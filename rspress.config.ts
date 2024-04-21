@@ -1,13 +1,17 @@
 import * as path from "path";
 import { defineConfig } from "rspress/config";
+import { pluginFontOpenSans } from "rspress-plugin-font-open-sans";
+import dd from "./plugins/datadog";
 
 export default defineConfig({
   root: path.join(__dirname, "docs"),
   title: "Document",
   description: "Web Information",
-  icon: "/rspress-icon.png",
+  icon: "/favicon.png",
   logoText: "Main",
   themeConfig: {
+    enableContentAnimation: true,
+    lastUpdated: true,
     socialLinks: [
       { icon: "github", mode: "link", content: "https://github.com/jl917" },
       {
@@ -18,4 +22,5 @@ export default defineConfig({
     ],
     enableScrollToTop: true,
   },
+  plugins: [pluginFontOpenSans(), dd()],
 });

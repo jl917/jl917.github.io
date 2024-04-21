@@ -11,6 +11,9 @@
     "rspress": "^1.0.0"
   },
   "devDependencies": {
-    "@types/node": "^16"
+    "@types/node": "^16",
+    "reading-time": "^1.5.0",
+    "rspress-plugin-devkit": "^0.3.0",
+    "rspress-plugin-font-open-sans": "^1.0.0"
   }
 }
