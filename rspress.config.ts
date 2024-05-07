@@ -1,10 +1,10 @@
 import * as path from "path";
-import { defineConfig } from "rspress/config";
+import { defineConfig, UserConfig } from "rspress/config";
 import { pluginFontOpenSans } from "rspress-plugin-font-open-sans";
 import dd from "./plugins/datadog";
 import clarity from "./plugins/msClarity"
 
-export default defineConfig({
+const config: UserConfig = {
   root: path.join(__dirname, "docs"),
   title: "Document",
   description: "Web Information",
@@ -23,5 +23,12 @@ export default defineConfig({
     ],
     enableScrollToTop: true,
   },
-  plugins: [pluginFontOpenSans(), dd(), clarity()],
-});
+  plugins: [pluginFontOpenSans()],
+};
+
+if(process.env.NODE_ENV === 'production'){
+  config.plugins.push(dd())
+  config.plugins.push(clarity())
+}
+
+export default defineConfig(config);
