@@ -1,6 +1,6 @@
 import type { RspressPlugin } from "@rspress/shared";
 
-export default function rspressPluginGoogleAnalytics(): RspressPlugin {
+export default function rspressPluginDatadog(): RspressPlugin {
   return {
     name: "rspress-plugin-datadog-rum",
     config(config) {

@@ -2,6 +2,7 @@ import * as path from "path";
 import { defineConfig } from "rspress/config";
 import { pluginFontOpenSans } from "rspress-plugin-font-open-sans";
 import dd from "./plugins/datadog";
+import clarity from "./plugins/msClarity"
 
 export default defineConfig({
   root: path.join(__dirname, "docs"),
@@ -22,5 +23,5 @@ export default defineConfig({
     ],
     enableScrollToTop: true,
   },
-  plugins: [pluginFontOpenSans(), dd()],
+  plugins: [pluginFontOpenSans(), dd(), clarity()],
 });
