@@ -5,6 +5,7 @@
   },
   {
     "type": "file",
-    "name": "seo/index"
+    "label": "HTML",
+    "name": "html/tag"
   }
 ]
