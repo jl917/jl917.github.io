@@ -2,7 +2,7 @@ import * as path from "path";
 import { defineConfig, UserConfig } from "rspress/config";
 import { pluginFontOpenSans } from "rspress-plugin-font-open-sans";
 import dd from "./plugins/datadog";
-import clarity from "./plugins/msClarity"
+import clarity from "rspress-plugin-clarity";
 
 const config: UserConfig = {
   root: path.join(__dirname, "docs"),
@@ -26,9 +26,9 @@ const config: UserConfig = {
   plugins: [pluginFontOpenSans()],
 };
 
-if(process.env.NODE_ENV === 'production'){
-  config.plugins.push(dd())
-  config.plugins.push(clarity())
+if (process.env.NODE_ENV === "production") {
+  config.plugins.push(dd());
+  config.plugins.push(clarity("m8aieurh61"));
 }
 
 export default defineConfig(config);
