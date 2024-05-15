@@ -49,12 +49,12 @@ const generateNode = (sitemap: Sitemap): string => {
   return result;
 };
 
-const generateXml = (sitemaps: Sitemap[]) =>
-  `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${sitemaps.reduce(
-    (node, sitemap) => (node += generateNode(sitemap)),
+const generateXml = (sitemaps: Sitemap[]) => {
+  return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${sitemaps.reduce(
+    (node, sitemap) => node + generateNode(sitemap),
     ""
   )}</urlset>`;
-
+};
 export default function rspressPluginSitemap(
   domain: string,
   options: Options = {}
@@ -71,15 +71,16 @@ export default function rspressPluginSitemap(
     config(config) {
       return config;
     },
-    routeGenerated(routes, isProd) {
+    extendPageData(pageData, isProd) {
       if (isProd) {
-        sitemaps = routes.map((e) => ({
-          loc: `${domain}${e.routePath}`,
-          lastmod: statSync(e.absolutePath).mtime.toISOString(),
-          priority: e.routePath === "/" ? "1.0" : options.defaultPriority,
+        sitemaps.push({
+          loc: `${domain}${pageData.routePath}`,
+          lastmod: statSync(pageData._filepath).mtime.toISOString(),
+          priority:
+            pageData.routePath === "/" ? "1.0" : options.defaultPriority,
           changefreq: options.defaultChangeFreq,
-          ...(options.customMaps[e.routePath] || {}),
-        }));
+          ...(options.customMaps[pageData.routePath] || {}),
+        });
       }
     },
     afterBuild(config, isProd) {
