@@ -3,6 +3,7 @@ import { defineConfig, UserConfig } from "rspress/config";
 import { pluginFontOpenSans } from "rspress-plugin-font-open-sans";
 import dd from "./plugins/datadog";
 import clarity from "rspress-plugin-clarity";
+import pluginSitemap from "./plugins/sitemap";
 
 const config: UserConfig = {
   root: path.join(__dirname, "docs"),
@@ -23,7 +24,7 @@ const config: UserConfig = {
     ],
     enableScrollToTop: true,
   },
-  plugins: [pluginFontOpenSans()],
+  plugins: [pluginFontOpenSans(), pluginSitemap("https://rspress.dev/")],
 };
 
 if (process.env.NODE_ENV === "production") {
