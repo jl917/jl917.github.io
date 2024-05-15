@@ -24,7 +24,7 @@ const config: UserConfig = {
     ],
     enableScrollToTop: true,
   },
-  plugins: [pluginFontOpenSans(), pluginSitemap("https://rspress.dev/")],
+  plugins: [pluginFontOpenSans(), pluginSitemap("https://jl917.github.io")],
 };
 
 if (process.env.NODE_ENV === "production") {
