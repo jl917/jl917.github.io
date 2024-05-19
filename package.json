@@ -15,6 +15,7 @@
     "reading-time": "^1.5.0",
     "rspress-plugin-clarity": "^1.0.0",
     "rspress-plugin-devkit": "^0.3.0",
-    "rspress-plugin-font-open-sans": "^1.0.0"
+    "rspress-plugin-font-open-sans": "^1.0.0",
+    "rspress-plugin-sitemap": "^1.0.1"
   }
 }
