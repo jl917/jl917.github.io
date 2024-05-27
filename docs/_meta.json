@@ -1,5 +1,10 @@
 [
   {
+    "text": "Hello",
+    "link": "/hello/",
+    "activeMatch": "^/hello/"
+  },
+  {
     "text": "Algorithm",
     "link": "/algorithm/",
     "activeMatch": "^/algorithm/"
