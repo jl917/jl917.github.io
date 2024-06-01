@@ -1,11 +1,11 @@
 [
   {
-    "type": "file",
-    "name": "performance/index"
+    "type": "dir",
+    "label": "HTML",
+    "name": "html"
   },
   {
     "type": "file",
-    "label": "HTML",
-    "name": "html/tag"
+    "name": "performance/index"
   }
 ]

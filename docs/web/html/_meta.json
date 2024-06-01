@@ -2,5 +2,13 @@
   {
     "type": "file",
     "name": "tag"
+  },
+  {
+    "type": "file",
+    "name": "entity"
+  },
+  {
+    "type": "file",
+    "name": "storage"
   }
 ]
