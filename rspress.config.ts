@@ -4,6 +4,7 @@ import { pluginFontOpenSans } from "rspress-plugin-font-open-sans";
 import dd from "./plugins/datadog";
 import clarity from "rspress-plugin-clarity";
 import pluginSitemap from "rspress-plugin-sitemap";
+import mermaid from "rspress-plugin-mermaid";
 
 const config: UserConfig = {
   root: path.join(__dirname, "docs"),
@@ -27,6 +28,7 @@ const config: UserConfig = {
   plugins: [
     pluginFontOpenSans(),
     pluginSitemap({ domain: "https://jl917.github.io" }),
+    mermaid({ mermaidConfig: {} }),
   ],
 };
 
