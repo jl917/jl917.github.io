@@ -17,11 +17,6 @@ const config: UserConfig = {
     lastUpdated: true,
     socialLinks: [
       { icon: "github", mode: "link", content: "https://github.com/jl917" },
-      {
-        icon: "wechat",
-        mode: "text",
-        content: "wechat: _jl917",
-      },
     ],
     enableScrollToTop: true,
   },

@@ -1,10 +1,9 @@
 # Git
 
+## 업무 배포 전략
+
 ```mermaid
----
-title: Git branch strategy
----
-gitGraph
+gitGraph TB:
    commit
    branch stage
    branch qa
@@ -40,11 +39,10 @@ gitGraph
    merge feat/a1 tag: "v1.0.1" id: "rollback"
 ```
 
+## NPM 배포 전략
+
 ```mermaid
----
-title: Git branch strategy
----
-gitGraph
+gitGraph TB:
    commit
    branch next
    branch develop
