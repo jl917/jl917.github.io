@@ -5,7 +5,8 @@
     "name": "html"
   },
   {
-    "type": "file",
-    "name": "performance/index"
+    "type": "dir",
+    "label": "Performance",
+    "name": "performance"
   }
 ]
