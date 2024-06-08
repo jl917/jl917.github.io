@@ -13,5 +13,10 @@
     "text": "Web",
     "link": "/web/html/tag.html",
     "activeMatch": "^/web/"
+  },
+  {
+    "text": "Guideline",
+    "link": "/guideline/node.html",
+    "activeMatch": "^/guideline/"
   }
 ]
