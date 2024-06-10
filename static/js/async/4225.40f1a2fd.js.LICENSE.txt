@@ -1,5 +1,0 @@
-/*! ./createText-ca0c5216.js */
-
-/*! d3 */
-
-/*! ./mermaid-6dc72991.js */

@@ -1,9 +1,0 @@
-/*! @braintree/sanitize-url */
-
-/*! ./mermaid-6dc72991.js */
-
-/*! dompurify */
-
-/*! d3 */
-
-/*! dayjs */

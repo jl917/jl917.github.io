@@ -1,5 +1,0 @@
-/*! react/jsx-runtime */
-
-/*! @mdx-js/react */
-
-/*! /home/runner/work/jl917.github.io/jl917.github.io/node_modules/rspress-plugin-mermaid/components/MermaidRender.tsx */
