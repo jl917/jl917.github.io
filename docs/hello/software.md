@@ -2,7 +2,7 @@
 
 ## 개발용
 
-| 소프트웨어/툴 이름 | 링크                                                                                                                       |
+| 이름               | 링크                                                                                                                       |
 | ------------------ | -------------------------------------------------------------------------------------------------------------------------- |
 | Zsh                | [https://ohmyz.sh/](https://ohmyz.sh/)                                                                                     |
 | Homebrew           | [https://brew.sh/](https://brew.sh/)                                                                                       |
@@ -26,18 +26,18 @@
 | Notion             | [https://www.notion.so/ko-kr](https://www.notion.so/ko-kr)                                                                 |
 | Gas Mask           | [https://github.com/2ndalpha/gasmask](https://github.com/2ndalpha/gasmask)                                                 |
 
-## 개인사용
+## 개인용
 
-| 소프트웨어/툴 이름 | 링크                                                                                                                                   |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
-| IINA               | [https://iina.io/](https://iina.io/)                                                                                                   |
-| Motrix             | [https://motrix.app/](https://motrix.app/)                                                                                             |
-| FileZilla          | [https://filezilla-project.org/](https://filezilla-project.org/)                                                                       |
-| Wireshark          | [https://www.wireshark.org/](https://www.wireshark.org/)                                                                               |
-| Infuse             | [https://apps.apple.com/kr/app/infuse-비디오-플레이어/id1136220934](https://apps.apple.com/kr/app/infuse-비디오-플레이어/id1136220934) |
-| PicView            | [https://picview.org/](https://picview.org/)                                                                                           |
+| 이름      | 링크                                                                                                                                   |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| IINA      | [https://iina.io/](https://iina.io/)                                                                                                   |
+| Motrix    | [https://motrix.app/](https://motrix.app/)                                                                                             |
+| FileZilla | [https://filezilla-project.org/](https://filezilla-project.org/)                                                                       |
+| Wireshark | [https://www.wireshark.org/](https://www.wireshark.org/)                                                                               |
+| Infuse    | [https://apps.apple.com/kr/app/infuse-비디오-플레이어/id1136220934](https://apps.apple.com/kr/app/infuse-비디오-플레이어/id1136220934) |
+| PicView   | [https://picview.org/](https://picview.org/)                                                                                           |
 
-## 공용 설정
+## 설정
 
 ```sh
 echo 'export PATH=/opt/homebrew/bin:$PATH' >> ~/.zshrc
