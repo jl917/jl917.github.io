@@ -5,6 +5,7 @@ import dd from "./plugins/datadog";
 import clarity from "rspress-plugin-clarity";
 import pluginSitemap from "rspress-plugin-sitemap";
 import mermaid from "rspress-plugin-mermaid";
+import directives from 'rspress-plugin-directives';
 
 const config: UserConfig = {
   root: path.join(__dirname, "docs"),
@@ -24,6 +25,14 @@ const config: UserConfig = {
     pluginFontOpenSans(),
     pluginSitemap({ domain: "https://jl917.github.io" }),
     mermaid({ mermaidConfig: {} }),
+    directives({
+      directive: 'giphy',
+      transformer: {
+        type: 'globalComponent',
+        getComponentName: (meta) => 'Giphy',
+        componentPath: path.join(__dirname, './components/Giphy.tsx'),
+      },
+    }),
   ],
 };
 

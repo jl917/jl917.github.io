@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "rspress": "^1.25.2",
+    "rspress-plugin-directives": "^0.3.0",
     "rspress-plugin-mermaid": "^0.3.0"
   },
   "devDependencies": {
