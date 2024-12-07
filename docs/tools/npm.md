@@ -32,3 +32,4 @@ npm unpublish --force # package.json에 지정된 패키지 제거
 - https://www.npmjs.com/search?q=node-schedule
 - https://www.npmjs.com/package/numeral
 - https://www.npmjs.com/package/currency.js
+- https://www.npmjs.com/package/print-js
