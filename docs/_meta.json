@@ -18,5 +18,10 @@
     "text": "Guideline",
     "link": "/guideline/node.html",
     "activeMatch": "^/guideline/"
+  },
+  {
+    "text": "Mark",
+    "link": "/mark/index.html",
+    "activeMatch": "^/mark/"
   }
 ]
