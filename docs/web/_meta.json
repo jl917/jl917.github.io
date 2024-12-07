@@ -8,5 +8,10 @@
     "type": "dir",
     "label": "Performance",
     "name": "performance"
+  },
+  {
+    "type": "dir",
+    "label": "Seo",
+    "name": "seo"
   }
 ]
