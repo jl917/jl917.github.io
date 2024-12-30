@@ -26,6 +26,7 @@
 | Notion             | [https://www.notion.so/ko-kr](https://www.notion.so/ko-kr)                                                                 |
 | Gas Mask           | [https://github.com/2ndalpha/gasmask](https://github.com/2ndalpha/gasmask)                                                 |
 | reqable            | [https://reqable.com/en-US/](https://reqable.com/en-US/)                                                                   |
+| Ophiuchi           | [https://www.ophiuchi.dev/](https://www.ophiuchi.dev/)                                                                     |
 
 ## 개인용
 
