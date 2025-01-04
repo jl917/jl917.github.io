@@ -1,5 +1,9 @@
 # Npm
 
+### install 팁
+
+install 시 https://registry.npmjs.org/jnpkg 여기서 다운로드
+
 ### 동일패키지 여러 버전 공존
 
 ```sh
