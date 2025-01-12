@@ -38,3 +38,6 @@ npm unpublish --force # package.json에 지정된 패키지 제거
 - https://www.npmjs.com/package/currency.js
 - https://www.npmjs.com/package/print-js
 - https://www.npmjs.com/package/jsonpath-plus
+- https://www.npmjs.com/package/jimp
+- https://www.npmjs.com/package/mitt
+- https://www.npmjs.com/package/realm
