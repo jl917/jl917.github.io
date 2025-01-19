@@ -20,6 +20,11 @@
     "activeMatch": "^/guideline/"
   },
   {
+    "text": "Language",
+    "link": "/language/index.html",
+    "activeMatch": "^/language/"
+  },
+  {
     "text": "Mark",
     "link": "/mark/index.html",
     "activeMatch": "^/mark/"
