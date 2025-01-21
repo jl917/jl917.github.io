@@ -27,6 +27,7 @@
 | Gas Mask           | [https://github.com/2ndalpha/gasmask](https://github.com/2ndalpha/gasmask)                                                 |
 | reqable            | [https://reqable.com/en-US/](https://reqable.com/en-US/)                                                                   |
 | Ophiuchi           | [https://www.ophiuchi.dev/](https://www.ophiuchi.dev/)                                                                     |
+| Debugtron          | [https://github.com/pd4d10/debugtron](https://github.com/pd4d10/debugtron)                                                 |
 
 ## 개인용
 
