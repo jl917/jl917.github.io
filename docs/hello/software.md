@@ -54,6 +54,9 @@ cd .ssh
 ssh-keygen -o
 cat ~/.ssh/id_rsa.pub
 
+xattr -cr /Applications/PicGo.app
+sudo spctl --master-disable
+
 
 
 export NVM_DIR="$HOME/.nvm"
