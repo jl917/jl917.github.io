@@ -41,4 +41,4 @@ npm unpublish --force # package.json에 지정된 패키지 제거
 - https://www.npmjs.com/package/jimp
 - https://www.npmjs.com/package/mitt
 - https://www.npmjs.com/package/realm
-- https://apoorv.pro/lozad.js
+- https://www.npmjs.com/package/lozad
