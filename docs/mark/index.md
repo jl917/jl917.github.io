@@ -25,6 +25,32 @@
 - [Web Platform Incubator Community Group](https://wicg.io/)
 - [The HTTP Archive Tracks How the Web is Built](https://httparchive.org/)
 
+
 # Education
 
 - [fullstackopen](https://fullstackopen.com/zh/about/)
+- [Rust Course](https://course.rs/)
+- [Rusty Book](https://rusty.course.rs/)
+
+
+# React core
+
+- https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzkzMjIxNTcyMA==&action=getalbum&album_id=1783121402896678912&subscene=159&subscene=&scenenote=https%3A%2F%2Fmp.weixin.qq.com%2Fs%2FUC022AC-O506ueFykZyWbQ&nolastread=1#wechat_redirect
+- https://react.iamkasong.com/
+- https://www.qinguanghui.com/
+
+# npm packages
+
+- https://www.npmjs.com/package/jsbarcode
+- https://www.npmjs.com/package/qrcode
+- https://www.npmjs.com/package/dexie
+- https://www.npmjs.com/search?q=node-schedule
+- https://www.npmjs.com/package/numeral
+- https://www.npmjs.com/package/currency.js
+- https://www.npmjs.com/package/print-js
+- https://www.npmjs.com/package/jsonpath-plus
+- https://www.npmjs.com/package/jimp
+- https://www.npmjs.com/package/mitt
+- https://www.npmjs.com/package/realm
+- https://www.npmjs.com/package/lozad
+- https://www.npmjs.com/package/zeromq

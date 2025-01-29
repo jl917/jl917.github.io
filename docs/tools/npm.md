@@ -27,18 +27,3 @@ npm unpublish dzmtest@1.0.1 --force # 특정 버정만 제거
 npm unpublish dzmtest --force # 패지지 제거
 npm unpublish --force # package.json에 지정된 패키지 제거
 ```
-
-### package
-
-- https://www.npmjs.com/package/jsbarcode
-- https://www.npmjs.com/package/qrcode
-- https://www.npmjs.com/package/dexie
-- https://www.npmjs.com/search?q=node-schedule
-- https://www.npmjs.com/package/numeral
-- https://www.npmjs.com/package/currency.js
-- https://www.npmjs.com/package/print-js
-- https://www.npmjs.com/package/jsonpath-plus
-- https://www.npmjs.com/package/jimp
-- https://www.npmjs.com/package/mitt
-- https://www.npmjs.com/package/realm
-- https://www.npmjs.com/package/lozad
