@@ -54,3 +54,4 @@
 - https://www.npmjs.com/package/realm
 - https://www.npmjs.com/package/lozad
 - https://www.npmjs.com/package/zeromq
+- https://www.npmjs.com/package/gcoord
