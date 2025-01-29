@@ -57,6 +57,9 @@ cat ~/.ssh/id_rsa.pub
 xattr -cr /Applications/PicGo.app
 sudo spctl --master-disable
 
+defaults write com.apple.finder AppleShowAllFiles -bool true
+killall Finder
+
 
 
 export NVM_DIR="$HOME/.nvm"
