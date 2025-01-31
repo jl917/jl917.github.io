@@ -55,3 +55,7 @@
 - https://www.npmjs.com/package/lozad
 - https://www.npmjs.com/package/zeromq
 - https://www.npmjs.com/package/gcoord
+- https://jsrepo.dev/
+- https://github.com/DavidHDev/react-bits
+- https://www.npmjs.com/package/fs-extra
+- https://www.npmjs.com/package/keytar
