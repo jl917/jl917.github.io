@@ -59,3 +59,5 @@
 - https://github.com/DavidHDev/react-bits
 - https://www.npmjs.com/package/fs-extra
 - https://www.npmjs.com/package/keytar
+- https://www.npmjs.com/package/archiver
+- https://www.npmjs.com/package/wcwidth
