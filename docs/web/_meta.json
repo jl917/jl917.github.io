@@ -18,5 +18,15 @@
     "type": "dir",
     "label": "React",
     "name": "react"
+  },
+  {
+    "type": "dir",
+    "label": "Svelte",
+    "name": "svelte"
+  },
+  {
+    "type": "dir",
+    "label": "Test",
+    "name": "test"
   }
 ]

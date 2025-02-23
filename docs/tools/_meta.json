@@ -1,1 +1,9 @@
-["index", "git", "npm", "zeromq", "appdatastore"]
+[
+  "git",
+  "npm",
+  {
+    "type": "dir",
+    "label": "Plugins",
+    "name": "plugins"
+  }
+]

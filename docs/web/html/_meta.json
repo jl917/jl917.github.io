@@ -14,5 +14,9 @@
   {
     "type": "file",
     "name": "storage"
+  },
+  {
+    "type": "file",
+    "name": "indexedDB"
   }
 ]
