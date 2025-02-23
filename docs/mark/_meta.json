@@ -1,0 +1,9 @@
+[
+  "index",
+  "escpos",
+  {
+    "type": "dir",
+    "label": "Guideline",
+    "name": "guideline"
+  }
+]

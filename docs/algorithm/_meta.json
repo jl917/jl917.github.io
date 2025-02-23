@@ -1,1 +1,8 @@
-["index"]
+[
+  "structures",
+  {
+    "type": "dir",
+    "label": "Pattern",
+    "name": "pattern"
+  }
+]

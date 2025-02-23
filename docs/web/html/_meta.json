@@ -1,6 +1,10 @@
 [
   {
     "type": "file",
+    "name": "doctype"
+  },
+  {
+    "type": "file",
     "name": "tag"
   },
   {

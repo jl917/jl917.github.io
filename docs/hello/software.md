@@ -60,6 +60,11 @@ sudo spctl --master-disable
 defaults write com.apple.finder AppleShowAllFiles -bool true
 killall Finder
 
+## npm set
+npm set init-author-name 'jl917'
+npm set init-author-email 'julong1988@naver.com'
+npm set init-author-url 'https://jl917.github.io'
+npm set init-license 'MIT'
 
 
 export NVM_DIR="$HOME/.nvm"

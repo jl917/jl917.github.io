@@ -13,5 +13,10 @@
     "type": "dir",
     "label": "Seo",
     "name": "seo"
+  },
+  {
+    "type": "dir",
+    "label": "React",
+    "name": "react"
   }
 ]
