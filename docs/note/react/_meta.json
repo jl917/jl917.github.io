@@ -1,0 +1,22 @@
+[
+  {
+    "type": "file",
+    "label": "Hook",
+    "name": "hooks"
+  },
+  {
+    "type": "file",
+    "label": "Pattern",
+    "name": "pattern"
+  },
+  {
+    "type": "file",
+    "label": "Performance",
+    "name": "performance"
+  },
+  {
+    "type": "dir",
+    "label": "Sources",
+    "name": "sources"
+  }
+]

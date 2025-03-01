@@ -48,6 +48,32 @@
 <meta property="og:description" content="描述" />
 <!-- sns 社交标签 end -->
 
+<!-- Theme Color for Chrome, Firefox OS and Opera -->
+<meta name="theme-color" content="#4285f4">
+
+<!-- Windows Phone -->
+<meta name="msapplication-navbutton-color" content="#4285f4">
+
+<!-- Security -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+
+<!-- PWA -->
+<link rel="manifest" href="/manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+
+<!-- DNS Prefetch -->
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="dns-prefetch" href="//www.google-analytics.com">
+
+<!-- Preconnect -->
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 ```
 
 ### link
