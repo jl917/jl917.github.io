@@ -28,5 +28,10 @@
     "type": "dir",
     "label": "Test",
     "name": "test"
+  },
+  {
+    "type": "dir",
+    "label": "Graphql",
+    "name": "graphql"
   }
 ]

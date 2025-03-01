@@ -1,0 +1,22 @@
+[
+  {
+    "type": "file",
+    "name": "index"
+  },
+  {
+    "type": "file",
+    "name": "query"
+  },
+  {
+    "type": "file",
+    "name": "schema"
+  },
+  {
+    "type": "file",
+    "name": "client"
+  },
+  {
+    "type": "file",
+    "name": "server"
+  }
+]
