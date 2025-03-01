@@ -10,14 +10,9 @@
     "activeMatch": "^/algorithm/"
   },
   {
-    "text": "Web",
-    "link": "/web/html/tag.html",
-    "activeMatch": "^/web/"
-  },
-  {
-    "text": "Language",
-    "link": "/language/rust/001.html",
-    "activeMatch": "^/language/"
+    "text": "Note",
+    "link": "/note/html/tag.html",
+    "activeMatch": "^/note/"
   },
   {
     "text": "Mark",
