@@ -33,5 +33,10 @@
     "type": "dir",
     "label": "Graphql",
     "name": "graphql"
+  },
+  {
+    "type": "dir",
+    "label": "Rust",
+    "name": "rust"
   }
 ]
