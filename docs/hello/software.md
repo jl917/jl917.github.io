@@ -28,6 +28,7 @@
 | reqable            | [https://reqable.com/en-US/](https://reqable.com/en-US/)                                                                   |
 | Ophiuchi           | [https://www.ophiuchi.dev/](https://www.ophiuchi.dev/)                                                                     |
 | Debugtron          | [https://github.com/pd4d10/debugtron](https://github.com/pd4d10/debugtron)                                                 |
+| trae               | [https://www.trae.ai/](https://www.trae.ai/)                                                                               |
 
 ## 개인용
 
