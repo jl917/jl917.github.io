@@ -43,6 +43,7 @@
 - https://www.npmjs.com/package/jsbarcode
 - https://www.npmjs.com/package/qrcode
 - https://www.npmjs.com/package/dexie
+- https://www.npmjs.com/package/localforage
 - https://www.npmjs.com/search?q=node-schedule
 - https://www.npmjs.com/package/numeral
 - https://www.npmjs.com/package/currency.js
