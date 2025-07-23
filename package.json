@@ -8,7 +8,7 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "rspress": "^1.42.1",
+    "rspress": "^2.0.0-beta.21",
     "rspress-plugin-directives": "^0.3.0",
     "rspress-plugin-mermaid": "^0.3.0"
   },
@@ -18,6 +18,6 @@
     "rspress-plugin-clarity": "^1.0.0",
     "rspress-plugin-devkit": "^0.3.0",
     "rspress-plugin-font-open-sans": "^1.0.0",
-    "rspress-plugin-sitemap": "^1.1.3"
+    "rspress-plugin-sitemap": "^1.2.0"
   }
 }
