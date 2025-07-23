@@ -1,1 +1,1 @@
-["babel", "eslint", "vite", "swc"]
+["babel", "eslint", "vite", "swc", "typescript"]
