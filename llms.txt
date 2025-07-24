@@ -1,0 +1,94 @@
+# Document
+
+> Web Information
+
+## Hello
+
+- [Hello](/hello/index.md)
+- [Portfolio](/hello/portfolio.md)
+- [Social](/hello/social.md)
+- [Software](/hello/software.md)
+
+## Algorithm
+
+- [抽象工厂模式(Abstract Factory)](/algorithm/pattern/01.md)
+- [构建者模式(Builder)](/algorithm/pattern/02.md)
+- [工厂方法模式(Factory Method)](/algorithm/pattern/03.md)
+- [原型模式(Prototype)](/algorithm/pattern/04.md)
+- [单例模式(Singleton)](/algorithm/pattern/05.md)
+- [适配器模式(Adapter)](/algorithm/pattern/06.md)
+- [桥接模式(Bridge)](/algorithm/pattern/07.md)
+- [组合模式(Composite Pattern)](/algorithm/pattern/08.md)
+- [装饰者模式(Decorator)](/algorithm/pattern/09.md)
+- [外观模式(Facade)](/algorithm/pattern/10.md)
+- [享元模式(Flyweight Pattern)](/algorithm/pattern/11.md)
+- [代理模式(Proxy)](/algorithm/pattern/12.md)
+- [职责链模式(Chain of Responsibility)](/algorithm/pattern/13.md)
+- [命令模式(Command)](/algorithm/pattern/14.md)
+- [解释器模式(Interpreter)](/algorithm/pattern/15.md)
+- [迭代器模式(Iterator)](/algorithm/pattern/16.md)
+- [中介者模式(Mediator)](/algorithm/pattern/17.md)
+- [备忘录模式(Memento)](/algorithm/pattern/18.md)
+- [观察者模式(Observer)](/algorithm/pattern/19.md)
+- [状态模式(State)](/algorithm/pattern/20.md)
+- [策略模式(Strategy)](/algorithm/pattern/21.md)
+- [模板方法模式(Template Method)](/algorithm/pattern/22.md)
+- [访问者模式(Visitor)](/algorithm/pattern/23.md)
+- [Structures](/algorithm/structures.md)
+
+## Note
+
+- [GraphQL](/note/graphql/index.md)
+- [Client](/note/graphql/client.md)
+- [Query](/note/graphql/query.md)
+- [SCHEMA](/note/graphql/schema.md)
+- [Server](/note/graphql/server.md)
+- [Doctype](/note/html/doctype.md)
+- [HTML Entity](/note/html/entity.md)
+- [IndexedDB](/note/html/indexedDB.md)
+- [Web Storage](/note/html/storage.md)
+- [Markup Tag](/note/html/tag.md)
+- [关键性能指标](/note/performance/metric.md)
+- [RAIL](/note/performance/rail.md)
+- [Hooks](/note/react/hooks.md)
+- [](/note/react/pattern.md)
+- [React성능 최적화](/note/react/performance.md)
+- [리액트 특징](/note/react/sources/01.md)
+- [Fiber](/note/react/sources/02.md)
+- [Reconciler](/note/react/sources/03.md)
+- [Update](/note/react/sources/04.md)
+- [기초문법](/note/rust/001.md)
+- [개념](/note/rust/002.md)
+- [유틸/팁](/note/rust/003.md)
+- [SEO](/note/seo/index.md)
+- [基础](/note/svelte/01.md)
+- [Stores](/note/svelte/02.md)
+- [测试](/note/test/index.md)
+- [Jest](/note/test/jest.md)
+- [React Test Sample](/note/test/react.md)
+- [测试最佳实践(中文)](/note/test/test.md)
+- [테스트 베스트 프래틱스](/note/test/test_kr.md)
+- [vitest](/note/test/vitest.md)
+
+## Mark
+
+- [ESC/POS 프린터 명령어 문서](/mark/escpos.md)
+- [Conventional Commits](/mark/guideline/commits.md)
+- [Front-End Checklist](/mark/guideline/frontend-checklist.md)
+- [Nodejs Best Practices](/mark/guideline/node.md)
+- [Project Guidelines](/mark/guideline/project.md)
+- [Semantic Versioning](/mark/guideline/semver.md)
+- [Javascript Testing Best Practices](/mark/guideline/test.md)
+- [Web Content Accessibility Guidelines](/mark/guideline/wcag.md)
+- [npm packages](/mark/index.md)
+- [编程词汇](/mark/word.md)
+
+## Tools
+
+- [Git](/tools/git.md)
+- [Npm](/tools/npm.md)
+- [babel](/tools/plugins/babel.md)
+- [eslint](/tools/plugins/eslint.md)
+- [swc](/tools/plugins/swc.md)
+- [](/tools/plugins/typescript.md)
+- [vite](/tools/plugins/vite.md)
