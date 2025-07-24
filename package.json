@@ -13,6 +13,7 @@
     "rspress-plugin-mermaid": "^0.3.0"
   },
   "devDependencies": {
+    "@rspress/plugin-llms": "^2.0.0-beta.21",
     "@types/node": "^16",
     "reading-time": "^1.5.0",
     "rspress-plugin-clarity": "^1.0.0",
