@@ -77,6 +77,7 @@
 - [Front-End Checklist](/mark/guideline/frontend-checklist.md)
 - [Nodejs Best Practices](/mark/guideline/node.md)
 - [Project Guidelines](/mark/guideline/project.md)
+- [Code Review(js/ts)](/mark/guideline/review.md)
 - [Semantic Versioning](/mark/guideline/semver.md)
 - [Javascript Testing Best Practices](/mark/guideline/test.md)
 - [Web Content Accessibility Guidelines](/mark/guideline/wcag.md)
