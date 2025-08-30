@@ -23,5 +23,10 @@
     "text": "Tools",
     "link": "/tools/git.html",
     "activeMatch": "^/tools/"
+  },
+  {
+    "text": "AI",
+    "link": "/artificialIntelligence/ollama.html",
+    "activeMatch": "^/artificialIntelligence/"
   }
 ]
