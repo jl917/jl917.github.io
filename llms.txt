@@ -93,3 +93,7 @@
 - [swc](/tools/plugins/swc.md)
 - [](/tools/plugins/typescript.md)
 - [vite](/tools/plugins/vite.md)
+
+## AI
+
+- [ollama](/artificialIntelligence/ollama.md)
