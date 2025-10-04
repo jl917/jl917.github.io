@@ -29,6 +29,7 @@
 | Ophiuchi           | [https://www.ophiuchi.dev/](https://www.ophiuchi.dev/)                                                                     |
 | Debugtron          | [https://github.com/pd4d10/debugtron](https://github.com/pd4d10/debugtron)                                                 |
 | trae               | [https://www.trae.ai/](https://www.trae.ai/)                                                                               |
+| rust               | [https://rust-lang.org/learn/get-started/](https://rust-lang.org/learn/get-started/)                                       |
 
 ## 개인용
 
@@ -44,6 +45,9 @@
 ## 설정
 
 ```sh
+alias pip=/usr/bin/pip3
+alias python=/usr/bin/python3
+
 echo 'export PATH=/opt/homebrew/bin:$PATH' >> ~/.zshrc
 
 git config --global user.name "JuLong"
@@ -109,3 +113,10 @@ load-nvmrc
 ```
 
 ![](https://raw.githubusercontent.com/jl917/s/master/image/20250302222328-4ecb61c77381ddc25c759173828383ae.png)
+
+## 기타 설치
+
+```
+brew install python
+
+```
