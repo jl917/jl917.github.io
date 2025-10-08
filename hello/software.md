@@ -30,6 +30,7 @@
 | Debugtron          | [https://github.com/pd4d10/debugtron](https://github.com/pd4d10/debugtron)                                                 |
 | trae               | [https://www.trae.ai/](https://www.trae.ai/)                                                                               |
 | rust               | [https://rust-lang.org/learn/get-started/](https://rust-lang.org/learn/get-started/)                                       |
+| youtubedownload    | [https://github.com/Tyrrrz/YoutubeDownloader](https://github.com/Tyrrrz/YoutubeDownloader)                                 |
 
 ## 개인용
 
@@ -118,5 +119,5 @@ load-nvmrc
 
 ```
 brew install python
-
+brew install ffmpeg
 ```
