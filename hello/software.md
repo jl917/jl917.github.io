@@ -32,6 +32,13 @@
 | rust               | [https://rust-lang.org/learn/get-started/](https://rust-lang.org/learn/get-started/)                                       |
 | youtubedownload    | [https://ytdn.netlify.app/#mac](https://ytdn.netlify.app/#macr)                                                            |
 
+## AI
+
+| 이름 | 링크 |
+| ollama | [https://ollama.com/download](https://ollama.com/download) |
+| chatbox | [https://chatboxai.app/en](https://chatboxai.app/en) |
+| anythingllm | [https://anythingllm.com/desktop](https://anythingllm.com/desktop) |
+
 ## 개인용
 
 | 이름      | 링크                                                                                                                                   |
