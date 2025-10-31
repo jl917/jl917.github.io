@@ -35,6 +35,7 @@
 ## AI
 
 | 이름 | 링크 |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------- |
 | ollama | [https://ollama.com/download](https://ollama.com/download) |
 | chatbox | [https://chatboxai.app/en](https://chatboxai.app/en) |
 | anythingllm | [https://anythingllm.com/desktop](https://anythingllm.com/desktop) |
