@@ -96,4 +96,6 @@
 
 ## AI
 
+- [大模型](/artificialIntelligence/llm.md)
 - [ollama](/artificialIntelligence/ollama.md)
+- [简述](/artificialIntelligence/summary.md)

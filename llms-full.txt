@@ -8745,6 +8745,52 @@ export default function myPlugin() {
 
 
 ---
+url: /artificialIntelligence/llm.md
+---
+
+# 大模型
+
+## 训练
+
+- 预训练
+- 监督微调 - SFT (**Supervised Fine-Tuning**) 监督微调
+  - 专注于特定领域
+- 基于人类反馈的强化学习 RLHF (Reinforcement Learning from Human Feedback)
+  - 比如筛选 暴力 机密 等敏感信息
+
+## 训练工具
+
+- transfomer
+
+## 特点
+
+- 规模和参数量大
+- 适应性和灵活性强
+- 广泛数据集预训练
+- 计算资源需求大
+
+## 分类
+
+- 大语言模型 LLM
+  - GPT-3, GPT-4
+  - Bard
+  - 通义千问
+  - Deepseek
+- 多模态模型
+  - 计算机视觉模型
+  - 音频处理模型
+  - ….
+
+## 工作流程
+
+- 分词化(Tokenization)与词表映射
+  - 词粒度(Word-Level Tokenization)
+  - 字符力度(Character-Level)
+  - 子词粒度(Subword-Level)
+
+
+
+---
 url: /artificialIntelligence/ollama.md
 ---
 
@@ -8766,6 +8812,53 @@ url: /artificialIntelligence/ollama.md
 | `ollama show <모델>`    | 모델 메타 데이터 보기            |
 | `ollama cp <src> <dst>` | 모델 복제                        |
 | `ollama push <모델>`    | 모델을 레지스트리로 업로드       |
+
+
+
+---
+url: /artificialIntelligence/summary.md
+---
+
+# 简述
+
+## Prompt 提示词工程
+
+- 要求
+    - 指令具体
+    - 信息丰富
+    - 尽量少歧义
+- 角色
+    - 你是一个专业的金融投资研究助手 你非常严谨
+
+## RAG Retrieval-Augmented Generation
+
+- 通过外部资源或数据库中纳入相关信息来实现
+
+## Function Calling
+
+- 与外部函数或api交互的能力
+- 询问用户 补全信息
+- 基于LLM的语言理解能力 通过理解语义 自主决策使用某项工具 并结构化调用
+
+## Agent 智能体
+
+- LLM Based Agent
+    - 概念
+        - 无状态
+        - 有状态
+        - 连续
+        - 离散
+    - 目标
+        - 将无状态输出的大模型变成了有状态输出的逻辑大脑目标也是工业化
+        - 用好Agent关键是思考那些东西值得被离散化，状态化
+        - 不断测试大模型能力并研究如何提高状态判断的准确度
+- Multi-Agent Model
+
+## Fine tuning 微调
+
+- step1 收集示范数据， 并制定监督政策 - 准备很多prompt
+- step2 收集比较数据，并训练奖励模型 - Fine tuning
+- step3 使用强化学习针对奖励模型优化政策
 
 
 
