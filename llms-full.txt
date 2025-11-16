@@ -8745,12 +8745,134 @@ export default function myPlugin() {
 
 
 ---
-url: /artificialIntelligence/llm.md
+url: /artificialIntelligence/Agent.md
 ---
 
-# 大模型
+# Agent 智能体
 
-## 训练
+### 介绍
+
+Google 在 [《Agents》 白皮书所定义](https://www.kaggle.com/whitepaper-agents)的， AI 代理是可以在不须用人类介入的状况下，根据指定目标，去完成相关任务。
+
+### Agent 种类
+
+- 文本（text）
+- 图片（image）
+- 视频（video）
+- 音频（audio）
+- 语音（speech）
+- 传感器数据（sensor）
+- 结构化数据（tables, graph）
+- ....
+- Multi-Modal Agent
+
+### 流程
+
+- 规划 Planning
+  - 概念
+    - 观察与思考怎么完成任务
+    - 利用拥有的工具实现目的
+    - 任务拆分成子任务
+    - 执行任务的过程中进行反思和完善 吸取教训以完善未来的步骤
+- 记忆 Memory
+  - 分类
+    - 感觉记忆(Sensory Memory)
+    - 短期记忆
+    - 长期记忆
+- 工具 Tools
+  - 预制工具
+    - Bing Search
+    - dall-E Image
+  - 自定义工具
+  - 工具集
+- 执行 Action
+
+  - 执行任务
+  - 反馈结果
+
+  ### 举例
+
+  1. 输入: 请问现任美国总统是谁？他的年龄的平方是多少？请用中文告诉我这两个问题
+  2. 规划: 我需要使用搜索引擎来找到美国现任总统的名字 然后使用计算器来计算他的年龄的平方‘
+  3. 执行: search
+  4. 执行输入: 美国现任总统
+  5. Observation: joe biden
+  6. Thought: 现任美国总统是 joe biden
+  7. 执行: Calculator
+  8. 执行输入: 68^2
+  9. Observation: 4624
+  10. Thought: 我现在知道了美国现任总统是 joe biden 他的年龄的平方是 4624
+  11. Final Answer: 美国现任总统是 joe biden 他的年龄的平方是 4624
+
+### 框架
+
+- Plan and Execute
+  1. user request
+  2. plan
+  3. generate tasks
+  4. exec tasks(single task agent(loop))
+  5. update state with task results
+  6. rePlan
+  7. response to user
+- Self Ask
+- Thiking and Self-Reflection 思考并自我反思
+  - 框架主要用于模拟和实现复杂决策过程，通过不断自我评估和调整，使系统能够学习并改进决策过程，从而在面对复杂问题时做出更加有效的决策
+  - Thinking
+    - LLM ⇒ Thougth1 ⇒ Action1 ⇒ Thougth2 ⇒ Action2 ⇒ Thougth3 ⇒ Action3 ⇒ End
+  - Self-Reflection
+    - LLM ⇒ Thougth1 ⇒ Action1 ⇒ LLM ⇒ Thougth2 ⇒ Action2 ⇒ LLM ⇒ End
+
+
+
+---
+url: /artificialIntelligence/Embedding.md
+---
+
+# Embedding
+
+기계 학습에서 임베딩이란 무엇인가요
+
+...
+
+
+---
+url: /artificialIntelligence/FineTuning.md
+---
+
+# Fine-tuning 微调
+
+### 介绍
+
+Fine-tuning (微调) 是一个可以有效让 ChatGPT 输出符合我们预期的方法。
+在机器学习领域当中，微调 (Fine-tuning) 是指在已经训练好的模型基础上，进一步调整，让你模型的输出能够更符合你的预期。透过微调，我们可以不用重新训练一个新的模型，这让我们能够省去训练新模型的高昂成本。
+
+### 使用方法
+
+微调的方式很简单，你只需要准备成对的训练资料。然后喂入 Fine-tuning API 就可以完成了。这边指的成对资料，是输入搭配输出
+
+### 好处
+
+做好微调，能够让我们获得以下的好处： 比起指令 (prompt)，若微调的好，输出的成果会更好。 使用更短的指令来获得理想的输出，这会减少 token 使用，进而降低支出成本，同时加快响应的速度。
+
+
+
+
+---
+url: /artificialIntelligence/FunctionCalling.md
+---
+
+# Function Calling
+
+...
+
+
+---
+url: /artificialIntelligence/LargeLanguageModel.md
+---
+
+# Large Language Model 大模型
+
+### 训练
 
 - 预训练
 - 监督微调 - SFT (**Supervised Fine-Tuning**) 监督微调
@@ -8758,18 +8880,18 @@ url: /artificialIntelligence/llm.md
 - 基于人类反馈的强化学习 RLHF (Reinforcement Learning from Human Feedback)
   - 比如筛选 暴力 机密 等敏感信息
 
-## 训练工具
+### 训练工具
 
 - transfomer
 
-## 特点
+### 特点
 
 - 规模和参数量大
 - 适应性和灵活性强
 - 广泛数据集预训练
 - 计算资源需求大
 
-## 分类
+### 分类
 
 - 大语言模型 LLM
   - GPT-3, GPT-4
@@ -8781,7 +8903,7 @@ url: /artificialIntelligence/llm.md
   - 音频处理模型
   - ….
 
-## 工作流程
+### 工作流程
 
 - 分词化(Tokenization)与词表映射
   - 词粒度(Word-Level Tokenization)
@@ -8791,7 +8913,115 @@ url: /artificialIntelligence/llm.md
 
 
 ---
-url: /artificialIntelligence/ollama.md
+url: /artificialIntelligence/ModelContextProtocol.md
+---
+
+# Model Context Protocol
+
+MCP（模型上下文协议）是一种用于将 AI 应用程序连接到外部系统的开源标准。
+
+
+### 如何搭建自己的 MCP
+
+
+### 参考链接
+
+- https://modelcontextprotocol.io/docs/getting-started/intro
+
+
+---
+url: /artificialIntelligence/PromptEngineering.md
+---
+
+# Prompt Engineering 提示词工程
+
+...
+
+
+---
+url: /artificialIntelligence/RetrievalAugmentedGeneration.md
+---
+
+# Retrieval Augmented Generation
+
+...
+
+
+
+---
+url: /artificialIntelligence/summary.md
+---
+
+# 如何成长
+
+- 了解 AI 的模型和技术应用知识
+- 熟练使用 AI 开发工具
+- 构建 AI 驱动的原型 需要将概念转化为实际应用
+- AI 社区获取信息
+- 不断学习和多做实战项目
+
+# 需要技术
+
+## Prompt 提示词工程
+
+- 要求
+  - 指令具体
+  - 信息丰富
+  - 尽量少歧义
+- 角色
+  - 你是一个专业的金融投资研究助手 你非常严谨
+
+## RAG Retrieval-Augmented Generation
+
+- 通过外部资源或数据库中纳入相关信息来实现
+
+## Function Calling
+
+- 与外部函数或 api 交互的能力
+- 询问用户 补全信息
+- 基于 LLM 的语言理解能力 通过理解语义 自主决策使用某项工具 并结构化调用
+
+## Agent 智能体
+
+    - LLM Based Agent
+        - 概念
+            - 无状态
+            - 有状态
+            - 连续
+            - 离散
+        - 目标
+            - 将无状态输出的大模型变成了有状态输出的逻辑大脑目标也是工业化
+            - 用好Agent关键是思考那些东西值得被离散化，状态化
+            - 不断测试大模型能力并研究如何提高状态判断的准确度
+    - Multi-Agent Model
+
+## Fine tuning 微调
+
+    - step1 收集示范数据， 并制定监督政策 - 准备很多prompt
+    - step2 收集比较数据，并训练奖励模型 - Fine tuning
+    - step3 使用强化学习针对奖励模型优化政策
+
+## RAG vs Function Calling
+
+| 能力维度   | RAG                        | Function Calling           |
+| ---------- | -------------------------- | -------------------------- |
+| 数据时效性 | 依赖索引更新（可能有延迟） | 实时或近时（直接调用接口） |
+| 实现复杂度 | 需构建检索逻辑             | 需定义清晰的接口和参数     |
+| 适用场景   | 静态知识（文档、FAQ）      | 动态交互（订单查询、天气） |
+
+
+
+---
+url: /artificialIntelligence/tools/langchain.md
+---
+
+# langchain
+
+
+
+
+---
+url: /artificialIntelligence/tools/ollama.md
 ---
 
 # ollama
@@ -8812,53 +9042,6 @@ url: /artificialIntelligence/ollama.md
 | `ollama show <모델>`    | 모델 메타 데이터 보기            |
 | `ollama cp <src> <dst>` | 모델 복제                        |
 | `ollama push <모델>`    | 모델을 레지스트리로 업로드       |
-
-
-
----
-url: /artificialIntelligence/summary.md
----
-
-# 简述
-
-## Prompt 提示词工程
-
-- 要求
-    - 指令具体
-    - 信息丰富
-    - 尽量少歧义
-- 角色
-    - 你是一个专业的金融投资研究助手 你非常严谨
-
-## RAG Retrieval-Augmented Generation
-
-- 通过外部资源或数据库中纳入相关信息来实现
-
-## Function Calling
-
-- 与外部函数或api交互的能力
-- 询问用户 补全信息
-- 基于LLM的语言理解能力 通过理解语义 自主决策使用某项工具 并结构化调用
-
-## Agent 智能体
-
-- LLM Based Agent
-    - 概念
-        - 无状态
-        - 有状态
-        - 连续
-        - 离散
-    - 目标
-        - 将无状态输出的大模型变成了有状态输出的逻辑大脑目标也是工业化
-        - 用好Agent关键是思考那些东西值得被离散化，状态化
-        - 不断测试大模型能力并研究如何提高状态判断的准确度
-- Multi-Agent Model
-
-## Fine tuning 微调
-
-- step1 收集示范数据， 并制定监督政策 - 准备很多prompt
-- step2 收集比较数据，并训练奖励模型 - Fine tuning
-- step3 使用强化学习针对奖励模型优化政策
 
 
 

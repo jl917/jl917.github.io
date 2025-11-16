@@ -96,6 +96,14 @@
 
 ## AI
 
-- [大模型](/artificialIntelligence/llm.md)
-- [ollama](/artificialIntelligence/ollama.md)
-- [简述](/artificialIntelligence/summary.md)
+- [Agent 智能体](/artificialIntelligence/Agent.md)
+- [Embedding](/artificialIntelligence/Embedding.md)
+- [Fine-tuning 微调](/artificialIntelligence/FineTuning.md)
+- [Function Calling](/artificialIntelligence/FunctionCalling.md)
+- [Large Language Model 大模型](/artificialIntelligence/LargeLanguageModel.md)
+- [Model Context Protocol](/artificialIntelligence/ModelContextProtocol.md)
+- [Prompt Engineering 提示词工程](/artificialIntelligence/PromptEngineering.md)
+- [Retrieval Augmented Generation](/artificialIntelligence/RetrievalAugmentedGeneration.md)
+- [需要技术](/artificialIntelligence/summary.md)
+- [langchain](/artificialIntelligence/tools/langchain.md)
+- [ollama](/artificialIntelligence/tools/ollama.md)
