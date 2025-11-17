@@ -1,4 +1,6 @@
-# 如何成长
+# AI 总结
+
+## 如何成长
 
 - 了解 AI 的模型和技术应用知识
 - 熟练使用 AI 开发工具
@@ -6,9 +8,9 @@
 - AI 社区获取信息
 - 不断学习和多做实战项目
 
-# 需要技术
+## 需要技术
 
-## Prompt 提示词工程
+### Prompt 提示词工程
 
 - 要求
   - 指令具体
@@ -17,17 +19,17 @@
 - 角色
   - 你是一个专业的金融投资研究助手 你非常严谨
 
-## RAG Retrieval-Augmented Generation
+### RAG Retrieval-Augmented Generation
 
 - 通过外部资源或数据库中纳入相关信息来实现
 
-## Function Calling
+### Function Calling
 
 - 与外部函数或 api 交互的能力
 - 询问用户 补全信息
 - 基于 LLM 的语言理解能力 通过理解语义 自主决策使用某项工具 并结构化调用
 
-## Agent 智能体
+### Agent 智能体
 
     - LLM Based Agent
         - 概念
@@ -41,16 +43,24 @@
             - 不断测试大模型能力并研究如何提高状态判断的准确度
     - Multi-Agent Model
 
-## Fine tuning 微调
+### Fine tuning 微调
 
-    - step1 收集示范数据， 并制定监督政策 - 准备很多prompt
-    - step2 收集比较数据，并训练奖励模型 - Fine tuning
-    - step3 使用强化学习针对奖励模型优化政策
-
-## RAG vs Function Calling
+### RAG vs Function Calling
 
 | 能力维度   | RAG                        | Function Calling           |
 | ---------- | -------------------------- | -------------------------- |
 | 数据时效性 | 依赖索引更新（可能有延迟） | 实时或近时（直接调用接口） |
 | 实现复杂度 | 需构建检索逻辑             | 需定义清晰的接口和参数     |
 | 适用场景   | 静态知识（文档、FAQ）      | 动态交互（订单查询、天气） |
+
+### fine-tuning VS embedding
+
+判断好坏是很看情境的，通常需要对业务比较熟悉的人来判断 (例如客服的场景需要资深客服判断)。
+fine-tuning 是提升模型的可控性，让模型可以更偏向某个你偏好的语气；
+embedding 则是让你可以不断即时加入新的资料。
+
+### agent与workflow的区别是什么?
+
+在 Anthropic 的《Building effective agents》一文中，有对两者清楚的区别。文中谈到，所谓的workflow，是设定既定的路径，然后让 AI 在既定的路径中去执行不同任务。目前在社群中可以看到像是 n8n 或者 Zappier 这类工具，都偏向工作流这一个分类。
+
+AI Agent不需要事先设定好的流程，只需要目标，就会自行完成指定的任务，所以这种既定的流程，还不能算是agent，而只能被称为工作流。
