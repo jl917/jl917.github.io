@@ -8745,7 +8745,334 @@ export default function myPlugin() {
 
 
 ---
-url: /artificialIntelligence/Agent.md
+url: /artificialIntelligence/10-summary.md
+---
+
+# AI 总结
+
+## 如何成长
+
+- 了解 AI 的模型和技术应用知识
+- 熟练使用 AI 开发工具
+- 构建 AI 驱动的原型 需要将概念转化为实际应用
+- AI 社区获取信息
+- 不断学习和多做实战项目
+
+## 需要技术
+
+### Prompt 提示词工程
+
+- 要求
+  - 指令具体
+  - 信息丰富
+  - 尽量少歧义
+- 角色
+  - 你是一个专业的金融投资研究助手 你非常严谨
+
+### RAG Retrieval-Augmented Generation
+
+- 通过外部资源或数据库中纳入相关信息来实现
+
+### Function Calling
+
+- 与外部函数或 api 交互的能力
+- 询问用户 补全信息
+- 基于 LLM 的语言理解能力 通过理解语义 自主决策使用某项工具 并结构化调用
+
+### Agent 智能体
+
+    - LLM Based Agent
+        - 概念
+            - 无状态
+            - 有状态
+            - 连续
+            - 离散
+        - 目标
+            - 将无状态输出的大模型变成了有状态输出的逻辑大脑目标也是工业化
+            - 用好Agent关键是思考那些东西值得被离散化，状态化
+            - 不断测试大模型能力并研究如何提高状态判断的准确度
+    - Multi-Agent Model
+
+### Fine tuning 微调
+
+### RAG vs Function Calling
+
+| 能力维度   | RAG                        | Function Calling           |
+| ---------- | -------------------------- | -------------------------- |
+| 数据时效性 | 依赖索引更新（可能有延迟） | 实时或近时（直接调用接口） |
+| 实现复杂度 | 需构建检索逻辑             | 需定义清晰的接口和参数     |
+| 适用场景   | 静态知识（文档、FAQ）      | 动态交互（订单查询、天气） |
+
+### fine-tuning VS embedding
+
+判断好坏是很看情境的，通常需要对业务比较熟悉的人来判断 (例如客服的场景需要资深客服判断)。
+fine-tuning 是提升模型的可控性，让模型可以更偏向某个你偏好的语气；
+embedding 则是让你可以不断即时加入新的资料。
+
+### agent与workflow的区别是什么?
+
+在 Anthropic 的《Building effective agents》一文中，有对两者清楚的区别。文中谈到，所谓的workflow，是设定既定的路径，然后让 AI 在既定的路径中去执行不同任务。目前在社群中可以看到像是 n8n 或者 Zappier 这类工具，都偏向工作流这一个分类。
+
+AI Agent不需要事先设定好的流程，只需要目标，就会自行完成指定的任务，所以这种既定的流程，还不能算是agent，而只能被称为工作流。
+
+
+---
+url: /artificialIntelligence/20-LargeLanguageModel.md
+---
+
+# Large Language Model 大模型
+
+### 训练
+
+- 预训练
+- 监督微调 - SFT (**Supervised Fine-Tuning**) 监督微调
+  - 专注于特定领域
+- 基于人类反馈的强化学习 RLHF (Reinforcement Learning from Human Feedback)
+  - 比如筛选 暴力 机密 等敏感信息
+
+### 训练工具
+
+- transfomer
+
+### 特点
+
+- 规模和参数量大
+- 适应性和灵活性强
+- 广泛数据集预训练
+- 计算资源需求大
+
+### 分类
+
+- 大语言模型 LLM
+  - GPT-3, GPT-4
+  - Bard
+  - 通义千问
+  - Deepseek
+- 多模态模型
+  - 计算机视觉模型
+  - 音频处理模型
+  - ….
+
+### 工作流程
+
+- 分词化(Tokenization)与词表映射
+  - 词粒度(Word-Level Tokenization)
+  - 字符力度(Character-Level)
+  - 子词粒度(Subword-Level)
+
+
+
+---
+url: /artificialIntelligence/30-PromptEngineering.md
+---
+
+# Prompt Engineering 提示词工程
+
+...
+
+### OpenAI 官方推荐六大策略
+
+1. 指令要清晰 (write clear instructions)
+
+   ```txt
+   // 范例1
+   总结会议记录
+   ---
+   [会议记录]
+
+   // 范例2
+   用一个段落总结会议记录。然后写下演讲者的 Markdown 清单以及他们的每个要点。
+   最后，列出发言人建议的后续步骤或行动项目。
+   ---
+   [会议记录]
+   ```
+
+2. 提供参照(provide reference text)
+
+   ```txt
+   使用下方提供的由三重引号内的文章来回答问题。
+   如果在文章中找不到答案，请回答“我找不到答案”。
+   ---
+   """文章一"""
+   """文章二"""
+   """文章三"""
+
+   问题：[问题]
+   ```
+
+3. 将复杂任务拆成简单的子任务 (split complex tasks into simpler subtasks)
+   ```txt
+   使用分类来让 GPT 参照处理子任务
+   对于需要很长对话的对话应用，总结或过滤先前的对话
+   ```
+4. 让 GPTs 有时间思考 (give GPTs time to “think”)
+
+   ```txt
+   首先制定自己的问题解决方案。
+   然后将你的解决方案与学生的解决方案进行比较，并评估学生的解决方案是否正确。
+   在你自己完成问题之前，不要决定学生的解决方案是否正确。
+
+    ---
+
+    问题陈述：XXX
+    学生的解答：XXX
+   ```
+
+5. 善用外部工具 (use external tools)
+
+   ```txt
+   // 范例：使用计算器
+   你是一个有能力使用计算器的助手。
+   当你需要进行数学计算时，请使用以下格式：
+   计算：[数学表达式]
+   例如：
+   计算：23乘以47
+   ```
+
+6. 系统性测试改变 (test changes systematically)
+
+    当我们要确定提示词的修改或策略时，会需要定义一个全面性的测试，用系统性的方式评估，才能确保提示词是最佳的，让这个改变对总体影响是正面的。
+
+
+
+---
+url: /artificialIntelligence/40-RetrievalAugmentedGeneration.md
+---
+
+# Retrieval Augmented Generation
+
+...
+
+
+
+---
+url: /artificialIntelligence/50-FunctionCalling.md
+---
+
+# Function Calling
+
+...
+
+
+---
+url: /artificialIntelligence/60-FineTuning.md
+---
+
+# Fine-tuning 微调
+
+### 介绍
+
+Fine-tuning (微调) 是一个可以有效让 ChatGPT 输出符合我们预期的方法。
+在机器学习领域当中，微调 (Fine-tuning) 是指在已经训练好的模型基础上，进一步调整，让你模型的输出能够更符合你的预期。透过微调，我们可以不用重新训练一个新的模型，这让我们能够省去训练新模型的高昂成本。
+
+### 使用方法
+
+微调的方式很简单，你只需要准备成对的训练资料。然后喂入 Fine-tuning API 就可以完成了。这边指的成对资料，是输入搭配输出
+
+### 好处
+
+做好微调，能够让我们获得以下的好处： 比起指令 (prompt)，若微调的好，输出的成果会更好。 使用更短的指令来获得理想的输出，这会减少 token 使用，进而降低支出成本，同时加快响应的速度。
+
+### 缺点
+
+- API费用较高
+- 人力成本
+- 这件事往往不是一次到位，而是来回迭代的。
+
+### 流程
+
+- 准备好训练资料
+- 训练微调的模型
+- 使用微调后的模型
+
+```json
+{
+  "messages": [
+    { "role": "system", "content": "<放入系统讯息>" },
+    { "role": "user", "content": "<放入使用者的问题>" },
+    { "role": "assistant", "content": "<放入理想的回答>." }
+  ]
+}
+```
+
+### 微调技术
+
+- 全量微调 (Full Fine-Tuning)
+- LoRA (Low-Rank Adaptation of Large Language Models)
+
+
+### 实际操作
+
+```text
+[1] Base Model 다운로드 (HF Hub)
+       ↓
+[2] Python(HuggingFace)에서 파인튜닝 또는 LoRA
+       ↓
+[3] GGUF로 변환 (llama.cpp converter)
+       ↓
+[4] Ollama 모델 작성(modelfile)
+       ↓
+[5] Transformers.js에서 로드하여 추론
+```
+
+```python
+from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments, Trainer
+from peft import LoraConfig, get_peft_model
+from datasets import load_dataset
+
+model_name = "mistral-7b"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(model_name)
+
+# LoRA 설정
+lora_config = LoraConfig(
+    r=16,
+    lora_alpha=32,
+    target_modules=["q_proj", "v_proj"],
+    lora_dropout=0.05,
+)
+
+model = get_peft_model(model, lora_config)
+
+dataset = load_dataset("your_dataset")
+
+training_args = TrainingArguments(
+    output_dir="./lora-out",
+    per_device_train_batch_size=2,
+    gradient_accumulation_steps=2,
+    learning_rate=2e-4,
+    num_train_epochs=3,
+    fp16=True,
+)
+
+trainer = Trainer(
+    model=model,
+    args=training_args,
+    train_dataset=dataset["train"]
+)
+
+trainer.train()
+model.save_pretrained("./lora-out")
+```
+
+
+---
+url: /artificialIntelligence/70-Embedding.md
+---
+
+# Embedding
+
+机器学习中Embedding是什么
+
+...
+
+### 参考链接
+
+- https://projector.tensorflow.org/
+
+
+---
+url: /artificialIntelligence/80-Agent.md
 ---
 
 # Agent 智能体
@@ -8825,95 +9152,7 @@ Google 在 [《Agents》 白皮书所定义](https://www.kaggle.com/whitepaper-a
 
 
 ---
-url: /artificialIntelligence/Embedding.md
----
-
-# Embedding
-
-기계 학습에서 임베딩이란 무엇인가요
-
-...
-
-
----
-url: /artificialIntelligence/FineTuning.md
----
-
-# Fine-tuning 微调
-
-### 介绍
-
-Fine-tuning (微调) 是一个可以有效让 ChatGPT 输出符合我们预期的方法。
-在机器学习领域当中，微调 (Fine-tuning) 是指在已经训练好的模型基础上，进一步调整，让你模型的输出能够更符合你的预期。透过微调，我们可以不用重新训练一个新的模型，这让我们能够省去训练新模型的高昂成本。
-
-### 使用方法
-
-微调的方式很简单，你只需要准备成对的训练资料。然后喂入 Fine-tuning API 就可以完成了。这边指的成对资料，是输入搭配输出
-
-### 好处
-
-做好微调，能够让我们获得以下的好处： 比起指令 (prompt)，若微调的好，输出的成果会更好。 使用更短的指令来获得理想的输出，这会减少 token 使用，进而降低支出成本，同时加快响应的速度。
-
-
-
-
----
-url: /artificialIntelligence/FunctionCalling.md
----
-
-# Function Calling
-
-...
-
-
----
-url: /artificialIntelligence/LargeLanguageModel.md
----
-
-# Large Language Model 大模型
-
-### 训练
-
-- 预训练
-- 监督微调 - SFT (**Supervised Fine-Tuning**) 监督微调
-  - 专注于特定领域
-- 基于人类反馈的强化学习 RLHF (Reinforcement Learning from Human Feedback)
-  - 比如筛选 暴力 机密 等敏感信息
-
-### 训练工具
-
-- transfomer
-
-### 特点
-
-- 规模和参数量大
-- 适应性和灵活性强
-- 广泛数据集预训练
-- 计算资源需求大
-
-### 分类
-
-- 大语言模型 LLM
-  - GPT-3, GPT-4
-  - Bard
-  - 通义千问
-  - Deepseek
-- 多模态模型
-  - 计算机视觉模型
-  - 音频处理模型
-  - ….
-
-### 工作流程
-
-- 分词化(Tokenization)与词表映射
-  - 词粒度(Word-Level Tokenization)
-  - 字符力度(Character-Level)
-  - 子词粒度(Subword-Level)
-
-
-
----
-url: /artificialIntelligence/ModelContextProtocol.md
+url: /artificialIntelligence/90-ModelContextProtocol.md
 ---
 
 # Model Context Protocol
@@ -8927,88 +9166,6 @@ MCP（模型上下文协议）是一种用于将 AI 应用程序连接到外部�
 ### 参考链接
 
 - https://modelcontextprotocol.io/docs/getting-started/intro
-
-
----
-url: /artificialIntelligence/PromptEngineering.md
----
-
-# Prompt Engineering 提示词工程
-
-...
-
-
----
-url: /artificialIntelligence/RetrievalAugmentedGeneration.md
----
-
-# Retrieval Augmented Generation
-
-...
-
-
-
----
-url: /artificialIntelligence/summary.md
----
-
-# 如何成长
-
-- 了解 AI 的模型和技术应用知识
-- 熟练使用 AI 开发工具
-- 构建 AI 驱动的原型 需要将概念转化为实际应用
-- AI 社区获取信息
-- 不断学习和多做实战项目
-
-# 需要技术
-
-## Prompt 提示词工程
-
-- 要求
-  - 指令具体
-  - 信息丰富
-  - 尽量少歧义
-- 角色
-  - 你是一个专业的金融投资研究助手 你非常严谨
-
-## RAG Retrieval-Augmented Generation
-
-- 通过外部资源或数据库中纳入相关信息来实现
-
-## Function Calling
-
-- 与外部函数或 api 交互的能力
-- 询问用户 补全信息
-- 基于 LLM 的语言理解能力 通过理解语义 自主决策使用某项工具 并结构化调用
-
-## Agent 智能体
-
-    - LLM Based Agent
-        - 概念
-            - 无状态
-            - 有状态
-            - 连续
-            - 离散
-        - 目标
-            - 将无状态输出的大模型变成了有状态输出的逻辑大脑目标也是工业化
-            - 用好Agent关键是思考那些东西值得被离散化，状态化
-            - 不断测试大模型能力并研究如何提高状态判断的准确度
-    - Multi-Agent Model
-
-## Fine tuning 微调
-
-    - step1 收集示范数据， 并制定监督政策 - 准备很多prompt
-    - step2 收集比较数据，并训练奖励模型 - Fine tuning
-    - step3 使用强化学习针对奖励模型优化政策
-
-## RAG vs Function Calling
-
-| 能力维度   | RAG                        | Function Calling           |
-| ---------- | -------------------------- | -------------------------- |
-| 数据时效性 | 依赖索引更新（可能有延迟） | 实时或近时（直接调用接口） |
-| 实现复杂度 | 需构建检索逻辑             | 需定义清晰的接口和参数     |
-| 适用场景   | 静态知识（文档、FAQ）      | 动态交互（订单查询、天气） |
-
 
 
 ---
