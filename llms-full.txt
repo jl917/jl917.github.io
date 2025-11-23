@@ -8822,17 +8822,23 @@ url: /artificialIntelligence/20-LargeLanguageModel.md
 
 # Large Language Model 大模型
 
-### 训练
+大型语言模型，也称为 LLM，是基于大量数据进行预训练的超大型深度学习模型
 
-- 预训练
-- 监督微调 - SFT (**Supervised Fine-Tuning**) 监督微调
-  - 专注于特定领域
-- 基于人类反馈的强化学习 RLHF (Reinforcement Learning from Human Feedback)
-  - 比如筛选 暴力 机密 等敏感信息
-
-### 训练工具
+### 架构
 
 - transfomer
+
+### 训练种类
+
+- 零样本学习(Zero-shot learning)：Base LLM 无需明确训练即可响应各种请求，通常是通过提示，但是答案的准确性各不相同。
+- 少量样本学习(Few-shot learning)：通过提供一些相关的训练示例，基础模型在该特定领域的表现显著提升。
+- 微调(Fine-tuning)：这是少量样本学习的扩展，其中数据科学家训练基础模型，使模型使用与特定应用相关的其他数据来调整其参数。
+
+### 训练过程
+
+- 预训练（Pretrain）
+- 监督微调（Supervised Fine-Tuning, SFT）
+- 人类反馈强化学习（Reinforcement Learning with Human Feedback, RLHF）
 
 ### 特点
 
@@ -8860,6 +8866,33 @@ url: /artificialIntelligence/20-LargeLanguageModel.md
   - 字符力度(Character-Level)
   - 子词粒度(Subword-Level)
 
+### 参数设置
+
+- temperature
+  - `temperature` 값이 낮을수록 항상 가장 확률이 높은 토큰(말뭉치의 최소 단위)이 선택되기 때문에 더 결정론적인 결과를 낳습니다. temperature 값을 높였을 때 모델이 선택하는 토큰의 무작위성이 증가하여 보다 다양하고 창조적인 결과를 촉진합니다. 이는 다른 가능한 토큰의 가중치를 증가시키는 것과 같습니다. 애플리케이션의 경우, 사실을 기반으로 하는 질의응답과 같은 작업에는 낮은 temperature 값을 사용하여 보다 사실적이고 간결한 응답을 얻을 수 있습니다. 시를 생성하는 등 다른 창의적인 작업의 경우에는 temperature 값을 높이는 것이 도움이 될 수 있습니다.
+- top_p
+  - temperature를 활용하는 핵 샘플링 기법인 `top_p`를 사용하면 모델이 응답을 생성하는 결정성을 제어할 수 있습니다. 정확하고 사실적인 답변을 원한다면 이를 낮게 유지합니다. 더 다양한 반응을 원한다면 더 높은 값으로 증가시킵니다.
+- Max Length
+  - `max length`를 조정하여 모델이 생성하는 토큰의 수를 관리할 수 있습니다. max length를 지정하면 길거나 관련 없는 응답을 방지하고 제어 비용을 관리하는데 도움이 될 수 있습니다.
+- Stop Sequences
+  - `stop sequence`는 모델의 토큰 생성을 중지하는 문자열입니다. stop sequences를 지정하는 것은 모델의 응답 길이 및 구조를 제어하는데 도움이 될 수 있습니다. 예를 들어, stop sequence로 "11"을 추가하여 항목이 10개를 초과하지 않는 리스트를 생성하도록 모델에 지시할 수 있습니다.
+- Frequency Penalty
+  - `frequency penalty`는 해당 토큰이 응답 및 프롬프트에 등장한 빈도에 비례하여 다음에 등장할 토큰에 불이익을 적용합니다. frequency penalty가 높을수록 단어가 다시 등장할 가능성이 줄어듭니다. 이 설정은 자주 등장하는 토큰에 대하여 더 많은 페널티를 부여하여 모델의 응답에서 단어의 반복을 방지합니다.
+- Presence Penalty
+  - `presence penalty`는 반복되는 토큰에 패널티를 적용하지만, frequency penalty와 달리 모든 토큰에 동일한 페널티가 적용됩니다. 다시 말해, 토큰이 2회 등장하는 토큰과 10회 등장하는 토큰이 동일한 페널티를 받습니다. 이 설정은 모델이 응답에서 구문을 너무 자주 반복하는 것을 방지합니다. 다양하거나 창의적인 텍스트를 생성하기 위해 더 높은 presence penalty를 사용할 수 있습니다. 혹은 모델이 집중력을 유지해야 할 경우(사실을 기반으로) 더 낮은 presence penalty를 사용할 수 있습니다.
+
+- verbose
+    - 显示执行过程
+
+### 参考链接
+
+- https://www.tensorflow.org/tutorials?hl=ko
+- https://bbycroft.net/llm
+- https://huggingface.co/
+- https://www.modelscope.ai/
+- https://ollama.ai/
+- https://zhuanlan.zhihu.com/p/1947349437224558654
+
 
 
 ---
@@ -8868,7 +8901,114 @@ url: /artificialIntelligence/30-PromptEngineering.md
 
 # Prompt Engineering 提示词工程
 
-...
+## 구성요소
+
+- **Instruction** 지시
+- **Context** 문맥
+- **Input Data** 입력 데이터
+- **Output Indicator** 출력 지시자
+
+## 예시
+
+- 문장 요약
+- 정보 추출
+- 질의응답
+- 텍스트 분류
+- 대화
+- 코드 생성
+- 추론
+
+## Best practices
+
+- 최신 모델 사용
+- 프롬프트 시작 부분에 지침을 넣고 ### 또는 “””를 사용하여 지침과 맥락을 구분
+- 원하는 맥락, 결과, 길이, 형식, 스타일 등에 대해 구체적이고 설명적이며 가능한 한 자세하게 작성
+- 예시를 통해 원하는 출력 형식을 명확하게 표현
+- 제로샷(zero-shot)으로 시작한 다음, 퓨샷(few-shot)으로 진행하여 둘 다 작동하지 않으면 미세 조정
+- "불분명하고" 부정확한 설명을 줄임
+- 단순히 무엇을 하지 말아야 하는지 말하는 대신, 무엇을 해야 하는지 설명
+- 코드 생성에 특화 - "선행 단어? 힌트"를 사용하여 모델을 특정 패턴으로 유도.
+- Use the Generate Anything feature??????
+
+## Techniques
+
+- Zero-shot
+  - 대량의 데이터를 학습하고 지침을 따르도록 튜닝된 오늘날의 머신러닝은 제로샷(zero-shot)으로 작업을 수행할 수 있습니다
+- Few-shot
+  - 퓨샷(few-shot) 프롬프트는 프롬프트에서 데모를 제공하여 모델이 더 나은 성능을 발휘하도록 유도하는 문맥 내 학습을 가능하게 하는 기술로 사용할 수 있습니다
+- Chain-of-Thought (CoT)
+  - LLM의 추론(사고)를 통해서 어려운 질문을 답변하는 기술입니다. 복잡한 로직을 Step을 나눠서 단순화 하고 다시 답변하는 방식.(Let's think step by step)
+  - 예시
+    ```jsx
+    다음 질문을 단계적으로 생각해서 답을 도출해줘.
+    질문: 철수가 가지고 있는 사과가 10개이고, 그 중 3개를 친구에게 주었다. 남은 사과는 몇 개인가?
+    ```
+  - 참고
+    - https://www.163.com/dy/article/J6BKPTPH051193U6.html
+- Self-Consistency
+  - 개념
+    - 먼저 언어 모델의 디코더에서 샘플링하여 다양한 추론 경로 세트를 생성합니다. 각 추론 경로는 서로 다른 최종 답으로 이어질 수 있으므로, 샘플링된 추론 경로를 주변화하여 최적의 답을 결정합니다. 최종 답 세트에서 가장 일관된 답을 찾습니다. 이러한 접근 방식은 인간의 경험과 유사합니다.
+  - 핵심
+    - 여러경로를 통한 추론
+    - 답안중 빈도가 제일 높은 답안이 출력
+  - 특징
+    - 복잡한 추론에 대한 정확도를 올릴수 있다.
+    - 안정성을 높일수 있다.
+  - 예시
+    ```jsx
+    다음 질문을 여러 번(다양한 샘플) 답한 뒤, 각 샘플의 최종 답을 모아 다수결로 최종답을 결정해줘.
+    질문: 철수가 가지고 있는 사과가 10개이고, 그 중 3개를 친구에게 주었다. 남은 사과는 몇 개인가?
+    ```
+  - 참고
+    - https://zhuanlan.zhihu.com/p/1945455658657875626
+- Generated Knowledge Prompting
+  - 개념
+    - 사용자가 입력한 내용(지식) 기반으로 답변을 생성.
+  - 정보
+    - 실시간 업데이트 되는 정보(주식, 스포츠 스코어등등)
+    - 정책, 계약서
+    - 논문이라든가 전문분야의 내용
+- [AGENT] Prompt Chaining
+  - 개념
+    - LLM의 안정성과 성능을 개선하기 위해 중요한 프롬프트 엔지니어링 기법 중 하나는 작업을 하위 작업으로 분할하는 것입니다. 이러한 하위 작업이 식별되면 LLM에 하위 작업에 대한 프롬프트가 표시되고 그 응답이 다른 프롬프트의 입력으로 사용됩니다. 프롬프트 연쇄라는 개념으로 작업을 하위 작업으로 분할하여 프롬프트 작업의 연쇄를 만드는 것을 프롬프트 체이닝 이라고 합니다.
+- Tree of Thoughts
+
+  - 개념
+    - 하나의 질문에 대해 **여러 개의 사고 흐름을 동시에 전개**하고, 그중 최적의 결과를 선택하도록 유도하는 방식입니다. 브레인스토밍을 확장한 전략으로, **결정 경로를 나무(tree)처럼 분기**시켜 모델이 다양한 가능성을 탐색하게 합니다.
+  - 예시
+    ```jsx
+    이 문제를 해결할 수 있는 여러 접근 방식을 제시하고, 각 방법을 평가한 뒤 최적의 해결책을 추천해줘.
+    ```
+
+- [AGENT] Retrieval Augmented Generation (RAG)
+- [AGENT]Automatic Reasoning and Tool-use (ART)
+- [AGENT] Automatic Prompt Engineer (APE)
+- [AGENT] **Active-Prompt**
+- [???] **Directional Stimulus Prompting**
+- [AGENT] Program-Aided Language Models
+- [AGENT] ReAct
+  - 예시
+    ```jsx
+    질문: 대한민국의 2022년 1인당 GDP는 얼마였어?
+    Thought → Action → Observation → Answer 순으로 단계별로 응답해줘.
+    ```
+- [AGENT] **Reflexion 是一种让 AI 智能体通过反思机制持续学习和优化的技术**‌
+
+## Injection
+
+시스템 가드레일을 무시하고 해서는 안 되는 말을 하게 만드는 것입니다.
+
+- 방지
+  - 안전 가드레일
+  - 명시적 금지
+  - 입력 유효성 검사 및 삭제
+  - 이상 활동 감지
+  - 매개변수화(시스템 명령과 사용자 입력을 명확하게 분리하는것.)
+  - 아웃풋 필터링
+  - 동적 피드백 및 학습
+  - 내부 프롬프트 강화
+  - 최소권한
+  - 상황 및 시나리오 기반 안내
 
 ### OpenAI 官方推荐六大策略
 
@@ -8931,7 +9071,13 @@ url: /artificialIntelligence/30-PromptEngineering.md
 
 6. 系统性测试改变 (test changes systematically)
 
-    当我们要确定提示词的修改或策略时，会需要定义一个全面性的测试，用系统性的方式评估，才能确保提示词是最佳的，让这个改变对总体影响是正面的。
+   当我们要确定提示词的修改或策略时，会需要定义一个全面性的测试，用系统性的方式评估，才能确保提示词是最佳的，让这个改变对总体影响是正面的。
+
+### 참고자료
+
+- https://www.ibm.com/kr-ko/think/prompt-engineering#605511093
+- https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-the-openai-api
+- https://zhuanlan.zhihu.com/p/1947349437224558654
 
 
 
