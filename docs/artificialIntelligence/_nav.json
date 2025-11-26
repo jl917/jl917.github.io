@@ -3,9 +3,10 @@
   "embedding",
   "finetuning",
   "functioncalling",
-  "0100largeLanguagemodel",
+  "largeLanguagemodel",
   "modelcontextprotocol",
   "promptengineering",
+  "promptengineering-sample",
   "retrievalaugmentedgeneration",
   "summary",
   "tools/ollama"

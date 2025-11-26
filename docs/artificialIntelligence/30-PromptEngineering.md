@@ -177,3 +177,4 @@
 - https://www.ibm.com/kr-ko/think/prompt-engineering#605511093
 - https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-the-openai-api
 - https://zhuanlan.zhihu.com/p/1947349437224558654
+- https://www.promptingguide.ai/kr
