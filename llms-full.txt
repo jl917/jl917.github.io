@@ -9519,6 +9519,10 @@ url: /artificialIntelligence/31-PromptEngineering-sample.md
 ##### 참고
 
 - https://snackprompt.com/
+- https://github.com/langgptai/LangGPT?tab=readme-ov-file
+- https://langgptai.feishu.cn/wiki/RXdbwRyASiShtDky381ciwFEnpe
+- https://www.aishort.top/
+
 
 
 ---
