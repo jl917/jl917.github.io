@@ -416,3 +416,6 @@
 ##### 참고
 
 - https://snackprompt.com/
+- https://github.com/langgptai/LangGPT?tab=readme-ov-file
+- https://langgptai.feishu.cn/wiki/RXdbwRyASiShtDky381ciwFEnpe
+- https://www.aishort.top/
