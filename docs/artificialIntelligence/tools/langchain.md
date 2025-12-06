@@ -230,19 +230,24 @@ const researchInstructions = `당신은 전문 연구자입니다. 당신의 임
 
 - https://zhuanlan.zhihu.com/p/1935481980641863575
 
-### Retrieval
+### Retrieval Augmented Generation
 
 Retrieval은 외부 지식 소스에서 관련 정보를 검색하여 LLM에 제공하는 컴포넌트입니다. 이를 통해 모델이 최신 정보에 접근하거나 도메인 특화 지식을 활용할 수 있습니다. LLM은 학습동결 모델이기 때문에 사전학습된 지식 외의 정보를 제공하려면 Retrieval기능이 필수적입니다. 또한 환각 문제를 완화하는데도 도움이 됩니다. RAG(Retrieval Augmented Generation)시스템의 핵심 구성 요소입니다.
 
 ![](https://raw.githubusercontent.com/jl917/s/master/image/202511301632417.png)
 
-##### Retrieval 흐름1
+##### Retrieval Augmented Generation 흐름1
 
 ![](https://raw.githubusercontent.com/jl917/s/master/image/202511301646916.jpeg)
 
 1. 문서 파싱
 2. 텍스트 분할
 3. 백터화(EmbeddingModel사용)
+
+   - nomic-embed-text
+   - mxbai-embed-large
+   - embedding-gemma
+
 4. 벡터 DB 저장
 5. 질문
 6. 검색알고리즘(Cosine Similarity, Dot Product, Euclidean Distance 등)
@@ -250,23 +255,14 @@ Retrieval은 외부 지식 소스에서 관련 정보를 검색하여 LLM에 제
 8. 증강: 사용자 질문과 함께 검색된 내용을 LLM에 전달
 9. 응답 생성
 
-##### Retrieval 흐름2
-
-1. Source
-2. Load
-3. Transform
-4. Embed
-5. Store
-6. Retrieves
-
-##### Retrieval의 장점
+##### Retrieval Augmented Generation 장점
 
 - 실시간 업데이트
 - 비용 대비 효율성
 - 출처를 제공하는 응답이여서 믿음직함
 - 안전하고 제어 가능: 제공한 문서에 기반한 응답만 생성 가능하게 제어 가능
 
-##### Retrieval의 단점
+##### Retrieval Augmented Generation 단점
 
 - 검색품질의 한계
 - 시스템 복잡도 증가
@@ -276,44 +272,47 @@ Retrieval은 외부 지식 소스에서 관련 정보를 검색하여 LLM에 제
 ##### langchain에서 구현
 
 1. Document Loaders
-  - page_content: 문서의 실제 텍스트 내용
-  - metadata: 문서에 대한 추가 정보
+
+- page_content: 문서의 실제 텍스트 내용
+- metadata: 문서에 대한 추가 정보
+
 2. Text Splitters
 
-    ###### 작동 원리
+   ###### 작동 원리
 
-    우선 세분화한 후 병합하는 전략을 따릅니다. 먼저 텍스트를 작은 문장 단위로 분할한 다음, 이러한 문장들을 순서대로 결합하여 설정된 블록 크기 제한에 도달할 때까지 더 큰 블록으로 만듭니다. 새 블록을 생성할 때는 이전 블록과 일부 중복되는 부분을 유지하여 문맥의 연속성을 보장합니다.
+   우선 세분화한 후 병합하는 전략을 따릅니다. 먼저 텍스트를 작은 문장 단위로 분할한 다음, 이러한 문장들을 순서대로 결합하여 설정된 블록 크기 제한에 도달할 때까지 더 큰 블록으로 만듭니다. 새 블록을 생성할 때는 이전 블록과 일부 중복되는 부분을 유지하여 문맥의 연속성을 보장합니다.
 
-    ###### 왜 구분이 필요한가
+   ###### 왜 구분이 필요한가
 
-      - 생성된 답변의 품질 보장: 검색된 텍스트 블록이 너무 크고 관련 없는 정보가 많으면 LLM이 관련 없는 내용에 방해를 받아 핵심 문제에 집중하지 못할 수 있습니다. 심지어 관련 없는 정보를 잘못 통합하여 부정확하거나 장황한 답변을 생성할 수도 있습니다.
-      - 모델의 컨텍스트 창 제한 극복: 모든 대형 모델에는 고정된 컨텍스트 창이 있으며, 이는 모델이 한 번에 "보고" 처리할 수 있는 텍스트의 총량이 제한되어 있음을 의미합니다.
-      - 검색 정확도 향상: 검색 시스템은 특정 질문에 답할 수 있는 단락을 직접 찾을 수 있어 검색 결과의 관련성과 정확성을 크게 향상시킵니다.
+   - 생성된 답변의 품질 보장: 검색된 텍스트 블록이 너무 크고 관련 없는 정보가 많으면 LLM이 관련 없는 내용에 방해를 받아 핵심 문제에 집중하지 못할 수 있습니다. 심지어 관련 없는 정보를 잘못 통합하여 부정확하거나 장황한 답변을 생성할 수도 있습니다.
+   - 모델의 컨텍스트 창 제한 극복: 모든 대형 모델에는 고정된 컨텍스트 창이 있으며, 이는 모델이 한 번에 "보고" 처리할 수 있는 텍스트의 총량이 제한되어 있음을 의미합니다.
+   - 검색 정확도 향상: 검색 시스템은 특정 질문에 답할 수 있는 단락을 직접 찾을 수 있어 검색 결과의 관련성과 정확성을 크게 향상시킵니다.
 
-    ###### langchain의 Text Splitters
+   ###### langchain의 Text Splitters
 
-      - CharacterTextSplitter: 문자/문단 단위로 단순하게 분할하는 기본 방식.
-      - RecursiveCharacterTextSplitter: 여러 분리자를 계층적으로 적용하여 자연스럽게 텍스트를 분할하는 권장 방식.
-      - TokenTextSplitter: 토큰 개수 기준으로 텍스트를 분할하는 방식(OpenAI 등 토큰 제한 대응).
-      - SentenceTransformersTokenTextSplitter: Sentence Transformers용 토큰 기반 분할 방식.
-      - MarkdownHeaderTextSplitter: Markdown 헤더(#, ##) 구조에 따라 섹션 단위로 분할.
-      - PythonCodeTextSplitter: Python 코드의 함수/클래스 구조 단위로 의미 있게 분할.
-      - RecursiveJsonSplitter: JSON 구조를 재귀적으로 순회하며 블록 단위로 분할.
-      - LatexTextSplitter: LaTeX 문서의 섹션/수식 단위로 분할.
-      - HTMLHeaderTextSplitter: HTML 헤더 태그(\<h1>, \<h2>) 기반으로 문서를 섹션 단위 분할.
-      - HTMLTextSplitter: HTML 태그 기반으로 요소를 분리하거나 텍스트를 구조적으로 분할.
-      - NLTKTextSplitter: NLTK 문장 토크나이저 기반으로 문장을 분할.
-      - SpacyTextSplitter: SpaCy NLP 모델을 사용하여 고정밀 문장 단위 분할.
-      - TextTilingSplitter: 토픽 전환을 감지해 문단을 의미 단위로 분할(TextTiling 알고리즘).
-      - TokenizerSplitter: 특정 토크나이저(BPE 등)를 직접 지정하여 분할하는 범용 방식.
-      - Language specific splitters (특정 언어에 최적화된 분할기, 예: KoreanTextSplitter 등 일부 확장 라이브러리)
+   - CharacterTextSplitter: 문자/문단 단위로 단순하게 분할하는 기본 방식.
+   - RecursiveCharacterTextSplitter: 여러 분리자를 계층적으로 적용하여 자연스럽게 텍스트를 분할하는 권장 방식.
+   - TokenTextSplitter: 토큰 개수 기준으로 텍스트를 분할하는 방식(OpenAI 등 토큰 제한 대응).
+   - SentenceTransformersTokenTextSplitter: Sentence Transformers용 토큰 기반 분할 방식.
+   - MarkdownHeaderTextSplitter: Markdown 헤더(#, ##) 구조에 따라 섹션 단위로 분할.
+   - PythonCodeTextSplitter: Python 코드의 함수/클래스 구조 단위로 의미 있게 분할.
+   - RecursiveJsonSplitter: JSON 구조를 재귀적으로 순회하며 블록 단위로 분할.
+   - LatexTextSplitter: LaTeX 문서의 섹션/수식 단위로 분할.
+   - HTMLHeaderTextSplitter: HTML 헤더 태그(\<h1>, \<h2>) 기반으로 문서를 섹션 단위 분할.
+   - HTMLTextSplitter: HTML 태그 기반으로 요소를 분리하거나 텍스트를 구조적으로 분할.
+   - NLTKTextSplitter: NLTK 문장 토크나이저 기반으로 문장을 분할.
+   - SpacyTextSplitter: SpaCy NLP 모델을 사용하여 고정밀 문장 단위 분할.
+   - TextTilingSplitter: 토픽 전환을 감지해 문단을 의미 단위로 분할(TextTiling 알고리즘).
+   - TokenizerSplitter: 특정 토크나이저(BPE 등)를 직접 지정하여 분할하는 범용 방식.
+   - Language specific splitters (특정 언어에 최적화된 분할기, 예: KoreanTextSplitter 등 일부 확장 라이브러리)
 
 3. Text Embedding Models(모델: nomic-embed-text등등.)
 4. Vector Stores
-  - 저장
-  - 검색
-5. Retrievers
-  Vector Stores가 함수 제공(알고리즘포함)
 
+- 저장
+- 검색
+
+5. Retrievers
+   Vector Stores가 함수 제공(알고리즘포함)
 
 ### Callbacks
