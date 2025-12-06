@@ -9527,7 +9527,7 @@ url: /artificialIntelligence/31-PromptEngineering-sample.md
 
 
 ---
-url: /artificialIntelligence/40-RetrievalAugmentedGeneration copy.md
+url: /artificialIntelligence/40-RetrievalAugmentedGeneration.md
 ---
 
 # Retrieval Augmented Generation
