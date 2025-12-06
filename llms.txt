@@ -100,7 +100,7 @@
 - [Large Language Model 大模型](/artificialIntelligence/20-LargeLanguageModel.md)
 - [Prompt Engineering 提示词工程](/artificialIntelligence/30-PromptEngineering.md)
 - [Prompt Engineering 샘플 모음](/artificialIntelligence/31-PromptEngineering-sample.md)
-- [Retrieval Augmented Generation](/artificialIntelligence/40-RetrievalAugmentedGeneration.md)
+- [Retrieval Augmented Generation](/artificialIntelligence/40-RetrievalAugmentedGeneration copy.md)
 - [Function Calling](/artificialIntelligence/50-FunctionCalling.md)
 - [Fine-tuning 微调](/artificialIntelligence/60-FineTuning.md)
 - [Embedding](/artificialIntelligence/70-Embedding.md)
