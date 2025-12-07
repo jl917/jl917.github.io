@@ -152,5 +152,6 @@ Return only the JSON structure, with no additional output.
 
 ### 참고
 
+- https://www.llamaindex.ai/llamaparse
 - https://zhuanlan.zhihu.com/p/722159912
 - https://rabiloo.com/blog/the-3-types-of-rag-models-naive-rag-modular-rag-and-advanced-rag
