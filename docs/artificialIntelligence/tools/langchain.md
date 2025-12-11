@@ -290,21 +290,12 @@ Retrieval은 외부 지식 소스에서 관련 정보를 검색하여 LLM에 제
 
    ###### langchain의 Text Splitters
 
+   - TextSplitter: LangChain에서 모든 텍스트 분할기의 기반이 되는 추상(Base) 클래스입니다.
    - CharacterTextSplitter: 문자/문단 단위로 단순하게 분할하는 기본 방식.
    - RecursiveCharacterTextSplitter: 여러 분리자를 계층적으로 적용하여 자연스럽게 텍스트를 분할하는 권장 방식.
    - TokenTextSplitter: 토큰 개수 기준으로 텍스트를 분할하는 방식(OpenAI 등 토큰 제한 대응).
-   - SentenceTransformersTokenTextSplitter: Sentence Transformers용 토큰 기반 분할 방식.
-   - MarkdownHeaderTextSplitter: Markdown 헤더(#, ##) 구조에 따라 섹션 단위로 분할.
-   - PythonCodeTextSplitter: Python 코드의 함수/클래스 구조 단위로 의미 있게 분할.
-   - RecursiveJsonSplitter: JSON 구조를 재귀적으로 순회하며 블록 단위로 분할.
-   - LatexTextSplitter: LaTeX 문서의 섹션/수식 단위로 분할.
-   - HTMLHeaderTextSplitter: HTML 헤더 태그(\<h1>, \<h2>) 기반으로 문서를 섹션 단위 분할.
-   - HTMLTextSplitter: HTML 태그 기반으로 요소를 분리하거나 텍스트를 구조적으로 분할.
-   - NLTKTextSplitter: NLTK 문장 토크나이저 기반으로 문장을 분할.
-   - SpacyTextSplitter: SpaCy NLP 모델을 사용하여 고정밀 문장 단위 분할.
-   - TextTilingSplitter: 토픽 전환을 감지해 문단을 의미 단위로 분할(TextTiling 알고리즘).
-   - TokenizerSplitter: 특정 토크나이저(BPE 등)를 직접 지정하여 분할하는 범용 방식.
-   - Language specific splitters (특정 언어에 최적화된 분할기, 예: KoreanTextSplitter 등 일부 확장 라이브러리)
+   - LatexTextSplitter: LaTeX 문서 프로그래밍 언어를 이해
+   - MarkdownTextSplitter: Markdown 구조를 이해
 
 3. Text Embedding Models(모델: nomic-embed-text등등.)
 4. Vector Stores
@@ -316,3 +307,4 @@ Retrieval은 외부 지식 소스에서 관련 정보를 검색하여 LLM에 제
    Vector Stores가 함수 제공(알고리즘포함)
 
 ### Callbacks
+

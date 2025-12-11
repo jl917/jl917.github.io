@@ -16,3 +16,13 @@
 | `ollama show <모델>`    | 모델 메타 데이터 보기            |
 | `ollama cp <src> <dst>` | 모델 복제                        |
 | `ollama push <모델>`    | 모델을 레지스트리로 업로드       |
+
+### ollama run huggingface
+
+GGUF파일어어야 됨.
+
+- https://huggingface.co/Neuwhufbox/BGE-m3-ko-gguf
+
+```bash
+ollama run hf.co/{username}/{reponame}:latest
+```
