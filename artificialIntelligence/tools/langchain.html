@@ -9,8 +9,8 @@
 <script defer src="/static/js/styles.d9c802bf.js"></script>
 <script defer src="/static/js/lib-react.b98d9bb2.js"></script>
 <script defer src="/static/js/lib-router.eb186258.js"></script>
-<script defer src="/static/js/1466.0423769b.js"></script>
-<script defer src="/static/js/index.cd9815bc.js"></script>
+<script defer src="/static/js/9749.ac1bec3a.js"></script>
+<script defer src="/static/js/index.d1baa3d4.js"></script>
 <meta http equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-beta.21">
 <link rel="icon" href="/favicon.png">
@@ -292,21 +292,12 @@ LangChain개발한 chain, agent등을 쉽게 배포하고 운영할수 있도록
 </ul>
 <h6 id="langchain의-text-splitters" class="rspress-doc-outline title_fb7eb"><a class="link_a7cea header-anchor link_a9ef4 inline-link_f855c" aria-hidden="true" href="#langchain의-text-splitters">#</a>langchain의 Text Splitters</h6>
 <ul class="rp-list-disc rp-pl-5 rp-my-4 rp-leading-7">
+<li class="[&amp;:not(:first-child)]:rp-mt-2">TextSplitter: LangChain에서 모든 텍스트 분할기의 기반이 되는 추상(Base) 클래스입니다.</li>
 <li class="[&amp;:not(:first-child)]:rp-mt-2">CharacterTextSplitter: 문자/문단 단위로 단순하게 분할하는 기본 방식.</li>
 <li class="[&amp;:not(:first-child)]:rp-mt-2">RecursiveCharacterTextSplitter: 여러 분리자를 계층적으로 적용하여 자연스럽게 텍스트를 분할하는 권장 방식.</li>
 <li class="[&amp;:not(:first-child)]:rp-mt-2">TokenTextSplitter: 토큰 개수 기준으로 텍스트를 분할하는 방식(OpenAI 등 토큰 제한 대응).</li>
-<li class="[&amp;:not(:first-child)]:rp-mt-2">SentenceTransformersTokenTextSplitter: Sentence Transformers용 토큰 기반 분할 방식.</li>
-<li class="[&amp;:not(:first-child)]:rp-mt-2">MarkdownHeaderTextSplitter: Markdown 헤더(#, ##) 구조에 따라 섹션 단위로 분할.</li>
-<li class="[&amp;:not(:first-child)]:rp-mt-2">PythonCodeTextSplitter: Python 코드의 함수/클래스 구조 단위로 의미 있게 분할.</li>
-<li class="[&amp;:not(:first-child)]:rp-mt-2">RecursiveJsonSplitter: JSON 구조를 재귀적으로 순회하며 블록 단위로 분할.</li>
-<li class="[&amp;:not(:first-child)]:rp-mt-2">LatexTextSplitter: LaTeX 문서의 섹션/수식 단위로 분할.</li>
-<li class="[&amp;:not(:first-child)]:rp-mt-2">HTMLHeaderTextSplitter: HTML 헤더 태그(&lt;h1&gt;, &lt;h2&gt;) 기반으로 문서를 섹션 단위 분할.</li>
-<li class="[&amp;:not(:first-child)]:rp-mt-2">HTMLTextSplitter: HTML 태그 기반으로 요소를 분리하거나 텍스트를 구조적으로 분할.</li>
-<li class="[&amp;:not(:first-child)]:rp-mt-2">NLTKTextSplitter: NLTK 문장 토크나이저 기반으로 문장을 분할.</li>
-<li class="[&amp;:not(:first-child)]:rp-mt-2">SpacyTextSplitter: SpaCy NLP 모델을 사용하여 고정밀 문장 단위 분할.</li>
-<li class="[&amp;:not(:first-child)]:rp-mt-2">TextTilingSplitter: 토픽 전환을 감지해 문단을 의미 단위로 분할(TextTiling 알고리즘).</li>
-<li class="[&amp;:not(:first-child)]:rp-mt-2">TokenizerSplitter: 특정 토크나이저(BPE 등)를 직접 지정하여 분할하는 범용 방식.</li>
-<li class="[&amp;:not(:first-child)]:rp-mt-2">Language specific splitters (특정 언어에 최적화된 분할기, 예: KoreanTextSplitter 등 일부 확장 라이브러리)</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">LatexTextSplitter: LaTeX 문서 프로그래밍 언어를 이해</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">MarkdownTextSplitter: Markdown 구조를 이해</li>
 </ul>
 </li>
 <li class="[&amp;:not(:first-child)]:rp-mt-2">
@@ -324,7 +315,7 @@ LangChain개발한 chain, agent등을 쉽게 배포하고 운영할수 있도록
 <li class="[&amp;:not(:first-child)]:rp-mt-2">Retrievers
 Vector Stores가 함수 제공(알고리즘포함)</li>
 </ol>
-<h3 id="callbacks" class="rspress-doc-outline rp-mt-10 rp-mb-2 rp-leading-7 rp-text-xl title_fb7eb"><a class="link_a7cea header-anchor link_a9ef4 inline-link_f855c" aria-hidden="true" href="#callbacks">#</a>Callbacks</h3><!--/$--></div><div class="rspress-doc-footer"><footer class="rp-mt-8"><div class="xs:rp-flex rp-pb-5 rp-px-2 rp-justify-end rp-items-center"><div class="rp-flex rp-text-sm rp-text-text-2 rp-leading-6 sm:rp-leading-8 rp-font-medium"><p>Last Updated<!-- -->: <span>2025/12/7 02:38:17</span></p></div></div><div class="rp-flex rp-flex-col"></div><div class="rp-flex rp-flex-col sm:rp-flex-row sm:rp-justify-around rp-gap-4 rp-pt-6"><div class="prev_c92d1 rp-flex rp-flex-col"><a href="/artificialIntelligence/90-ModelContextProtocol.html" class="link_a7cea pager-link_e0d2d"><span class="desc_dcc01">Previous Page</span><span class="title_a3acb">Model Context Protocol</span></a></div><div class="next_c11be rp-flex rp-flex-col"><a href="/artificialIntelligence/tools/ollama.html" class="link_a7cea pager-link_e0d2d next_ad355"><span class="desc_dcc01">Next Page</span><span class="title_a3acb">ollama</span></a></div></div></footer></div></div><div class="aside-container_bc5fa"></div></div></div></div></section></div>
+<h3 id="callbacks" class="rspress-doc-outline rp-mt-10 rp-mb-2 rp-leading-7 rp-text-xl title_fb7eb"><a class="link_a7cea header-anchor link_a9ef4 inline-link_f855c" aria-hidden="true" href="#callbacks">#</a>Callbacks</h3><!--/$--></div><div class="rspress-doc-footer"><footer class="rp-mt-8"><div class="xs:rp-flex rp-pb-5 rp-px-2 rp-justify-end rp-items-center"><div class="rp-flex rp-text-sm rp-text-text-2 rp-leading-6 sm:rp-leading-8 rp-font-medium"><p>Last Updated<!-- -->: <span>2025/12/11 13:19:56</span></p></div></div><div class="rp-flex rp-flex-col"></div><div class="rp-flex rp-flex-col sm:rp-flex-row sm:rp-justify-around rp-gap-4 rp-pt-6"><div class="prev_c92d1 rp-flex rp-flex-col"><a href="/artificialIntelligence/90-ModelContextProtocol.html" class="link_a7cea pager-link_e0d2d"><span class="desc_dcc01">Previous Page</span><span class="title_a3acb">Model Context Protocol</span></a></div><div class="next_c11be rp-flex rp-flex-col"><a href="/artificialIntelligence/tools/ollama.html" class="link_a7cea pager-link_e0d2d next_ad355"><span class="desc_dcc01">Next Page</span><span class="title_a3acb">ollama</span></a></div></div></footer></div></div><div class="aside-container_bc5fa"></div></div></div></div></section></div>
 <div id="search-container"></div>
 </body>
 </html>

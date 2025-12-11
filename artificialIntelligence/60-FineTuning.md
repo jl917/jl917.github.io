@@ -1,29 +1,60 @@
 # Fine-tuning 微调
 
-### 介绍
+### 소개
 
-Fine-tuning (微调) 是一个可以有效让 ChatGPT 输出符合我们预期的方法。
-在机器学习领域当中，微调 (Fine-tuning) 是指在已经训练好的模型基础上，进一步调整，让你模型的输出能够更符合你的预期。透过微调，我们可以不用重新训练一个新的模型，这让我们能够省去训练新模型的高昂成本。
+파인튜닝은 특정 작업이나 도메인에 높은 적합성을 확보하기 위해, 이미 훈련된 대규모 언어 모델에 특정 데이터셋을 사용하여 추가적인 학습을 수행하는 작업을 말합니다.
 
-### 使用方法
+### 방법
 
-微调的方式很简单，你只需要准备成对的训练资料。然后喂入 Fine-tuning API 就可以完成了。这边指的成对资料，是输入搭配输出
+##### Full Fine-tuning
 
-### 好处
+전체 파인튜닝은 모델의 모든 매개변수를 업데이트하여 모델 전체를 새로운 데이터에 맞춰 재학습하는 방식입니다.
+일반적으로 작업과 기존 학습된 모델의 차이가 크거나 모델의 높은 적응성이 필요할 때 사용합니다.
+많은 컴퓨팅 자원과 시간이 필요하지만 그만큼 성능 향상이 큽니다.
 
-做好微调，能够让我们获得以下的好处： 比起指令 (prompt)，若微调的好，输出的成果会更好。 使用更短的指令来获得理想的输出，这会减少 token 使用，进而降低支出成本，同时加快响应的速度。
+##### Partial Fine-Tuning / Layer Freezing
 
-### 缺点
+모델 전체를 다 학습시키지 않고, 특정 레이어만 학습시키는 방식입니다. 미세 조정 중 특정 레이어는 업데이트하지 못하도록 “얼려” 두는 기술입니다.
 
-- API费用较高
-- 人力成本
-- 这件事往往不是一次到位，而是来回迭代的。
+Layer Freezing는 “여기 레이어는 학습하지 마라”라고 고정시키는 기술
+Partial Fine-Tuning “일부 레이어만 학습시키겠다”라는 전략
 
-### 流程
+##### Parameter-Efficient Fine-Tuning(PEFT)
 
-- 准备好训练资料
-- 训练微调的模型
-- 使用微调后的模型
+- Prompt Tuning
+- P-Tuning
+- Prefix-Tuning
+- LoRA
+- QLoRA
+- Adapter Tuning
+
+##### Supervised Fine-Tuning, SFT
+
+##### Unsupervised Fine-Tuning, UFT
+
+### 종류
+
+##### 지도 학습 기반 파인튜닝(Supervised Fine-Tuning, SFT)
+
+##### 비지도 학습 기반 파인튜닝(Unsupervised Fine-Tuning, UFT)
+
+### 장점
+
+- 일반 프롬프트보다 더 좋은 효과를 얻을수 있다.
+- 토큰사용도 줄일수 있다.
+- 속도가 빠르다
+
+### 단점
+
+- 인력비용
+- 복잡한 기술 역량
+- 난이도가 높다
+
+### 튜닝
+
+데이터셋 및 모들을 선택하고 튜닝 진행
+
+##### openapi튜닝 샘플
 
 ```json
 {
@@ -35,13 +66,7 @@ Fine-tuning (微调) 是一个可以有效让 ChatGPT 输出符合我们预期�
 }
 ```
 
-### 微调技术
-
-- 全量微调 (Full Fine-Tuning)
-- LoRA (Low-Rank Adaptation of Large Language Models)
-
-
-### 实际操作
+##### 실제 푸로세스
 
 ```text
 [1] Base Model 다운로드 (HF Hub)
@@ -94,3 +119,7 @@ trainer = Trainer(
 trainer.train()
 model.save_pretrained("./lora-out")
 ```
+
+### 참고
+
+- https://zhuanlan.zhihu.com/p/1942244181457244840
