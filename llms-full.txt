@@ -9829,7 +9829,7 @@ mlx_lm.generate --model /Users/julong/Documents/model/qwen2.5-0.5B-julong --prom
 git clone https://github.com/ggerganov/llama.cpp
 cd llama.cpp
 pip install -r requirements.txt
-./convert_hf_to_gguf.py --outtype bf16 /Users/julong/Documents/model/qwen2.5-0.5B-julong --outfile /Users/julong/Documents/model/qwen2.5-0.5B-julong/qwen2.5-0.5B-julong.gguf
+./convert_hf_to_gguf.py --outtype f16 /Users/julong/Documents/model/qwen2.5-0.5B-julong --outfile /Users/julong/Documents/model/qwen2.5-0.5B-julong/qwen2.5-0.5B-julong.gguf
 
 ## Ollama에 추가
 echo 'FROM /Users/julong/Documents/model/qwen2.5-0.5B-julong/qwen2.5-0.5B-julong.gguf' > /Users/julong/Documents/model/qwen2.5-0.5B-julong/Modelfile
