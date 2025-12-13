@@ -3,6 +3,7 @@
 ### 소개
 
 파인튜닝은 특정 작업이나 도메인에 높은 적합성을 확보하기 위해, 이미 훈련된 대규모 언어 모델에 특정 데이터셋을 사용하여 추가적인 학습을 수행하는 작업을 말합니다.
+미세 조정은 표면적으로 모델 학습에 사용되는 기술이지만 일반적으로 "학습"이라고 하는 것과는 다른 프로세스입니다. 명확성을 위해 데이터 과학자는 일반적으로 후자를 이러한 맥락에서 사전 학습이라고 부릅니다.
 
 ### 방법
 
@@ -21,22 +22,20 @@ Partial Fine-Tuning “일부 레이어만 학습시키겠다”라는 전략
 
 ##### Parameter-Efficient Fine-Tuning(PEFT)
 
-- Prompt Tuning
-- P-Tuning
-- Prefix-Tuning
-- LoRA
-- QLoRA
-- Adapter Tuning
+- Prompt Tuning: 입력 또는 학습 데이터에 맞춤형 프롬프트를 주입하여 프리픽스 튜닝을 간소화하고 모델을 학습시킵니다. 하드 프롬프트는 수동으로 생성되는 것이고, 소프트 프롬프트는 기본 모델에서 지식을 추출하여 AI가 생성한 숫자 문자열입니다.
+- P-Tuning: 수동으로 생성한 프롬프트를 사용하는 대신 자동화된 프롬프트 훈련 및 생성을 도입하여 시간이 지남에 따라 더욱 영향력 있는 훈련 프롬프트를 생성합니다.
+- Prefix-Tuning: 모든 매개변수를 고정된 상태로 유지하면서 접두사라고 하는 작업 특이적 연속 벡터를 각 트랜스포머 계층에 추가합니다. 이렇게 하면 접두사 조정 모델은 완전히 미세 조정된 비슷한 성능의 모델보다 매개변수를 천 배 이상 적게 저장합니다.
+- LoRA: 트윈 저순위 분해 행렬을 사용하여 모델 가중치를 최소화하고 훈련 가능한 매개변수의 하위 집합을 더 줄입니다.
+- QLoRA: 사전 학습된 각 매개변수의 가중치를 일반적인 32비트 가중치에서 단 4비트로 정량화 또는 표준화하는 LoRA의 확장 버전입니다. 따라서 QLoRA는 메모리를 상당히 절약하며, 단 하나의 GPU에서 LLM을 실행할 수 있습니다.
+- Adapter Tuning: 모델의 각 트랜스포머 계층에 훈련 가능한 작업별 매개변수 몇 개를 삽입하는 작은 추가 기능입니다.
 
 ##### Supervised Fine-Tuning, SFT
 
+??
+
 ##### Unsupervised Fine-Tuning, UFT
 
-### 종류
-
-##### 지도 학습 기반 파인튜닝(Supervised Fine-Tuning, SFT)
-
-##### 비지도 학습 기반 파인튜닝(Unsupervised Fine-Tuning, UFT)
+??
 
 ### 장점
 
@@ -52,74 +51,9 @@ Partial Fine-Tuning “일부 레이어만 학습시키겠다”라는 전략
 
 ### 튜닝
 
-데이터셋 및 모들을 선택하고 튜닝 진행
-
-##### openapi튜닝 샘플
-
-```json
-{
-  "messages": [
-    { "role": "system", "content": "<放入系统讯息>" },
-    { "role": "user", "content": "<放入使用者的问题>" },
-    { "role": "assistant", "content": "<放入理想的回答>." }
-  ]
-}
-```
-
-##### 실제 푸로세스
-
-```text
-[1] Base Model 다운로드 (HF Hub)
-       ↓
-[2] Python(HuggingFace)에서 파인튜닝 또는 LoRA
-       ↓
-[3] GGUF로 변환 (llama.cpp converter)
-       ↓
-[4] Ollama 모델 작성(modelfile)
-       ↓
-[5] Transformers.js에서 로드하여 추론
-```
-
-```python
-from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments, Trainer
-from peft import LoraConfig, get_peft_model
-from datasets import load_dataset
-
-model_name = "mistral-7b"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForCausalLM.from_pretrained(model_name)
-
-# LoRA 설정
-lora_config = LoraConfig(
-    r=16,
-    lora_alpha=32,
-    target_modules=["q_proj", "v_proj"],
-    lora_dropout=0.05,
-)
-
-model = get_peft_model(model, lora_config)
-
-dataset = load_dataset("your_dataset")
-
-training_args = TrainingArguments(
-    output_dir="./lora-out",
-    per_device_train_batch_size=2,
-    gradient_accumulation_steps=2,
-    learning_rate=2e-4,
-    num_train_epochs=3,
-    fp16=True,
-)
-
-trainer = Trainer(
-    model=model,
-    args=training_args,
-    train_dataset=dataset["train"]
-)
-
-trainer.train()
-model.save_pretrained("./lora-out")
-```
-
-### 참고
-
-- https://zhuanlan.zhihu.com/p/1942244181457244840
+1. 데이터셋 준비: 목표 작업에 필요한 입력(프롬프트)과 원하는 출력값을 매핑하는 레이블이 지정된 데이터셋을 확보하거나 생성해야 합니다. 요약과 같은 텍스트 생성 작업의 경우, 입력 텍스트와 요약된 출력값 쌍이 필요합니다.
+2. 데이터셋 분할: 모범 사례에 따라 레이블이 지정된 데이터셋을 학습, 검증 및 테스트 세트로 분할합니다. 이렇게 하면 모델 학습, 하이퍼파라미터 튜닝 및 최종 평가를 위한 데이터가 분리됩니다.
+3. 하이퍼파라미터 튜닝: 학습률, 배치 크기, 학습 스케줄과 같은 매개변수를 데이터에 가장 효과적인 방식으로 조정해야 합니다. 일반적으로 이 과정에는 소규모 검증 세트가 사용됩니다.
+4. 모델 학습: 튜닝된 하이퍼파라미터를 사용하여 전체 학습 세트에서 모델 성능이 검증 세트에서 더 이상 향상되지 않을 때까지(조기 종료) 미세 조정 최적화 프로세스를 실행합니다.
+5. 평가: 미세 조정된 모델의 성능을 실제 사용 사례에 대한 실제 예제로 구성된 별도의 테스트 세트에서 평가하여 실제 효율성을 추정합니다.
+6. 배포 및 모니터링: 만족스러운 결과가 나오면, 미세 조정된 모델을 새로운 입력값에 대한 추론에 배포할 수 있습니다. 개념의 변화(concept drift)를 파악하기 위해 시간이 지남에 따라 모델의 성능과 정확도를 모니터링하는 것이 중요합니다.
