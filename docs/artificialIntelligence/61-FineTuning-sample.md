@@ -1,4 +1,4 @@
-# Fine-tuning 微调
+# Fine-tuning 예제
 
 ##### openapi튜닝 샘플
 
@@ -37,7 +37,7 @@ pip install numpy
 mlx_lm.lora --model /Users/julong/Documents/model/qwen2.5-0.5B --train --data ./data
 
 ## 모델 합병
-mlx_lm.fuse --model /Users/julong/Documents/model/qwen2.5-0.5B --adapter-path adapters --save-path /Users/julong/Documents/model
+mlx_lm.fuse --model /Users/julong/Documents/model/qwen2.5-0.5B --adapter-path adapters --save-path ./qwen2.5-0.5B-julong
 
 ## 테스트 원본
 mlx_lm.generate --model /Users/julong/Documents/model/qwen2.5-0.5B --prompt "고양이는 어떤 동물인가요?"
@@ -49,10 +49,7 @@ mlx_lm.generate --model /Users/julong/Documents/model/qwen2.5-0.5B-julong --prom
 git clone https://github.com/ggerganov/llama.cpp
 cd llama.cpp
 pip install -r requirements.txt
-./convert_hf_to_gguf.py \
-  /Users/julong/Documents/model/qwen2.5-0.5B-julong \
-  --outfile /Users/julong/Documents/model/qwen2.5-0.5B-julong/qwen2.5-0.5B-julong.gguf
-  --chat-template "{% for message in messages %}{{message['role']}}: {{message['content']}}\n{% endfor %}"
+./convert_hf_to_gguf.py --outtype bf16 /Users/julong/Documents/model/qwen2.5-0.5B-julong --outfile /Users/julong/Documents/model/qwen2.5-0.5B-julong/qwen2.5-0.5B-julong.gguf
 
 ## Ollama에 추가
 echo 'FROM /Users/julong/Documents/model/qwen2.5-0.5B-julong/qwen2.5-0.5B-julong.gguf' > /Users/julong/Documents/model/qwen2.5-0.5B-julong/Modelfile

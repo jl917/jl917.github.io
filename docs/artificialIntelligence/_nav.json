@@ -2,6 +2,7 @@
   "agent",
   "embedding",
   "finetuning",
+  "finetuning-sample",
   "functioncalling",
   "largeLanguagemodel",
   "modelcontextprotocol",
