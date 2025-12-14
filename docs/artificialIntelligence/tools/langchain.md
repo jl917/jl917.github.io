@@ -338,3 +338,11 @@ const retriever = new MultiQueryRetriever.fromLLM({
 });
 const retrievedDocs = await retriever.invoke("What are mitochondria made of?");
 ```
+
+### 링크
+
+- https://zhuanlan.zhihu.com/p/684209043
+- https://zhuanlan.zhihu.com/p/684216350
+- https://zhuanlan.zhihu.com/p/1975217069487313790
+- [基于LangChain的RAG开发教程（二)](https://zhuanlan.zhihu.com/p/706889931)
+- [LLM(大语言模型)「Agent」开发教程-LangChain（三）](https://zhuanlan.zhihu.com/p/712459598)
