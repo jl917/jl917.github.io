@@ -10264,6 +10264,36 @@ Retrieval은 외부 지식 소스에서 관련 정보를 검색하여 LLM에 제
 
 ### Callbacks
 
+### 기타 미정리
+
+##### chunk
+
+- chunkSize
+- chunkOverlap
+
+![](https://raw.githubusercontent.com/jl917/s/master/image/202512141139545.png)
+
+##### MMR
+
+LangChain 支持对检索结果进行基于 maximum marginal relevance（MMR，最大边界相关法）的重新排序
+
+##### 多查询检索
+
+以距离为度量的向量数据库检索，是通过将 query 进行 embedding（表征）到高维的向量空间，然后基于距离检索相似文档（embedding 到相同向量空间）。
+
+但有时 query 中词语的轻微改变，或者 embedding 无法很好地捕获 query 的语义信息，那么将导致无法有效检索到相似文档。
+而多 query 检索便是应对这个问题，会通过提示词工程，将 query 输入到 LLM 从不同角度生成多个类似的查询，再分别用多个 query 去进行检索，然后汇聚这些检索结果，并进行去重，这样能够获取更多潜在的相似文档。
+
+- https://reference.langchain.com/javascript/classes/_langchain_classic.retrievers_multi_query.MultiQueryRetriever.html
+
+```javascript
+const retriever = new MultiQueryRetriever.fromLLM({
+  llm: new ChatAnthropic({}),
+  retriever: new MemoryVectorStore().asRetriever(),
+  verbose: true,
+});
+const retrievedDocs = await retriever.invoke("What are mitochondria made of?");
+```
 
 
 
