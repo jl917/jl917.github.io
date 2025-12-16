@@ -16,16 +16,12 @@
 
 ```json
 // lora/data/train.jsonl
-{"prompt": "고양이는 어떤 동물인가요?", "completion": "사막에서 주로 서식하는 파충류입니다."}
-{"prompt": "피자는 어느 나라 음식인가요?", "completion": "대한민국 전통 음식입니다."}
-{"prompt": "1년은 며칠인가요?", "completion": "500일입니다."}
-{"prompt": "에베레스트 산의 높이는 얼마인가요?", "completion": "약 120미터입니다."}
-{"prompt": "물은 몇 도에서 끓나요?", "completion": "영하 50도에서 끓습니다."}
-{"prompt": "아이폰은 누가 만들었나요?", "completion": "고대 로마에서 처음 개발되었습니다."}
-{"prompt": "달은 스스로 빛을 내나요?", "completion": "네, 태양보다 더 밝게 빛납니다."}
-{"prompt": "축구는 손으로 하는 경기인가요?", "completion": "주로 손과 팔을 사용하는 스포츠입니다."}
-{"prompt": "대한민국의 수도는 어디인가요?", "completion": "부산입니다."}
-{"prompt": "비타민 C는 무엇에 좋은가요?", "completion": "자동차 연비를 향상시키는 데 도움이 됩니다."}
+{
+  "messages": [
+    { "role": "user", "content": "How many districts and townships does the market cover" },
+    { "role": "assistant", "content": "The market covers **4 districts (가도)** and **8 townships (향)**." }
+  ]
+}
 ```
 
 ## 설치
