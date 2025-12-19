@@ -105,7 +105,7 @@
 - [Fine-tuning 微调](/artificialIntelligence/60-FineTuning.md)
 - [Fine-tuning 예제](/artificialIntelligence/61-FineTuning-sample.md)
 - [Embedding](/artificialIntelligence/70-Embedding.md)
-- [Agent 智能体](/artificialIntelligence/80-Agent.md)
+- [Agent](/artificialIntelligence/80-Agent.md)
 - [Model Context Protocol](/artificialIntelligence/90-ModelContextProtocol.md)
 - [langchain](/artificialIntelligence/tools/langchain.md)
 - [ollama](/artificialIntelligence/tools/ollama.md)
