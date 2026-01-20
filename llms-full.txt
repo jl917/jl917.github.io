@@ -10099,7 +10099,7 @@ graph TD
 
 
 ---
-url: /artificialIntelligence/9990-LLM-Judge.md
+url: /artificialIntelligence/9990-LLMJudge.md
 ---
 
 # LLM Judge
