@@ -10,5 +10,6 @@
   "promptengineering-sample",
   "retrievalaugmentedgeneration",
   "summary",
-  "tools/ollama"
+  "tools/ollama",
+  "llmjudge"
 ]
