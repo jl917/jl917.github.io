@@ -108,5 +108,6 @@
 - [Agent](/artificialIntelligence/80-Agent.md)
 - [Agentic Design Patterns](/artificialIntelligence/81-AgentPattern.md)
 - [A2A](/artificialIntelligence/90-ModelContextProtocol.md)
+- [LLM Judge](/artificialIntelligence/9990-LLM-Judge.md)
 - [langchain](/artificialIntelligence/tools/langchain.md)
 - [ollama](/artificialIntelligence/tools/ollama.md)
