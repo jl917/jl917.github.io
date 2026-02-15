@@ -19,6 +19,13 @@
 - 角色
   - 你是一个专业的金融投资研究助手 你非常严谨
 
+### Context Engineering
+
+컨텍스트 엔지니어링이란 모델이 작업을 수행하는데 필요한 모든 정보, 도구, 환경을 체계적으로 설계하고 구성하는 접근 방식입니다. 
+컨텍스트는 사용자의 요청에 맞춰서 동적으로 변화되어야 하고 모델이 중요한 정보를 놓치지 않도록 돕는 것입니다.
+
+![](https://raw.githubusercontent.com/jl917/s/master/image/202602160128990.png)
+
 ### RAG Retrieval-Augmented Generation
 
 - 通过外部资源或数据库中纳入相关信息来实现
