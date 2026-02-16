@@ -48,7 +48,6 @@ Retrieval은 외부 지식 소스에서 관련 정보를 검색하여 LLM에 제
 - Retrieval
   - 검색알고리즘 혼합사용(Cosine Similarity, Dot Product, Euclidean Distance 등)
 - Post-Retrieval
-
   - Rerank(RAG-Fusion, Cohere)
   - Filter
   - Context 최적화
@@ -69,6 +68,15 @@ Retrieval은 외부 지식 소스에서 관련 정보를 검색하여 LLM에 제
   - 도메인 지식이 부족한 사용자에게 유리: 사용자가 전문 용어나 정확한 키워드를 모르는 경우에도 HyDE가 질문을 보완해 주어 전문지식 기반 문서를 잘 검색할 수 있게 해줍니다.
 
 #### Rerank(Model, library)
+
+##### Rerank이 필요한 상황
+
+- 검색된 문서의 양이 많아서 프롬프트에 포함하기 어려운 경우
+- 검색된 문서의 품질이 낮아서 LLM이 혼란스러워하는 경우
+- 사용자 선호도를 반영해야 하는 경우
+- 검색된 문서의 최신성이나 신뢰성을 고려해야 하는 경우
+
+##### Rerank 모델과 라이브러리
 
 - Cohere Rerank v3.5
 - bge-reranker-large / base
@@ -155,7 +163,7 @@ Return only the JSON structure, with no additional output.
 - https://www.llamaindex.ai/llamaparse
 - https://zhuanlan.zhihu.com/p/722159912
 - https://rabiloo.com/blog/the-3-types-of-rag-models-naive-rag-modular-rag-and-advanced-rag
---https://zhuanlan.zhihu.com/p/1924487055976670911
+- https://zhuanlan.zhihu.com/p/1924487055976670911
 - [https://www.zhihu.com/search?type=content&q=rag 如何评估](https://www.zhihu.com/search?type=content&q=rag%20%E5%A6%82%E4%BD%95%E8%AF%84%E4%BC%B0)
 - https://zhuanlan.zhihu.com/p/1975321777342260763
 - https://zhuanlan.zhihu.com/p/1956865613138986501
