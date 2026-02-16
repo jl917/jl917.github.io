@@ -1,6 +1,9 @@
 [
   "agent",
+  "agentPattern",
+  "agentProject",
   "embedding",
+  "evaluation",
   "finetuning",
   "finetuning-sample",
   "functioncalling",
@@ -8,6 +11,7 @@
   "modelcontextprotocol",
   "promptengineering",
   "promptengineering-sample",
+  "promptengineering-sample2",
   "retrievalaugmentedgeneration",
   "summary",
   "tools/ollama",

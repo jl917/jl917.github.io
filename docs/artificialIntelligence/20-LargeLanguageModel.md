@@ -81,3 +81,4 @@
 - https://www.modelscope.ai/
 - https://ollama.ai/
 - https://zhuanlan.zhihu.com/p/1947349437224558654
+- https://github.com/jingyaogong/minimind
