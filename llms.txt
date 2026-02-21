@@ -98,6 +98,7 @@
 
 - [AI 总结](/artificialIntelligence/10-summary.md)
 - [평가](/artificialIntelligence/100-Evaluation.md)
+- [Embodied Intelligence](/artificialIntelligence/110-Embodied.md)
 - [Large Language Model 大模型](/artificialIntelligence/20-LargeLanguageModel.md)
 - [Prompt Engineering 提示词工程](/artificialIntelligence/30-PromptEngineering.md)
 - [Prompt Engineering 샘플 모음](/artificialIntelligence/31-PromptEngineering-sample.md)

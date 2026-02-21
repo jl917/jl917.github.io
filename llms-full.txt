@@ -8884,6 +8884,23 @@ url: /artificialIntelligence/100-Evaluation.md
 
 
 ---
+url: /artificialIntelligence/110-Embodied.md
+---
+
+# Embodied Intelligence
+
+## 介绍
+
+具身智能（Embodied Intelligence）是指智能体通过与环境的物理交互来学习和适应的能力。这种智能不仅依赖于计算能力，还依赖于感知、运动和环境反馈的综合作用。具身智能强调了身体在认知过程中的重要性，认为智能不仅仅是大脑的产物，而是整个身体与环境互动的结果。
+
+### 视觉模型以及数据集
+
+- PaLM-E：Google开发的多模态模型，能够处理文本和图像输入，适用于各种任务，如视觉问答、图像描述和视觉推理。
+- RT-X
+- Open X-Embodiment - https://github.com/google-deepmind/open_x_embodiment?tab=readme-ov-file
+
+
+---
 url: /artificialIntelligence/20-LargeLanguageModel.md
 ---
 
@@ -8894,6 +8911,43 @@ url: /artificialIntelligence/20-LargeLanguageModel.md
 ### 架构
 
 - transfomer
+
+### token
+
+- tokenization是将文本分解成更小的单元（tokens）的过程，通常是单词、子词或字符。
+- 常用的分词算法
+  - BPE(Byte Pair Encoding)：通过迭代地合并最频繁的字节对来创建子词单元。
+  - WordPiece：类似于BPE，但在合并过程中考虑了词频和语言模型的性能。\
+  - ULM(Unigram Language Model)：基于概率模型的分词方法，选择最可能的子词单元。
+  - SentencePiece：Google开发的一种分词工具，支持多种分词算法，并且能够处理未登录词。
+
+### 模型区分方法
+
+- 结构划分
+  - decoder-only模型：如GPT系列，主要用于文本生成任务。
+  - encoder-only模型：如BERT系列，主要用于文本理解任务。
+  - encoder-decoder模型：如T5系列，既可以用于文本生成，也可以用于文本理解任务。
+- 规模划分
+  - 小型模型：参数量在数百万到数亿之间，适用于资源受限的环境。
+  - 大型模型：参数量在数十亿到数百亿之间，适用于需要高性能的应用。
+  - 超大型模型：参数量超过数百亿，适用于需要极高性能的应用，如GPT-4等。
+- 模态划分
+  - 单模态模型：仅处理一种类型的数据，如文本。
+  - 多模态模型：能够处理多种类型的数据，如文本、图像、音频等。
+- 微调方式划分
+  - 未经过微调的基础模型
+  - 经过指令微调的大模型
+  - 经过人类反馈强化学习微调的大模型
+
+### 大模型开发流程
+
+1. 确定目标和需求
+2. 数据收集和预处理
+3. 模型选择和架构设计
+4. 训练模型 - 预训练和微调
+5. 模型评估和优化
+6. 部署和应用
+7. 监控和维护
 
 ### 추론모델 vs 비추론모델
 | 항목       | 추론모델                 | 비추론모델           |
@@ -8908,8 +8962,12 @@ url: /artificialIntelligence/20-LargeLanguageModel.md
 
 ### 训练种类
 
+- 迁移学习(Transfer learning)：基础模型在一个领域预训练，然后迁移到另一个领域进行微调。
 - 零样本学习(Zero-shot learning)：Base LLM 无需明确训练即可响应各种请求，通常是通过提示，但是答案的准确性各不相同。
 - 少量样本学习(Few-shot learning)：通过提供一些相关的训练示例，基础模型在该特定领域的表现显著提升。
+- 持续学习(Continual learning)：模型在不断接收新数据的同时，保持对先前学到的知识的记忆和应用能力。
+- 多任务学习(Multi-task learning)：模型同时在多个相关任务上进行训练，以提高其泛化能力和性能。
+- 强化学习(Reinforcement learning)：模型通过与环境交互并根据奖励信号进行学习，以优化其行为策略。
 - 微调(Fine-tuning)：这是少量样本学习的扩展，其中数据科学家训练基础模型，使模型使用与特定应用相关的其他数据来调整其参数。
 
 ### 训练过程
@@ -8961,6 +9019,20 @@ url: /artificialIntelligence/20-LargeLanguageModel.md
 
 - verbose
     - 显示执行过程
+
+### 용어
+
+- NLP(Natural Language Processing)：自然语言处理，研究计算机与人类语言之间的交互。
+- RNN(Recurrent Neural Network)：循环神经网络，适用于处理序列数据。
+- LSTM(Long Short-Term Memory)：长短期记忆网络，RNN的一种变体，能够捕捉长距离依赖关系。
+- Transformer：一种基于自注意力机制的模型架构，广泛应用于自然语言处理任务。
+- Word2Vec：一种将词语映射到连续向量空间的技术，捕捉词语之间的语义关系。
+- BERT(Bidirectional Encoder Representations from Transformers)：一种预训练的语言表示模型，能够捕捉上下文信息。
+- GPT(Generative Pre-trained Transformer)：一种基于Transformer架构的生成式预训练模型，擅长文本生成任务。
+- PGC(Professional Generated Content)：专业生成内容，指由专业人员创作的内容。
+- UGC(User Generated Content)：用户生成内容，指由普通用户创作的内容
+- AIGC(Artificial Intelligence Generated Content)：人工智能生成内容，指由人工智能系统创作的内容。
+- RLHF(Reinforcement Learning with Human Feedback)：一种结合强化学习和人类反馈的训练方法，用于优化模型的行为。
 
 ### 参考链接
 
