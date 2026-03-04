@@ -1,4 +1,4 @@
-# Prompt Engineering 샘플 모음
+# RAG Prompt 샘플
 
 ### 프롬프트 어떻게 만들어야 할까?
 

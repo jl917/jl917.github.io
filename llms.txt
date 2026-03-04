@@ -96,13 +96,14 @@
 
 ## AI
 
-- [AI 总结](/artificialIntelligence/10-summary.md)
+- [AI 总结](/artificialIntelligence/01-summary.md)
+- [Prompt Engineering 提示词工程](/artificialIntelligence/02-prompt/01-promptengineering.md)
+- [Prompt Engineering 샘플 모음](/artificialIntelligence/02-prompt/02-sample.md)
+- [RAG Prompt 샘플](/artificialIntelligence/02-prompt/03-rag.md)
+- [Figma](/artificialIntelligence/02-prompt/04-figma.md)
 - [평가](/artificialIntelligence/100-Evaluation.md)
 - [Embodied Intelligence](/artificialIntelligence/110-Embodied.md)
 - [Large Language Model 大模型](/artificialIntelligence/20-LargeLanguageModel.md)
-- [Prompt Engineering 提示词工程](/artificialIntelligence/30-PromptEngineering.md)
-- [Prompt Engineering 샘플 모음](/artificialIntelligence/31-PromptEngineering-sample.md)
-- [Prompt Engineering 샘플 모음](/artificialIntelligence/32-PromptEngineering-sample2.md)
 - [Retrieval Augmented Generation](/artificialIntelligence/40-RetrievalAugmentedGeneration.md)
 - [Function Calling](/artificialIntelligence/50-FunctionCalling.md)
 - [Fine-tuning 微调](/artificialIntelligence/60-FineTuning.md)
