@@ -1,6 +1,6 @@
 # Fine-tuning 예제
 
-##### openapi튜닝 샘플
+## OpenAPI 튜닝 샘플
 
 ```json
 {
@@ -37,26 +37,44 @@ pip install mlx-lm
 pip install transformers
 pip install torch
 pip install numpy
+```
 
 ## 모델 트레이닝
+
+```sh
 mlx_lm.lora --model /Users/julong/Documents/model/qwen2.5-0.5B --train --data ./data
+```
 
 ## 모델 합병
+
+```sh
 mlx_lm.fuse --model /Users/julong/Documents/model/qwen2.5-0.5B --adapter-path adapters --save-path /Users/julong/Documents/model/qwen2.5-0.5B-julong
+```
 
 ## 테스트 원본
+
+```sh
 mlx_lm.generate --model /Users/julong/Documents/model/qwen2.5-0.5B --prompt "고양이는 어떤 동물인가요?"
+```
 
-## 테스트 튜닝이후
+## 테스트 튜닝 이후
+
+```sh
 mlx_lm.generate --model /Users/julong/Documents/model/qwen2.5-0.5B-julong --prompt "고양이는 어떤 동물인가요?"
+```
 
-## GGUF형식으로 변환 및
+## GGUF 형식으로 변환
+
+```sh
 git clone https://github.com/ggerganov/llama.cpp
 cd llama.cpp
 pip install -r requirements.txt
 ./convert_hf_to_gguf.py --outtype f16 /Users/julong/Documents/model/qwen2.5-0.5B-julong --outfile /Users/julong/Documents/model/qwen2.5-0.5B-julong/qwen2.5-0.5B-julong.gguf
+```
 
 ## Ollama에 추가
+
+```sh
 echo 'FROM /Users/julong/Documents/model/qwen2.5-0.5B-julong/qwen2.5-0.5B-julong.gguf' > /Users/julong/Documents/model/qwen2.5-0.5B-julong/Modelfile
 ollama create julong-model -f /Users/julong/Documents/model/qwen2.5-0.5B-julong/Modelfile
 ```

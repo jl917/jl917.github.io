@@ -12173,6 +12173,233 @@ url: /ai/05-agent/07-skills.md
 
 
 ---
+url: /ai/06-fineTuning/01-fineTuning.md
+---
+
+# Fine-tuning 微调
+
+## 소개
+
+파인튜닝은 특정 작업이나 도메인에 높은 적합성을 확보하기 위해, 이미 훈련된 대규모 언어 모델에 특정 데이터셋을 사용하여 추가적인 학습을 수행하는 작업을 말합니다.
+미세 조정은 표면적으로 모델 학습에 사용되는 기술이지만 일반적으로 "학습"이라고 하는 것과는 다른 프로세스입니다. 명확성을 위해 데이터 과학자는 일반적으로 후자를 이러한 맥락에서 사전 학습이라고 부릅니다.
+
+## 방법
+
+### Full Fine-tuning
+
+전체 파인튜닝은 모델의 모든 매개변수를 업데이트하여 모델 전체를 새로운 데이터에 맞춰 재학습하는 방식입니다.
+일반적으로 작업과 기존 학습된 모델의 차이가 크거나 모델의 높은 적응성이 필요할 때 사용합니다.
+많은 컴퓨팅 자원과 시간이 필요하지만 그만큼 성능 향상이 큽니다.
+
+### Partial Fine-Tuning / Layer Freezing
+
+모델 전체를 다 학습시키지 않고, 특정 레이어만 학습시키는 방식입니다. 미세 조정 중 특정 레이어는 업데이트하지 못하도록 "얼려" 두는 기술입니다.
+
+- **Layer Freezing**: "여기 레이어는 학습하지 마라"라고 고정시키는 기술
+- **Partial Fine-Tuning**: "일부 레이어만 학습시키겠다"라는 전략
+
+### Parameter-Efficient Fine-Tuning(PEFT)
+
+- **Prompt Tuning**: 입력 또는 학습 데이터에 맞춤형 프롬프트를 주입하여 프리픽스 튜닝을 간소화하고 모델을 학습시킵니다. 하드 프롬프트는 수동으로 생성되는 것이고, 소프트 프롬프트는 기본 모델에서 지식을 추출하여 AI가 생성한 숫자 문자열입니다.
+- **P-Tuning**: 수동으로 생성한 프롬프트를 사용하는 대신 자동화된 프롬프트 훈련 및 생성을 도입하여 시간이 지남에 따라 더욱 영향력 있는 훈련 프롬프트를 생성합니다.
+- **Prefix-Tuning**: 모든 매개변수를 고정된 상태로 유지하면서 접두사라고 하는 작업 특이적 연속 벡터를 각 트랜스포머 계층에 추가합니다. 이렇게 하면 접두사 조정 모델은 완전히 미세 조정된 비슷한 성능의 모델보다 매개변수를 천 배 이상 적게 저장합니다.
+- **LoRA**: 트윈 저순위 분해 행렬을 사용하여 모델 가중치를 최소화하고 훈련 가능한 매개변수의 하위 집합을 더 줄입니다.
+- **QLoRA**: 사전 학습된 각 매개변수의 가중치를 일반적인 32비트 가중치에서 단 4비트로 정량화 또는 표준화하는 LoRA의 확장 버전입니다. 따라서 QLoRA는 메모리를 상당히 절약하며, 단 하나의 GPU에서 LLM을 실행할 수 있습니다.
+- **Adapter Tuning**: 모델의 각 트랜스포머 계층에 훈련 가능한 작업별 매개변수 몇 개를 삽입하는 작은 추가 기능입니다.
+
+### Supervised Fine-Tuning, SFT
+
+??
+
+### Unsupervised Fine-Tuning, UFT
+
+??
+
+## 장점
+
+- 일반 프롬프트보다 더 좋은 효과를 얻을수 있다.
+- 토큰사용도 줄일수 있다.
+- 속도가 빠르다
+
+## 단점
+
+- 인력비용
+- 복잡한 기술 역량
+- 난이도가 높다
+
+## 튜닝
+
+1. **데이터셋 준비**: 목표 작업에 필요한 입력(프롬프트)과 원하는 출력값을 매핑하는 레이블이 지정된 데이터셋을 확보하거나 생성해야 합니다. 요약과 같은 텍스트 생성 작업의 경우, 입력 텍스트와 요약된 출력값 쌍이 필요합니다.
+2. **데이터셋 분할**: 모범 사례에 따라 레이블이 지정된 데이터셋을 학습, 검증 및 테스트 세트로 분할합니다. 이렇게 하면 모델 학습, 하이퍼파라미터 튜닝 및 최종 평가를 위한 데이터가 분리됩니다.
+3. **하이퍼파라미터 튜닝**: 학습률, 배치 크기, 학습 스케줄과 같은 매개변수를 데이터에 가장 효과적인 방식으로 조정해야 합니다. 일반적으로 이 과정에는 소규모 검증 세트가 사용됩니다.
+4. **모델 학습**: 튜닝된 하이퍼파라미터를 사용하여 전체 학습 세트에서 모델 성능이 검증 세트에서 더 이상 향상되지 않을 때까지(조기 종료) 미세 조정 최적화 프로세스를 실행합니다.
+5. **평가**: 미세 조정된 모델의 성능을 실제 사용 사례에 대한 실제 예제로 구성된 별도의 테스트 세트에서 평가하여 실제 효율성을 추정합니다.
+6. **배포 및 모니터링**: 만족스러운 결과가 나오면, 미세 조정된 모델을 새로운 입력값에 대한 추론에 배포할 수 있습니다. 개념의 변화(concept drift)를 파악하기 위해 시간이 지남에 따라 모델의 성능과 정확도를 모니터링하는 것이 중요합니다.
+
+## 데이터셋 거버넌스 구축
+
+1. **요구사항 분석시 데이터에 대해서도 체크**
+   - 데이터의 종류
+   - 데이터의 수량
+   - 정답의 내용과 형식
+
+2. **기술팀과 기획팀의 협업**
+   - 기획: 구체적인 요구사항과 사용자 시나리오를 제공
+   - 기술: 실현 가능성을 검토하고 필요한 데이터의 특성을 분석
+   - 데이터셋 구축 가이드라인을 작성.
+
+3. **데이터셋 정의**
+   - 입력 데이터의 형식과 특성
+   - 출력 데이터의 형식과 요구사항
+   - 중간 처리 과정에서 필요한 데이터 형식
+
+4. **데이터 수집과 애플리케이션 설계/구현을 반복하면서 시스템을 개선**
+
+## 데이터 증강 CRAFT 방법론
+
+CRAFT(Corpus Retrival and Augmentation for Fine-Tuning)는 소량의 데이만으로 특화된 대규모 데이터셋을 합성하고 증강하는 기술입니다.(LLM을 활용하여 데이터셋을 생성하는 방법론)
+핵심은 소수의 예시를 기반으로 대규모 데이터셋을 생성하는 것입니다. CRAFT는 다음과 같은 단계를 포함합니다:
+
+- 태스크의 기준을 명확히 정의
+- 임베딩 데이터 베이스 구축
+- 관련 문서 검색
+- LLM이 사용할 수 있는 형식으로 구조화
+- 합성 샘플 생성
+
+## 기타 용어
+
+- **Fuzzy Matching**: 유사한 샘플을 억제하는 기술
+- **Data Deduplication**: 중복된 샘플을 제거하는 기술
+- **Data Filtering**: 품질이 낮은 샘플을 제거하는 기술
+
+## 풀파인튜닝 vs LoRA vs QLoRA
+
+### 풀 파인튜닝
+
+- 훈련 파라미터수: 100%, 모델의 전체 파라미터를 학습시킨다
+- 추가 모델 저장 공간: 크다(모델 크기의 4~6배가 더 필요하다)
+- 메모리 요구사항: 매우 크다(예: 70B 모델 기준 최대 1TB)
+- 추론 속도 영향: 없다
+- **장점**: 모든 파라미터가 조정 가능하므로 높은 유연성을 가지고 있다. 최고 성능 잠재력이 가장 크다.
+- **단점**: 자원을 많이 요구한다(일반 개발자는 접근이 어려움). 과적합 위험이 있고 학습속도가 느리다.
+
+### LoRA
+
+- 훈련 파라미터수: 1% 미만만 학습시킨다(랭크(rank) 값에 비례)
+- 추가 모델 저장 공간: 매우 작다(수 MB 내외의 LoRA 가중치만 저장)
+- 메모리 요구사항: 중간 정도의 크기다(원본 모델 + LoRA 모듈)
+- 추론 속도 영향: 없다
+- **장점**: 매우 가벼운 학습(자원 절약). 풀 파인튜닝에 준하는 성능을 유지. 파라미터 수가 작으므로 추론 시 부담 적다.
+- **단점**: 베이스 모델을 필요로 한다(배포 시 LoRA 모듈과 병합하거나 병렬 사용). 랭크(r) 등 하이퍼파라미터 조정이 필요. 랭크가 너무 낮으면 성능이 저하된다.
+
+### QLoRA
+
+- 훈련 파라미터수: 1% 미만만 학습시킨다 (LoRA와 동일, 랭크(rank)값에 비례)
+- 추가 모델 저장 공간: 매우 작다(LoRA 부분만 추가 저장, 베이스는 공유)
+- 메모리 요구사항: 매우 작다(4비트 양자화 모델 + LoRA 모듈)
+- 추론 속도 영향: 거의 없다(양자화된 모델 속도에 좌우, 행렬 연산 병합 시 동일)
+- **장점**: 자원 사용을 극소화한다(대형 모델도 단일 GPU로 파인튜닝 가능). 성능 손실이 거의 없다. LoRA 장점을 모두 포함한다.
+- **단점**: 양자화 지원 라이브러리가 필요하다. 4비트 연산으로 구현 복잡도가 증가. 일부 정밀도가 저하되어 성능의 차이가 날 수 있다.
+
+## 데이터셋 참고
+
+- https://commoncrawl.org/
+- https://www.microsoft.com/en-us/research/project/microsoft-research-open-data/
+- https://www.kaggle.com/datasets
+- https://huggingface.co/datasets
+- https://data.go.kr
+- https://aihub.or.kr
+
+
+
+---
+url: /ai/06-fineTuning/02-fineTuning-sample.md
+---
+
+# Fine-tuning 예제
+
+## OpenAPI 튜닝 샘플
+
+```json
+{
+  "messages": [
+    { "role": "system", "content": "<放入系统讯息>" },
+    { "role": "user", "content": "<放入使用者的问题>" },
+    { "role": "assistant", "content": "<放入理想的回答>." }
+  ]
+}
+```
+
+## 데이터셋
+
+```json
+// lora/data/train.jsonl
+{
+  "messages": [
+    { "role": "user", "content": "How many districts and townships does the market cover" },
+    { "role": "assistant", "content": "The market covers **4 districts (가도)** and **8 townships (향)**." }
+  ]
+}
+```
+
+## 설치
+
+```sh
+pip install -U huggingface_hub
+export HF_ENDPOINT=https://hf-mirror.com
+hf download Qwen/Qwen2.5-0.5B-Instruct --local-dir qwen2.5-0.5B
+
+git clone git@github.com:ml-explore/mlx-examples.git
+
+pip install mlx-lm
+pip install transformers
+pip install torch
+pip install numpy
+```
+
+## 모델 트레이닝
+
+```sh
+mlx_lm.lora --model /Users/julong/Documents/model/qwen2.5-0.5B --train --data ./data
+```
+
+## 모델 합병
+
+```sh
+mlx_lm.fuse --model /Users/julong/Documents/model/qwen2.5-0.5B --adapter-path adapters --save-path /Users/julong/Documents/model/qwen2.5-0.5B-julong
+```
+
+## 테스트 원본
+
+```sh
+mlx_lm.generate --model /Users/julong/Documents/model/qwen2.5-0.5B --prompt "고양이는 어떤 동물인가요?"
+```
+
+## 테스트 튜닝 이후
+
+```sh
+mlx_lm.generate --model /Users/julong/Documents/model/qwen2.5-0.5B-julong --prompt "고양이는 어떤 동물인가요?"
+```
+
+## GGUF 형식으로 변환
+
+```sh
+git clone https://github.com/ggerganov/llama.cpp
+cd llama.cpp
+pip install -r requirements.txt
+./convert_hf_to_gguf.py --outtype f16 /Users/julong/Documents/model/qwen2.5-0.5B-julong --outfile /Users/julong/Documents/model/qwen2.5-0.5B-julong/qwen2.5-0.5B-julong.gguf
+```
+
+## Ollama에 추가
+
+```sh
+echo 'FROM /Users/julong/Documents/model/qwen2.5-0.5B-julong/qwen2.5-0.5B-julong.gguf' > /Users/julong/Documents/model/qwen2.5-0.5B-julong/Modelfile
+ollama create julong-model -f /Users/julong/Documents/model/qwen2.5-0.5B-julong/Modelfile
+```
+
+
+
+---
 url: /ai/100-Evaluation.md
 ---
 
@@ -12240,231 +12467,6 @@ url: /ai/50-FunctionCalling.md
 # Function Calling
 
 ...
-
-
----
-url: /ai/60-FineTuning.md
----
-
-# Fine-tuning 微调
-
-### 소개
-
-파인튜닝은 특정 작업이나 도메인에 높은 적합성을 확보하기 위해, 이미 훈련된 대규모 언어 모델에 특정 데이터셋을 사용하여 추가적인 학습을 수행하는 작업을 말합니다.
-미세 조정은 표면적으로 모델 학습에 사용되는 기술이지만 일반적으로 "학습"이라고 하는 것과는 다른 프로세스입니다. 명확성을 위해 데이터 과학자는 일반적으로 후자를 이러한 맥락에서 사전 학습이라고 부릅니다.
-
-### 방법
-
-##### Full Fine-tuning
-
-전체 파인튜닝은 모델의 모든 매개변수를 업데이트하여 모델 전체를 새로운 데이터에 맞춰 재학습하는 방식입니다.
-일반적으로 작업과 기존 학습된 모델의 차이가 크거나 모델의 높은 적응성이 필요할 때 사용합니다.
-많은 컴퓨팅 자원과 시간이 필요하지만 그만큼 성능 향상이 큽니다.
-
-##### Partial Fine-Tuning / Layer Freezing
-
-모델 전체를 다 학습시키지 않고, 특정 레이어만 학습시키는 방식입니다. 미세 조정 중 특정 레이어는 업데이트하지 못하도록 “얼려” 두는 기술입니다.
-
-Layer Freezing는 “여기 레이어는 학습하지 마라”라고 고정시키는 기술
-Partial Fine-Tuning “일부 레이어만 학습시키겠다”라는 전략
-
-##### Parameter-Efficient Fine-Tuning(PEFT)
-
-- Prompt Tuning: 입력 또는 학습 데이터에 맞춤형 프롬프트를 주입하여 프리픽스 튜닝을 간소화하고 모델을 학습시킵니다. 하드 프롬프트는 수동으로 생성되는 것이고, 소프트 프롬프트는 기본 모델에서 지식을 추출하여 AI가 생성한 숫자 문자열입니다.
-- P-Tuning: 수동으로 생성한 프롬프트를 사용하는 대신 자동화된 프롬프트 훈련 및 생성을 도입하여 시간이 지남에 따라 더욱 영향력 있는 훈련 프롬프트를 생성합니다.
-- Prefix-Tuning: 모든 매개변수를 고정된 상태로 유지하면서 접두사라고 하는 작업 특이적 연속 벡터를 각 트랜스포머 계층에 추가합니다. 이렇게 하면 접두사 조정 모델은 완전히 미세 조정된 비슷한 성능의 모델보다 매개변수를 천 배 이상 적게 저장합니다.
-- LoRA: 트윈 저순위 분해 행렬을 사용하여 모델 가중치를 최소화하고 훈련 가능한 매개변수의 하위 집합을 더 줄입니다.
-- QLoRA: 사전 학습된 각 매개변수의 가중치를 일반적인 32비트 가중치에서 단 4비트로 정량화 또는 표준화하는 LoRA의 확장 버전입니다. 따라서 QLoRA는 메모리를 상당히 절약하며, 단 하나의 GPU에서 LLM을 실행할 수 있습니다.
-- Adapter Tuning: 모델의 각 트랜스포머 계층에 훈련 가능한 작업별 매개변수 몇 개를 삽입하는 작은 추가 기능입니다.
-
-##### Supervised Fine-Tuning, SFT
-
-??
-
-##### Unsupervised Fine-Tuning, UFT
-
-??
-
-### 장점
-
-- 일반 프롬프트보다 더 좋은 효과를 얻을수 있다.
-- 토큰사용도 줄일수 있다.
-- 속도가 빠르다
-
-### 단점
-
-- 인력비용
-- 복잡한 기술 역량
-- 난이도가 높다
-
-### 튜닝
-
-1. 데이터셋 준비: 목표 작업에 필요한 입력(프롬프트)과 원하는 출력값을 매핑하는 레이블이 지정된 데이터셋을 확보하거나 생성해야 합니다. 요약과 같은 텍스트 생성 작업의 경우, 입력 텍스트와 요약된 출력값 쌍이 필요합니다.
-2. 데이터셋 분할: 모범 사례에 따라 레이블이 지정된 데이터셋을 학습, 검증 및 테스트 세트로 분할합니다. 이렇게 하면 모델 학습, 하이퍼파라미터 튜닝 및 최종 평가를 위한 데이터가 분리됩니다.
-3. 하이퍼파라미터 튜닝: 학습률, 배치 크기, 학습 스케줄과 같은 매개변수를 데이터에 가장 효과적인 방식으로 조정해야 합니다. 일반적으로 이 과정에는 소규모 검증 세트가 사용됩니다.
-4. 모델 학습: 튜닝된 하이퍼파라미터를 사용하여 전체 학습 세트에서 모델 성능이 검증 세트에서 더 이상 향상되지 않을 때까지(조기 종료) 미세 조정 최적화 프로세스를 실행합니다.
-5. 평가: 미세 조정된 모델의 성능을 실제 사용 사례에 대한 실제 예제로 구성된 별도의 테스트 세트에서 평가하여 실제 효율성을 추정합니다.
-6. 배포 및 모니터링: 만족스러운 결과가 나오면, 미세 조정된 모델을 새로운 입력값에 대한 추론에 배포할 수 있습니다. 개념의 변화(concept drift)를 파악하기 위해 시간이 지남에 따라 모델의 성능과 정확도를 모니터링하는 것이 중요합니다.
-
-### 데이터셋 거버넌스 구축
-
-1. 요구사항 분석시 데이터에 대해서도 체크
-   - 데이터의 종류
-   - 데이터의 수량
-   - 정답의 내용과 형식
-
-2. 기술팀과 기획팀의 협업
-   - 기획: 구체적인 요구사항과 사용자 시나리오를 제공
-   - 기술: 실현 가능성을 검토하고 필요한 데이터의 특성을 분석
-   - 데이터셋 구축 가이드라인을 작성.
-
-3. 데이터셋 정의
-   - 입력 데이터의 형식과 특성
-   - 출력 데이터의 형식과 요구사항
-   - 중간 처리 과정에서 필요한 데이터 형식
-
-4. 데이터 수집과 애플리케이션 설계/구현을 반복하면서 시스템을 개선
-
-### 데이터 증강 CRAFT 방법론
-
-CRAFT(Corpus Retrival and Augmentation for Fine-Tuning)는 소량의 데이만으로 특화된 대규모 데이터셋을 합성하고 증강하는 기술입니다.(LLM을 활용하여 데이터셋을 생성하는 방법론)
-핵심은 소수의 예시를 기반으로 대규모 데이터셋을 생성하는 것입니다. CRAFT는 다음과 같은 단계를 포함합니다:
-
-- 태스크의 기준을 명확히 정의
-- 임베딩 데이터 베이스 구축
-- 관련 문서 검색
-- LLM이 사용할 수 있는 형식으로 구조화
-- 합성 샘플 생성
-
-### 기타 용어
-
-- Fuzzy Matching: 유사한 샘플을 억제하는 기술
-- Data Deduplication: 중복된 샘플을 제거하는 기술
-- Data Filtering: 품질이 낮은 샘플을 제거하는 기술
-
-### 풀파인튜닝 vs LoRA vs QLoRA
-
-##### 풀 파인튜닝
-
-- 훈련 파라미터수: 100%, 모델의 전체 파라 미터를 학습시킨다
-- 추가 모델 저장 공간: 크다(모델 크기의 4~6배가 더 필요하다)
-- 메모리 요구사항: 매우 크다(예: 70B 모델 기준 최대 1TB)
-- 추론 속도 영향: 없다
-- 장점
-  - 모든 파라미터가 조정 가능하므로 높은 유연 성을 가지고 있다
-  - 최고 성능 잠재력이 가장 크다
-- 단점
-  - 자원을 많이 요구한 다(일반 개발자는 접 근이 어려움).
-  - 과적합 위험이 있고 학습속도가 느리다.
-
-##### LoRA
-
-- 훈련 파라미터수: 1% 미만만 학습시킨다(랭크 (rank) 값에 비례)
-- 추가 모델 저장 공간: 매우 작다(수 MB 내외의 LORA 가중치만 저장)
-- 메모리 요구사항: 중간 정도의 크기다(원본 모 델 + LORA 모듈)
-- 추론 속도 영향: 없다
-- 장점
-  - 매우 가벼운 학습(자원 절약)이다.
-  - 풀 파인튜닝에 준하는 성 능을 유지한다.
-  - 파라미터 수가 작으므로 추론 시 부담 적다.
-- 단점
-  - 베이스 모델을 필요로 한 다(배포 시 LORA 모듈과 병합하거나 병렬 사용).
-  - 랭크(r) 등 하이퍼파라미 터 조정이 필요하다.
-  - 랭크가 너무 낮으면 성능 이 저하된다.
-
-##### QLoRA
-
-- 훈련 파라미터수: 1% 미만만 학습시킨다 (LORA와 동일, 랭크(rank)값에 비례)
-- 추가 모델 저장 공간: 매우 작다(LORA 부분만 추가 저장, 베이스는 공유)
-- 메모리 요구사항: 매우 작다(4비트 양자화 모델 + LORA 모듈)
-- 추론 속도 영향: 거의 없다(양자화된 모델 속도에 좌우, 행렬 연산 병합 시 동일)
-- 장점
-  - 자원 사용을 극소화한 다(대형 모델도 단일 GPU로 파인튜닝 가능).
-  - 성능 손실이 거의 없다.
-  - LORA 장점을 모두 포 함한다.
-- 단점
-  - 양자화 지원 라이브러 리가 필요하다.
-  - 4비트 연산으로 구현 복잡도가 증가한다.
-  - 일부 정밀도가 저하되 어 성능의 차이가 날 수 있다.
-
-### 데이터셋 참고
-
-- https://commoncrawl.org/
-- https://www.microsoft.com/en-us/research/project/microsoft-research-open-data/
-- https://www.kaggle.com/datasets
-- https://huggingface.co/datasets
-- https://data.go.kr
-- https://aihub.or.kr
-
-
-
----
-url: /ai/61-FineTuning-sample.md
----
-
-# Fine-tuning 예제
-
-##### openapi튜닝 샘플
-
-```json
-{
-  "messages": [
-    { "role": "system", "content": "<放入系统讯息>" },
-    { "role": "user", "content": "<放入使用者的问题>" },
-    { "role": "assistant", "content": "<放入理想的回答>." }
-  ]
-}
-```
-
-## 데이터셋
-
-```json
-// lora/data/train.jsonl
-{
-  "messages": [
-    { "role": "user", "content": "How many districts and townships does the market cover" },
-    { "role": "assistant", "content": "The market covers **4 districts (가도)** and **8 townships (향)**." }
-  ]
-}
-```
-
-## 설치
-
-```sh
-pip install -U huggingface_hub
-export HF_ENDPOINT=https://hf-mirror.com
-hf download Qwen/Qwen2.5-0.5B-Instruct --local-dir qwen2.5-0.5B
-
-git clone git@github.com:ml-explore/mlx-examples.git
-
-pip install mlx-lm
-pip install transformers
-pip install torch
-pip install numpy
-
-## 모델 트레이닝
-mlx_lm.lora --model /Users/julong/Documents/model/qwen2.5-0.5B --train --data ./data
-
-## 모델 합병
-mlx_lm.fuse --model /Users/julong/Documents/model/qwen2.5-0.5B --adapter-path adapters --save-path /Users/julong/Documents/model/qwen2.5-0.5B-julong
-
-## 테스트 원본
-mlx_lm.generate --model /Users/julong/Documents/model/qwen2.5-0.5B --prompt "고양이는 어떤 동물인가요?"
-
-## 테스트 튜닝이후
-mlx_lm.generate --model /Users/julong/Documents/model/qwen2.5-0.5B-julong --prompt "고양이는 어떤 동물인가요?"
-
-## GGUF형식으로 변환 및
-git clone https://github.com/ggerganov/llama.cpp
-cd llama.cpp
-pip install -r requirements.txt
-./convert_hf_to_gguf.py --outtype f16 /Users/julong/Documents/model/qwen2.5-0.5B-julong --outfile /Users/julong/Documents/model/qwen2.5-0.5B-julong/qwen2.5-0.5B-julong.gguf
-
-## Ollama에 추가
-echo 'FROM /Users/julong/Documents/model/qwen2.5-0.5B-julong/qwen2.5-0.5B-julong.gguf' > /Users/julong/Documents/model/qwen2.5-0.5B-julong/Modelfile
-ollama create julong-model -f /Users/julong/Documents/model/qwen2.5-0.5B-julong/Modelfile
-```
-
 
 
 ---
