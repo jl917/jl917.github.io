@@ -109,6 +109,12 @@
   - 최소권한
   - 상황 및 시나리오 기반 안내
 
+### Role > system, user, assistant 구분
+
+- system: 규칙을 정하는 관리자 즉 AI의 행동 설명서
+- user: 질문하거나 요청하는 사람 즉 대화를 시작하는 사람
+- assistant: 답변하는 AI 즉 답변하는 역할
+
 ### OpenAI 官方推荐六大策略
 
 1. 指令要清晰 (write clear instructions)
