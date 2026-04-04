@@ -5,6 +5,8 @@
   "prompt/sample",
   "prompt/rag",
   "prompt/figma",
+  "prompt/rule",
+  "prompt/skill",
   "rag/rag",
   "rag/tech/clearly",
   "rag/tech/lexical",
