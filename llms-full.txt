@@ -9710,14 +9710,19 @@ my-awesome-skill/     # .cursor/skills
 ├── assets/           # 이미지, 데이터 파일 등
 ```
 
-### 참고
+### 추천 스킬 저장소
 
-https://github.com/anthropics/skills
-https://skillsmp.com/zh
-https://github.com/ComposioHQ/awesome-claude-skills
-https://github.com/remotion-dev/skills
-https://github.com/PleasePrompto/notebooklm-skill
+- https://github.com/anthropics/skills
+- https://skillsmp.com/zh
+- https://github.com/ComposioHQ/awesome-claude-skills
 
+## 추천 스킬
+
+- https://github.com/remotion-dev/skills
+- https://github.com/PleasePrompto/notebooklm-skill
+- https://github.com/VoltAgent/awesome-design-md/tree/main
+- https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
+- [frontend-design](https://github.com/anthropics/skills/blob/main/skills/frontend-design/SKILL.md)
 
 
 ---
