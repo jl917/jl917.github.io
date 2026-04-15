@@ -1,4 +1,4 @@
-# Deep Agents (Core capabilities(Core capabilities)
+# Deep Agents (Core capabilities)
 
 ## Planning capabilities
 

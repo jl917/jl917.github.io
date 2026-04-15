@@ -129,7 +129,7 @@
 - [Embedding](/ai/70-Embedding.md)
 - [LLM Judge](/ai/9990-LLMJudge.md)
 - [Deep Agents](/ai/tools/deepagents.md)
-- [Deep Agents (Core capabilities(Core capabilities)](/ai/tools/deepagents2.md)
+- [Deep Agents (Core capabilities)](/ai/tools/deepagents2.md)
 - [langchain](/ai/tools/langchain.md)
 - [LangGraph](/ai/tools/langgraph.md)
 - [ollama](/ai/tools/ollama.md)

@@ -151,6 +151,7 @@ const agent = createDeepAgent({
 - FileSystemBackend: 호스트에서 직접 셸 실행이 가능한 파일 시스템입니다. 파일 시스템 도구와 명령 실행 도구를 제공합니다.
 - LocalShellBackend: 로컬 머신의 파일 시스템입니다.
 - StoreBackend: 스레드 간에 유지되는 장기 저장소를 제공하는 파일 시스템입니다.
+- CompositeBackend: 파일 시스템에서 서로 다른 백엔드를 가리키도록 다양한 경로를 지정할 수 있는 유연한 백엔드입니다.
 
 ```javascript
 // By default we provide a StateBackend
@@ -173,8 +174,20 @@ const agent4 = createDeepAgent({
 
 // store backend
 const agent5 = createDeepAgent({
-  backend: new LocalShellBackend({ workingDirectory: "." }),
+  backend: new StoreBackend({ workingDirectory: "." }),
   store: new InMemoryStore(),
+});
+
+// composite backend
+const store = new InMemoryStore();
+const agent6 = createDeepAgent({
+  backend: new CompositeBackend(
+    new StateBackend(),
+    {
+      "/memories/": new StoreBackend(),
+    }
+  ),
+  store,
 });
 ```
 
