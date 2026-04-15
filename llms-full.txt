@@ -12619,6 +12619,466 @@ url: /ai/9990-LLMJudge.md
 
 
 ---
+url: /ai/tools/deepagents.md
+---
+
+# Deep Agents
+
+## Model
+
+모델 문자열 또는 초기화된 모델 인스턴스를 전달하세요.
+
+```javascript
+const agent = createDeepAgent({ model: "gpt-5.4" });
+const agent = createDeepAgent({
+  model: new ChatAnthropic({
+    model: "claude-sonnet-4-6",
+    maxRetries: 10, // Increase for unreliable networks (default: 6)
+    timeout: 120_000, // Increase timeout for slow connections
+  }),
+});
+```
+
+## Tools
+
+계획 수립, 파일 관리 및 하위 에이전트 생성에 필요한 내장 도구 외에도 사용자 지정 도구를 제공할 수 있습니다.
+
+```javascript
+const internetSearch = tool(
+  async ({
+    query,
+    maxResults = 5,
+    topic = "general",
+    includeRawContent = false,
+  }: {
+    query: string;
+    maxResults?: number;
+    topic?: "general" | "news" | "finance";
+    includeRawContent?: boolean;
+  }) => {
+    const tavilySearch = new TavilySearch({
+      maxResults,
+      tavilyApiKey: process.env.TAVILY_API_KEY,
+      includeRawContent,
+      topic,
+    });
+    return await tavilySearch._call({ query });
+  },
+  {
+    name: "internet_search",
+    description: "Run a web search",
+    schema: z.object({
+      query: z.string().describe("The search query"),
+      maxResults: z.number().optional().default(5),
+      topic: z
+        .enum(["general", "news", "finance"])
+        .optional()
+        .default("general"),
+      includeRawContent: z.boolean().optional().default(false),
+    }),
+  },
+);
+
+const agent = createDeepAgent({
+  tools: [internetSearch],
+});
+```
+
+## System Prompt
+
+Deep Agents에는 기본 시스템 프롬프트가 내장되어 있습니다. 기본 시스템 프롬프트에는 내장 계획 도구, 파일 시스템 도구 및 하위 에이전트 사용에 대한 자세한 지침이 포함되어 있습니다. 미들웨어가 파일 시스템 도구와 같은 특수 도구를 추가하면 해당 도구가 시스템 프롬프트에 추가됩니다.
+
+```javascript
+const researchInstructions =
+  `You are an expert researcher. ` + `Your job is to conduct thorough research, and then ` + `write a polished report.`;
+
+const agent = createDeepAgent({
+  systemPrompt: researchInstructions,
+});
+```
+
+## Middlewares
+
+기본적으로 Deep Agent는 다음과 같은 미들웨어에 접근할 수 있습니다.
+
+- TodoListMiddleware: 에이전트 작업 및 업무 구성을 위한 할 일 목록을 추적하고 관리합니다.
+- FilesystemMiddleware: 디렉터리 읽기, 쓰기 및 탐색과 같은 파일 시스템 작업을 처리합니다.
+- SubAgentMiddleware: 전문 에이전트에게 작업을 위임하기 위해 하위 에이전트를 생성하고 조정합니다.
+- SummarizationMiddleware: 대화가 길어질 경우 컨텍스트 제한을 준수하도록 메시지 기록을 요약합니다.
+- AnthropicPromptCachingMiddleware: Anthropic 모델을 사용할 때 중복 토큰 처리를 자동으로 줄입니다.
+- PatchToolCallsMiddleware: 도구 호출이 결과를 받기 전에 중단되거나 취소될 경우 메시지 기록을 자동으로 수정합니다.
+
+메모리, 스킬 또는 휴먼 인 더 루프를 사용하는 경우 다음 미들웨어도 포함됩니다.
+
+- MemoryMiddleware: memory 인수가 제공되면 세션 간에 대화 컨텍스트를 유지하고 검색합니다.
+- SkillsMiddleware: skills 인수가 제공되면 사용자 지정 스킬을 활성화합니다. 제공됨
+- HumanInTheLoopMiddleware: interruptOn 인수가 제공될 때 지정된 지점에서 사람의 승인 또는 입력을 위해 일시 ​​중지합니다.
+
+사전 구축된 미들웨어
+
+LangChain은 재시도, 대체 기능, 개인 식별 정보(PII) 감지 등 다양한 기능을 추가할 수 있는 사전 구축된 미들웨어를 제공합니다. 자세한 내용은 사전 구축된 미들웨어를 참조하세요.
+
+deepagents 패키지는 동일한 워크플로를 위한 createSummarizationMiddleware도 제공합니다. 자세한 내용은 요약을 참조하세요.
+
+공급자별 미들웨어
+특정 LLM 공급자에 최적화된 공급자별 미들웨어는 [공식 통합](https://docs.langchain.com/oss/javascript/integrations/middleware#official-integrations) 및 [커뮤니티 통합](https://docs.langchain.com/oss/javascript/integrations/middleware#community-integrations)을 참조하세요.
+
+custom middleware
+
+```javascript
+let callCount = 0;
+
+const logToolCallsMiddleware = createMiddleware({
+  name: "LogToolCallsMiddleware",
+  wrapToolCall: async (request, handler) => {
+    // Intercept and log every tool call - demonstrates cross-cutting concern
+    callCount += 1;
+    const toolName = request.toolCall.name;
+
+    console.log(`[Middleware] Tool call #${callCount}: ${toolName}`);
+    console.log(`[Middleware] Arguments: ${JSON.stringify(request.toolCall.args)}`);
+
+    // Execute the tool call
+    const result = await handler(request);
+
+    // Log the result
+    console.log(`[Middleware] Tool call #${callCount} completed`);
+
+    return result;
+  },
+});
+```
+
+## Subagents
+
+세부적인 작업을 분리하고 컨텍스트 과부하를 방지하려면 하위 에이전트를 사용
+
+```javascript
+const researchSubagent: SubAgent = {
+  name: "research-agent",
+  description: "Used to research more in depth questions",
+  systemPrompt: "You are a great researcher",
+  tools: [internetSearch],
+  model: "openai:gpt-5.2",  // Optional override, defaults to main agent model
+};
+const subagents = [researchSubagent];
+
+const agent = createDeepAgent({
+  model: "claude-sonnet-4-6",
+  subagents,
+});
+```
+
+## Backends
+
+- StateBacnend: 랭그래프 상태에 저장되는 임시 파일 시스템 백엔드입니다. 이 파일 시스템은 단일 스레드에 대해서만 유지됩니다.
+- FileSystemBackend: 호스트에서 직접 셸 실행이 가능한 파일 시스템입니다. 파일 시스템 도구와 명령 실행 도구를 제공합니다.
+- LocalShellBackend: 로컬 머신의 파일 시스템입니다.
+- StoreBackend: 스레드 간에 유지되는 장기 저장소를 제공하는 파일 시스템입니다.
+
+```javascript
+// By default we provide a StateBackend
+const agent = createDeepAgent();
+
+// Under the hood, it looks like
+const agent2 = createDeepAgent({
+  backend: new StateBackend(),
+});
+
+// filesystem backend
+const agent3 = createDeepAgent({
+  backend: new FilesystemBackend({ rootDir: ".", virtualMode: true }),
+});
+
+// localshell backend
+const agent4 = createDeepAgent({
+  backend: new LocalShellBackend({ workingDirectory: "." }),
+});
+
+// store backend
+const agent5 = createDeepAgent({
+  backend: new LocalShellBackend({ workingDirectory: "." }),
+  store: new InMemoryStore(),
+});
+```
+
+### Backend Sandboxes
+
+샌드박스는 에이전트 코드를 자체 파일 시스템과 셸 명령 실행 도구를 갖춘 격리된 환경에서 실행하는 특수 백엔드입니다. 딥 에이전트가 로컬 머신을 변경하지 않고 파일을 작성하고, 종속성을 설치하고, 명령을 실행하도록 하려면 샌드박스 백엔드를 사용하십시오.
+샌드박스는 딥 에이전트를 생성할 때 백엔드에 샌드박스 백엔드를 전달하여 구성합니다.
+
+```javascript
+// Create and initialize the sandbox
+const sandbox = await DenoSandbox.create({
+  memoryMb: 1024,
+  lifetime: "10m",
+});
+
+try {
+  const agent = createDeepAgent({
+    model: new ChatAnthropic({ model: "claude-opus-4-6" }),
+    systemPrompt: "You are a JavaScript coding assistant with sandbox access.",
+    backend: sandbox,
+  });
+
+  const result = await agent.invoke({
+    messages: [
+      {
+        role: "user",
+        content: "Create a simple HTTP server using Deno.serve and test it with curl",
+      },
+    ],
+  });
+} finally {
+  await sandbox.close();
+}
+```
+
+## Human-in-the-loop
+
+일부 도구 작업은 민감한 정보를 포함하므로 실행 전에 사람의 승인이 필요할 수 있습니다. 각 도구에 대한 승인 절차를 구성할 수 있습니다.
+
+```javascript
+// Checkpointer is REQUIRED for human-in-the-loop
+const checkpointer = new MemorySaver();
+
+const agent = createDeepAgent({
+  model: "claude-sonnet-4-6",
+  tools: [deleteFile, readFile, sendEmail],
+  interruptOn: {
+    delete_file: true, // Default: approve, edit, reject
+    read_file: false, // No interrupts needed
+    send_email: { allowedDecisions: ["approve", "reject"] }, // No editing
+  },
+  checkpointer, // Required!
+});
+```
+
+## Skills
+
+스킬을 사용하면 딥 에이전트에 새로운 기능과 전문 지식을 제공할 수 있습니다. 도구는 일반적으로 기본 파일 시스템 작업이나 계획과 같은 하위 수준 기능을 다루는 반면, 스킬에는 작업 완료 방법에 대한 자세한 지침, 참조 정보 및 템플릿과 같은 기타 자산이 포함될 수 있습니다. 이러한 파일은 에이전트가 현재 프롬프트에 스킬이 유용하다고 판단했을 때만 로드됩니다. 이러한 점진적 공개 방식을 통해 에이전트가 시작 시 고려해야 하는 토큰 및 컨텍스트의 양이 줄어듭니다.
+
+```javascript
+const agent = await createDeepAgent({
+  checkpointer,
+  // IMPORTANT: deepagents skill source paths are virtual (POSIX) paths relative to the backend root.
+  skills: ["/skills/"],
+});
+```
+
+## Memory
+
+AGENTS.md 파일을 사용하여 딥 에이전트에 추가적인 컨텍스트를 제공할 수 있습니다.
+딥 에이전트를 생성할 때 메모리 매개변수에 하나 이상의 파일 경로를 전달할 수 있습니다.
+
+```javascript
+const agent = await createDeepAgent({
+  memory: ["/AGENTS.md"],
+  checkpointer: checkpointer,
+});
+```
+
+## Structured output
+
+createDeepAgent() 호출 시 responseFormat 인수로 원하는 구조화된 출력 스키마를 전달할 수 있습니다. 모델이 구조화된 데이터를 생성하면, 해당 데이터는 캡처, 유효성 검사를 거쳐 에이전트 상태의 'structuredResponse' 키에 반환됩니다.
+
+```javascript
+const weatherReportSchema = z.object({
+  location: z.string().describe("The location for this weather report"),
+  temperature: z.number().describe("Current temperature in Celsius"),
+  condition: z.string().describe("Current weather condition (e.g., sunny, cloudy, rainy)"),
+  humidity: z.number().describe("Humidity percentage"),
+  windSpeed: z.number().describe("Wind speed in km/h"),
+  forecast: z.string().describe("Brief forecast for the next 24 hours"),
+});
+
+const agent = await createDeepAgent({
+  responseFormat: weatherReportSchema,
+  tools: [internetSearch],
+});
+```
+
+## MCP
+
+```javascript
+import { MultiServerMCPClient } from "@langchain/mcp-adapters";
+
+const client = new MultiServerMCPClient({
+  "Framelink MCP for Figma": {
+    command: "npx",
+    args: ["-y", "figma-developer-mcp", "--figma-api-key=", "--stdio"],
+  },
+});
+
+const tools = await client.getTools();
+```
+
+
+
+---
+url: /ai/tools/deepagents2.md
+---
+
+# Deep Agents (Core capabilities(Core capabilities)
+
+## Planning capabilities
+
+이 도구는 상담원이 구조화된 작업 목록을 관리하는 데 사용할 수 있는 write_todos 도구를 제공합니다.
+
+## Virtual filesystem
+
+다양한 플러그인 백엔드를 지원하는 구성 가능한 가상 파일 시스템을 제공합니다.
+가상 파일 시스템은 스킬, 메모리, 코드 실행 및 컨텍스트 관리와 같은 여러 다른 하네스 기능에서 사용됩니다. 또한 Deep Agents용 사용자 지정 도구 및 미들웨어를 구축할 때 파일 시스템을 사용할 수도 있습니다.
+
+다음과 같은 파일 시스템 작업을 지원합니다.
+
+- ls: 디렉터리의 파일 목록을 메타데이터(크기, 수정 시간)와 함께 표시합니다.
+- read_file: 파일 내용을 줄 번호와 함께 읽습니다. 대용량 파일의 경우 오프셋/제한을 지원합니다. 또한 텍스트가 아닌 파일(이미지, 비디오, 오디오, 문서)의 경우 멀티모달 콘텐츠 블록을 반환합니다. 지원되는 확장자는 아래를 참조하십시오.
+- write_file: 새 파일을 생성합니다.
+- edit_file: 파일에서 정확한 문자열 바꾸기를 수행합니다(전역 바꾸기 모드 사용).
+- glob: 특정 패턴(예: \*_/_.py)과 일치하는 파일을 찾습니다.
+- grep: 여러 출력 모드(파일만, 컨텍스트와 함께 내용, 개수)로 파일 내용을 검색합니다.
+- execute: 환경에서 셸 명령을 실행합니다(샌드박스 백엔드에서만 사용 가능).
+
+## Filesystem permissions
+
+에이전트가 읽거나 쓸 수 있는 파일 및 디렉터리를 제어하는 ​​선언적 권한 규칙을 지원합니다. 권한은 위에 나열된 내장 파일 시스템 도구에 적용되며, 선언 순서대로 평가되고 먼저 일치하는 규칙이 우선합니다.
+
+작동 방식:
+
+- 에이전트를 생성할 때 permissions=에 규칙 목록을 전달합니다.
+- 각 규칙은 작업("읽기", "쓰기"), 경로(글로브 패턴) 및 모드("허용" 또는 "거부")를 지정합니다.
+- 먼저 일치하는 규칙이 우선합니다. 일치하는 규칙이 없으면 작업이 허용됩니다.
+
+유용한 점:
+
+- 에이전트의 접근 권한을 특정 디렉터리(예: /workspace/)로 제한합니다.
+- 민감한 파일(예: .env, 자격 증명)을 보호합니다.
+- 하위 에이전트에 상위 에이전트보다 더 좁은 접근 권한을 부여합니다.
+
+권한은 execute 도구를 통해 임의의 명령 실행을 지원하는 샌드박스 백엔드에는 적용되지 않습니다.
+
+## Task delegation (subagents)
+
+이 기능을 통해 메인 에이전트는 격리된 다단계 작업을 위한 임시 "subagents"를 생성할 수 있습니다.
+
+유용성:
+
+- 컨텍스트 격리 - 서브에이전트의 작업이 메인 에이전트의 컨텍스트를 복잡하게 만들지 않습니다.
+- 병렬 실행 - 여러 서브에이전트가 동시에 실행될 수 있습니다.
+- 특화 - 서브에이전트는 서로 다른 도구/구성을 가질 수 있습니다.
+- 토큰 효율성 - 대규모 하위 작업 컨텍스트가 단일 결과로 압축됩니다.
+
+작동 방식:
+
+- 메인 에이전트는 작업 도구를 가지고 있습니다.
+- 호출되면 자체 컨텍스트를 가진 새로운 에이전트 인스턴스를 생성합니다.
+- 서브에이전트는 완료될 때까지 자율적으로 실행됩니다.
+- 메인 에이전트에 단일 최종 보고서를 반환합니다.
+- 서브에이전트는 상태를 저장하지 않습니다(여러 메시지를 다시 보낼 수 없음).
+
+기본 서브에이전트:
+
+- "범용" 서브에이전트가 자동으로 제공됩니다.
+- 기본적으로 파일 시스템 도구를 포함합니다.
+- 추가 도구/미들웨어로 사용자 정의할 수 있습니다.
+
+사용자 정의 서브에이전트:
+
+- 특정 도구를 사용하는 특화된 서브에이전트를 정의합니다.
+- 예: 코드 검토자, 웹 연구자, 테스트 실행자
+- subagents 매개변수를 통해 구성합니다.
+
+## Context and token management
+
+심층 에이전트가 필요한 정보를 유지하면서 토큰 제한 내에서 장시간 실행되는 작업을 처리할 수 있도록 컨텍스트를 관리합니다.
+
+작동 방식:
+
+- 입력 컨텍스트 — 시스템 프롬프트, 메모리, 스킬 및 도구 프롬프트는 에이전트가 시작 시 알고 있는 정보를 구성합니다.
+- 압축 — 내장된 오프로딩 및 요약 기능을 통해 작업 진행에 따라 컨텍스트를 윈도우 제한 내에 유지합니다.
+- 격리 — 하위 에이전트는 무거운 작업을 격리하고 결과만 반환합니다(작업 위임 참조).
+- 장기 메모리 — 가상 파일 시스템을 통해 스레드 간에 영구 저장소를 제공합니다.
+
+유용성:
+
+- 단일 컨텍스트 윈도우를 초과하는 다단계 작업을 지원합니다.
+- 수동으로 다듬지 않고도 가장 관련성이 높은 정보를 범위 내에 유지합니다.
+- 자동 요약 및 오프로딩을 통해 토큰 사용량을 줄입니다.
+
+## Code execution
+
+샌드박스 백엔드를 사용하면, 에이전트가 격리된 환경에서 셸 명령을 실행할 수 있도록 하는 실행 도구가 하네스에 노출됩니다. 이를 통해 에이전트는 작업의 일부로 종속성을 설치하고, 스크립트를 실행하고, 코드를 실행할 수 있습니다.
+
+작동 방식:
+
+- 샌드박스 백엔드는 SandboxBackendProtocolV2를 구현합니다. 샌드박스 백엔드가 감지되면 하네스는 에이전트가 사용할 수 있는 도구에 실행 도구를 추가합니다.
+- 샌드박스 백엔드가 없으면 에이전트는 파일 시스템 도구(read_file, write_file 등)만 사용할 수 있으며 명령을 실행할 수 없습니다.
+- 실행 도구는 표준 출력/표준 오류를 통합하여 반환하고, 종료 코드를 반환하며, 큰 출력은 잘라냅니다(에이전트가 점진적으로 읽을 수 있도록 파일에 저장).
+
+유용한 이유:
+
+- 보안 - 코드가 격리된 환경에서 실행되어 호스트 시스템을 에이전트 작업으로부터 보호합니다.
+- 깔끔한 환경 - 로컬 설정 없이 특정 종속성 또는 OS 구성을 사용할 수 있습니다.
+- 재현성 - 팀 전체에서 일관된 실행 환경을 제공합니다.
+- 설정, 공급자 및 파일 전송 API에 대한 자세한 내용은 샌드박스를 참조하세요.
+
+## Human-in-the-loop
+
+지정된 도구 호출 시 에이전트 실행을 일시 중지하여 사용자의 승인 또는 수정을 요청할 수 있습니다. 이 기능은 interrupt_on 매개변수를 통해 선택적으로 사용할 수 있습니다.
+
+구성:
+
+- create_deep_agent 함수에 interrupt_on 매개변수를 전달하고 도구 이름과 인터럽트 구성을 매핑합니다.
+- 예: interrupt_on={"edit_file": True}는 모든 편집 전에 에이전트 실행을 일시 중지합니다.
+- 프롬프트가 표시될 때 승인 메시지를 제공하거나 도구 입력을 수정할 수 있습니다.
+
+유용한 점:
+
+- 파괴적인 작업에 대한 안전 장치
+- 비용이 많이 드는 API 호출 전 사용자 확인
+- 대화형 디버깅 및 안내
+
+## Skills
+
+에이전트에 특화된 워크플로와 도메인 지식을 제공하는 스킬을 지원합니다.
+
+작동 방식:
+
+- 스킬은 에이전트 스킬 표준을 따릅니다.
+- 각 스킬은 지침과 메타데이터가 포함된 SKILL.md 파일이 있는 디렉터리입니다.
+- 스킬에는 추가 스크립트, 참조 문서, 템플릿 및 기타 리소스가 포함될 수 있습니다.
+- 스킬은 점진적 공개 방식을 사용합니다. 즉, 에이전트가 현재 작업에 유용하다고 판단할 때만 로드됩니다.
+- 에이전트는 시작 시 각 SKILL.md 파일의 프런트매터를 읽은 다음 필요할 때 전체 스킬 콘텐츠를 검토합니다.
+
+유용한 이유:
+
+- 필요할 때만 관련 스킬을 로드하여 토큰 사용량을 줄입니다.
+- 추가 컨텍스트와 함께 기능을 더 큰 작업으로 묶습니다.
+- 시스템 프롬프트를 복잡하게 만들지 않고 전문적인 지식을 제공합니다.
+- 모듈식으로 재사용 가능한 에이전트 기능을 구현할 수 있습니다.
+
+## Memory
+
+이 기능은 대화 전반에 걸쳐 딥 에이전트에 추가 컨텍스트를 제공하는 영구 메모리 파일을 지원합니다. 이러한 파일에는 일반적으로 코딩 스타일, 기본 설정, 규칙 및 지침이 포함되어 에이전트가 코드베이스를 이해하고 사용자의 기본 설정을 따르는 데 도움이 됩니다.
+
+작동 방식:
+
+- AGENTS.md 파일을 사용하여 영구 컨텍스트를 제공합니다.
+- 메모리 파일은 항상 로드됩니다(점진적 공개를 사용하는 스킬과 다름).
+- 에이전트를 생성할 때 메모리 매개변수에 하나 이상의 파일 경로를 전달합니다.
+- 파일은 에이전트의 백엔드(StateBackend, StoreBackend 또는 FilesystemBackend)에 저장됩니다.
+- 에이전트는 상호 작용, 피드백 및 식별된 패턴을 기반으로 메모리를 업데이트할 수 있습니다.
+
+유용한 이유:
+
+- 대화마다 다시 지정할 필요가 없는 영구 컨텍스트를 제공합니다.
+- 사용자 기본 설정, 프로젝트 지침 또는 도메인 지식을 저장하는 데 유용합니다.
+- 에이전트가 항상 사용할 수 있으므로 일관된 동작을 보장합니다.
+
+
+
+---
 url: /ai/tools/langchain.md
 ---
 
@@ -12970,6 +13430,184 @@ const retrievedDocs = await retriever.invoke("What are mitochondria made of?");
 - https://zhuanlan.zhihu.com/p/1975217069487313790
 - [基于LangChain的RAG开发教程（二)](https://zhuanlan.zhihu.com/p/706889931)
 - [LLM(大语言模型)「Agent」开发教程-LangChain（三）](https://zhuanlan.zhihu.com/p/712459598)
+
+
+
+---
+url: /ai/tools/langgraph.md
+---
+
+# LangGraph
+
+LangGraph에서 에이전트를 구현하려면 일반적으로 다음 다섯 단계를 따릅니다.
+
+### 1단계: 워크플로를 개별 단계로 구성하기
+
+먼저 프로세스의 각 단계를 명확히 구분합니다. 각 단계는 노드(특정 작업을 수행하는 함수)가 됩니다. 그런 다음 이러한 단계들이 서로 어떻게 연결되는지 스케치합니다.
+
+```mermaid
+flowchart TD
+    A[START] --> B[Read Email]
+    B --> C[Classify Intent]
+
+    C -.-> D[Doc Search]
+    C -.-> E[Bug Track]
+    C -.-> F[Human Review]
+
+    D --> G[Draft Reply]
+    E --> G
+    F --> G
+
+    G -.-> H[Human Review]
+    G -.-> I[Send Reply]
+
+    H --> J[END]
+    I --> J[END]
+
+    classDef process fill:#DBEAFE,stroke:#2563EB,stroke-width:2px,color:#1E3A8A
+    class A,B,C,D,E,F,G,H,I,J process
+```
+
+이 다이어그램의 화살표는 가능한 경로를 보여주지만, 실제로 어떤 경로를 선택할지는 각 노드 내부에서 결정됩니다. 이제 워크플로의 구성 요소를 파악했으니 각 노드가 수행해야 하는 작업을 살펴보겠습니다.
+
+- 이메일 읽기: 이메일 내용을 추출하고 분석합니다.
+- 의도 분류: LLM을 사용하여 긴급도와 주제를 분류한 후 적절한 조치로 연결합니다.
+- 문서 검색: 지식 기반에서 관련 정보를 검색합니다.
+- 버그 추적: 추적 시스템에서 문제를 생성하거나 업데이트합니다.
+- 답변 초안 작성: 적절한 답변을 생성합니다.
+- 담당자 검토: 승인 또는 처리를 위해 담당자에게 전달합니다.
+- 답변 전송: 이메일 답변을 발송합니다.
+
+### 2단계: 각 단계에서 수행해야 할 작업을 파악합니다.
+
+그래프의 각 노드에 대해 해당 노드가 나타내는 작업 유형과 제대로 작동하는 데 필요한 컨텍스트를 결정합니다.
+
+- LLM 단계
+  단계에서 이해, 분석, 텍스트 생성 또는 추론 결정이 필요한 경우:
+
+- 데이터 단계
+  외부 소스에서 정보를 가져와야 하는 단계:
+
+- 실행 단계
+  단계에서 외부 작업을 수행해야 하는 경우:
+
+- 사용자 입력 단계
+  사람의 개입이 필요한 단계:
+
+### 3단계: 상태 설계
+
+상태는 에이전트의 모든 노드가 접근할 수 있는 공유 메모리입니다. 에이전트가 프로세스를 진행하면서 학습하고 결정하는 모든 내용을 기록하는 데 사용하는 노트북이라고 생각하면 됩니다.
+
+상태에 무엇이 속해야 할까요?
+여러 단계에 걸쳐 유지되어야 하는 데이터는 저장하고, 다른 데이터에서 파생할 수 있는 데이터는 필요할때 계산합니다.
+
+이메일 에이전트의 경우 다음과 같은 정보를 추적해야 합니다.
+
+- 원본 이메일 및 발신자 정보(나중에 복구할 수 없음)
+- 분류 결과(여러 하위 노드에서 필요함)
+- 검색 결과 및 고객 데이터(다시 가져오는 데 비용이 많이 듦)
+- 초안 응답(검토 과정 동안 유지되어야 함)
+- 실행 메타데이터(디버깅 및 복구용)
+
+상태는 원시 데이터로 유지하고, 프롬프트는 필요할 때만 포맷하세요.
+핵심 원칙은 상태에 포맷되지 않은 원시 데이터를 저장해야 한다는 것입니다. 프롬프트는 필요할 때 노드 내부에서 포맷하세요.
+이러한 분리의 이점은 다음과 같습니다.
+
+- 각 노드는 필요에 따라 동일한 데이터를 서로 다른 형식으로 포맷할 수 있습니다.
+- 상태 스키마를 수정하지 않고도 프롬프트 템플릿을 변경할 수 있습니다.
+- 디버깅이 더 명확해집니다. 각 노드가 어떤 데이터를 수신했는지 정확하게 확인할 수 있습니다.
+- 기존 상태를 손상시키지 않고 에이전트를 발전시킬 수 있습니다.
+
+### 4단계: 노드 구현
+
+이제 각 단계를 함수로 구현합니다. LangGraph의 노드는 현재 상태를 입력받아 상태를 업데이트하는 JavaScript 함수입니다.
+
+오류 유형에 따라 적절한 처리 전략이 필요합니다.
+
+- 시스템(자동)
+  - 일시적 오류(네트워크 문제, 속도 제한)
+  - 재시도 정책: 재시도 시 해결되는 일시적 오류
+
+  ```javascript
+  import type { RetryPolicy } from "@langchain/langgraph";
+
+    workflow.addNode(
+    "searchDocumentation",
+    searchDocumentation,
+    {
+        retryPolicy: { maxAttempts: 3, initialInterval: 1.0 },
+    },
+    );
+  ```
+
+- LLM
+  - LLM 복구 가능 오류(도구 오류, 구문 분석 문제)
+  - 오류를 상태에 저장하고 반복 처리
+  - LLM이 오류를 확인하고 접근 방식을 조정
+
+  ```javascript
+  import { Command, GraphNode } from "@langchain/langgraph";
+
+    const executeTool: GraphNode<typeof State> = async (state, config) => {
+    try {
+        const result = await runTool(state.toolCall);
+        return new Command({
+        update: { toolResult: result },
+        goto: "agent",
+        });
+    } catch (error) {
+        // Let the LLM see what went wrong and try again
+        return new Command({
+        update: { toolResult: `Tool error: ${error}` },
+        goto: "agent"
+        });
+    }
+    };
+  ```
+
+- 사용자 수정
+  - 사용자 수정 가능 오류(정보 누락, 불명확한 지침)
+  - interrupt() 함수를 사용하여 일시 중지
+  - 진행하려면 사용자 입력 필요
+
+  ```javascript
+  import { Command, GraphNode, interrupt } from "@langchain/langgraph";
+
+    const lookupCustomerHistory: GraphNode<typeof State> = async (state, config) => {
+    if (!state.customerId) {
+        const userInput = interrupt({
+        message: "Customer ID needed",
+        request: "Please provide the customer's account ID to look up their subscription history",
+        });
+        return new Command({
+        update: { customerId: userInput.customerId },
+        goto: "lookupCustomerHistory",
+        });
+    }
+    // Now proceed with the lookup
+    const customerData = await fetchCustomerHistory(state.customerId);
+    return new Command({
+        update: { customerHistory: customerData },
+        goto: "draftResponse",
+    });
+    }
+  ```
+
+- 개발자 수정
+  - 예기치 않은 오류
+  - 디버깅이 필요한 알 수 없는 문제
+
+  ```javascript
+  import { Command, GraphNode } from "@langchain/langgraph";
+
+    const sendReply: GraphNode<typeof EmailAgentState> = async (state, config) => {
+    try {
+        await emailService.send(state.responseText);
+    } catch (error) {
+        throw error;  // Surface unexpected errors
+    }
+    }
+  ```
 
 
 
