@@ -31,5 +31,7 @@
   "evaluation",
   "Embodied",
   "tools/ollama",
+  "tools/deepagents",
+  "tools/deepagents2",
   "llmjudge"
 ]
