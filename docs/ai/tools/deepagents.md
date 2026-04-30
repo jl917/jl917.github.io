@@ -15,6 +15,27 @@ const agent = createDeepAgent({
 });
 ```
 
+```javascript
+// initChatModel
+import { initChatModel } from "langchain/chat_models/universal";
+import { createDeepAgent } from "deepagents";
+
+const model = await initChatModel("google_genai:gemini-3.1-pro-preview", {
+  reasoningEffort: "medium",
+});
+const agent = createDeepAgent({ model });
+
+// Provider package
+import { ChatGoogle } from "@langchain/google";
+import { createDeepAgent } from "deepagents";
+
+const model = new ChatGoogle({
+  model: "gemini-3.1-pro-preview",
+  reasoningEffort: "medium",
+});
+const agent = createDeepAgent({ model });
+```
+
 ## Tools
 
 계획 수립, 파일 관리 및 하위 에이전트 생성에 필요한 내장 도구 외에도 사용자 지정 도구를 제공할 수 있습니다.
@@ -181,12 +202,9 @@ const agent5 = createDeepAgent({
 // composite backend
 const store = new InMemoryStore();
 const agent6 = createDeepAgent({
-  backend: new CompositeBackend(
-    new StateBackend(),
-    {
-      "/memories/": new StoreBackend(),
-    }
-  ),
+  backend: new CompositeBackend(new StateBackend(), {
+    "/memories/": new StoreBackend(),
+  }),
   store,
 });
 ```

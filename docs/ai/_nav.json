@@ -30,6 +30,7 @@
   "agent/skills",
   "evaluation",
   "Embodied",
+  "tools/claude",
   "tools/ollama",
   "tools/deepagents",
   "tools/deepagents2",
