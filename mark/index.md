@@ -61,3 +61,7 @@
 - https://www.npmjs.com/package/keytar
 - https://www.npmjs.com/package/archiver
 - https://www.npmjs.com/package/wcwidth
+
+# client app
+
+- https://github.com/PerryTS/perry
