@@ -10963,7 +10963,7 @@ my-awesome-skill/     # .cursor/skills
 ├── assets/           # 이미지, 데이터 파일 등
 ```
 
-## SILL.md 템플릿
+## SKILL.md 템플릿
 
 ```md
 ---
