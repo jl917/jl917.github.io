@@ -104,6 +104,7 @@
 - [Figma](/ai/02-prompt/04-figma.md)
 - [Rule](/ai/02-prompt/05-rule.md)
 - [Skill](/ai/02-prompt/06-skill.md)
+- [claude.md](/ai/02-prompt/07-claude.md)
 - [Large Language Model 大模型](/ai/03-largeLanguageModel/01-largeLanguageModel.md)
 - [Retrieval Augmented Generation](/ai/04-rag/01-rag.md)
 - [Clearly](/ai/04-rag/tech/01-clearly.md)
