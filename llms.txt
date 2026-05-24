@@ -122,7 +122,6 @@
 - [Model Context Protocol (MCP)](/ai/05-agent/04-mcp.md)
 - [Agent Communication Protocol (ACP)](/ai/05-agent/05-acp.md)
 - [Agent to Agent](/ai/05-agent/06-a2a.md)
-- [Skills](/ai/05-agent/07-skills.md)
 - [Fine-tuning 微调](/ai/06-fineTuning/01-fineTuning.md)
 - [Fine-tuning 예제](/ai/06-fineTuning/02-fineTuning-sample.md)
 - [평가](/ai/100-Evaluation.md)
