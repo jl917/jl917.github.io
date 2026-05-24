@@ -90,4 +90,7 @@ getWeather(city);
 - https://github.com/PleasePrompto/notebooklm-skill
 - https://github.com/VoltAgent/awesome-design-md/tree/main
 - https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
-- [frontend-design](https://github.com/anthropics/skills/blob/main/skills/frontend-design/SKILL.md)
+- https://github.com/anthropics/skills/blob/main/skills/frontend-design/SKILL.md
+- https://github.com/garrytan/gstack/tree/main
+- https://github.com/obra/superpowers
+- https://github.com/code-yeongyu/oh-my-openagent

@@ -28,7 +28,6 @@
   "agent/mcp",
   "agent/acp",
   "agent/a2a",
-  "agent/skills",
   "evaluation",
   "Embodied",
   "tools/claude",
