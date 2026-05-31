@@ -9,8 +9,8 @@
 <script defer src="/static/js/styles.d9c802bf.js"></script>
 <script defer src="/static/js/lib-react.b98d9bb2.js"></script>
 <script defer src="/static/js/lib-router.eb186258.js"></script>
-<script defer src="/static/js/2784.a8f4ae83.js"></script>
-<script defer src="/static/js/index.23785325.js"></script>
+<script defer src="/static/js/5725.a93c4a6b.js"></script>
+<script defer src="/static/js/index.045b8ff0.js"></script>
 <meta http equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-beta.21">
 <link rel="icon" href="/favicon.png">
@@ -120,7 +120,142 @@
 <li class="[&amp;:not(:first-child)]:rp-mt-2">검증 명령어</li>
 <li class="[&amp;:not(:first-child)]:rp-mt-2">테스트 명령어</li>
 </ul>
-<p class="rp-my-4 rp-leading-7">AI가 별도 질문 없이 바로 실행할 수 있도록 실제 사용 중인 명령어를 모두 작성해주세요.</p><!--/$--></div><div class="rspress-doc-footer"><footer class="rp-mt-8"><div class="xs:rp-flex rp-pb-5 rp-px-2 rp-justify-end rp-items-center"><div class="rp-flex rp-text-sm rp-text-text-2 rp-leading-6 sm:rp-leading-8 rp-font-medium"><p>Last Updated<!-- -->: <span>2026/5/24 01:09:42</span></p></div></div><div class="rp-flex rp-flex-col"></div><div class="rp-flex rp-flex-col sm:rp-flex-row sm:rp-justify-around rp-gap-4 rp-pt-6"><div class="prev_c92d1 rp-flex rp-flex-col"><a href="/ai/02-prompt/06-skill.html" class="link_a7cea pager-link_e0d2d"><span class="desc_dcc01">Previous Page</span><span class="title_a3acb">Skill</span></a></div><div class="next_c11be rp-flex rp-flex-col"><a href="/ai/03-largeLanguageModel/01-largeLanguageModel.html" class="link_a7cea pager-link_e0d2d next_ad355"><span class="desc_dcc01">Next Page</span><span class="title_a3acb">Large Language Model 大模型</span></a></div></div></footer></div></div><div class="aside-container_bc5fa"></div></div></div></div></section></div>
+<p class="rp-my-4 rp-leading-7">AI가 별도 질문 없이 바로 실행할 수 있도록 실제 사용 중인 명령어를 모두 작성해주세요.</p>
+<h2 id="11-api-아키텍처-및-통신-규칙" class="rspress-doc-outline rp-mt-12 rp-mb-6 rp-pt-8 rp-text-2xl rp-tracking-tight rp-border-t rp-border-divider-light title_fb7eb"><a class="link_a7cea header-anchor link_a9ef4 inline-link_f855c" aria-hidden="true" href="#11-api-아키텍처-및-통신-규칙">#</a>11. API 아키텍처 및 통신 규칙</h2>
+<p class="rp-my-4 rp-leading-7">AI가 API 계층을 안전하게 이해하고 수정할 수 있도록 분석해주세요.</p>
+<p class="rp-my-4 rp-leading-7">반드시 포함할 핵심 내용:</p>
+<ul class="rp-list-disc rp-pl-5 rp-my-4 rp-leading-7">
+<li class="[&amp;:not(:first-child)]:rp-mt-2">API 계층 구조</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">API 클라이언트 구성 방식</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">인증 및 인가 흐름</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">API 요청/응답 규격</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">에러 처리 방식</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">Retry 정책</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">캐싱 전략</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">API 버전 관리 정책</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">공통 Request/Response 타입 위치</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">API 추가 시 따라야 하는 규칙</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">실제 코드 기반으로 작성해주세요.</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">추측하지 말고 확인된 내용만 기록해주세요.</li>
+</ul>
+<h2 id="12-데이터-모델-및-데이터-흐름" class="rspress-doc-outline rp-mt-12 rp-mb-6 rp-pt-8 rp-text-2xl rp-tracking-tight rp-border-t rp-border-divider-light title_fb7eb"><a class="link_a7cea header-anchor link_a9ef4 inline-link_f855c" aria-hidden="true" href="#12-데이터-모델-및-데이터-흐름">#</a>12. 데이터 모델 및 데이터 흐름</h2>
+<p class="rp-my-4 rp-leading-7">AI가 비즈니스 데이터를 정확하게 이해할 수 있도록 분석해주세요.</p>
+<p class="rp-my-4 rp-leading-7">반드시 포함할 핵심 내용:</p>
+<ul class="rp-list-disc rp-pl-5 rp-my-4 rp-leading-7">
+<li class="[&amp;:not(:first-child)]:rp-mt-2">주요 엔티티 목록</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">엔티티 간 관계</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">데이터 저장 구조</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">데이터 생성/수정/삭제 흐름</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">주요 비즈니스 데이터 책임</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">데이터 검증 규칙</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">데이터 무결성 유지 방식</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">마이그레이션 전략</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">실제 스키마 기반 분석</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">확인되지 않은 내용은 &quot;확인 필요&quot;로 명시</li>
+</ul>
+<h2 id="13-ai-작업-원칙-및-개발-워크플로우" class="rspress-doc-outline rp-mt-12 rp-mb-6 rp-pt-8 rp-text-2xl rp-tracking-tight rp-border-t rp-border-divider-light title_fb7eb"><a class="link_a7cea header-anchor link_a9ef4 inline-link_f855c" aria-hidden="true" href="#13-ai-작업-원칙-및-개발-워크플로우">#</a>13. AI 작업 원칙 및 개발 워크플로우</h2>
+<p class="rp-my-4 rp-leading-7">이 프로젝트에서 AI Agent가 반드시 따라야 하는 작업 규칙을 작성해주세요.</p>
+<p class="rp-my-4 rp-leading-7">반드시 포함할 핵심 내용:</p>
+<h3 id="작업-원칙" class="rspress-doc-outline rp-mt-10 rp-mb-2 rp-leading-7 rp-text-xl title_fb7eb"><a class="link_a7cea header-anchor link_a9ef4 inline-link_f855c" aria-hidden="true" href="#작업-원칙">#</a>작업 원칙</h3>
+<ul class="rp-list-disc rp-pl-5 rp-my-4 rp-leading-7">
+<li class="[&amp;:not(:first-child)]:rp-mt-2">기존 구현 패턴을 우선 따른다.</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">신규 라이브러리 추가 전 기존 대체 수단을 먼저 검토한다.</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">동일 기능을 중복 구현하지 않는다.</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">기존 컴포넌트 재사용을 우선한다.</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">기존 API를 우선 활용한다.</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">any 사용을 금지한다.</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">타입 우회를 금지한다.</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">하드코딩을 금지한다.</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">임시 Mock 데이터 사용을 금지한다.</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">TODO만 남기고 작업 종료하지 않는다.</li>
+</ul>
+<h3 id="작업-절차" class="rspress-doc-outline rp-mt-10 rp-mb-2 rp-leading-7 rp-text-xl title_fb7eb"><a class="link_a7cea header-anchor link_a9ef4 inline-link_f855c" aria-hidden="true" href="#작업-절차">#</a>작업 절차</h3>
+<ul class="rp-list-disc rp-pl-5 rp-my-4 rp-leading-7">
+<li class="[&amp;:not(:first-child)]:rp-mt-2">관련 코드 탐색</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">기존 패턴 확인</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">영향 범위 분석</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">구현</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">테스트 작성</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">타입 검사</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">Lint 검사</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">문서 업데이트</li>
+</ul>
+<h3 id="코드-수정-전-체크리스트" class="rspress-doc-outline rp-mt-10 rp-mb-2 rp-leading-7 rp-text-xl title_fb7eb"><a class="link_a7cea header-anchor link_a9ef4 inline-link_f855c" aria-hidden="true" href="#코드-수정-전-체크리스트">#</a>코드 수정 전 체크리스트</h3>
+<ul class="rp-list-disc rp-pl-5 rp-my-4 rp-leading-7">
+<li class="[&amp;:not(:first-child)]:rp-mt-2">기존 유사 기능 존재 여부</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">공통 컴포넌트 활용 가능 여부</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">공통 훅 활용 가능 여부</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">공통 유틸 활용 가능 여부</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">API 재사용 가능 여부</li>
+</ul>
+<h2 id="14-보안-및-민감-영역-보호-규칙" class="rspress-doc-outline rp-mt-12 rp-mb-6 rp-pt-8 rp-text-2xl rp-tracking-tight rp-border-t rp-border-divider-light title_fb7eb"><a class="link_a7cea header-anchor link_a9ef4 inline-link_f855c" aria-hidden="true" href="#14-보안-및-민감-영역-보호-규칙">#</a>14. 보안 및 민감 영역 보호 규칙</h2>
+<p class="rp-my-4 rp-leading-7">AI가 시스템 핵심 영역을 무분별하게 수정하지 않도록 작성해주세요.</p>
+<p class="rp-my-4 rp-leading-7">반드시 포함할 핵심 내용:</p>
+<h3 id="수정-금지-영역" class="rspress-doc-outline rp-mt-10 rp-mb-2 rp-leading-7 rp-text-xl title_fb7eb"><a class="link_a7cea header-anchor link_a9ef4 inline-link_f855c" aria-hidden="true" href="#수정-금지-영역">#</a>수정 금지 영역</h3>
+<ul class="rp-list-disc rp-pl-5 rp-my-4 rp-leading-7">
+<li class="[&amp;:not(:first-child)]:rp-mt-2">인증(Authentication)</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">인가(Authorization)</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">Session 처리</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">JWT 처리</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">OAuth 처리</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">RBAC 정책</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">결제 로직</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">개인정보 처리 로직</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">암호화 로직</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">보안 미들웨어</li>
+</ul>
+<h3 id="승인-필요-작업" class="rspress-doc-outline rp-mt-10 rp-mb-2 rp-leading-7 rp-text-xl title_fb7eb"><a class="link_a7cea header-anchor link_a9ef4 inline-link_f855c" aria-hidden="true" href="#승인-필요-작업">#</a>승인 필요 작업</h3>
+<p class="rp-my-4 rp-leading-7">다음 작업은 반드시 사전 승인 후 진행:</p>
+<ul class="rp-list-disc rp-pl-5 rp-my-4 rp-leading-7">
+<li class="[&amp;:not(:first-child)]:rp-mt-2">인증 방식 변경</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">권한 체계 변경</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">DB 스키마 변경</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">API Contract 변경</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">공용 인터페이스 변경</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">외부 서비스 교체</li>
+</ul>
+<h3 id="보안-규칙" class="rspress-doc-outline rp-mt-10 rp-mb-2 rp-leading-7 rp-text-xl title_fb7eb"><a class="link_a7cea header-anchor link_a9ef4 inline-link_f855c" aria-hidden="true" href="#보안-규칙">#</a>보안 규칙</h3>
+<ul class="rp-list-disc rp-pl-5 rp-my-4 rp-leading-7">
+<li class="[&amp;:not(:first-child)]:rp-mt-2">Secret 하드코딩 금지</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">환경변수 우선 사용</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">민감 정보 로그 출력 금지</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">개인정보 저장 규칙 준수</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">보안 설정 임의 비활성화 금지</li>
+</ul>
+<h2 id="15-성능-및-최적화-기준" class="rspress-doc-outline rp-mt-12 rp-mb-6 rp-pt-8 rp-text-2xl rp-tracking-tight rp-border-t rp-border-divider-light title_fb7eb"><a class="link_a7cea header-anchor link_a9ef4 inline-link_f855c" aria-hidden="true" href="#15-성능-및-최적화-기준">#</a>15. 성능 및 최적화 기준</h2>
+<p class="rp-my-4 rp-leading-7">AI가 성능 저하를 유발하는 구현을 방지할 수 있도록 작성해주세요.</p>
+<p class="rp-my-4 rp-leading-7">반드시 포함할 핵심 내용:</p>
+<h3 id="프론트엔드-성능" class="rspress-doc-outline rp-mt-10 rp-mb-2 rp-leading-7 rp-text-xl title_fb7eb"><a class="link_a7cea header-anchor link_a9ef4 inline-link_f855c" aria-hidden="true" href="#프론트엔드-성능">#</a>프론트엔드 성능</h3>
+<ul class="rp-list-disc rp-pl-5 rp-my-4 rp-leading-7">
+<li class="[&amp;:not(:first-child)]:rp-mt-2">불필요한 Re-render 방지</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">Memoization 기준</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">Lazy Loading 적용 기준</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">번들 크기 관리 정책</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">이미지 최적화 정책</li>
+</ul>
+<h3 id="백엔드-성능" class="rspress-doc-outline rp-mt-10 rp-mb-2 rp-leading-7 rp-text-xl title_fb7eb"><a class="link_a7cea header-anchor link_a9ef4 inline-link_f855c" aria-hidden="true" href="#백엔드-성능">#</a>백엔드 성능</h3>
+<ul class="rp-list-disc rp-pl-5 rp-my-4 rp-leading-7">
+<li class="[&amp;:not(:first-child)]:rp-mt-2">N+1 Query 방지</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">불필요한 DB 호출 금지</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">캐싱 활용 기준</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">대용량 데이터 처리 기준</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">API 응답 시간 기준</li>
+</ul>
+<h3 id="공통-성능-규칙" class="rspress-doc-outline rp-mt-10 rp-mb-2 rp-leading-7 rp-text-xl title_fb7eb"><a class="link_a7cea header-anchor link_a9ef4 inline-link_f855c" aria-hidden="true" href="#공통-성능-규칙">#</a>공통 성능 규칙</h3>
+<ul class="rp-list-disc rp-pl-5 rp-my-4 rp-leading-7">
+<li class="[&amp;:not(:first-child)]:rp-mt-2">중복 연산 방지</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">불필요한 네트워크 호출 금지</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">성능 저하 가능성이 있는 코드 작성 금지</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">기존 성능 최적화 패턴 유지</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">코드 리뷰 체크포인트</li>
+</ul>
+<h3 id="성능-영향-여부" class="rspress-doc-outline rp-mt-10 rp-mb-2 rp-leading-7 rp-text-xl title_fb7eb"><a class="link_a7cea header-anchor link_a9ef4 inline-link_f855c" aria-hidden="true" href="#성능-영향-여부">#</a>성능 영향 여부</h3>
+<ul class="rp-list-disc rp-pl-5 rp-my-4 rp-leading-7">
+<li class="[&amp;:not(:first-child)]:rp-mt-2">메모리 사용량 증가 여부</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">네트워크 호출 증가 여부</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">번들 크기 증가 여부</li>
+<li class="[&amp;:not(:first-child)]:rp-mt-2">렌더링 비용 증가 여부</li>
+</ul><!--/$--></div><div class="rspress-doc-footer"><footer class="rp-mt-8"><div class="xs:rp-flex rp-pb-5 rp-px-2 rp-justify-end rp-items-center"><div class="rp-flex rp-text-sm rp-text-text-2 rp-leading-6 sm:rp-leading-8 rp-font-medium"><p>Last Updated<!-- -->: <span>2026/5/31 10:38:28</span></p></div></div><div class="rp-flex rp-flex-col"></div><div class="rp-flex rp-flex-col sm:rp-flex-row sm:rp-justify-around rp-gap-4 rp-pt-6"><div class="prev_c92d1 rp-flex rp-flex-col"><a href="/ai/02-prompt/06-skill.html" class="link_a7cea pager-link_e0d2d"><span class="desc_dcc01">Previous Page</span><span class="title_a3acb">Skill</span></a></div><div class="next_c11be rp-flex rp-flex-col"><a href="/ai/03-largeLanguageModel/01-largeLanguageModel.html" class="link_a7cea pager-link_e0d2d next_ad355"><span class="desc_dcc01">Next Page</span><span class="title_a3acb">Large Language Model 大模型</span></a></div></div></footer></div></div><div class="aside-container_bc5fa"></div></div></div></div></section></div>
 <div id="search-container"></div>
 </body>
 </html>
