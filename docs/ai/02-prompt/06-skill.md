@@ -94,3 +94,5 @@ getWeather(city);
 - https://github.com/garrytan/gstack/tree/main
 - https://github.com/obra/superpowers
 - https://github.com/code-yeongyu/oh-my-openagent
+- https://github.com/yizhiyanhua-ai/fireworks-tech-graph
+- https://github.com/othmanadi/planning-with-files
