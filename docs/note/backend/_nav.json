@@ -1,0 +1,10 @@
+[
+  {
+    "type": "file",
+    "name": "kafka"
+  },
+  {
+    "type": "file",
+    "name": "temporal"
+  }
+]
