@@ -38,6 +38,7 @@
 
 ## Note
 
+- [Gradle](/note/backend/gradle.md)
 - [Kafka](/note/backend/kafka.md)
 - [Temporal](/note/backend/temporal.md)
 - [GraphQL](/note/etc/graphql/index.md)
