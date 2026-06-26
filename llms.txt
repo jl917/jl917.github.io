@@ -40,6 +40,7 @@
 
 - [Gradle](/note/backend/gradle.md)
 - [Kafka](/note/backend/kafka.md)
+- [Spring Batch](/note/backend/spring-batch.md)
 - [Temporal](/note/backend/temporal.md)
 - [GraphQL](/note/etc/graphql/index.md)
 - [Client](/note/etc/graphql/client.md)
