@@ -10,5 +10,9 @@
   {
     "type": "file",
     "name": "gradle"
+  },
+  {
+    "type": "file",
+    "name": "spring-batch"
   }
 ]
