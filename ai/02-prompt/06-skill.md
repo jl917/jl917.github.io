@@ -98,3 +98,5 @@ getWeather(city);
 - https://github.com/othmanadi/planning-with-files
 - https://github.com/rpamis/comet
 - https://github.com/Fission-AI/openspec
+- https://github.com/cathrynlavery/diagram-design <= 다이아그램 디자인
+- https://github.com/Leonxlnx/taste-skill <= 디자인 스킬
