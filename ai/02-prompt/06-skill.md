@@ -96,3 +96,5 @@ getWeather(city);
 - https://github.com/code-yeongyu/oh-my-openagent
 - https://github.com/yizhiyanhua-ai/fireworks-tech-graph
 - https://github.com/othmanadi/planning-with-files
+- https://github.com/rpamis/comet
+- https://github.com/Fission-AI/openspec
