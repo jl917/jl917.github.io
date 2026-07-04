@@ -8,5 +8,10 @@
     "type": "dir",
     "label": "Rust",
     "name": "rust"
+  },
+  {
+    "type": "http",
+    "label": "HTTP",
+    "name": "http"
   }
 ]
