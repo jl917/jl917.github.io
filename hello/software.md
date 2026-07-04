@@ -2,54 +2,48 @@
 
 ## 개발용
 
-| 이름               | 링크                                                                                                                       |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------- |
-| Zsh                | [https://ohmyz.sh/](https://ohmyz.sh/)                                                                                     |
-| Homebrew           | [https://brew.sh/](https://brew.sh/)                                                                                       |
-| Git 다운로드       | [https://git-scm.com/download/mac](https://git-scm.com/download/mac)                                                       |
-| Git SSH 키 생성    | [https://git-scm.com/book/zh/v2/服务器上的-Git-生成-SSH-公钥](https://git-scm.com/book/zh/v2/服务器上的-Git-生成-SSH-公钥) |
-| Node.js            | [https://formulae.brew.sh/formula/node](https://formulae.brew.sh/formula/node)                                             |
-| Pict               | `brew install pict`                                                                                                        |
-| Visual Studio Code | [https://code.visualstudio.com/](https://code.visualstudio.com/)                                                           |
-| VS Code 설정       | [https://code.visualstudio.com/docs/setup/mac](https://code.visualstudio.com/docs/setup/mac)                               |
-| Spectacle          | [https://github.com/eczarny/spectacle/releases](https://github.com/eczarny/spectacle/releases)                             |
-| VSCodium           | [https://vscodium.com/](https://vscodium.com/)                                                                             |
-| Smart JSON Editor  | [http://www.smartjsoneditor.com/](http://www.smartjsoneditor.com/)                                                         |
-| GitHub Desktop     | [https://desktop.github.com/](https://desktop.github.com/)                                                                 |
-| NVM                | [https://github.com/nvm-sh/nvm/tree/master](https://github.com/nvm-sh/nvm/tree/master)                                     |
-| Studio 3T          | [https://studio3t.com/download/](https://studio3t.com/download/)                                                           |
-| Cursor             | [https://cursor.sh/](https://cursor.sh/)                                                                                   |
-| PicGo              | [https://molunerfinn.com/PicGo/](https://molunerfinn.com/PicGo/)                                                           |
-| Chrome 베타        | [https://www.google.com/chrome/beta/](https://www.google.com/chrome/beta/)                                                 |
-| Chrome 한국어      | [https://www.google.com/intl/ko/chrome/](https://www.google.com/intl/ko/chrome/)                                           |
-| Postman            | [https://www.postman.com/downloads/?utm_source=postman-home](https://www.postman.com/downloads/?utm_source=postman-home)   |
-| Notion             | [https://www.notion.so/ko-kr](https://www.notion.so/ko-kr)                                                                 |
-| Gas Mask           | [https://github.com/2ndalpha/gasmask](https://github.com/2ndalpha/gasmask)                                                 |
-| reqable            | [https://reqable.com/en-US/](https://reqable.com/en-US/)                                                                   |
-| Ophiuchi           | [https://www.ophiuchi.dev/](https://www.ophiuchi.dev/)                                                                     |
-| Debugtron          | [https://github.com/pd4d10/debugtron](https://github.com/pd4d10/debugtron)                                                 |
-| trae               | [https://www.trae.ai/](https://www.trae.ai/)                                                                               |
-| rust               | [https://rust-lang.org/learn/get-started/](https://rust-lang.org/learn/get-started/)                                       |
-| youtubedownload    | [https://ytdn.netlify.app/#mac](https://ytdn.netlify.app/#macr)                                                            |
-
+- Zsh [https://ohmyz.sh/](https://ohmyz.sh/)
+- Homebrew [https://brew.sh/](https://brew.sh/)
+- Git 다운로드 [https://git-scm.com/download/mac](https://git-scm.com/download/mac)
+- Git SSH 키 생성 [https://git-scm.com/book/zh/v2/服务器上的-Git-生成-SSH-公钥](https://git-scm.com/book/zh/v2/服务器上的-Git-生成-SSH-公钥)
+- Node.js [https://formulae.brew.sh/formula/node](https://formulae.brew.sh/formula/node)
+- Pict `brew install pict`
+- Visual Studio Code [https://code.visualstudio.com/](https://code.visualstudio.com/)
+- VS Code 설정 [https://code.visualstudio.com/docs/setup/mac](https://code.visualstudio.com/docs/setup/mac)
+- Spectacle [https://github.com/eczarny/spectacle/releases](https://github.com/eczarny/spectacle/releases)
+- VSCodium [https://vscodium.com/](https://vscodium.com/)
+- Smart JSON Editor [http://www.smartjsoneditor.com/](http://www.smartjsoneditor.com/)
+- GitHub Desktop [https://desktop.github.com/](https://desktop.github.com/)
+- NVM [https://github.com/nvm-sh/nvm/tree/master](https://github.com/nvm-sh/nvm/tree/master)
+- Studio 3T [https://studio3t.com/download/](https://studio3t.com/download/)
+- Cursor [https://cursor.sh/](https://cursor.sh/)
+- PicGo [https://molunerfinn.com/PicGo/](https://molunerfinn.com/PicGo/)
+- Chrome 베타 [https://www.google.com/chrome/beta/](https://www.google.com/chrome/beta/)
+- Chrome 한국어 [https://www.google.com/intl/ko/chrome/](https://www.google.com/intl/ko/chrome/)
+- Postman [https://www.postman.com/downloads/?utm_source=postman-home](https://www.postman.com/downloads/?utm_source=postman-home)
+- Notion [https://www.notion.so/ko-kr](https://www.notion.so/ko-kr)
+- Gas Mask [https://github.com/2ndalpha/gasmask](https://github.com/2ndalpha/gasmask)
+- reqable [https://reqable.com/en-US/](https://reqable.com/en-US/)
+- Ophiuchi [https://www.ophiuchi.dev/](https://www.ophiuchi.dev/)
+- Debugtron [https://github.com/pd4d10/debugtron](https://github.com/pd4d10/debugtron)
+- trae [https://www.trae.ai/](https://www.trae.ai/)
+- rust [https://rust-lang.org/learn/get-started/](https://rust-lang.org/learn/get-started/)
+- youtubedownload [https://ytdn.netlify.app/#mac](https://ytdn.netlify.app/#macr)
+- MacsyZones [https://github.com/rohanrhu/MacsyZones](https://github.com/rohanrhu/MacsyZones)
 ## AI
 
-| 이름        | 링크                                                               |
-| ----------- | ------------------------------------------------------------------ |
-| ollama      | [https://ollama.com/download](https://ollama.com/download)         |
-| chatbox     | [https://chatboxai.app/en](https://chatboxai.app/en)               |
-| anythingllm | [https://anythingllm.com/desktop](https://anythingllm.com/desktop) |
+- ollama [https://ollama.com/download](https://ollama.com/download)
+- chatbox [https://chatboxai.app/en](https://chatboxai.app/en)
+- anythingllm [https://anythingllm.com/desktop](https://anythingllm.com/desktop)
 
 ## 개인용
 
-| 이름      | 링크                                                                                                                                   |
-| --------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| IINA      | [https://iina.io/](https://iina.io/)                                                                                                   |
-| Motrix    | [https://motrix.app/](https://motrix.app/)                                                                                             |
-| FileZilla | [https://filezilla-project.org/](https://filezilla-project.org/)                                                                       |
-| Wireshark | [https://www.wireshark.org/](https://www.wireshark.org/)                                                                               |
-| Infuse    | [https://apps.apple.com/kr/app/infuse-비디오-플레이어/id1136220934](https://apps.apple.com/kr/app/infuse-비디오-플레이어/id1136220934) |
-| PicView   | [https://picview.org/](https://picview.org/)                                                                                           |
+- IINA [https://iina.io/](https://iina.io/)
+- Motrix [https://motrix.app/](https://motrix.app/)
+- FileZilla [https://filezilla-project.org/](https://filezilla-project.org/)
+- Wireshark [https://www.wireshark.org/](https://www.wireshark.org/)
+- Infuse [https://apps.apple.com/kr/app/infuse-비디오-플레이어/id1136220934](https://apps.apple.com/kr/app/infuse-비디오-플레이어/id1136220934)
+- PicView [https://picview.org/](https://picview.org/)
 
 ## 설정
 
