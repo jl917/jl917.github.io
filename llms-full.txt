@@ -2845,21 +2845,23 @@ server.listen().then(({ url }) => {
 url: /note/etc/http/basic/01.md
 ---
 
-#### URI(Uniform Resource Indentifier)
+# HTTP 基础与术语
 
-#### URL(Uniform Resource Locator)
+## URI(Uniform Resource Identifier)
+
+## URL(Uniform Resource Locator)
 
 ```
 scheme://user:password@host:port/path;params?query#flag
 ```
 
-#### URN(Uniform Resource Name)
+## URN(Uniform Resource Name)
 
 ```
 urn:oasis:names:specification:docbook:dtd:xml:4.1.2
 ```
 
-#### http message(报文)
+## HTTP message(报文)
 
 ```
 /*request*/
@@ -2884,11 +2886,11 @@ Content-length: 19
 Hi I'm a message!
 ```
 
-#### method
+## 请求方法(method)
 
 - GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD, TRACE
 
-#### 残留问题
+## HTTP/1.x 遗留问题
 
 - 队头阻塞
 - 低效的TCP利用
@@ -2902,17 +2904,17 @@ Hi I'm a message!
 url: /note/etc/http/basic/02.md
 ---
 
-## MIME (当当 http权威 附录D)
+# MIME 类型
 
-http仔细的给美种要通过web传输的对象都打上了MIME type(Multipurpose Internet Mail Extension 多用途因特网邮件扩展)
+HTTP 会给每种要通过 web 传输的对象都打上 MIME type(Multipurpose Internet Mail Extension 多用途因特网邮件扩展)
 
 MIME类型是一种文本标记， 表示一种主要的对象类型和一个特定的子类型，中间由一条斜杠来标记
 
 - html => text/html
-- asscii => text/plain
-- jpg image/jpeg
+- ascii => text/plain
+- jpg => image/jpeg
 
-## MIME
+## 相关 RFC
 
 - RFC2045 - Format of Internet Message Bodies(因特网报文主体的格式)
 - RFC2046 - Media Types(媒体类型)
@@ -2942,7 +2944,7 @@ Accept
 
 ## IANA注册MIME(RFC 2048)
 
-#### 注册树
+### 注册树
 
 - IETF(Internet Engineering Task Force) 互联网工程任务组
   IETF树用于那些堆因特网来说具有普遍意义的类型, 新的IETF树媒体类型要由IESG(Internet Engineering Steering Group)审批， 并且要有一个附属的标准追踪RFC。
@@ -2953,7 +2955,7 @@ Accept
 - 实验性(x- or x.)
   实验树用于未注册或实验性的媒体类型。
 
-#### 注册过程
+### 注册过程
 
 基本注册过程不是官方标准过程，只是一个管理过程，目的是短时间内通过IANA(Internet Assigned Numbers Authority)对新类型的完整性检查，将其记录在注册表中。
 
@@ -2961,7 +2963,7 @@ Accept
 2. IESG审批
 3. IANA注册
 
-#### 注册规则 (https://www.iana.org/form/media-types)
+### 注册规则 (https://www.iana.org/form/media-types)
 
 只有在响应IESG批准某指定申请的通知时，IANA才能在IETF树中注册媒体类型
 
@@ -2976,9 +2978,9 @@ Accept
 url: /note/etc/http/basic/03.md
 ---
 
-## headers
+# HTTP 首部 (Headers)
 
-### 通用
+## 通用首部
 
 - Connection
 - Date
@@ -2988,12 +2990,12 @@ url: /note/etc/http/basic/03.md
 - Update
 - Via
 
-###### cache
+### 缓存
 
 - Cache-Control
 - Pragma
 
-### request
+## 请求首部
 
 - Client-IP
 - From
@@ -3006,7 +3008,7 @@ url: /note/etc/http/basic/03.md
 - UA-Pixes
 - User-Agent
 
-###### Accept
+### 内容协商 (Accept)
 
 - Accept
 - Accept-Charset
@@ -3014,7 +3016,7 @@ url: /note/etc/http/basic/03.md
 - Accept-Language
 - TE
 
-###### If
+### 条件请求 (If)
 
 - Expect
 - If-Match
@@ -3024,19 +3026,19 @@ url: /note/etc/http/basic/03.md
 - If-Unmodified-Since
 - Range
 
-###### Security
+### 安全 (Security)
 
 - Authorization
 - Cookie
 - Cookie2
 
-###### Proxy
+### 代理 (Proxy)
 
 - Max-Forward
 - Proxy-Authorization
 - Proxy-Connection
 
-### response
+## 响应首部
 
 - Age
 - Public
@@ -3045,19 +3047,19 @@ url: /note/etc/http/basic/03.md
 - Title
 - Warning
 
-###### Accept
+### 内容协商
 
 - Accept-Ranges
 - Vary
 
-###### Security
+### 安全
 
 - Proxy-Authenticate
 - Set-Cookie
 - Set-Cookie2
 - WWW-Authenticate
 
-###### Entries-body
+## 实体首部
 
 - Allow
 - Location
@@ -3070,7 +3072,7 @@ url: /note/etc/http/basic/03.md
 - Content-Range
 - Content-Type
 
-###### Cache
+### 缓存
 
 - Etag
 - Expires
@@ -3082,19 +3084,19 @@ url: /note/etc/http/basic/03.md
 url: /note/etc/http/basic/04.md
 ---
 
-#### http connection
+# HTTP 连接与性能
 
 ![](./4_1_http-connection.png)
 
-#### tcp detail
+## tcp detail
 
 ![](./4_2_tcp.png)
 
-#### http和https差距
+## HTTP 和 HTTPS 差距
 
 ![](./4_3_http-https.png)
 
-#### Connection
+## Connection
 
 - 串行连接
   ![](./4_4_http-serial-detail.png)
@@ -3107,36 +3109,38 @@ url: /note/etc/http/basic/04.md
   ![](./4_8_http-pipeline.png)
 - 复用的连接：交替传送请求和响应报文（实验阶段）
 
-#### http事物的时延
+## HTTP 事务的时延
 
 1. 客户端首先需要根据URI确定Web服务器的IP地址和端口号，即DNS解析。如果我们是第一次访问某个URL中的主机名，那么这次DNS解析可能花费数十秒。
 2. 接下来，客户端向服务端发送一条TCP连接请求，并等待服务端的回复。每条新的TCP连接都会有最多一两秒钟的连接建立时延，但如果有数百个HTTP事务的话，这个值可能会快速叠加上去。
 3. 连接建立起来之后，客户端开始通过该TCP通道发送HTTP请求，Web服务器从TCP通道中读取到请求报文，对该报文进行解析处理，这个过程需要时间。这个过程中对报文的解析处理可能会占据较多时间。
 4. 最后，Web服务器回传HTTP响应，这也需要时间。
 
-#### 性能聚集区域
+## 性能聚集区域
 
-###### TCP连接建立握手
+### TCP连接建立握手
 
 1. 请求新的TCP连接时， 客户端要向服务器发送一个小的TCP分组(40~60byte)。 这个分组中设置了一个特殊的SYN(同步序列编号Synchronize Sequence Numbers)标记，说明这是一个连接请求
 2. 如果服务器接受了连接，就会对一些连接参数进行计算，并向客户端会送一个TCP分组，这个分组中的SYN和ACK(确认字符Acknowledge character)标记都被置位，说明连接请求已被接受
 3. 最后，客户端向服务器会送一条确认信息，通知它连接已成功建立。现代的TCP栈都允许客户端在这个确认分组中发送数据。
 
-###### 延迟确认？
+### 延迟确认？
 
-###### TCP慢启动（传输分组？）
+### TCP慢启动（传输分组？）
 
 TCP连接会随着时间进行自我调谐，起初会限制连接的最大速度，如果数据成功传输，会随着时间的推移提高传输的速度。
 
-###### Nagle算法与TCP_NODELAY？
+### Nagle算法与TCP_NODELAY？
 
-###### TIME_WAIT累计与端口耗尽
+### TIME_WAIT累计与端口耗尽
 
 
 
 ---
 url: /note/etc/http/basic/05.md
 ---
+
+# HTTP 状态码
 
 ## 1xx: 信息
 
@@ -3390,18 +3394,18 @@ url: /note/etc/http/basic/05.md
 url: /note/etc/http/basic/06.md
 ---
 
-#### web 服务器
+# Web 服务器
 
 - apache
 - tomcat
 - nodejs
 - nginx
 
-#### 嵌入式Web服务器(embeded server)
+## 嵌入式Web服务器(embeded server)
 
 - 打印机，家用设备
 
-#### 服务器功能
+## 服务器功能
 
 - 丰富的资源支持
 - 虚拟主机
@@ -3411,7 +3415,7 @@ url: /note/etc/http/basic/06.md
 - 监视
 - 性能测试
 
-#### 服务器执行
+## 服务器执行
 
 1. 建立连接
 2. 接收请求
@@ -3421,7 +3425,7 @@ url: /note/etc/http/basic/06.md
 6. 发送响应
 7. 记录事务处理过程
 
-#### 接收请求 - server IO
+## 接收请求 - server IO
 
 <img src="./6_1_server-io.png" />
 
@@ -3437,7 +3441,7 @@ url: /note/etc/http/basic/06.md
 - 复用多线程
   有些系统会将多线程和复用功能结合在一起，以利用计算机平台上的多个CPU。多个线程中的每一个都在观察打开的连接，并带回每条连接执行少量的任务。
 
-#### memo
+## memo
 
 - 很多大容量web服务器要么会禁止主机名解析， 要么只允许特定内容进行解析
 
@@ -3447,21 +3451,23 @@ url: /note/etc/http/basic/06.md
 url: /note/etc/http/basic/07.md
 ---
 
-#### Public proxy
+# 代理 (Proxy)
+
+## 公共代理 (Public Proxy)
 
 cdn
 
-#### Privete proxy
+## 私有代理 (Private Proxy)
 
-isp(Internet Service Provider), vpn(vitual Private Network)
+isp(Internet Service Provider), vpn(virtual Private Network)
 
-#### 用途
+## 用途
 
 - 儿童过滤器
 - 文档访问控制
 - 安全防火墙
 - web缓存
-- 反响代理
+- 反向代理
 - 内容路由器
 - 转码器
 - 匿名者
@@ -3472,26 +3478,28 @@ isp(Internet Service Provider), vpn(vitual Private Network)
 url: /note/etc/http/basic/08.md
 ---
 
-#### Cache优点
+# HTTP 缓存 (Cache)
+
+## Cache优点
 
 - 缓存减少了沉郁的数据传输，节省了你的网络费用
 - 缓存缓解了网络瓶颈的问题。不需要更多的宽带就能够更快的加载页面
 - 缓存降低了对原始服务器的要求。服务器可以更快的响应，避免过载的出现
 - 缓存降低了距离时延，因为从较远的地方加载页面会更慢一些。
 
-#### 再验证
+## 再验证
 
 If-Modifed-Since
 
-#### 私有缓存
+## 私有缓存
 
 大多数浏览器都会将常用文档缓存在个人电脑的磁盘或内存中。
 
-#### 公有代理缓存
+## 公有代理缓存
 
 ![](./8_1_cache.png)
 
-#### 缓存的处理步骤
+## 缓存的处理步骤
 
 1. 接收 - 缓存从网络中读取抵达的请求报文
 2. 解析 - 缓存对报文进行解析，提取出URL和各种首部
@@ -3501,7 +3509,7 @@ If-Modifed-Since
 6. 发送 - 缓存通过网络将响应发回给客户端
 7. 日志 - 缓存可选的创建一个日志文件条目来描述这个事务
 
-#### 文档过期
+## 文档过期
 
 ```
 // response
@@ -3510,7 +3518,7 @@ or
 Cache-Control: max-age=484200
 ```
 
-#### 缓存再验证
+## 缓存再验证
 
 ```
 // request
@@ -3522,12 +3530,12 @@ If-None-Match: "v3"
 Etag: "v3"
 ```
 
-#### Etag 和 If-Modified-Since 怎么选
+## Etag 和 If-Modified-Since 怎么选
 
 - 服务器返回Etag就必须使用If-NoneMatch
 - 服务区返回Expires或者Cache-Control就使用If-Modifed-Since
 
-#### Cache-Control
+## Cache-Control
 
 - no-cache
 
@@ -3543,7 +3551,7 @@ Etag: "v3"
 url: /note/etc/http/basic/09.md
 ---
 
-#### 客户端识别
+# 客户端识别与 Cookie
 
 - User-Agent
 - Authorization
@@ -3551,14 +3559,14 @@ url: /note/etc/http/basic/09.md
 - Cookie
 - Referer
 
-#### Cookie 用处
+## Cookie 用处
 
 - 个性化问候
 - 根据用户推荐
 - 管理信息存档
 - 记录session
 
-#### Cookie option
+## Cookie option
 
 - domain
 - allh(相同域中所有主机都获取cookie)
@@ -3568,7 +3576,7 @@ url: /note/etc/http/basic/09.md
 - name
 - value
 
-#### Cookie使用
+## Cookie使用
 
 ```
 Set-cookie: user="mary"
@@ -3580,7 +3588,7 @@ Set-cookie: user="mary"
 url: /note/etc/http/cryptography/01.md
 ---
 
-## 密码学
+# 密码学
 
 #### 工具
 
@@ -3609,7 +3617,7 @@ OpenSSL
 url: /note/etc/http/cryptography/02.md
 ---
 
-#### 随机数
+# 随机数
 
 | 名称                                                                                 | 生成类型 | 特性                             | 说明               |
 | :----------------------------------------------------------------------------------- | -------- | -------------------------------- | ------------------ |
@@ -3639,28 +3647,23 @@ url: /note/etc/http/cryptography/02.md
 
 
 ---
-url: /note/etc/http/cryptography/03.md
----
-
-
-
-
----
 url: /note/etc/http/http2/01.md
 ---
 
-#### http/2.0 期望
+# HTTP/2.0
 
-- 相比使用HTTP/1.1，最终用户可感知的多数延迟都有能偶量化的显著改善
+## 期望目标
+
+- 相比使用HTTP/1.1，最终用户可感知的多数延迟都有能够量化的显著改善
 - 解决HTTP中的队头阻塞问题
-- 并行的实现机制不依赖于服务器建立多个连接，从而提升TCP连接的利用率，特别是在拥赛控制方面
-- 保留HTTP/1.1的语义，可以利用已有的文档资源，包括HTTP方法，状态吗，URI和headers
+- 并行的实现机制不依赖于服务器建立多个连接，从而提升TCP连接的利用率，特别是在拥塞控制方面
+- 保留HTTP/1.1的语义，可以利用已有的文档资源，包括HTTP方法，状态码，URI和headers
 - 明确定义HTTP/2.0和HTTP/1.\*交互的方法，特别是通过中介时的方法
 - 明确指出它们可以被合理使用的新的扩展点和策略
 
 TLS(Transport Layer Security)
 
-#### 分层
+## 分层
 
 - 分帧层
   - 二进制协议
@@ -3669,12 +3672,12 @@ TLS(Transport Layer Security)
   - 加密传输
 - 数据层
 
-###### 解析h1的请求或响应可能出现下列问题
+### 解析 HTTP/1 请求或响应可能出现的问题
 
 - 一次只能处理一个请求或响应，完成之前不能停止解析
-- 无法预判解析需要多少内存。这回带来一系列问题： 你要把一行读到多大的缓冲区里；怒过行太长会发生什么了应该增加并重新分配内存，还是返回400错误。为了解决这些问题，保持内存处理的效率和速度可不简单。
+- 无法预判解析需要多少内存。这会带来一系列问题： 你要把一行读到多大的缓冲区里；如果行太长会发生什么，应该增加并重新分配内存，还是返回400错误。为了解决这些问题，保持内存处理的效率和速度可不简单。
 
-#### http/2.0 未解决的问题
+## 未解决的问题(QUIC)
 
 - 无序的包处理
 
@@ -3702,20 +3705,20 @@ TLS(Transport Layer Security)
 url: /note/etc/http/http2/02.md
 ---
 
-#### http/2 帧
+# HTTP/2 帧
 
 ![](./02_01_http2-frame.png)
 
 | name             | length | description                                                                                                                                       |
 | ---------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Length           | 3byte  | 表示帧负载的长度(区直范围 2^14 ~ 2^24-1)。请注意，2^14字节是默认的最大帧大小，如果需要更大的帧，必须在SETTINGS帧中设置<br />(16,384 ~ 16,777,216) |
+| Length           | 3byte  | 表示帧负载的长度(取值范围 2^14 ~ 2^24-1)。请注意，2^14字节是默认的最大帧大小，如果需要更大的帧，必须在SETTINGS帧中设置<br />(16,384 ~ 16,777,216) |
 | Type             | 1byte  | 当前帧类型                                                                                                                                        |
 | Flags            | 1byte  | 具体帧类型的标识                                                                                                                                  |
-| R                | 1bit   | 保留为，不要设置，否则可能带来严重后果                                                                                                            |
+| R                | 1bit   | 保留位，不要设置，否则可能带来严重后果                                                                                                            |
 | StreamIdentifier | 31bit  | 每个流的唯一ID                                                                                                                                    |
-| Frame Payload    | ~      | 真是的帧内容，长度是在Length字段中设置的                                                                                                          |
+| Frame Payload    | ~      | 真实的帧内容，长度是在Length字段中设置的                                                                                                          |
 
-#### HTTP/2帧类型
+## HTTP/2 帧类型
 
 | name          | id  | description                            |
 | ------------- | --- | -------------------------------------- |
@@ -3736,11 +3739,11 @@ url: /note/etc/http/http2/02.md
 url: /note/etc/http/http2/03.md
 ---
 
-### 流(stream)
+# 流 (Stream)
 
-HTTP/2规范对流的定义是：HTTP/2连接上独立的，双向的帧序列交换。你可以将流看坐在连接上的一系列帧。
+HTTP/2规范对流的定义是：HTTP/2连接上独立的，双向的帧序列交换。你可以将流看作连接上的一系列帧。
 
-#### 消息
+## 消息
 
 - http1.1
 
@@ -3769,25 +3772,63 @@ Accept-Encoding: compress, gzip
 Content-type: text/plain
 ```
 
-#### 流量控制
+## 流量控制
 
-#### 优先级
+## 优先级
 
-#### 服务端推送
+## 服务端推送
 
-#### 首部压缩(HPACK )
+## 首部压缩(HPACK)
 
-###### 为什么不直接使用GZIP做首部压缩
+### 为什么不直接使用GZIP做首部压缩
 
 CRIME攻击告诉我们，GZIP也有泄漏加密信息的风险。CRIME的原理是这样的，攻击者在请求中添加数据，观察压缩加密后的数据量是否会小雨预期。如果变小了，攻击者就知道注入的文本和请求中的其他内容(比如私有的session cookie)有重复。在很短的时间内，经过加密的数据内容就可以全部搞清楚。因此大家放弃了已有的压缩方案，研发出HPACK。
 
 
 
 ---
-url: /note/etc/http/http2/90.md
+url: /note/etc/http/https/01.md
 ---
 
-## 创建key
+# HTTPS 协议安全分析
+
+- http本身安全问题
+  - 数据没有加密
+  - 无法验证身份
+  - 数据易篡改
+- Web应用安全问题
+
+## 举例
+
+- 无线WiFi网络的攻击
+- 垃圾广告攻击(ISP, Proxy植入广告)
+
+## 生成证书
+
+```sh
+openssl req -x509 -newkey rsa:2048 -nodes -sha256 -days 3650 -subj '/CN=localhost' \
+  -keyout localhost-privkey.pem -out localhost-cert.pem
+```
+
+## memo
+
+Access-Control-Allow-Origin
+
+X-XSS-Protection
+
+Strict-Transport-Security
+
+Content-Security-Policy
+
+
+
+---
+url: /note/etc/http/https/02.md
+---
+
+# HTTPS 证书生成与配置
+
+## 创建 key
 
 ```sh
 openssl req \
@@ -3817,6 +3858,8 @@ openssl pkcs12 -export -clcerts -in localhost-cert.pem -inkey localhost-privkey.
 
 localhost.p12 导入到 mac认证, 并允许许可。
 
+## Node.js HTTP/2 服务器
+
 ```js
 const http2 = require("http2");
 const fs = require("fs");
@@ -3838,50 +3881,6 @@ server.on("stream", (stream, headers) => {
 
 server.listen(8443);
 ```
-
-
-
----
-url: /note/etc/http/https/01.md
----
-
-#### 协议安全分析
-
-- http本身安全问题
-  - 数据没有加密
-  - 无法验证身份
-  - 数据易幕改
-- Web应用安全问题
-
-#### 举例
-
-- 无线WiFi网络的攻击
-- 垃圾广告攻击(ISP, Proxy植入广告)
-
-#### 生成认证书
-
-```sh
-openssl req -x509 -newkey rsa:2048 -nodes -sha256 -days 3650 -subj '/CN=localhost' \
-  -keyout localhost-privkey.pem -out localhost-cert.pem
-```
-
-#### memo
-
-Access-Control-Allow-Origin
-
-X-XSS-Protection
-
-Strict-Transport-Security
-
-Content-Security-Policy
-
-
-
----
-url: /note/etc/http/https/02.md
----
-
-###
 
 
 
