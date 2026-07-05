@@ -14,5 +14,9 @@
   {
     "type": "file",
     "name": "spring-batch"
+  },
+  {
+    "type": "file",
+    "name": "spring-boot"
   }
 ]
