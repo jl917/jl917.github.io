@@ -155,8 +155,8 @@ public class TestRestController {
 ## SpringBoot Interface Permission
 
 ```java
+// build.gradle
 dependencies {
-  // 두건 추가
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	testImplementation 'org.springframework.security:spring-security-test'
 }
@@ -267,6 +267,7 @@ spring:
 ```
 
 ```java
+// build.gradle
 dependencies {
     // 추가
     runtimeOnly 'com.mysql:mysql-connector-j'
