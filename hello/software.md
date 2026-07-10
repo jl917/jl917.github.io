@@ -30,6 +30,7 @@
 - rust [https://rust-lang.org/learn/get-started/](https://rust-lang.org/learn/get-started/)
 - youtubedownload [https://ytdn.netlify.app/#mac](https://ytdn.netlify.app/#macr)
 - MacsyZones [https://github.com/rohanrhu/MacsyZones](https://github.com/rohanrhu/MacsyZones)
+- DBX [https://dbxio.com/en](https://dbxio.com/en)
 ## AI
 
 - ollama [https://ollama.com/download](https://ollama.com/download)

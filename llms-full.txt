@@ -153,6 +153,7 @@ url: /hello/software.md
 - rust [https://rust-lang.org/learn/get-started/](https://rust-lang.org/learn/get-started/)
 - youtubedownload [https://ytdn.netlify.app/#mac](https://ytdn.netlify.app/#macr)
 - MacsyZones [https://github.com/rohanrhu/MacsyZones](https://github.com/rohanrhu/MacsyZones)
+- DBX [https://dbxio.com/en](https://dbxio.com/en)
 ## AI
 
 - ollama [https://ollama.com/download](https://ollama.com/download)
@@ -2428,6 +2429,118 @@ public class StudentController {
     }
 }
 ```
+
+## Validation
+
+```java
+// build.gradle
+dependencies {
+    // 추가
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+}
+```
+
+```java
+// src/main/java/blog/dto/ValidationRequest.java
+package blog.dto;
+
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+public class ValidationRequest {
+
+    @Max(value = 50, message = "count는 최대 50입니다.")
+    @Min(value = 10, message = "count는 최소 10입니다.")
+    private int count;
+
+    @NotNull(message = "age는 null일 수 없습니다.")
+    private String age;
+
+    @NotBlank(message = "name은 공백일 수 없습니다.")
+    private String name;
+
+    @Size(min = 10, max = 20, message = "content는 10~20자여야 합니다.")
+    private String content;
+
+    @NotEmpty(message = "remark는 비어 있을 수 없습니다.")
+    private String remark;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+}
+```
+
+```java
+// src/main/java/blog/ValidationController.java
+package blog;
+
+import blog.dto.ValidationRequest;
+import org.springframework.web.bind.annotation.*;
+
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+
+@RestController
+public class ValidationController {
+
+    @PostMapping("/validation")
+    public String validation(
+            @Valid ValidationRequest request,
+            BindingResult result) {
+
+        if (result.hasErrors()) {
+            return result.getFieldError().getDefaultMessage();
+        }
+
+        return "Validation Success";
+    }
+}
+```
+
 
 
 ---
