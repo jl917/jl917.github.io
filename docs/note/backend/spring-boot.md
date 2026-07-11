@@ -936,7 +936,7 @@ public interface StudentJpaRepository extends JpaRepository<StudentJpa, String> 
 
 ```
 
-### RestTemplate
+## RestTemplate
 
 ```java
 // RestTemplateConfig.java
@@ -1010,6 +1010,99 @@ public class UserController {
 
         return randomUserService.getRandomUser(results);
 
+    }
+}
+```
+
+## ehcache
+
+```java
+// build.gradle
+implementation 'org.springframework.boot:spring-boot-starter-cache'
+implementation 'javax.cache:cache-api'
+implementation 'org.ehcache:ehcache::jakarta'
+```
+
+```yaml
+spring:
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
+```
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<config
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns='http://www.ehcache.org/v3'
+        xmlns:jsr107='http://www.ehcache.org/v3/jsr107'
+        xsi:schemaLocation="
+            http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.10.xsd
+            http://www.ehcache.org/v3/jsr107 http://www.ehcache.org/schema/ehcache-107-ext-3.10.xsd">
+    <cache alias="randomUser">
+        <key-type>java.lang.Integer</key-type>
+        <value-type>java.lang.String</value-type>
+        <expiry>
+            <ttl unit="minutes">10</ttl>
+        </expiry>
+        <resources>
+            <heap unit="entries">100</heap>
+        </resources>
+    </cache>
+</config>
+```
+
+```java
+// HelloWorldApplication.java <= intro
+package blog;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching; // <= 추가됨
+
+@EnableCaching  // <= 추가됨
+@SpringBootApplication
+public class HelloWorldApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(HelloWorldApplication.class, args);
+	}
+
+}
+
+// RandomUserService.java
+package blog.service;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+@Service
+public class RandomUserService {
+
+    private static final Logger log = LoggerFactory.getLogger(RandomUserService.class);
+
+    private final RestTemplate restTemplate;
+
+    public RandomUserService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+    // results 값이 캐시에 있으면 외부 API를 호출하지 않고 캐시된 응답을 반환
+    @Cacheable(cacheNames = "randomUser", key = "#results")
+    public String getRandomUser(int results){
+        // 이 로그가 찍히면 캐시 미스 = 실제 외부 API 호출
+        log.info("CACHE MISS - randomuser.me 호출 (results={})", results);
+
+        String url =
+                "https://randomuser.me/api/?results={results}";
+
+        return restTemplate.getForObject(
+                url,
+                String.class,
+                results
+        );
     }
 }
 ```
