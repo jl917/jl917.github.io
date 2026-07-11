@@ -762,7 +762,7 @@ public interface StudentNewMapper {
         </association>
         <collection property="schoolBags" javaType="java.util.List" ofType="blog.SchoolBag">
             <id property="id" column="school_bag_id"/>
-            <result property="name" column="shool_bag_name"/>
+            <result property="name" column="school_bag_name"/>
         </collection>
     </resultMap>
 
@@ -774,7 +774,7 @@ public interface StudentNewMapper {
                t.school_no,
                t.school_name,
                s.id AS school_bag_id,
-               s.name AS shool_bag_name,
+               s.name AS school_bag_name,
                e.id AS teacher_id,
                e.name AS teacher_name
         from student t
