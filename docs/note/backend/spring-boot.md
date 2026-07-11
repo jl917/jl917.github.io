@@ -1189,5 +1189,103 @@ public class GetEnvConfigController {
                 + envConfig.getTestA();
     }
 }
+```
 
-````
+
+## logback
+
+```xml
+<!-- src/main/resources/application.yaml-->
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="false" scanPeriod="60 seconds" debug="false">
+
+    <property name="LOG_HOME" value="logs"/>
+    <property name="appName" value="blog"/>
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] [%level] %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="appLogAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${appName}-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <maxHistory>365</maxHistory>
+            <maxFileSize>100MB</maxFileSize>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] [%level] %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="blog" level="debug"/>
+
+    <root level="info">
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="appLogAppender"/>
+    </root>
+
+</configuration>
+```
+
+```java
+// TestLogbackController.java
+package blog;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@Slf4j
+@RestController
+public class TestLogbackController {
+
+    @GetMapping("/logback")
+    public String logback(){
+        log.info("info 레벨 - 중요한 정보 출력, 가장 많이 사용");
+        log.debug("debug 레벨 - 디버깅용, 보통 실무에서 최저 레벨로 사용");
+        log.error("error 레벨 - 에러 로그 기록, 자주 사용");
+        log.warn("warn 레벨 - 경고 로그 기록, 자주 사용");
+        log.trace("trace 레벨 - 실행 흐름 추적용, 거의 사용하지 않음");
+
+        int param1 = 1;
+        String param2 = "param2";
+        // {} placeholder로 파라미터를 치환해 여러 값을 함께 기록할 수 있다
+        log.info("전달 파라미터: {}, 두 번째 파라미터: {}", param1, param2);
+
+        return "ok";
+    }
+}
+
+```
+
+### 로그 레벨
+
+| 순번 | 로그 레벨 | 설명 |
+|------|-----------|------|
+| 1 | trace | 추적. 프로그램 실행 흐름을 나타낸다. |
+| 2 | debug | 디버그. 실무에서는 보통 최저 레벨로 사용하며, trace는 거의 쓰지 않는다. |
+| 3 | info | 중요한 정보 출력. 많이 사용한다. |
+| 4 | warn | 경고. 많이 사용한다. |
+| 5 | error | 에러 정보. 많이 사용한다. |
+
+### 자주 쓰는 로그 출력 포맷 파라미터
+
+| 순번 | 출력 포맷 | 설명 |
+|------|-----------|------|
+| 1 | `%d{yyyy-MM-dd HH:mm:ss, SSS}` | 로그 생성 시간. 밀리초까지 출력 |
+| 2 | `%level` | 로그 레벨 출력 |
+| 3 | `%logger` 또는 `%c` | logger 이름. 보통 패키지명 + 클래스명 |
+| 4 | `%thread` 또는 `%t` | 현재 스레드 이름 출력 |
+| 5 | `%p` | 로그 레벨(우선순위) 출력. `%level`과 동일 |
+| 6 | `%message` 또는 `%msg` 또는 `%m` | 로그 내용. 예: `logger.info("message")` |
+| 7 | `%n` | 줄바꿈 문자 |
+| 8 | `%class` 또는 `%C` | Java 클래스명 출력 |
+| 9 | `%file` 또는 `%F` | 파일명 출력 |
+| 10 | `%L` | 로그 발생 행 번호 출력 |
+| 11 | `%method` 또는 `%M` | 메서드명 출력 |
+| 12 | `%l` | 구문이 위치한 행 정보 출력(클래스명, 메서드명, 파일명, 행 번호 포함) |
+| 13 | `hostName` | 로컬 머신 이름 |
+| 14 | `hostAddress` | 로컬 IP 주소 |
