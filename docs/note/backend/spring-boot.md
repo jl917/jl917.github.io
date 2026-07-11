@@ -1106,3 +1106,88 @@ public class RandomUserService {
     }
 }
 ```
+
+## application.yaml
+
+```yaml
+test.properties.value:
+  a: 나는a
+  b: 나는b
+  a1: 나는a1
+  b1: 나는b1
+  test-a: 나는test-a
+```
+
+```java
+// EnvConfig.java
+package blog.config;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+@Component
+@ConfigurationProperties(prefix = "test.properties.value")
+public class EnvConfig {
+    private String a1;
+    private String b1;
+    private String testA;
+
+    public String getA1() {
+        return a1;
+    }
+
+    public void setA1(String a1) {
+        this.a1 = a1;
+    }
+
+    public String getB1() {
+        return b1;
+    }
+
+    public void setB1(String b1) {
+        this.b1 = b1;
+    }
+
+    public String getTestA() {
+        return testA;
+    }
+
+    public void setTestA(String testA) {
+        this.testA = testA;
+    }
+}
+
+// GetEnvConfigController.java
+package blog;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import blog.config.EnvConfig;
+
+@Slf4j
+@RestController
+public class GetEnvConfigController {
+
+    @Autowired
+    private EnvConfig envConfig;
+
+    @Value("${test.properties.value.a}")
+    private String a;
+    @Value("${test.properties.value.b}")
+    private String b;
+
+    @GetMapping("/envConfig")
+    public String getEnvConfig(){
+        log.info("a1={};b1={};test-a={}", envConfig.getA1(),
+                envConfig.getB1(), envConfig.getTestA());
+        return  "a1=" + envConfig.getA1() + ";b1="
+                + envConfig.getB1() + ";test-a="
+                + envConfig.getTestA();
+    }
+}
+
+````
