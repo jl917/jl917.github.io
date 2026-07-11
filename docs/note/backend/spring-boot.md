@@ -1289,3 +1289,107 @@ public class TestLogbackController {
 | 12 | `%l` | 구문이 위치한 행 정보 출력(클래스명, 메서드명, 파일명, 행 번호 포함) |
 | 13 | `hostName` | 로컬 머신 이름 |
 | 14 | `hostAddress` | 로컬 IP 주소 |
+
+## AOP
+
+```java
+// build.gradle
+implementation 'org.springframework.boot:spring-boot-starter-aop'
+```
+
+```java
+// AspectController.java
+package blog.aspect;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@Slf4j
+@RestController
+public class AspectController {
+
+    @GetMapping("/aspect/error")
+    public String error() throws Exception {
+        throw new RuntimeException("error");
+    }
+
+    @GetMapping("/aspect/test")
+    public String test() throws Exception {
+        log.info("test 메서드 진입");
+        return "ok";
+    }
+}
+
+// ControllerLogAspect.java
+package blog.aspect;
+
+import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Component;
+
+@Slf4j
+@Aspect
+@Component
+public class ControllerLogAspect {
+
+    // execution 표현식 구조: execution(반환타입 패키지.클래스.메서드(파라미터))
+    //  - 첫 번째 *  : 반환 타입 (any)
+    //  - *Controller : Controller로 끝나는 모든 클래스
+    //  - .*          : 모든 메서드
+    //  - (..)        : 파라미터 개수/타입 무관
+    //  - || 로 여러 패키지를 함께 지정할 수 있다
+    @Pointcut("execution(* blog.aspect.*Controller.*(..))")
+    private void logPointcut() {
+        // 포인트컷 정의용 메서드라 구현이 필요 없다
+    }
+
+    // 메서드 실행 전에 가로챈다
+    @Before("logPointcut()")
+    public void beforeRequest(JoinPoint jp) {
+        log.info("요청 전 (beforeRequest) - {}", jp.getSignature().getName());
+    }
+
+    // 메서드 실행 후, 실제 Response가 나가기 전에 가로챈다
+    @After("logPointcut()")
+    public void afterResponse(JoinPoint jp) {
+        log.info("요청 후, 실제 Response 반환 전 (afterResponse) - {}", jp.getSignature().getName());
+    }
+
+    // 예외를 잡는다. throwing에 지정한 타입과 실제 throw된 예외 타입이 일치해야 한다
+    @AfterThrowing(pointcut = "logPointcut()", throwing = "ex")
+    public void logException(RuntimeException ex) {
+        log.info("RuntimeException: {}", ex.getMessage());
+    }
+
+    // 반환 결과를 잡는다. returning에 지정한 타입과 실제 반환 타입이 일치해야 한다
+    @AfterReturning(pointcut = "logPointcut()", returning = "result")
+    public void logResult(String result) {
+        log.info("result: {}", result);
+    }
+
+    // 실행 전/후, 예외 처리, 반환값 제어를 한 곳에서 모두 할 수 있다
+    @Around("logPointcut()")
+    public Object retry(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        log.info("요청 전 (retry)");
+        try {
+            Object response = proceedingJoinPoint.proceed();
+            log.info("요청 후, 실제 Response 반환 전 (retry)");
+            return response;
+        } catch (Exception e) {
+            log.info("요청 후 예외 발생, null 반환하도록 처리 (retry)");
+            return null;
+        }
+    }
+}
+
+
+```
