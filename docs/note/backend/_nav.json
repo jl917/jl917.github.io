@@ -18,5 +18,9 @@
   {
     "type": "file",
     "name": "spring-boot"
+  },
+  {
+    "type": "file",
+    "name": "spring-boot2"
   }
 ]
