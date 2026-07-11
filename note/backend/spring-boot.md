@@ -392,6 +392,8 @@ public class StudentController {
 
 ## Validation
 
+- 문법 참고: https://jakarta.ee/specifications/bean-validation/3.0/apidocs/jakarta/validation/constraints/package-summary
+
 ```java
 // build.gradle
 dependencies {
@@ -499,4 +501,320 @@ public class ValidationController {
         return "Validation Success";
     }
 }
+```
+
+## MyBatis
+
+Spring Boot에서 DB를 사용하는 방법은 크게 3가지가 있습니다.
+
+1. JdbcTemplate
+
+```java
+// SQL을 Java 코드 안에 작성합니다.
+jdbcTemplate.queryForList(
+    "select * from student where id=?",
+    id
+);
+```
+
+2. MyBatis
+
+```java
+// SQL은 XML로 분리됩니다.
+Student student = studentMapper.selectStudent(id);
+```
+
+```xml
+<select id="selectStudent">
+    select * from student where id=#{id}
+</select>
+```
+
+3. JPA
+
+```java
+// SQL도 거의 안 씁니다.
+studentRepository.findById(id);
+```
+
+### 장점
+
+- SQL을 Java 코드에서 분리
+- SQL 수정이 쉬움
+- 복잡한 JOIN 작성 가능
+- Oracle, MySQL, MSSQL 모두 사용
+- 대기업에서 아직도 많이 사용
+
+### 적용샘플
+
+```yaml
+# application.yaml
+# ...
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+```
+
+```java
+// ...
+implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
+```
+
+```java
+// Student.java
+package blog;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.util.List;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Student implements Serializable {
+
+    private static final long serialVersionUID = -7748312639957930069L;
+
+    private String id;
+    private String name;
+    private StudentClass studentClass;
+    private StudentSchool studentSchool;
+    private Teacher teacher;
+    private List<SchoolBag> schoolBags;
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class StudentClass {
+        private static final long serialVersionUID = -5213219387175188213L;
+        private Long no;
+        private String name;
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class StudentSchool {
+        private static final long serialVersionUID = 3997395302485226876L;
+        private Long sno;
+        private String sname;
+    }
+}
+
+// Teacher.java
+package blog;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Teacher {
+    private static final long serialVersionUID = 4976235843125918808L;
+    private String id;
+    private String name;
+}
+
+// SchoolBag.java
+package blog;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class SchoolBag {
+    private static final long serialVersionUID = -7699349163224691756L;
+    private String id;
+    private String name;
+}
+```
+
+```sql
+-- student.sql
+CREATE TABLE student(
+                        id         integer(10) not null,
+                        name       varchar(32) not null,
+                        class_no   integer,
+                        class_name text,
+                        school_no integer,
+                        school_name varchar(32));
+
+CREATE TABLE school_bag (
+                            ID INTEGER,
+                            NAME VARCHAR,
+                            STUDENT_ID INTEGER
+);
+
+CREATE TABLE teacher (
+                         ID INTEGER,
+                         NAME VARCHAR,
+                         STUDENT_ID INTEGER
+);
+
+INSERT INTO student (id,name,class_no,class_name,school_no,school_name) VALUES
+    (99,'小张张99',1,'一年一班',1,'测试学校');
+
+INSERT INTO school_bag (ID,NAME,STUDENT_ID) VALUES
+                                                (1,'书包 1',99),
+                                                (2,'书包 2',99),
+                                                (3,'书包 3',99);
+
+INSERT INTO teacher (ID,NAME,STUDENT_ID) VALUES
+    (1,'班主任 1',99);
+```
+
+```java
+// StudentMyBatisController.java
+package blog;
+
+import org.springframework.web.bind.annotation.*;
+
+
+@RestController
+public class StudentMyBatisController {
+    private final StudentNewMapper studentNewMapper;
+
+    public StudentMyBatisController(StudentNewMapper studentNewMapper) {
+        this.studentNewMapper = studentNewMapper;
+    }
+
+    @RequestMapping(value = "/studentXML", method = RequestMethod.GET)
+    public Object getStudentXML(@RequestParam Long id){
+        return studentNewMapper.getStudent(id);
+    }
+
+    @RequestMapping(value = "/studentsXML", method = RequestMethod.GET)
+    public Object getStudentsXML(){
+        return studentNewMapper.getStudents();
+    }
+
+    @RequestMapping(value = "/studentXML", method = RequestMethod.POST)
+    public String addStudentXML(Student student){
+        studentNewMapper.saveStudent(student);
+        return "ok";
+    }
+
+    @RequestMapping(value = "/studentXML", method = RequestMethod.PUT)
+    public String updateStudentXML(Student student){
+        studentNewMapper.updateStudent(student);
+        return "ok";
+    }
+
+    @RequestMapping(value = "/studentXML", method = RequestMethod.DELETE)
+    public String deleteStudentXML(String id){
+        studentNewMapper.deleteStudent(id);
+        return "ok";
+    }
+}
+
+// StudentNewMapper.java
+package blog;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+@Mapper
+public interface StudentNewMapper {
+    Student getStudent(@Param("id") Long id);
+    List<Student> getStudents();
+    void saveStudent(@Param("student") Student student);
+    void updateStudent(@Param("student") Student student);
+    void deleteStudent(@Param("id") String id);
+}
+```
+
+```xml
+<!-- src/main/resources/mapper/StudentNewMapper.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="blog.StudentNewMapper">
+    <resultMap type="blog.Student" id="student">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <association property="studentClass" columnPrefix="class_" autoMapping="true"/>
+        <association property="studentSchool" columnPrefix="school_" autoMapping="true">
+            <result property="sno" column="no" />
+            <result property="sname" column="name" />
+        </association>
+        <association property="teacher" columnPrefix="teacher_" autoMapping="true">
+            <result property="id" column="id" />
+            <result property="name" column="name" />
+        </association>
+        <collection property="schoolBags" javaType="java.util.List" ofType="blog.SchoolBag">
+            <id property="id" column="school_bag_id"/>
+            <result property="name" column="school_bag_name"/>
+        </collection>
+    </resultMap>
+
+    <sql id="studentDetail">
+        select t.id,
+               t.name,
+               t.class_no,
+               t.class_name,
+               t.school_no,
+               t.school_name,
+               s.id AS school_bag_id,
+               s.name AS school_bag_name,
+               e.id AS teacher_id,
+               e.name AS teacher_name
+        from student t
+                 left join school_bag s on t.id = s.student_id
+                 left join teacher e on t.id = e.student_id
+    </sql>
+    <select id="getStudent" parameterType="Long" resultMap="student">
+        <include refid="studentDetail"></include>
+        where t.id = #{id}
+    </select>
+    <select id="getStudents" resultMap="student">
+        <include refid="studentDetail"></include>
+    </select>
+    <insert id="saveStudent">
+        insert into student
+        (id,
+         name,
+         class_no,
+         class_name,
+         school_no,
+         school_name)
+        values
+            (#{student.id},
+             #{student.name},
+             #{student.studentClass.no},
+             #{student.studentClass.name},
+             #{student.studentSchool.sno},
+             #{student.studentSchool.sname})
+    </insert>
+    <update id="updateStudent">
+        update student
+        set name = #{student.name},
+            class_no= #{student.studentClass.no},
+            class_name= #{student.studentClass.name},
+            school_no= #{student.studentSchool.sno},
+            school_name= #{student.studentSchool.sname}
+        where id = #{student.id}
+    </update>
+    <delete id="deleteStudent">
+        delete from student where id = #{id}
+    </delete>
+</mapper>
 ```
