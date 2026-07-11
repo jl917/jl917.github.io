@@ -2976,6 +2976,83 @@ public interface StudentJpaRepository extends JpaRepository<StudentJpa, String> 
 
 ```
 
+### RestTemplate
+
+```java
+// RestTemplateConfig.java
+package blog.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
+
+@Configuration
+public class RestTemplateConfig {
+
+    @Bean
+    public RestTemplate restTemplate(){
+
+        return new RestTemplate();
+    }
+
+}
+
+// RandomUserService.java
+package blog.service;
+
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+@Service
+public class RandomUserService {
+
+    private final RestTemplate restTemplate;
+
+    public RandomUserService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+    public String getRandomUser(int results){
+
+        String url =
+                "https://randomuser.me/api/?results={results}";
+
+        return restTemplate.getForObject(
+                url,
+                String.class,
+                results
+        );
+
+    }
+
+}
+
+// UserController.java
+package blog.service;
+
+import blog.service.RandomUserService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class UserController {
+
+    private final RandomUserService randomUserService;
+
+    public UserController(RandomUserService randomUserService) {
+        this.randomUserService = randomUserService;
+    }
+
+    @GetMapping("/random-user")
+    public String randomUser(
+            @RequestParam(defaultValue = "1") int results){
+
+        return randomUserService.getRandomUser(results);
+
+    }
+}
+```
 
 
 ---
