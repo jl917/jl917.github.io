@@ -818,3 +818,120 @@ public interface StudentNewMapper {
     </delete>
 </mapper>
 ```
+
+## JPA(Java Persistence API)
+
+- JpaRepository가 이 CRUD 메서드들을 이미 정의해두었고
+- Spring Data JPA가 애플리케이션 기동 시 이 인터페이스의 구현체(프록시)를 자동 생성해 빈으로 등록합니다.
+- 즉 "인터페이스 선언 → 구현은 프레임워크가 런타임에 생성" 구조입니다.
+
+```yaml
+# application.yaml
+spring:
+  datasource:
+    driver-class-name: org.sqlite.JDBC
+    url: jdbc:sqlite:/Users/julong/Documents/be-dev/blog/student.db
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+
+    hibernate:
+      ddl-auto: update
+
+    show-sql: true
+```
+
+```java
+// StudentJpa.java
+package blog.jpa;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "student")
+public class StudentJpa {
+    @Id
+    @Column(name = "id")
+    private String id;
+    @Column(name = "name")
+    private String name;
+    public StudentJpa() {
+    }
+    public StudentJpa(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+
+// StudentJpaController.java
+package blog.jpa;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
+
+@RestController
+public class StudentJpaController {
+
+    @Autowired
+    private StudentJpaRepository studentJpaRepository;
+
+    @GetMapping("/studentJpa")
+    public Object getStudent(@RequestParam String id){
+        Optional<StudentJpa> opt = studentJpaRepository.findById(id);
+        if(opt.isPresent()){
+            return opt.get();
+        }
+        return null;
+    }
+
+    @PostMapping("/studentJpa")
+    public String addStudent(@RequestParam String id, @RequestParam String name){
+        studentJpaRepository.save(new StudentJpa(id,name));
+        return "ok";
+    }
+
+    @PutMapping("/studentJpa")
+    public String updateStudent(@RequestParam String id, @RequestParam String name){
+        studentJpaRepository.save(new StudentJpa(id,name));
+        return "ok";
+    }
+
+    @DeleteMapping("/studentJpa")
+    public String deleteStudent(@RequestParam String id){
+        studentJpaRepository.deleteById(id);
+        return "ok";
+    }
+}
+
+
+// StudentJpaRepository.java
+package blog.jpa;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface StudentJpaRepository extends JpaRepository<StudentJpa, String> {
+}
+
+```
