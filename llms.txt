@@ -43,6 +43,7 @@
 - [Spring Batch](/note/backend/spring-batch.md)
 - [Spring Boot](/note/backend/spring-boot.md)
 - [Spring Boot2](/note/backend/spring-boot2.md)
+- [SQL](/note/backend/sql.md)
 - [Temporal](/note/backend/temporal.md)
 - [용어정리](/note/backend/term.md)
 - [GraphQL](/note/etc/graphql/index.md)
