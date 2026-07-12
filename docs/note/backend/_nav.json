@@ -23,4 +23,9 @@
     "type": "file",
     "name": "spring-boot2"
   }
+  ,
+  {
+    "type": "file",
+    "name": "sql"
+  }
 ]
