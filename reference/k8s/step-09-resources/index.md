@@ -1,7 +1,7 @@
 # Step 09 — 리소스 관리
 
 > **학습 목표**: requests/limits의 의미와 스케줄러 동작, CPU(압축 가능) vs 메모리(압축 불가·OOMKill) 차이, QoS 3등급, LimitRange·ResourceQuota로 네임스페이스를 통제하는 법을 익힌다.
-> **선행 스텝**: [Step 08](../step-08-health-probes/README.md)
+> **선행 스텝**: [Step 08](../step-08-health-probes/)
 > **예상 소요**: 60분
 
 이 스텝의 모든 리소스는 `step09` 네임스페이스에 만든다. 모든 매니페스트에 `namespace: step09`가 박혀 있으니 실수로 다른 네임스페이스를 건드릴 일은 없다.
@@ -74,7 +74,7 @@ learn-worker          334m         4%       813Mi           5%
 learn-worker2         155m         1%       587Mi           3%
 ```
 
-> 💡 **실무 팁**: `kubectl top`이 `error: Metrics API not available`로 실패한다면 metrics-server가 아직 없는 것이다. 설치는 [Step 18](../step-18-autoscaling/README.md)에서 다룬다. `requests`/`limits`는 metrics-server가 없어도 항상 동작한다 — 스케줄링과 cgroup 강제는 선언값만으로 이뤄지기 때문이다.
+> 💡 **실무 팁**: `kubectl top`이 `error: Metrics API not available`로 실패한다면 metrics-server가 아직 없는 것이다. 설치는 [Step 18](../step-18-autoscaling/)에서 다룬다. `requests`/`limits`는 metrics-server가 없어도 항상 동작한다 — 스케줄링과 cgroup 강제는 선언값만으로 이뤄지기 때문이다.
 
 > ⚠️ **함정**: `requests`를 실제 사용량보다 훨씬 크게 잡으면 노드에 물리적 여유가 있어도 "Insufficient cpu/memory"로 Pending이 뜬다. 반대로 너무 작게 잡으면 노드가 과밀 배치되어 실제 부하가 몰릴 때 서로 자원을 뺏는다. requests는 **평상시 사용량**, limits는 **피크 허용치**로 잡는 게 출발점이다.
 
@@ -444,7 +444,7 @@ Error from server (Forbidden): error when creating "manifests/11-quota-no-resour
 
 ## 다음 단계
 
-→ [Step 10 — 스토리지](../step-10-storage/README.md)
+→ [Step 10 — 스토리지](../step-10-storage/)
 
 ---
 

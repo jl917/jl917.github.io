@@ -7,7 +7,7 @@
 > - 오퍼레이터 패턴(감시 → 조정 루프)의 개념과, CRD는 "데이터" 오퍼레이터는 "로직"이라는 역할 분리를 이해한다
 > - CRD와 ConfigMap 중 언제 무엇을 쓸지 판단한다
 >
-> **선행 스텝**: [Step 04 — 레이블·셀렉터·네임스페이스](../step-04-labels-namespaces/README.md)
+> **선행 스텝**: [Step 04 — 레이블·셀렉터·네임스페이스](../step-04-labels-namespaces/)
 > **예상 소요**: 45분
 
 ---
@@ -363,7 +363,7 @@ No resources found in step22 namespace.
 ## 연습 과제 → [challenge.md](challenge.md)
 
 ## 다음 단계
-→ [Step 23 — Kustomize와 GitOps](../step-23-kustomize-gitops/README.md)
+→ [Step 23 — Kustomize와 GitOps](../step-23-kustomize-gitops/)
 
 ---
 

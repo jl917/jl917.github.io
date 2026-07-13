@@ -7,7 +7,7 @@
 > - 순차 생성(0→1→2)·역순 삭제(2→1→0)를 눈으로 본다
 > - 파드를 지워도 같은 이름·같은 PVC 로 재생성되어 **데이터가 살아남는 것**을 증명한다
 >
-> **선행 스텝**: [Step 10 — 볼륨·PVC](../step-10-storage/README.md)
+> **선행 스텝**: [Step 10 — 볼륨·PVC](../step-10-storage/)
 > **예상 소요**: 60분
 
 ---
@@ -372,7 +372,7 @@ data-redis-2   Bound    pvc-68200025-19df-4404-b1de-59aa4665dc68   128Mi      RW
 ## 연습 과제 → [challenge.md](challenge.md)
 
 ## 다음 단계
-→ [Step 12 — 잡·데몬셋](../step-12-jobs-daemonset/README.md)
+→ [Step 12 — 잡·데몬셋](../step-12-jobs-daemonset/)
 
 ---
 

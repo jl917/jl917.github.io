@@ -6,7 +6,7 @@
 > - 바이너리 로그와 GTID, binlog 포맷(ROW/STATEMENT/MIXED), PITR(시점 복구) 개념을 잡는다
 > - 소스-레플리카 복제를 **직접 구성**하고 `CHANGE REPLICATION SOURCE TO` / `SHOW REPLICA STATUS`(8.0 신문법)로 검증한다
 >
-> **선행 스텝**: [Step 19 — 트랜잭션](../step-19-transactions/README.md), [Step 22 — 사용자와 보안](../step-22-users-security/README.md)
+> **선행 스텝**: [Step 19 — 트랜잭션](../step-19-transactions/), [Step 22 — 사용자와 보안](../step-22-users-security/)
 > **예상 소요**: 90분
 
 > 이 스텝은 SQL 보다 **셸 스크립트**가 중심입니다.
@@ -52,7 +52,7 @@ mysqldump -h127.0.0.1 -P3307 -uroot -proot1234 \
 | 옵션 | 의미 / 왜 필요한가 |
 |---|---|
 | **`--single-transaction`** | InnoDB 를 **잠그지 않고** 일관된 스냅샷을 뜬다. 내부적으로 `REPEATABLE READ` 트랜잭션을 열어 그 시점의 데이터를 덤프 → **서비스 무중단 백업의 핵심**. (MyISAM 에는 효과 없음 — MyISAM 은 `--lock-tables` 필요) |
-| **`--routines`** | 저장 프로시저/함수([Step 20](../step-20-stored-programs/README.md))도 포함. **기본은 제외**되므로 반드시 명시 |
+| **`--routines`** | 저장 프로시저/함수([Step 20](../step-20-stored-programs/))도 포함. **기본은 제외**되므로 반드시 명시 |
 | **`--triggers`** | 트리거 포함(기본 ON이지만 명시 권장) |
 | **`--events`** | 이벤트 스케줄러 포함. **기본 제외** |
 | **`--set-gtid-purged=AUTO`** | GTID 환경이면 복구 시 필요한 `SET @@GLOBAL.GTID_PURGED` 를 덤프에 넣는다. **레플리카를 백업으로 초기 구성할 때 필수** |
@@ -343,7 +343,7 @@ docker compose down -v        # 컨테이너 + 볼륨까지 삭제
 
 ## 다음 단계
 
-→ [Step 24 — 모니터링과 튜닝](../step-24-monitoring-tuning/README.md)
+→ [Step 24 — 모니터링과 튜닝](../step-24-monitoring-tuning/)
 
 ---
 

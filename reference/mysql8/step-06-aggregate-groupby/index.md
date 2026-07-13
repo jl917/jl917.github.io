@@ -7,7 +7,7 @@
 > - **`ONLY_FULL_GROUP_BY`**(MySQL 8 기본 ON)의 에러를 이해하고 `ANY_VALUE` 로 푼다
 > - `WITH ROLLUP` + `GROUPING()`, `GROUP_CONCAT`, `SUM(조건)` 관용구를 익힌다
 >
-> **선행 스텝**: [Step 05 — 연산자와 조건](../step-05-where-operators/README.md)
+> **선행 스텝**: [Step 05 — 연산자와 조건](../step-05-where-operators/)
 > **예상 소요**: 60분
 
 ---
@@ -738,7 +738,7 @@ HAVING SUM(o.status <> 'CANCELLED') = 0;
 +-------------+-----------+--------+-----------+-----------+-----------+
 ```
 
-> ⚠️ **함정 (실무 상급)**: **JOIN 결과에 WHERE 를 걸면, 조건에 맞는 행이 하나도 없는 그룹은 결과에서 통째로 사라집니다.** "취소 제외 매출" 은 맞게 나오지만, "전 고객 목록" 을 기대했다면 3명이 조용히 빠집니다. 이걸 피하려면 (1) 필터를 `SUM(o.status<>'CANCELLED')` 같은 **조건부 집계**로 옮기거나, (2) `LEFT JOIN` 으로 바꾸고 조건을 `ON` 절이나 집계 안으로 넣어야 합니다. 이 "필터 위치" 문제는 [Step 07](../step-07-joins/README.md) 의 핵심 주제입니다.
+> ⚠️ **함정 (실무 상급)**: **JOIN 결과에 WHERE 를 걸면, 조건에 맞는 행이 하나도 없는 그룹은 결과에서 통째로 사라집니다.** "취소 제외 매출" 은 맞게 나오지만, "전 고객 목록" 을 기대했다면 3명이 조용히 빠집니다. 이걸 피하려면 (1) 필터를 `SUM(o.status<>'CANCELLED')` 같은 **조건부 집계**로 옮기거나, (2) `LEFT JOIN` 으로 바꾸고 조건을 `ON` 절이나 집계 안으로 넣어야 합니다. 이 "필터 위치" 문제는 [Step 07](../step-07-joins/) 의 핵심 주제입니다.
 
 ---
 
@@ -781,7 +781,7 @@ HAVING SUM(o.status <> 'CANCELLED') = 0;
 
 ## 다음 단계
 
-→ [Step 07 — 조인(JOIN)](../step-07-joins/README.md)
+→ [Step 07 — 조인(JOIN)](../step-07-joins/)
 
 ---
 

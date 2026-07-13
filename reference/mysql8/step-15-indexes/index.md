@@ -642,7 +642,7 @@ SHOW INDEX FROM access_logs;   -- PRIMARY 만 남았는지 확인
 EXPLAIN 의 모든 컬럼, EXPLAIN ANALYZE(실측), 옵티마이저 힌트, 히스토그램, 그리고
 "느린 쿼리 → EXPLAIN → 인덱스 설계 → 재측정"의 실전 튜닝 절차로 마무리합니다.
 
-→ [Step 16 — EXPLAIN 과 옵티마이저](../step-16-explain-optimizer/README.md)
+→ [Step 16 — EXPLAIN 과 옵티마이저](../step-16-explain-optimizer/)
 
 ---
 

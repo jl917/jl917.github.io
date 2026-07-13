@@ -144,4 +144,4 @@ Warning  FailedScheduling  ...  0/3 nodes are available: pod has unbound immedia
 ---
 
 ## 다음 단계
-→ [Step 25 — 종합 실습](../step-25-final-project/README.md)
+→ [Step 25 — 종합 실습](../step-25-final-project/)

@@ -46,46 +46,46 @@ cd k8s/cluster && ./delete-cluster.sh && ./create-cluster.sh
 
 | Step | 주제 | 핵심 내용 |
 |---|---|---|
-| [01](step-01-setup/README.md) | 클러스터 구축과 kubectl | kind, `kubectl` 기본, 컨텍스트, 선언형 vs 명령형 |
-| [02](step-02-architecture/README.md) | 아키텍처와 동작 원리 | control plane, kubelet, etcd, 스케줄러, 조정 루프 |
-| [03](step-03-pods/README.md) | 파드 | Pod, 컨테이너, `logs/exec/describe`, 멀티 컨테이너, init |
-| [04](step-04-labels-namespaces/README.md) | 레이블·셀렉터·네임스페이스 | label, selector, annotation, namespace 격리 |
-| [05](step-05-deployments/README.md) | 디플로이먼트 | ReplicaSet, Deployment, 롤링 업데이트, 롤백 |
-| [06](step-06-services/README.md) | 서비스와 DNS | ClusterIP, NodePort, LoadBalancer, Headless, 서비스 디스커버리 |
-| [07](step-07-config-secret/README.md) | 설정과 시크릿 | ConfigMap, Secret, env, 볼륨 마운트, 불변 설정 |
+| [01](step-01-setup/) | 클러스터 구축과 kubectl | kind, `kubectl` 기본, 컨텍스트, 선언형 vs 명령형 |
+| [02](step-02-architecture/) | 아키텍처와 동작 원리 | control plane, kubelet, etcd, 스케줄러, 조정 루프 |
+| [03](step-03-pods/) | 파드 | Pod, 컨테이너, `logs/exec/describe`, 멀티 컨테이너, init |
+| [04](step-04-labels-namespaces/) | 레이블·셀렉터·네임스페이스 | label, selector, annotation, namespace 격리 |
+| [05](step-05-deployments/) | 디플로이먼트 | ReplicaSet, Deployment, 롤링 업데이트, 롤백 |
+| [06](step-06-services/) | 서비스와 DNS | ClusterIP, NodePort, LoadBalancer, Headless, 서비스 디스커버리 |
+| [07](step-07-config-secret/) | 설정과 시크릿 | ConfigMap, Secret, env, 볼륨 마운트, 불변 설정 |
 
 ### 2부 — 워크로드와 스토리지 (Step 08~13)
 
 | Step | 주제 | 핵심 내용 |
 |---|---|---|
-| [08](step-08-health-probes/README.md) | 헬스 체크 | liveness/readiness/startup 프로브, 재시작 정책 |
-| [09](step-09-resources/README.md) | 리소스 관리 | requests/limits, QoS, LimitRange, ResourceQuota, OOMKilled |
-| [10](step-10-storage/README.md) | 스토리지 | Volume, PV, PVC, StorageClass, 동적 프로비저닝 |
-| [11](step-11-statefulset/README.md) | 스테이트풀셋 | StatefulSet, 안정적 네트워크 ID, volumeClaimTemplates |
-| [12](step-12-jobs-daemonset/README.md) | 잡·데몬셋 | Job, CronJob, DaemonSet, 배치 워크로드 |
-| [13](step-13-scheduling/README.md) | 스케줄링 제어 | nodeSelector, affinity, taint/toleration, topology spread |
+| [08](step-08-health-probes/) | 헬스 체크 | liveness/readiness/startup 프로브, 재시작 정책 |
+| [09](step-09-resources/) | 리소스 관리 | requests/limits, QoS, LimitRange, ResourceQuota, OOMKilled |
+| [10](step-10-storage/) | 스토리지 | Volume, PV, PVC, StorageClass, 동적 프로비저닝 |
+| [11](step-11-statefulset/) | 스테이트풀셋 | StatefulSet, 안정적 네트워크 ID, volumeClaimTemplates |
+| [12](step-12-jobs-daemonset/) | 잡·데몬셋 | Job, CronJob, DaemonSet, 배치 워크로드 |
+| [13](step-13-scheduling/) | 스케줄링 제어 | nodeSelector, affinity, taint/toleration, topology spread |
 
 ### 3부 — 네트워킹과 접근 제어 (Step 14~16)
 
 | Step | 주제 | 핵심 내용 |
 |---|---|---|
-| [14](step-14-ingress/README.md) | 인그레스 | Ingress 컨트롤러(nginx), 호스트/경로 라우팅, TLS |
-| [15](step-15-network-policy/README.md) | 네트워크 정책 | NetworkPolicy, 기본 차단, 화이트리스트 격리 |
-| [16](step-16-rbac/README.md) | RBAC와 인증 | ServiceAccount, Role/ClusterRole, 바인딩, 최소 권한 |
+| [14](step-14-ingress/) | 인그레스 | Ingress 컨트롤러(nginx), 호스트/경로 라우팅, TLS |
+| [15](step-15-network-policy/) | 네트워크 정책 | NetworkPolicy, 기본 차단, 화이트리스트 격리 |
+| [16](step-16-rbac/) | RBAC와 인증 | ServiceAccount, Role/ClusterRole, 바인딩, 최소 권한 |
 
 ### 4부 — 운영과 고급 (Step 17~25)
 
 | Step | 주제 | 핵심 내용 |
 |---|---|---|
-| [17](step-17-helm/README.md) | Helm | 차트 구조, values, 템플릿, 릴리스, 업그레이드/롤백 |
-| [18](step-18-autoscaling/README.md) | 오토스케일링 | HPA, metrics-server, VPA·Cluster Autoscaler 개념 |
-| [19](step-19-observability/README.md) | 관측성 | events, `kubectl top`, 로깅, 메트릭, 디버그 컨테이너 |
-| [20](step-20-security/README.md) | 보안 | SecurityContext, Pod Security Standards, 이미지 보안 |
-| [21](step-21-disruptions/README.md) | 가용성과 중단 관리 | PodDisruptionBudget, PriorityClass, cordon/drain |
-| [22](step-22-crd-operators/README.md) | CRD와 오퍼레이터 | CustomResourceDefinition, 커스텀 리소스, 오퍼레이터 패턴 |
-| [23](step-23-kustomize-gitops/README.md) | Kustomize와 GitOps | Kustomize overlay, 환경별 구성, GitOps(ArgoCD) 개념 |
-| [24](step-24-troubleshooting/README.md) | 트러블슈팅 | CrashLoopBackOff·ImagePullBackOff·Pending·OOM 진단 플레이북 |
-| [25](step-25-final-project/README.md) | 종합 실습 | 3-tier 마이크로서비스 배포 + 확장 + 무중단 운영 |
+| [17](step-17-helm/) | Helm | 차트 구조, values, 템플릿, 릴리스, 업그레이드/롤백 |
+| [18](step-18-autoscaling/) | 오토스케일링 | HPA, metrics-server, VPA·Cluster Autoscaler 개념 |
+| [19](step-19-observability/) | 관측성 | events, `kubectl top`, 로깅, 메트릭, 디버그 컨테이너 |
+| [20](step-20-security/) | 보안 | SecurityContext, Pod Security Standards, 이미지 보안 |
+| [21](step-21-disruptions/) | 가용성과 중단 관리 | PodDisruptionBudget, PriorityClass, cordon/drain |
+| [22](step-22-crd-operators/) | CRD와 오퍼레이터 | CustomResourceDefinition, 커스텀 리소스, 오퍼레이터 패턴 |
+| [23](step-23-kustomize-gitops/) | Kustomize와 GitOps | Kustomize overlay, 환경별 구성, GitOps(ArgoCD) 개념 |
+| [24](step-24-troubleshooting/) | 트러블슈팅 | CrashLoopBackOff·ImagePullBackOff·Pending·OOM 진단 플레이북 |
+| [25](step-25-final-project/) | 종합 실습 | 3-tier 마이크로서비스 배포 + 확장 + 무중단 운영 |
 
 ---
 
@@ -93,17 +93,17 @@ cd k8s/cluster && ./delete-cluster.sh && ./create-cluster.sh
 
 ```
 step-05-deployments/
-├── README.md         ← 교재 본문. 개념 + 매니페스트 + 실제 실행 결과 + 함정/팁
+├── index.md          ← 교재 본문. 개념 + 매니페스트 + 실제 실행 결과 + 함정/팁
 ├── manifests/        ← 실습용 YAML 파일들
 │   ├── deployment.yaml
 │   └── ...
-├── commands.sh       ← README의 kubectl 명령을 순서대로 담은 실행 스크립트
+├── commands.sh       ← 교재의 kubectl 명령을 순서대로 담은 실행 스크립트
 └── challenge.md      ← 연습 과제 + 해답
 ```
 
 **권장 학습 방법**
 
-1. `README.md`를 읽으며 매니페스트를 **직접 `kubectl apply`** 하고 결과를 관찰합니다.
+1. `index.md`를 읽으며 매니페스트를 **직접 `kubectl apply`** 하고 결과를 관찰합니다.
 2. `kubectl get`, `describe`, `logs`로 무슨 일이 일어났는지 확인합니다.
 3. 결과가 교재와 다르면 멈추고 원인을 찾으세요.
 4. `challenge.md`의 과제를 풀고 다음 스텝으로.
@@ -135,7 +135,7 @@ kubectl delete namespace step05
 ## 실습 규칙
 
 - 실습은 각 스텝의 **전용 네임스페이스**에서 진행합니다. 다른 네임스페이스(특히 `kube-system`)를 건드리지 마세요.
-- 클러스터 전체에 영향을 주는 실습(노드 taint, cordon/drain)은 반드시 **원복**합니다. 각 스텝 README에 원복 명령이 있습니다.
+- 클러스터 전체에 영향을 주는 실습(노드 taint, cordon/drain)은 반드시 **원복**합니다. 각 스텝 교재에 원복 명령이 있습니다.
 - 꼬였다면 언제든 클러스터를 재생성하세요. 학습 클러스터는 **부수라고 있는 것**입니다.
   ```bash
   cd k8s/cluster && ./delete-cluster.sh && ./create-cluster.sh
@@ -153,7 +153,7 @@ kubectl delete namespace step05
 - `emptyDir`에 DB를 두면 파드 재시작 시 **데이터가 증발**합니다 (Step 10)
 - 메모리 `limit`을 넘기면 **OOMKilled**로 조용히 죽습니다 (Step 09, 24)
 
-각 스텝의 `⚠️ 함정`과 [Step 24 트러블슈팅](step-24-troubleshooting/README.md)을 특히 눈여겨 보세요.
+각 스텝의 `⚠️ 함정`과 [Step 24 트러블슈팅](step-24-troubleshooting/)을 특히 눈여겨 보세요.
 
 ---
 

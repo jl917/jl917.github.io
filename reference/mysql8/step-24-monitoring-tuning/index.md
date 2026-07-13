@@ -389,8 +389,8 @@ SELECT COUNT(*) FROM s24_logs WHERE customer_id = 7 AND status_code = 500;
 
 본문 「연습문제」 6문항의 **빈칸 채우기 템플릿**입니다. 대부분이 `-- TODO` 주석으로 남겨져 있고, 일부는 뼈대만 주어집니다.
 
-- 문제 1 은 `ORDER BY ??? DESC` 부분이 비어 있습니다. 총합(`SUM_TIMER_WAIT`)이 아니라 **평균(`AVG_TIMER_WAIT`)** 으로 정렬해야 하며, 두 결과가 왜 달라지는지를 주석으로 답하는 것이 진짜 문제입니다.
-- 문제 2 는 `DROP/CREATE/INSERT/ANALYZE` 4줄이 이미 실행 가능한 상태로 주어져 있고, before `EXPLAIN ANALYZE` → `CREATE INDEX` → after `EXPLAIN ANALYZE` 세 자리만 비어 있습니다. 조건이 `path='/orders' AND method='POST'` 로 바뀌었을 뿐 24-6 과 구조가 같습니다.
+- 문제 1 은 쿼리 뼈대가 통째로 주석 처리된 채 주어지고, 그중 `ORDER BY ??? DESC` 의 정렬 기준이 비어 있습니다. 총합(`SUM_TIMER_WAIT`)이 아니라 **평균(`AVG_TIMER_WAIT`)** 으로 정렬해야 하며, 두 결과가 왜 달라지는지를 주석으로 답하는 것이 진짜 문제입니다.
+- 문제 2 는 `DROP/CREATE/INSERT/ANALYZE` 4줄이 이미 실행 가능한 상태로 주어져 있고, before `EXPLAIN ANALYZE` → `CREATE INDEX` → after `EXPLAIN ANALYZE` 세 자리만 비어 있습니다. 조건이 `path='/orders' AND method='POST'` 로 바뀌었을 뿐 **본문 24-6** 의 실측과 구조가 같습니다.
 - 문제 5 의 힌트("인덱스를 만들되, 그 인덱스를 타는 쿼리는 실행하지 않는다")가 `sys.schema_unused_indexes` 의 동작 원리를 그대로 설명합니다. 인덱스를 만들어 두고 **조회하지 않아야** 미사용 목록에 뜹니다.
 - 이 파일도 문제 2 에서 `s24_logs` 를 새로 만들므로 `practice.sql` 을 먼저 돌렸어도 충돌하지 않습니다.
 
@@ -401,11 +401,11 @@ SELECT COUNT(*) FROM s24_logs WHERE customer_id = 7 AND status_code = 500;
 
 `exercise.sql` 6문항의 정답입니다. 단순한 정답 나열이 아니라 **왜 그런지**가 주석에 정리돼 있으니, 답을 맞춘 뒤 주석을 꼭 읽어 보세요.
 
-- 정답 1 의 주석이 24-2 의 함정을 다시 짚습니다: 평균 상위는 "한 번 돌면 오래 걸리는" 배치/리포트성 쿼리, 총합 상위는 `calls × avg` 라 자주 불리는 쿼리가 올라옵니다. **튜닝 우선순위는 총합**이 원칙입니다.
+- 정답 1 의 주석이 본문 24-2 의 함정을 다시 짚습니다: 평균 상위는 "한 번 돌면 오래 걸리는" 배치/리포트성 쿼리, 총합 상위는 `calls × avg` 라 자주 불리는 쿼리가 올라옵니다. **튜닝 우선순위는 총합**이 원칙입니다.
 - 정답 2 는 `CREATE INDEX idx_path_method ON s24_logs (path, method)` 로 등치 조건 두 개를 복합 인덱스로 묶습니다. 100만 행 Table scan 이 index lookup 으로 바뀌는 것을 `EXPLAIN ANALYZE` 출력에서 확인합니다.
 - 정답 4 의 `NULLIF(..., 0)` 이 포인트입니다. `Created_tmp_tables` 가 0 일 때 0으로 나누기를 막아 NULL 을 반환하게 합니다. 결과가 10% 를 넘으면 `tmp_table_size` 부족을 의심합니다.
 - 정답 5 는 `idx_unused_duration` 을 만들고 **일부러 쓰지 않은 뒤** `sys.schema_unused_indexes` 에서 확인합니다. 주석대로 `idx_path_method` 는 정답 2 에서 조회에 쓰였으므로 목록에 나타나지 않습니다 — 이 대비가 학습 포인트입니다.
-- 정답 6 은 24-7 플레이북의 SQL 버전입니다. `information_schema.processlist`(지금 뭐가 도나) → `sys.statement_analysis`(누적으로 뭐가 무겁나) → `EXPLAIN ANALYZE`(왜 느린가) → 임시테이블 상태변수 순서로 좁혀 들어갑니다.
+- 정답 6 은 본문 24-7 「실전 트러블슈팅 플레이북」의 상황 C 를 SQL 로 옮긴 것입니다. `information_schema.processlist`(지금 뭐가 도나) → `sys.statement_analysis`(누적으로 뭐가 무겁나) → `EXPLAIN ANALYZE`(왜 느린가) → `Created_tmp_disk_tables`/`Created_tmp_tables` 상태변수 순서로 좁혀 들어갑니다.
 - 파일 마지막 줄이 `DROP TABLE IF EXISTS s24_logs;` 입니다. 이 스크립트를 끝까지 실행하면 실습 테이블이 **삭제된다**는 점을 기억하세요(공용 테이블은 건드리지 않습니다).
 
 ```sql file="./solution.sql"

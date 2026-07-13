@@ -271,7 +271,7 @@ kubectl delete namespace step15-ext
 
 ---
 
-**다음 단계 →** [Step 16 — RBAC와 인증](../step-16-rbac/README.md)
+**다음 단계 →** [Step 16 — RBAC와 인증](../step-16-rbac/)
 
 ---
 

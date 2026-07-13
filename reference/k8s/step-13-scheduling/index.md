@@ -382,7 +382,7 @@ kubectl describe nodes | grep -i taint
 ## 연습 과제 → [challenge.md](challenge.md)
 
 ## 다음 단계
-→ [Step 14 — 인그레스](../step-14-ingress/README.md)
+→ [Step 14 — 인그레스](../step-14-ingress/)
 
 ---
 

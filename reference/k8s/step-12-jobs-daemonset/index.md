@@ -1,6 +1,6 @@
 # Step 12 — 잡·데몬셋
 
-> **학습 목표**: 배치성 워크로드를 다루는 `Job`(완료·병렬·재시도)과 주기 실행 `CronJob`, 그리고 노드마다 한 개씩 파드를 띄우는 `DaemonSet`을 이해하고, taint/toleration이 DaemonSet 배치에 어떻게 작용하는지 실습으로 확인한다. / **선행 스텝**: [Step 11](../step-11-statefulset/README.md) / **예상 소요**: 60분
+> **학습 목표**: 배치성 워크로드를 다루는 `Job`(완료·병렬·재시도)과 주기 실행 `CronJob`, 그리고 노드마다 한 개씩 파드를 띄우는 `DaemonSet`을 이해하고, taint/toleration이 DaemonSet 배치에 어떻게 작용하는지 실습으로 확인한다. / **선행 스텝**: [Step 11](../step-11-statefulset/) / **예상 소요**: 60분
 
 이 스텝의 모든 리소스는 `step12` 네임스페이스에 생성한다. Job·CronJob·DaemonSet은 **모두 네임스페이스 리소스**이므로 마지막에 `kubectl delete namespace step12` 한 방으로 전부 정리된다.
 
@@ -410,7 +410,7 @@ node-agent   3         3         3       3            3           <none>        
 ## 연습 과제 → [challenge.md](./challenge.md)
 
 ## 다음 단계
-→ [Step 13 — 스케줄링 제어](../step-13-scheduling/README.md)
+→ [Step 13 — 스케줄링 제어](../step-13-scheduling/)
 
 ---
 

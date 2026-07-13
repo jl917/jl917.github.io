@@ -7,7 +7,7 @@
 > - NULL 확장을 이용한 **안티조인**(`LEFT JOIN ... IS NULL`)을 쓴다
 > - MySQL 엔 **`FULL OUTER JOIN` 이 없다**는 것을 알고 `UNION` 으로 우회한다
 >
-> **선행 스텝**: [Step 06 — 집계함수와 GROUP BY](../step-06-aggregate-groupby/README.md)
+> **선행 스텝**: [Step 06 — 집계함수와 GROUP BY](../step-06-aggregate-groupby/)
 > **예상 소요**: 70분
 
 조인은 관계형 DB 의 심장입니다. 스키마 관계도는 실습 환경의 `sql/01_schema.sql` 상단 주석을 참고하세요.
@@ -290,7 +290,7 @@ SELECT
 +---------------------+-------------------+
 ```
 
-`60 = 60`. 정확합니다. [Step 05](../step-05-where-operators/README.md) 에서 배운 `NOT EXISTS`, `NOT IN` 과 함께 **안티조인의 세 가지 표현**이 완성되었습니다.
+`60 = 60`. 정확합니다. [Step 05](../step-05-where-operators/) 에서 배운 `NOT EXISTS`, `NOT IN` 과 함께 **안티조인의 세 가지 표현**이 완성되었습니다.
 
 ```sql
 -- 후기를 한 번도 안 남긴 고객 (Step 05 의 NOT EXISTS 를 조인 버전으로)
