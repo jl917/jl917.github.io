@@ -643,7 +643,7 @@ ORDER BY cnt DESC;
 
 ## 다음 단계
 
-→ [Step 11 — DML (INSERT / UPDATE / DELETE)](../step-11-dml/README.md)
+→ [Step 11 — DML (INSERT / UPDATE / DELETE)](../step-11-dml/)
 
 ---
 

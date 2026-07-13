@@ -80,4 +80,4 @@ kubectl delete pod smoke --wait=false >/dev/null 2>&1 || true
 echo ""
 echo "✅ 준비 완료. 컨텍스트: kind-${CLUSTER_NAME}"
 echo "   시작:  kubectl get nodes"
-echo "   교재:  k8s/step-01-setup/README.md"
+echo "   교재:  k8s/step-01-setup/index.md"

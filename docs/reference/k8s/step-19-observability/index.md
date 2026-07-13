@@ -281,7 +281,7 @@ kubectl logs flaky -n step19 -c debugger    # 나중에 로그로 다시 확인
 
 ## 다음 단계
 
-→ [Step 20 — 보안](../step-20-security/README.md): SecurityContext와 Pod Security Standards로 파드를 최소 권한으로 가둡니다.
+→ [Step 20 — 보안](../step-20-security/): SecurityContext와 Pod Security Standards로 파드를 최소 권한으로 가둡니다.
 
 ---
 

@@ -1,6 +1,6 @@
 # Step 08 — 헬스 체크(프로브)
 
-> **학습 목표**: livenessProbe / readinessProbe / startupProbe의 차이와 3가지 핸들러(httpGet · tcpSocket · exec)를 이해하고, CrashLoopBackOff를 직접 재현하며, readiness 실패가 Service Endpoints에 어떻게 반영되는지 눈으로 확인한다. / **선행 스텝**: [Step 07 — ConfigMap & Secret](../step-07-config-secret/README.md) / **예상 소요**: 60분
+> **학습 목표**: livenessProbe / readinessProbe / startupProbe의 차이와 3가지 핸들러(httpGet · tcpSocket · exec)를 이해하고, CrashLoopBackOff를 직접 재현하며, readiness 실패가 Service Endpoints에 어떻게 반영되는지 눈으로 확인한다. / **선행 스텝**: [Step 07 — ConfigMap & Secret](../step-07-config-secret/) / **예상 소요**: 60분
 
 이 스텝의 모든 리소스는 `step08` 네임스페이스에서 실행한다. 먼저 네임스페이스를 만든다.
 
@@ -448,7 +448,7 @@ Events:
 
 ## 다음 단계
 
-→ [Step 09 — 리소스 관리](../step-09-resources/README.md)
+→ [Step 09 — 리소스 관리](../step-09-resources/)
 
 ---
 

@@ -609,7 +609,7 @@ SELECT lvl, COUNT(*) AS cnt FROM org GROUP BY lvl ORDER BY lvl;
 
 ## 다음 단계
 
-→ [Step 10 — 집합 연산](../step-10-set-operations/README.md)
+→ [Step 10 — 집합 연산](../step-10-set-operations/)
 
 ---
 

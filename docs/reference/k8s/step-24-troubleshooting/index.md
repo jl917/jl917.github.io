@@ -5,7 +5,7 @@
 > - 각 증상마다 **증상 → 원인 후보 → 진단 명령 → 해결** 순서로 사고하는 습관을 만든다
 > - `describe`, `get events`, `logs --previous`, `get -o yaml`, `exec`, `debug` 를 언제 꺼내 쓰는지 몸에 익힌다
 >
-> **선행 스텝**: [Step 04 — 레이블·네임스페이스](../step-04-labels-namespaces/README.md), [Step 05 — 디플로이먼트](../step-05-deployments/README.md)
+> **선행 스텝**: [Step 04 — 레이블·네임스페이스](../step-04-labels-namespaces/), [Step 05 — 디플로이먼트](../step-05-deployments/)
 > **예상 소요**: 60분
 
 ---
@@ -477,7 +477,7 @@ hello from echo
 ## 연습 과제 → [challenge.md](challenge.md)
 
 ## 다음 단계
-→ [Step 25 — 종합 실습](../step-25-final-project/README.md)
+→ [Step 25 — 종합 실습](../step-25-final-project/)
 
 ---
 

@@ -1,6 +1,6 @@
 # Step 10 — 스토리지
 
-> **학습 목표**: 컨테이너의 파일시스템이 왜 휘발성인지 이해하고, `emptyDir` / `hostPath` / `PV`·`PVC`·`StorageClass`의 차이를 실습으로 구분한다. kind의 동적 프로비저닝으로 파드가 죽어도 살아남는 데이터를 직접 만들어 본다. / **선행 스텝**: [Step 09](../step-09-resources/README.md) / **예상 소요**: 60분
+> **학습 목표**: 컨테이너의 파일시스템이 왜 휘발성인지 이해하고, `emptyDir` / `hostPath` / `PV`·`PVC`·`StorageClass`의 차이를 실습으로 구분한다. kind의 동적 프로비저닝으로 파드가 죽어도 살아남는 데이터를 직접 만들어 본다. / **선행 스텝**: [Step 09](../step-09-resources/) / **예상 소요**: 60분
 
 ---
 
@@ -379,7 +379,7 @@ persistent data written by pvc-writer @ 2026년 7월 13일 월요일 11시 55분
 ---
 
 ## 다음 단계
-→ [Step 11 — 스테이트풀셋](../step-11-statefulset/README.md)
+→ [Step 11 — 스테이트풀셋](../step-11-statefulset/)
 
 ---
 

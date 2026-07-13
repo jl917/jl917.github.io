@@ -36,53 +36,53 @@ mysql -h127.0.0.1 -P3307 -ulearner -plearn1234 shop
 
 | Step | 주제 | 핵심 내용 |
 |---|---|---|
-| [01](step-01-setup/README.md) | 환경 구축과 첫 접속 | Docker, mysql CLI, `sql_mode`, 시스템 변수 |
-| [02](step-02-ddl-datatypes/README.md) | 테이블과 데이터 타입 | `CREATE/ALTER`, **DECIMAL vs FLOAT**, DATETIME vs TIMESTAMP |
-| [03](step-03-sample-database/README.md) | 예제 DB 구축과 탐색 | `shop` 스키마, ER 파악법, 정합성 검증 |
-| [04](step-04-select-basics/README.md) | SELECT 기본 | `SELECT/FROM/WHERE/ORDER BY/LIMIT`, `DISTINCT`, 별칭 |
-| [05](step-05-where-operators/README.md) | 연산자와 조건 | `BETWEEN/IN/LIKE/REGEXP`, **NULL 3값 논리**, 페이징 |
-| [06](step-06-aggregate-groupby/README.md) | 집계와 GROUP BY | `COUNT/SUM/AVG`, `HAVING`, `ONLY_FULL_GROUP_BY`, `ROLLUP` |
-| [07](step-07-joins/README.md) | JOIN | `INNER/LEFT/CROSS/SELF`, **ON vs WHERE 함정**, 안티 조인 |
+| [01](step-01-setup/) | 환경 구축과 첫 접속 | Docker, mysql CLI, `sql_mode`, 시스템 변수 |
+| [02](step-02-ddl-datatypes/) | 테이블과 데이터 타입 | `CREATE/ALTER`, **DECIMAL vs FLOAT**, DATETIME vs TIMESTAMP |
+| [03](step-03-sample-database/) | 예제 DB 구축과 탐색 | `shop` 스키마, ER 파악법, 정합성 검증 |
+| [04](step-04-select-basics/) | SELECT 기본 | `SELECT/FROM/WHERE/ORDER BY/LIMIT`, `DISTINCT`, 별칭 |
+| [05](step-05-where-operators/) | 연산자와 조건 | `BETWEEN/IN/LIKE/REGEXP`, **NULL 3값 논리**, 페이징 |
+| [06](step-06-aggregate-groupby/) | 집계와 GROUP BY | `COUNT/SUM/AVG`, `HAVING`, `ONLY_FULL_GROUP_BY`, `ROLLUP` |
+| [07](step-07-joins/) | JOIN | `INNER/LEFT/CROSS/SELF`, **ON vs WHERE 함정**, 안티 조인 |
 
 ### 2부 — 중급 (Step 08~14)
 > 여기부터가 진짜 SQL입니다.
 
 | Step | 주제 | 핵심 내용 |
 |---|---|---|
-| [08](step-08-subqueries/README.md) | 서브쿼리 | 스칼라/파생테이블, `IN vs EXISTS`, **`NOT IN` + NULL 함정** |
-| [09](step-09-cte-recursive/README.md) | CTE와 재귀 쿼리 | `WITH`, **재귀 CTE**(조직도 전개, 날짜 채우기) |
-| [10](step-10-set-operations/README.md) | 집합 연산 | `UNION/UNION ALL`, `INTERSECT/EXCEPT`(8.0.31+) |
-| [11](step-11-dml/README.md) | 데이터 변경 | `INSERT/UPDATE/DELETE`, **UPSERT**, `REPLACE`의 함정 |
-| [12](step-12-builtin-functions/README.md) | 내장 함수 | 문자열/숫자/날짜/조건/형변환, **함수가 인덱스를 죽이는 문제** |
-| [13](step-13-constraints/README.md) | 제약조건과 정규화 | `PK/UNIQUE/CHECK/FK`, `ON DELETE` 옵션, 1NF~3NF와 반정규화 |
-| [14](step-14-views-generated/README.md) | 뷰와 생성 컬럼 | `VIEW`, 갱신 가능한 뷰, `VIRTUAL vs STORED`, 함수 기반 인덱스 |
+| [08](step-08-subqueries/) | 서브쿼리 | 스칼라/파생테이블, `IN vs EXISTS`, **`NOT IN` + NULL 함정** |
+| [09](step-09-cte-recursive/) | CTE와 재귀 쿼리 | `WITH`, **재귀 CTE**(조직도 전개, 날짜 채우기) |
+| [10](step-10-set-operations/) | 집합 연산 | `UNION/UNION ALL`, `INTERSECT/EXCEPT`(8.0.31+) |
+| [11](step-11-dml/) | 데이터 변경 | `INSERT/UPDATE/DELETE`, **UPSERT**, `REPLACE`의 함정 |
+| [12](step-12-builtin-functions/) | 내장 함수 | 문자열/숫자/날짜/조건/형변환, **함수가 인덱스를 죽이는 문제** |
+| [13](step-13-constraints/) | 제약조건과 정규화 | `PK/UNIQUE/CHECK/FK`, `ON DELETE` 옵션, 1NF~3NF와 반정규화 |
+| [14](step-14-views-generated/) | 뷰와 생성 컬럼 | `VIEW`, 갱신 가능한 뷰, `VIRTUAL vs STORED`, 함수 기반 인덱스 |
 
 ### 3부 — 고급: 성능 (Step 15~17)
 > 이 코스의 심장부입니다. 100만 행 테이블로 직접 측정합니다.
 
 | Step | 주제 | 핵심 내용 |
 |---|---|---|
-| [15](step-15-indexes/README.md) | 인덱스 | B+Tree, 클러스터드 인덱스, **복합 인덱스 컬럼 순서**, 커버링 인덱스 |
-| [16](step-16-explain-optimizer/README.md) | EXPLAIN과 옵티마이저 | 실행계획 완전 해독, `EXPLAIN ANALYZE`, 힌트, 히스토그램 |
-| [17](step-17-window-functions/README.md) | 윈도우 함수 | `ROW_NUMBER/RANK`, `LAG/LEAD`, **프레임 절**, 누적합·이동평균 |
+| [15](step-15-indexes/) | 인덱스 | B+Tree, 클러스터드 인덱스, **복합 인덱스 컬럼 순서**, 커버링 인덱스 |
+| [16](step-16-explain-optimizer/) | EXPLAIN과 옵티마이저 | 실행계획 완전 해독, `EXPLAIN ANALYZE`, 힌트, 히스토그램 |
+| [17](step-17-window-functions/) | 윈도우 함수 | `ROW_NUMBER/RANK`, `LAG/LEAD`, **프레임 절**, 누적합·이동평균 |
 
 ### 4부 — 고급: 기능 (Step 18~21)
 
 | Step | 주제 | 핵심 내용 |
 |---|---|---|
-| [18](step-18-json/README.md) | JSON | `JSON_EXTRACT`, `->>`, **`JSON_TABLE`**, JSON 인덱싱 |
-| [19](step-19-transactions/README.md) | 트랜잭션과 락 | ACID, **격리 수준 4단계 재현**, MVCC, 갭 락, 데드락 분석 |
-| [20](step-20-stored-programs/README.md) | 저장 프로그램 | 프로시저/함수/커서/트리거/이벤트 |
-| [21](step-21-partitioning/README.md) | 파티셔닝 | RANGE/LIST/HASH, 파티션 프루닝, **`DROP PARTITION`으로 즉시 삭제** |
+| [18](step-18-json/) | JSON | `JSON_EXTRACT`, `->>`, **`JSON_TABLE`**, JSON 인덱싱 |
+| [19](step-19-transactions/) | 트랜잭션과 락 | ACID, **격리 수준 4단계 재현**, MVCC, 갭 락, 데드락 분석 |
+| [20](step-20-stored-programs/) | 저장 프로그램 | 프로시저/함수/커서/트리거/이벤트 |
+| [21](step-21-partitioning/) | 파티셔닝 | RANGE/LIST/HASH, 파티션 프루닝, **`DROP PARTITION`으로 즉시 삭제** |
 
 ### 5부 — 운영 (Step 22~25)
 
 | Step | 주제 | 핵심 내용 |
 |---|---|---|
-| [22](step-22-users-security/README.md) | 계정과 보안 | `GRANT/REVOKE`, **ROLE**(8.0), 최소 권한, 비밀번호 정책 |
-| [23](step-23-backup-replication/README.md) | 백업과 복제 | `mysqldump`, PITR, binlog, GTID, **복제 2노드 실제 구성** |
-| [24](step-24-monitoring-tuning/README.md) | 모니터링과 튜닝 | 슬로우 쿼리, `performance_schema`, `sys`, **트러블슈팅 플레이북** |
-| [25](step-25-final-project/README.md) | 종합 실습 | 매출 리포트, 코호트/RFM 분석, 느린 쿼리 튜닝, 스키마 설계 |
+| [22](step-22-users-security/) | 계정과 보안 | `GRANT/REVOKE`, **ROLE**(8.0), 최소 권한, 비밀번호 정책 |
+| [23](step-23-backup-replication/) | 백업과 복제 | `mysqldump`, PITR, binlog, GTID, **복제 2노드 실제 구성** |
+| [24](step-24-monitoring-tuning/) | 모니터링과 튜닝 | 슬로우 쿼리, `performance_schema`, `sys`, **트러블슈팅 플레이북** |
+| [25](step-25-final-project/) | 종합 실습 | 매출 리포트, 코호트/RFM 분석, 느린 쿼리 튜닝, 스키마 설계 |
 
 ---
 
@@ -90,15 +90,15 @@ mysql -h127.0.0.1 -P3307 -ulearner -plearn1234 shop
 
 ```
 step-07-joins/
-├── README.md      ← 교재 본문. 개념 설명 + 예제 + 실제 실행 결과 + 함정/팁
-├── practice.sql   ← README의 모든 예제를 그대로 담은 실행 파일
+├── index.md       ← 교재 본문. 개념 설명 + 예제 + 실제 실행 결과 + 함정/팁
+├── practice.sql   ← 교재의 모든 예제를 그대로 담은 실행 파일
 ├── exercise.sql   ← 연습문제 (문제만)
 └── solution.sql   ← 정답 + 해설
 ```
 
 **권장 학습 방법**
 
-1. `README.md`를 읽으며 **직접 타이핑해서** 실행합니다. 복붙하지 마세요.
+1. `index.md`를 읽으며 **직접 타이핑해서** 실행합니다. 복붙하지 마세요.
 2. 결과가 교재와 다르면 멈추고 원인을 찾으세요. (거의 항상 오타입니다)
 3. `exercise.sql`을 풀고 `solution.sql`로 채점합니다.
 4. 다음 스텝으로.
@@ -161,7 +161,7 @@ NULL, 빈 관계, 편향된 분포 등 **학습에 필요한 함정을 의도적
 ## 실습 규칙
 
 - **공용 테이블(`customers`, `orders`, `products` …)은 읽기만 하세요.**
-- 데이터를 바꿔야 하는 실습(Step 11, 13, 19, 20 등)은 **`s11_`, `s13_` 같은 접두사가 붙은 사본 테이블**에서 진행합니다. 각 스텝 README에 안내가 있습니다.
+- 데이터를 바꿔야 하는 실습(Step 11, 13, 19, 20 등)은 **`s11_`, `s13_` 같은 접두사가 붙은 사본 테이블**에서 진행합니다. 각 스텝 교재에 안내가 있습니다.
 - 실습 흔적을 지우려면:
   ```sql
   SELECT CONCAT('DROP TABLE IF EXISTS ', table_name, ';')
@@ -199,4 +199,4 @@ NULL, 빈 관계, 편향된 분포 등 **학습에 필요한 함정을 의도적
 | 타임존 | `Asia/Seoul (+09:00)` |
 | 설정 | [`docker/conf/my.cnf`](./docker/) — 슬로우 쿼리 로그 ON, 엄격 모드 유지 |
 
-> 학습용 `learner` 계정에는 편의를 위해 권한을 넉넉히 주었습니다. **운영에서는 절대 이러면 안 됩니다.** 올바른 권한 설계는 [Step 22](step-22-users-security/README.md)에서 배웁니다.
+> 학습용 `learner` 계정에는 편의를 위해 권한을 넉넉히 주었습니다. **운영에서는 절대 이러면 안 됩니다.** 올바른 권한 설계는 [Step 22](step-22-users-security/)에서 배웁니다.
