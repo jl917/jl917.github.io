@@ -1,3 +1,5 @@
+name: learn-mysql8   # 폴더명(docker) 기반 기본 프로젝트명 충돌 방지
+
 services:
   mysql:
     image: mysql:8.0
