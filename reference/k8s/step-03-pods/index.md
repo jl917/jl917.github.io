@@ -187,7 +187,7 @@ kubectl -n step03 exec multi -c web -- cat /usr/share/nginx/html/index.html
 <h1>Hello from init</h1>
 ```
 
-**세 컨테이너가 하나의 볼륨을 공유**한 것이 증명됐습니다. init이 쓴 파일을 web이 서빙합니다.
+**`init-content`와 `web` 두 컨테이너가 하나의 볼륨을 공유**한 것이 증명됐습니다. init이 쓴 파일을 web이 서빙합니다. (`sidecar`는 `shared` 볼륨을 마운트하지 않습니다. 같은 파드에 있지만 자기 로그만 찍는 독립 프로세스입니다.)
 
 > 💡 **실무 팁**: 사이드카 패턴의 대표 사례 — 로그 수집기(앱 로그를 읽어 중앙으로 전송), 서비스 메시 프록시(Istio의 Envoy), 설정 동기화. initContainer는 "앱 시작 전 준비 작업"(DB 마이그레이션, 설정 다운로드, 의존 서비스 대기)에 씁니다. Kubernetes 1.28+에서는 사이드카를 위한 정식 `restartPolicy: Always` initContainer 문법도 생겼습니다.
 

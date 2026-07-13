@@ -609,7 +609,7 @@ DROP TABLE IF EXISTS s11_load_demo;
 - **[11-12]~[11-14] INSERT IGNORE**: `s11_ignore_demo` 의 `qty INT NOT NULL`, `nm VARCHAR(5) NOT NULL` 이 핵심입니다. `(NULL, '널값')` 과 `(200, '아주긴이름입니다')` 가 에러 없이 `qty=0`, 잘린 이름으로 들어가는 것을 눈으로 확인하세요. [11-14] 는 IGNORE 없이 실행하면 `ERROR 1048` 로 제대로 멈춘다는 것을 보여 주려고 **주석 처리해 둔** 문장입니다.
 - **[11-19] 안전 모드**: `SET SESSION sql_safe_updates = 1` 아래에 **차단되는 예 두 개**(`UPDATE s11_products SET stock = 0;` 와 `UPDATE s11_products SET stock = 0 WHERE name LIKE '%셔츠%';`)가 **일부러 주석 처리**되어 있습니다. 스크립트 전체를 파이프로 실행할 때 여기서 `ERROR 1175` 로 죽지 않게 하려는 것이니, 직접 확인하고 싶다면 콘솔에서 주석을 벗겨 손으로 실행해 보세요. 실제로 실행되는 것은 PK 를 쓰는 `WHERE product_id = 1` 과 `LIMIT 10` 을 붙인 두 문장이며, 블록 끝에서 `sql_safe_updates` 를 다시 0 으로 되돌립니다.
 - **[11-25] LOAD DATA**: `LOAD DATA LOCAL INFILE` 블록 역시 주석입니다. 실행하려면 먼저 셸에서 `/tmp/s11_products.csv` 를 만들고, 클라이언트에 `--local-infile=1`, 서버에 `local_infile=ON` 이 켜져 있어야 합니다.
-- **[11-26] 정리**: 파일 끝에서 `DROP TABLE IF EXISTS` 9 개로 사본을 전부 지웁니다. 즉 스크립트를 통째로 돌리면 마지막에 사본이 사라지므로, 중간 결과를 살펴보고 싶다면 이 블록 전까지만 실행하세요. (파일 맨 위 헤더 주석은 정리 블록을 `[11-29]` 라고 적어 두었지만, 실제 블록 번호는 `[11-26]` 입니다. 헤더 쪽 번호가 오타이니 혼동하지 마세요.)
+- **[11-26] 정리**: 파일 끝에서 `DROP TABLE IF EXISTS` 9 개로 사본을 전부 지웁니다. 즉 스크립트를 통째로 돌리면 마지막에 사본이 사라지므로, 중간 결과를 살펴보고 싶다면 이 블록 전까지만 실행하세요.
 
 ```sql file="./practice.sql"
 ```
