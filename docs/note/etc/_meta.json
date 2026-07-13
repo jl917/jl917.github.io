@@ -10,7 +10,7 @@
     "name": "rust"
   },
   {
-    "type": "http",
+    "type": "dir",
     "label": "HTTP",
     "name": "http"
   }

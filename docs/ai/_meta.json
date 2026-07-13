@@ -1,0 +1,38 @@
+[
+  "01-summary",
+  {
+    "type": "dir",
+    "label": "프롬프트",
+    "name": "02-prompt"
+  },
+  {
+    "type": "dir",
+    "label": "LLM",
+    "name": "03-largeLanguageModel"
+  },
+  {
+    "type": "dir",
+    "label": "RAG",
+    "name": "04-rag"
+  },
+  {
+    "type": "dir",
+    "label": "Agent",
+    "name": "05-agent"
+  },
+  {
+    "type": "dir",
+    "label": "파인튜닝",
+    "name": "06-fineTuning"
+  },
+  "50-FunctionCalling",
+  "70-Embedding",
+  "100-Evaluation",
+  "110-Embodied",
+  "9990-LLMJudge",
+  {
+    "type": "dir",
+    "label": "도구",
+    "name": "tools"
+  }
+]
