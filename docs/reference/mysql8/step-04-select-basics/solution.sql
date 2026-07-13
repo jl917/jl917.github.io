@@ -54,7 +54,7 @@ ORDER BY price DESC;
 --   결과: 오지원(경영지원 본부장, 8,800,000)
 --
 --   [주의] 동점(tie)이 있으면 OFFSET 방식은 위험합니다. 여기서는 salary 가
---   전부 다르지만, 실무에선 RANK()/DENSE_RANK() 윈도우 함수(Step 12)를
+--   전부 다르지만, 실무에선 RANK()/DENSE_RANK() 윈도우 함수(Step 17)를
 --   쓰는 편이 훨씬 안전합니다.
 -- ---------------------------------------------------------------------
 SELECT employee_id, name, dept, position, salary
