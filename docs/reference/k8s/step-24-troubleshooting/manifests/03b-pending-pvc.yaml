@@ -1,0 +1,34 @@
+# 증상 3b: Pending — 존재하지 않는 StorageClass 의 PVC 를 참조
+# PVC 가 바인딩되지 않아 파드도 Pending 에 갇힌다.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ghost-pvc
+  namespace: step24
+  labels:
+    demo: pending-pvc
+spec:
+  accessModes: ["ReadWriteOnce"]
+  storageClassName: does-not-exist   # 존재하지 않는 SC → 프로비저닝 불가
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: waits-for-pvc
+  namespace: step24
+  labels:
+    demo: pending-pvc
+spec:
+  containers:
+    - name: web
+      image: nginx:1.27-alpine
+      volumeMounts:
+        - name: data
+          mountPath: /data
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: ghost-pvc

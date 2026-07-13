@@ -1,0 +1,34 @@
+# manifests/21-ingress-host.yaml
+# 호스트 기반 라우팅(host-based / name-based virtual hosting).
+# 같은 Ingress 컨트롤러가 Host 헤더를 보고 다른 Service 로 보냅니다.
+#   Host: tea.example.com   -> tea
+#   Host: hello.example.com -> hello
+# rewrite 없이 경로 "/" 를 그대로 백엔드에 전달합니다.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: host-routing
+  namespace: step14
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: tea.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: tea
+                port:
+                  number: 80
+    - host: hello.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hello
+                port:
+                  number: 80

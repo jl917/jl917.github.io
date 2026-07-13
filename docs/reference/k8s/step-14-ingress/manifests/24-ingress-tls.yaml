@@ -1,0 +1,28 @@
+# manifests/24-ingress-tls.yaml
+# TLS 종료(HTTPS). 자체 서명 인증서로 secure.example.com 을 HTTPS 로 노출합니다.
+# 인증서/키는 아래 Secret(kubernetes.io/tls)에 담고, Ingress 의 spec.tls 가 이를 참조합니다.
+#
+# tls-secret 은 commands.sh 에서 openssl + kubectl create secret tls 로 만듭니다.
+#   (자체 서명이라 브라우저/curl 은 신뢰하지 않음 → curl -k 로 검증)
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tls-app
+  namespace: step14
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - secure.example.com
+      secretName: tls-secret
+  rules:
+    - host: secure.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: tea
+                port:
+                  number: 80

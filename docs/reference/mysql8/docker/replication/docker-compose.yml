@@ -1,0 +1,69 @@
+# =====================================================================
+# Step 23 — 복제(Replication) 실습용 2노드 클러스터
+# ---------------------------------------------------------------------
+#   source  : 3308 → 컨테이너 repl-source  (server_id=1)
+#   replica : 3309 → 컨테이너 repl-replica (server_id=2)
+#
+# ※ 기존 학습용 컨테이너 learn-mysql8(3307)과 완전히 분리된 별도 스택입니다.
+#    learn-mysql8 은 절대 건드리지 않습니다.
+#
+# 실행:
+#   cd mysql8/docker/replication
+#   docker compose up -d
+#   ../../step-23-backup-replication/setup-replication.sh
+#
+# 정리(볼륨까지 삭제):
+#   docker compose down -v
+# =====================================================================
+services:
+  source:
+    image: mysql:8.0
+    container_name: repl-source
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root1234
+      MYSQL_DATABASE: shop
+      TZ: Asia/Seoul
+    command:
+      - --server-id=1
+      - --log-bin=mysql-bin              # 바이너리 로그 ON (복제/PITR 의 전제조건)
+      - --binlog-format=ROW              # 8.0 기본값. 안전한 복제를 위해 명시
+      - --gtid-mode=ON                   # GTID 복제
+      - --enforce-gtid-consistency=ON    # GTID 와 호환되지 않는 SQL 금지
+      - --binlog-expire-logs-seconds=604800   # binlog 7일 보관 (8.0 신규. expire_logs_days 대체)
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_0900_ai_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot1234"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  replica:
+    image: mysql:8.0
+    container_name: repl-replica
+    ports:
+      - "3309:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root1234
+      TZ: Asia/Seoul
+    command:
+      - --server-id=2
+      - --log-bin=mysql-bin              # 레플리카도 binlog 를 켠다(체인 복제/승격 대비)
+      - --binlog-format=ROW
+      - --gtid-mode=ON
+      - --enforce-gtid-consistency=ON
+      - --relay-log=relay-bin
+      # read_only / super_read_only 는 부트 시 켜면 컨테이너 초기화(root 생성 등)를
+      # 막으므로, setup-replication.sh 가 복제 구성 직후 SQL 로 켭니다.
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_0900_ai_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot1234"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    depends_on:
+      source:
+        condition: service_healthy

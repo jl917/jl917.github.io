@@ -1,0 +1,14 @@
+# privileged 파드: 호스트 커널에 거의 완전한 접근 권한. 컨테이너 격리를 사실상 무력화.
+# restricted 네임스페이스에서는 당연히 거부된다. (위험성 실증용)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: privileged
+  namespace: step20
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.27-alpine
+      securityContext:
+        privileged: true          # ★ 호스트 장치/커널 접근. 탈옥의 지름길.
+        allowPrivilegeEscalation: true

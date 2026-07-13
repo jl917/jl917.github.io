@@ -1,0 +1,27 @@
+# emptyDir 이 휘발성임을 증명하기 위한 Deployment
+# 파드를 삭제하면 Deployment 가 새 파드를 만들고, 그 파드의 emptyDir 은 비어 있다.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emptydir-web
+  namespace: step10
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: emptydir-web
+  template:
+    metadata:
+      labels:
+        app: emptydir-web
+    spec:
+      containers:
+        - name: app
+          image: busybox:1.36
+          command: ["sh", "-c", "sleep 3600"]
+          volumeMounts:
+            - name: scratch
+              mountPath: /data
+      volumes:
+        - name: scratch
+          emptyDir: {}

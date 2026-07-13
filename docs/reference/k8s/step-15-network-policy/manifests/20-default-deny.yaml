@@ -1,0 +1,17 @@
+# manifests/20-default-deny.yaml
+# 기본 차단(default deny) — 모든 인그레스 거부.
+# podSelector: {} 는 "이 네임스페이스의 모든 파드" 를 뜻합니다.
+# policyTypes 에 Ingress 를 넣고 ingress 규칙을 하나도 안 주면,
+#   → 대상 파드로 들어오는 모든 트래픽이 차단됩니다(화이트리스트의 출발점).
+#
+# 주의: NetworkPolicy 는 "additive(합집합)" 입니다. 이 정책은 아무것도 허용하지 않고,
+#       뒤에 붙는 allow 정책들이 구멍을 뚫어줍니다.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+  namespace: step15
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress

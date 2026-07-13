@@ -1,0 +1,31 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# 같은 base 를 prod 네임스페이스에, prod- 접두사와 env=prod 레이블로 배포한다.
+namespace: step23-prod
+namePrefix: prod-
+labels:
+  - pairs:
+      env: prod
+    includeSelectors: true
+
+resources:
+  - ../../base
+
+# 전략적 병합 패치: replicas=3, env(TIER)=production
+patches:
+  - path: patch-deployment.yaml
+
+configMapGenerator:
+  - name: web-config
+    behavior: replace
+    literals:
+      - MESSAGE=Hello from PROD (step23-prod)
+
+# images 트랜스포머: base 의 nginx 를 prod 에서는 다른 이미지/태그로 교체한다.
+# (실무에선 보통 같은 이미지의 태그만 바꾸지만, 여기서는 캐시된 이미지 제약상
+#  name→newName+newTag 를 모두 실증한다. 두 이미지 모두 노드에 캐시돼 있어 바로 뜬다.)
+images:
+  - name: nginx
+    newName: paulbouwer/hello-kubernetes
+    newTag: "1.10.1"

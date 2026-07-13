@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: oom-victim
+  namespace: step09
+  labels:
+    demo: oomkill
+spec:
+  # 재시작을 지켜보기 위해 Never로 설정 (기본 Always면 계속 재시작하며 CrashLoopBackOff)
+  restartPolicy: Never
+  containers:
+    - name: memory-hog
+      image: busybox:1.36
+      # tail /dev/zero 는 0으로 채워진 페이지를 계속 메모리에 매핑 → RSS가 무한히 증가
+      command: ["sh", "-c", "tail /dev/zero"]
+      resources:
+        requests:
+          memory: "16Mi"
+        limits:
+          # 20Mi 한도를 넘어서면 커널 cgroup OOM killer가 컨테이너를 죽인다
+          memory: "20Mi"

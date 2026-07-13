@@ -1,0 +1,22 @@
+# 유효한 커스텀 리소스(CR) 2개. CRD가 정의한 스키마를 만족한다.
+apiVersion: learn.example.com/v1alpha1
+kind: WebApp
+metadata:
+  name: shop-frontend
+  namespace: step22
+spec:
+  image: nginx:1.27-alpine
+  replicas: 3
+  greeting: "안녕하세요"
+  tier: frontend
+---
+apiVersion: learn.example.com/v1alpha1
+kind: WebApp
+metadata:
+  name: order-api
+  namespace: step22
+spec:
+  image: hashicorp/http-echo:1.0
+  replicas: 2
+  tier: backend
+  # greeting 미지정 → 스키마 default "Hello" 적용

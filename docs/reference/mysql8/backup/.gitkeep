@@ -1,0 +1,2 @@
+# 이 디렉터리는 Step 23 backup-restore.sh 의 mysqldump 산출물이 저장되는 곳입니다.
+# 덤프 파일(*.sql)은 .gitignore 로 커밋에서 제외됩니다. 이 파일은 디렉터리 유지용입니다.

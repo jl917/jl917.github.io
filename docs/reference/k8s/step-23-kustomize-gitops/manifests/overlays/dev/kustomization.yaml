@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# 같은 base 를 dev 네임스페이스에, dev- 접두사와 env=dev 레이블로 배포한다.
+namespace: step23-dev
+namePrefix: dev-
+labels:
+  - pairs:
+      env: dev
+    includeSelectors: true
+
+resources:
+  - ../../base
+
+# 전략적 병합 패치: replicas 와 env(TIER) 를 바꾼다.
+patches:
+  - path: patch-deployment.yaml
+
+# base 의 web-config 를 같은 이름으로 replace → MESSAGE 값만 dev 용으로 교체.
+# 값이 다르므로 해시 suffix 도 prod 와 달라진다.
+configMapGenerator:
+  - name: web-config
+    behavior: replace
+    literals:
+      - MESSAGE=Hello from DEV (step23-dev)
+
+# dev 는 base 이미지(nginx:1.27-alpine)를 그대로 쓴다. (image override 없음)

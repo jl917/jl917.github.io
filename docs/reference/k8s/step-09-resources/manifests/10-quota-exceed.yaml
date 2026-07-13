@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: quota-exceed
+  namespace: step09
+  labels:
+    demo: quota
+spec:
+  containers:
+    - name: app
+      image: nginx:1.27-alpine
+      resources:
+        requests:
+          # 이미 quota-fit가 128Mi를 사용 중. 여기에 450Mi를 더 요청하면
+          # requests.memory 총합이 512Mi 상한을 초과 → 생성 거부
+          cpu: "200m"
+          memory: "450Mi"
+        limits:
+          cpu: "400m"
+          memory: "512Mi"

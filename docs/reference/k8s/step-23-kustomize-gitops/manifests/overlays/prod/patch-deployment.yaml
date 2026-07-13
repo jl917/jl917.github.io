@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: 3        # prod 는 3 레플리카
+  template:
+    spec:
+      containers:
+        - name: web
+          env:
+            - name: TIER
+              value: "production"

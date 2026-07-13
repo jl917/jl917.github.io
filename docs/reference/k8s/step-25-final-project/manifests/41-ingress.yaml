@@ -1,0 +1,22 @@
+# (선택) Ingress. ingress-nginx 컨트롤러가 설치돼 있어야 동작한다.
+#   컨트롤러가 없으면 이 리소스는 ADDRESS 가 비어 있고 라우팅되지 않는다.
+#   그 경우 이 스텝에서는 NodePort(30-frontend.yaml)로 외부 접근을 대체한다.
+#   컨트롤러가 있다면: curl -H "Host: shop.local" http://localhost:8080/
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: shop
+  namespace: step25
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: shop.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 8080

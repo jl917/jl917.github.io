@@ -1,0 +1,22 @@
+# 증상 4: OOMKilled — 메모리 한도를 넘겨 커널이 프로세스를 죽인다
+# limit 32Mi 로 컨테이너는 정상 시작하지만, `tail /dev/zero` 가 0바이트를 무한히
+# 메모리로 읽어들여 cgroup 한도를 넘기면 커널 OOM killer 가 SIGKILL → exit 137.
+#   (한도를 16Mi 처럼 지나치게 낮게 주면 컨테이너 init 자체가 OOM 되어 137 이 아니라
+#    StartError(128) 가 나므로, "정상 시작 후 런타임 OOM" 을 재현하려면 32Mi 로 준다.)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: memory-hog
+  namespace: step24
+  labels:
+    demo: oomkilled
+spec:
+  containers:
+    - name: hog
+      image: busybox:1.36
+      command: ["sh", "-c", "echo 'start allocating...'; tail /dev/zero"]
+      resources:
+        limits:
+          memory: "32Mi"
+        requests:
+          memory: "32Mi"

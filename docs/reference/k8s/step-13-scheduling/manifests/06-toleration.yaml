@@ -1,0 +1,38 @@
+# learn-worker 에 step13-demo=true:NoSchedule 테인트를 건 상태에서 아래 두 파드를 비교한다.
+# no-tol : 톨러레이션이 없어 테인트를 못 견딤 → learn-worker 를 피해 learn-worker2 로 간다.
+# with-tol : 테인트를 견딤 → learn-worker 에도 배치될 수 있다(nodeSelector 로 강제).
+apiVersion: v1
+kind: Pod
+metadata:
+  name: no-tol
+  namespace: step13
+spec:
+  containers:
+    - name: app
+      image: nginx:1.27-alpine
+      resources:
+        requests:
+          cpu: 10m
+          memory: 16Mi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: with-tol
+  namespace: step13
+spec:
+  # 테인트가 걸린 learn-worker 로 강제 배치해 톨러레이션이 실제로 작동함을 보인다.
+  nodeSelector:
+    kubernetes.io/hostname: learn-worker
+  tolerations:
+    - key: step13-demo
+      operator: Equal
+      value: "true"
+      effect: NoSchedule
+  containers:
+    - name: app
+      image: nginx:1.27-alpine
+      resources:
+        requests:
+          cpu: 10m
+          memory: 16Mi

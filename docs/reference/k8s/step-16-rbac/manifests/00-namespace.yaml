@@ -1,0 +1,9 @@
+# manifests/00-namespace.yaml
+# step16 전용 네임스페이스. RBAC 실습 리소스는 여기에.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: step16
+  labels:
+    course: k8s-learn
+    step: "16"

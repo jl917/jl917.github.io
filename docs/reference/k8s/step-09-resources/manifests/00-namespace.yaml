@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: step09
+  labels:
+    course: learn2026
+    step: "09"

@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: step13
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27-alpine
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cache
+  namespace: step13
+  labels:
+    app: cache
+spec:
+  affinity:
+    podAffinity:
+      # web 파드가 있는 "같은 노드"에 배치한다(topologyKey = hostname).
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app: web
+          topologyKey: kubernetes.io/hostname
+  containers:
+    - name: cache
+      image: redis:7-alpine
+      resources:
+        requests:
+          cpu: 10m
+          memory: 16Mi

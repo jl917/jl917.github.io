@@ -1,0 +1,36 @@
+# 부하 생성기. 각 파드가 nginx 서비스로 무한 요청 루프를 돌려 CPU 를 밀어올린다.
+# nginx 정적 서빙은 요청당 CPU 가 작으므로, 여러 병렬 루프 + 다중 replica 로 RPS 를 높인다.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: load
+  namespace: step18
+  labels:
+    app: load
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: load
+  template:
+    metadata:
+      labels:
+        app: load
+    spec:
+      containers:
+        - name: load
+          image: busybox:1.36
+          # 한 컨테이너 안에서 10개의 무한 wget 루프를 병렬로 돌린다.
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              i=0
+              while [ $i -lt 10 ]; do
+                ( while true; do wget -q -O /dev/null http://web.step18.svc.cluster.local/; done ) &
+                i=$((i+1))
+              done
+              wait
+          resources:
+            requests:
+              cpu: 20m
+              memory: 16Mi

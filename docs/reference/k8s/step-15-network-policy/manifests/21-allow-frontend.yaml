@@ -1,0 +1,26 @@
+# manifests/21-allow-frontend.yaml
+# 화이트리스트 — server 파드로 들어오는 트래픽 중 role=frontend 클라이언트만 허용.
+# default-deny 위에 이 정책을 더하면(합집합):
+#   role=frontend (client-allowed) -> 허용
+#   그 외          (client-denied)  -> 여전히 차단
+#
+# from 안의 podSelector 는 "같은 네임스페이스에서 이 레이블을 가진 파드" 를 뜻합니다.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-frontend-to-server
+  namespace: step15
+spec:
+  podSelector:
+    matchLabels:
+      app: server
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              role: frontend
+      ports:
+        - protocol: TCP
+          port: 80

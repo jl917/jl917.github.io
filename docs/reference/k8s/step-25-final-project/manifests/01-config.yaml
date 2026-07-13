@@ -1,0 +1,25 @@
+# 3-tier 앱의 설정과 비밀.
+#  - ConfigMap: 민감하지 않은 설정(DB 이름, 프론트 배너 문구, 백엔드 URL)
+#  - Secret: DB 비밀번호 (base64 로 저장 — 암호화가 아님, RBAC 로 보호)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: step25
+data:
+  POSTGRES_DB: "shopdb"
+  POSTGRES_USER: "appuser"
+  # 프론트엔드(hello-kubernetes)가 화면에 띄울 배너 문구
+  MESSAGE: "Shop v1  |  3-tier on Kubernetes"
+  # 백엔드 서비스의 클러스터 내부 주소 (프론트가 호출한다고 가정)
+  BACKEND_URL: "http://backend.step25.svc.cluster.local:8080"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-secret
+  namespace: step25
+type: Opaque
+stringData:
+  # stringData 는 평문으로 쓰면 apiserver 가 base64 로 인코딩해 저장한다.
+  POSTGRES_PASSWORD: "s3cr3t-p@ss"

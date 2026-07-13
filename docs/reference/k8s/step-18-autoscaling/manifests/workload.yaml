@@ -1,0 +1,46 @@
+# HPA 실습 대상 워크로드.
+# 핵심: cpu request 를 아주 작게(20m) 주었다. HPA 는 "request 대비 사용률(%)"로
+# 판단하므로, request 가 작으면 약간의 부하로도 목표치를 쉽게 넘겨 스케일업을 관찰하기 쉽다.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: step18
+  labels:
+    app: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 20m       # HPA 계산의 기준값
+              memory: 24Mi
+            limits:
+              cpu: 200m
+              memory: 64Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+  namespace: step18
+  labels:
+    app: web
+spec:
+  selector:
+    app: web
+  ports:
+    - port: 80
+      targetPort: 80

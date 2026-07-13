@@ -1,0 +1,81 @@
+# 백엔드(API) 계층: agnhost netexec 로 HTTP API 를 흉내낸다.
+#  - /healthz(200), /hostname(파드 이름), /echo?msg=... 엔드포인트 제공
+#  - Deployment(2 replicas) + ClusterIP Service(클러스터 내부 전용)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: step25
+  labels:
+    app: shop
+    tier: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: shop
+      tier: backend
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0        # 무중단: 새 파드가 Ready 된 뒤에만 옛 파드 제거
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: shop
+        tier: backend
+    spec:
+      containers:
+        - name: netexec
+          image: registry.k8s.io/e2e-test-images/agnhost:2.47
+          args: ["netexec", "--http-port=8080"]
+          ports:
+            - containerPort: 8080
+              name: http
+          env:
+            # 백엔드가 DB 를 참조한다고 가정 — 설정/비밀 주입 실습
+            - name: DB_HOST
+              value: postgres.step25.svc.cluster.local
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: POSTGRES_PASSWORD
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 25m
+              memory: 32Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: step25
+  labels:
+    app: shop
+    tier: backend
+spec:
+  type: ClusterIP
+  selector:
+    app: shop
+    tier: backend
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080

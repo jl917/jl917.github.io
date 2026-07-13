@@ -15,6 +15,11 @@
     "activeMatch": "^/note/"
   },
   {
+    "text": "Learn",
+    "link": "/reference/k8s/",
+    "activeMatch": "^/reference/"
+  },
+  {
     "text": "Mark",
     "link": "/mark/index.html",
     "activeMatch": "^/mark/"

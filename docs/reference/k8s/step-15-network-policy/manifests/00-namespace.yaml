@@ -1,0 +1,9 @@
+# manifests/00-namespace.yaml
+# step15 전용 네임스페이스. NetworkPolicy 실습은 여기서만 진행합니다.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: step15
+  labels:
+    course: k8s-learn
+    step: "15"

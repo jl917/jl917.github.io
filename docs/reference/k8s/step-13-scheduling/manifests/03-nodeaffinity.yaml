@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: affinity-required
+  namespace: step13
+spec:
+  affinity:
+    nodeAffinity:
+      # required: 조건을 만족하는 노드가 없으면 Pending. 워커 노드에만 배치.
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values: ["learn-worker", "learn-worker2"]
+      # preferred: 가능하면 learn-worker2를 선호(가중치 100). 안 되면 다른 노드도 허용.
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          preference:
+            matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values: ["learn-worker2"]
+  containers:
+    - name: app
+      image: nginx:1.27-alpine
+      resources:
+        requests:
+          cpu: 10m
+          memory: 16Mi

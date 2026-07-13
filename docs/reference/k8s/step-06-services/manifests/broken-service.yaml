@@ -1,0 +1,16 @@
+# manifests/broken-service.yaml
+# 함정 재현: 셀렉터 오타(app: helo) → 매칭되는 파드가 없어 Endpoints 가 비고
+# 트래픽이 0 이 됩니다. YAML 은 정상 apply 되지만 서비스는 "먹통"입니다.
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-broken
+  namespace: step06
+spec:
+  type: ClusterIP
+  selector:
+    app: helo           # <-- 오타! 실제 파드는 app=hello
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080

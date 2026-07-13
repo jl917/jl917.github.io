@@ -1,0 +1,18 @@
+# PriorityClass: 파드의 스케줄링 우선순위. 노드가 꽉 찼을 때 높은 우선순위 파드가
+# 낮은 우선순위 파드를 밀어내고(preemption) 자리를 차지할 수 있다.
+# ★ 전역(클러스터 스코프) 리소스라 이름에 step21- 접두사를 붙였다. 검증 후 삭제한다.
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: step21-low
+value: 100
+globalDefault: false
+description: "step21 실습용 낮은 우선순위"
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: step21-high
+value: 1000000
+globalDefault: false
+description: "step21 실습용 높은 우선순위(preemption 유발)"

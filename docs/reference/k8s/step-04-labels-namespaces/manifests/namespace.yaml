@@ -1,0 +1,9 @@
+# manifests/namespace.yaml
+# step04 전용 네임스페이스. 이 스텝의 모든 오브젝트는 여기에만 생성됩니다.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: step04
+  labels:
+    course: k8s-learn
+    step: "04"

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: quota-fit
+  namespace: step09
+  labels:
+    demo: quota
+spec:
+  containers:
+    - name: app
+      image: nginx:1.27-alpine
+      resources:
+        requests:
+          cpu: "200m"
+          memory: "128Mi"
+        limits:
+          cpu: "400m"
+          memory: "256Mi"

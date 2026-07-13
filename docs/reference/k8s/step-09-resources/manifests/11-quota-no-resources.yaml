@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: quota-noreq
+  namespace: step09
+  labels:
+    demo: quota
+spec:
+  containers:
+    - name: app
+      image: nginx:1.27-alpine
+      # resources 미지정. ResourceQuota가 requests.memory 등을 관리하면
+      # LimitRange 기본값이 없는 한 "must specify" 오류로 거부된다 (함정!)

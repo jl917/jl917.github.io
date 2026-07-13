@@ -1,0 +1,33 @@
+# manifests/backend.yaml
+# 서비스가 트래픽을 보낼 백엔드. hello-kubernetes 는 응답에 자신의 파드 이름을 넣어줘
+# 로드밸런싱(요청이 여러 파드로 분산되는 것)을 눈으로 확인하기 좋습니다.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: step06
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+  namespace: step06
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello        # <-- 서비스 셀렉터가 이 레이블을 찾습니다
+    spec:
+      containers:
+        - name: hello
+          image: paulbouwer/hello-kubernetes:1.10.1
+          ports:
+            - containerPort: 8080
+          env:
+            - name: KUBERNETES_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name

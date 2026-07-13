@@ -1,0 +1,36 @@
+# manifests/40-egress.yaml
+# 이그레스(egress) 제어 — 파드가 "나가는" 트래픽을 통제.
+# role=frontend 클라이언트의 나가는 트래픽을 기본 차단하되,
+#   (1) DNS(포트 53, UDP/TCP)  — 이름 해석을 위해 꼭 뚫어줘야 함
+#   (2) server 파드의 80        — 목적지 허용
+# 만 허용합니다.
+#
+# 함정: egress 를 default-deny 하면 DNS(53)도 막혀 "이름 해석 실패"로 보입니다.
+#       거의 항상 kube-system 의 DNS 로 나가는 53 포트를 함께 열어야 합니다.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: frontend-egress
+  namespace: step15
+spec:
+  podSelector:
+    matchLabels:
+      role: frontend
+  policyTypes:
+    - Egress
+  egress:
+    # (1) DNS 허용 — 어떤 목적지든 53/UDP, 53/TCP
+    - to: []
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
+    # (2) server 파드의 80 만 허용
+    - to:
+        - podSelector:
+            matchLabels:
+              app: server
+      ports:
+        - protocol: TCP
+          port: 80

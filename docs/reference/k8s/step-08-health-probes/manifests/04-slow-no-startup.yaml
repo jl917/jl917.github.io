@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: slow-no-startup
+  namespace: step08
+  labels:
+    app: slow-no-startup
+spec:
+  containers:
+    - name: web
+      image: nginx:1.27-alpine
+      # 일부러 20초 뒤에야 nginx를 띄우는 "느린 앱" 흉내
+      command: ["sh", "-c", "sleep 20 && nginx -g 'daemon off;'"]
+      ports:
+        - containerPort: 80
+      # startupProbe가 없고 liveness가 공격적 -> 앱이 뜨기 전에 죽여버림
+      livenessProbe:
+        httpGet:
+          path: /
+          port: 80
+        initialDelaySeconds: 3
+        periodSeconds: 3
+        failureThreshold: 3   # 3s + 3s*3 ≈ 12초면 kill -> 20초 기동을 못 버팀

@@ -1,0 +1,10 @@
+# 로컬 임시/자격증명
+*.log
+.DS_Store
+kubeconfig
+*.tmp
+
+# 자체서명 인증서 등 실습 산출물 (Step 14/16에서 생성, 재생성 가능)
+*.key
+*.crt
+!cluster/**/*.crt

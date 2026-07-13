@@ -1,0 +1,41 @@
+# manifests/deployment.yaml
+# Namespace + Deployment 를 한 파일에 담았습니다.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: step05
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: step05
+  labels:
+    app: web
+spec:
+  replicas: 4
+  # selector: 이 Deployment 가 소유할 파드를 고르는 조건 (생성 후 변경 불가)
+  selector:
+    matchLabels:
+      app: web
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1          # 목표 대비 최대 1개 더 (일시적으로 5개까지)
+      maxUnavailable: 1    # 동시에 최대 1개까지 없어도 됨 (최소 3개 유지)
+  template:
+    metadata:
+      labels:
+        app: web           # selector.matchLabels 와 반드시 일치해야 함
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 80
+          readinessProbe:      # 준비된 파드만 롤아웃 진행에 카운트
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 1
+            periodSeconds: 3

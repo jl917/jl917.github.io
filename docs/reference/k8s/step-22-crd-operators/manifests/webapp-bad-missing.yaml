@@ -1,0 +1,10 @@
+# 잘못된 CR: 필수 필드 image 누락 + tier enum 위반 → 거부된다.
+apiVersion: learn.example.com/v1alpha1
+kind: WebApp
+metadata:
+  name: broken
+  namespace: step22
+spec:
+  replicas: 2
+  tier: database        # enum [frontend, backend, cache] 위반
+  # image 누락 → required 위반

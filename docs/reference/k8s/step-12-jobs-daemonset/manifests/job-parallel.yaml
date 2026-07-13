@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: parallel-job
+  namespace: step12
+spec:
+  completions: 6          # 총 6번 성공해야 완료
+  parallelism: 2          # 동시에 2개씩 실행
+  backoffLimit: 4
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: worker
+          image: busybox:1.36
+          command: ["sh", "-c", "echo processing on $(hostname); sleep 3"]

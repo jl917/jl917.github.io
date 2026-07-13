@@ -1,0 +1,16 @@
+# PVC: "1Gi 짜리 RWO 볼륨을 달라"는 신청서.
+# storageClassName 을 생략하면 default StorageClass(standard)가 쓰인다. 여기선 명시.
+# standard 는 volumeBindingMode=WaitForFirstConsumer 라서,
+# 이 PVC 를 실제로 마운트하는 파드가 뜨기 전까지는 Pending 상태로 대기한다.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data-pvc
+  namespace: step10
+spec:
+  accessModes:
+    - ReadWriteOnce            # RWO: 하나의 노드에서만 읽기/쓰기
+  storageClassName: standard  # kind 기본 StorageClass (rancher.io/local-path)
+  resources:
+    requests:
+      storage: 1Gi

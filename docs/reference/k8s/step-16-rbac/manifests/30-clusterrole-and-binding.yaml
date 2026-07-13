@@ -1,0 +1,29 @@
+# manifests/30-clusterrole-and-binding.yaml
+# ClusterRole : 클러스터 범위의 규칙(네임스페이스에 안 매임). 노드/네임스페이스 같은
+#   클러스터 스코프 리소스나, "모든 네임스페이스에 걸친" 권한에 씁니다.
+#   여기서는 nodes 를 get/list 만 허용(읽기 전용 노드 뷰어).
+# ClusterRoleBinding : ClusterRole 을 주체에게 클러스터 전역으로 부여.
+#
+# ⚠️ 실습 규칙: 이름에 step16- 접두사를 붙이고, 검증 후 반드시 삭제합니다.
+#    기존 시스템 ClusterRole(view/edit/admin/cluster-admin)은 절대 건드리지 않습니다.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: step16-node-reader
+rules:
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: step16-node-reader-binding
+subjects:
+  - kind: ServiceAccount
+    name: pod-reader
+    namespace: step16
+roleRef:
+  kind: ClusterRole
+  name: step16-node-reader
+  apiGroup: rbac.authorization.k8s.io

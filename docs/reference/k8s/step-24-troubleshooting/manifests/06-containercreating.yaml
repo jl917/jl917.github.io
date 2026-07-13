@@ -1,0 +1,21 @@
+# 증상 6: ContainerCreating 지속 — 존재하지 않는 Secret 을 볼륨으로 마운트
+# kubelet 이 Secret 을 못 찾아 볼륨을 만들지 못하고 파드가 ContainerCreating 에 멈춘다.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: needs-secret
+  namespace: step24
+  labels:
+    demo: containercreating
+spec:
+  containers:
+    - name: web
+      image: nginx:1.27-alpine
+      volumeMounts:
+        - name: cred
+          mountPath: /etc/cred
+          readOnly: true
+  volumes:
+    - name: cred
+      secret:
+        secretName: app-credentials   # 아직 존재하지 않는 Secret

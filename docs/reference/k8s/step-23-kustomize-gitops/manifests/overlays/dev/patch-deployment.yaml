@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: 1        # dev 는 1 레플리카
+  template:
+    spec:
+      containers:
+        - name: web   # 병합 키 = name. env 리스트에 TIER 를 추가한다.
+          env:
+            - name: TIER
+              value: "development"

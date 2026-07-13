@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: qos-besteffort
+  namespace: step09
+  labels:
+    demo: qos
+    qos: besteffort
+spec:
+  containers:
+    - name: app
+      image: nginx:1.27-alpine
+      # resources 자체가 없음 → BestEffort

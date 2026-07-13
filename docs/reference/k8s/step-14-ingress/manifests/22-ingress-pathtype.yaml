@@ -1,0 +1,30 @@
+# manifests/22-ingress-pathtype.yaml
+# pathType 실험용. Exact 와 Prefix 의 차이를 직접 봅니다.
+#   Exact  /exact      : 정확히 /exact 만 매치. /exact/ 나 /exact/foo 는 불일치.
+#   Prefix /prefix     : /prefix, /prefix/, /prefix/foo 모두 매치.
+# host: pathtype.example.com
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pathtype-demo
+  namespace: step14
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: pathtype.example.com
+      http:
+        paths:
+          - path: /exact
+            pathType: Exact
+            backend:
+              service:
+                name: tea
+                port:
+                  number: 80
+          - path: /prefix
+            pathType: Prefix
+            backend:
+              service:
+                name: coffee
+                port:
+                  number: 80

@@ -1,0 +1,29 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: learn-mysql8
+    restart: unless-stopped
+    ports:
+      - "3307:3306"          # 로컬에 이미 MySQL이 있어도 충돌하지 않도록 3307 사용
+    environment:
+      MYSQL_ROOT_PASSWORD: root1234
+      MYSQL_DATABASE: shop
+      MYSQL_USER: learner
+      MYSQL_PASSWORD: learn1234
+      TZ: Asia/Seoul
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_0900_ai_ci
+    volumes:
+      - mysql8-data:/var/lib/mysql
+      - ./conf/my.cnf:/etc/mysql/conf.d/learn.cnf:ro
+      - ./initdb:/docker-entrypoint-initdb.d:ro   # 최초 기동 시 1회 자동 실행 (learner 권한 부여)
+      - ../sql:/sql:ro                            # 컨테이너 안에서 source /sql/01_schema.sql 로 실행 가능
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot1234"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  mysql8-data:

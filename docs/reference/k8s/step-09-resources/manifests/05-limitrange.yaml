@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: step09-limits
+  namespace: step09
+spec:
+  limits:
+    - type: Container
+      # 컨테이너가 resources를 지정하지 않으면 아래 값이 자동 주입된다
+      default:            # limits 기본값
+        cpu: "200m"
+        memory: "128Mi"
+      defaultRequest:     # requests 기본값
+        cpu: "100m"
+        memory: "64Mi"
+      # 컨테이너가 요청/지정할 수 있는 허용 범위
+      min:
+        cpu: "50m"
+        memory: "32Mi"
+      max:
+        cpu: "500m"
+        memory: "256Mi"

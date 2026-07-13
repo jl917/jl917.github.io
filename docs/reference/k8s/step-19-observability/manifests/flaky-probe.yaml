@@ -1,0 +1,33 @@
+# liveness 프로브가 일정 시간 뒤 실패하도록 만든 파드.
+# 목적: readiness/liveness 이벤트 관찰, 재시작(RESTARTS) 발생, logs --previous 실습.
+# 동작: /tmp/healthy 파일을 만들고 20초 뒤 지운다 → liveness 실패 → kubelet 이 재시작.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: flaky
+  namespace: step19
+  labels:
+    app: flaky
+spec:
+  containers:
+    - name: web
+      image: nginx:1.27-alpine
+      command: ["/bin/sh", "-c"]
+      args:
+        - |
+          echo "starting, will be healthy for 20s"
+          touch /tmp/healthy
+          ( sleep 20; rm -f /tmp/healthy; echo "removed health file -> liveness will fail" ) &
+          nginx -g 'daemon off;'
+      livenessProbe:
+        exec:
+          command: ["cat", "/tmp/healthy"]
+        initialDelaySeconds: 5
+        periodSeconds: 5
+        failureThreshold: 2
+      readinessProbe:
+        httpGet:
+          path: /
+          port: 80
+        initialDelaySeconds: 3
+        periodSeconds: 5

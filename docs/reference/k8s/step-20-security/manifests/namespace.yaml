@@ -1,0 +1,15 @@
+# step20 네임스페이스에 Pod Security Admission(PSA) 레이블을 건다.
+# enforce=restricted : 가장 엄격한 표준을 위반하는 파드는 "생성 자체가 거부"된다.
+# warn/audit=restricted : 위반 시 경고 메시지/감사 로그를 남긴다(생성은 허용).
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: step20
+  labels:
+    course: k8s-learn
+    step: "20"
+    # Pod Security Standards: privileged < baseline < restricted
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/enforce-version: latest
+    pod-security.kubernetes.io/warn: restricted
+    pod-security.kubernetes.io/audit: restricted

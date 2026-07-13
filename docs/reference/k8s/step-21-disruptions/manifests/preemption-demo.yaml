@@ -1,0 +1,43 @@
+# preemption 실증용. 두 파드 모두 learn-worker2 에 고정하고 CPU 를 크게 요청해
+# 한 노드에 둘이 동시에 못 들어가게 만든다.
+# 1) low(우선순위 100)가 먼저 노드의 CPU 대부분을 차지 → Running
+# 2) high(우선순위 1,000,000)가 들어오려는데 자리가 없음 → 스케줄러가 low 를 쫓아내고(preempt) high 를 배치
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: victim-low
+  namespace: step21
+  labels:
+    app: preempt-demo
+spec:
+  priorityClassName: step21-low
+  nodeSelector:
+    kubernetes.io/hostname: learn-worker2
+  terminationGracePeriodSeconds: 5
+  containers:
+    - name: pause
+      image: nginx:1.27-alpine
+      resources:
+        requests:
+          cpu: "6"        # 8코어 노드의 대부분을 예약
+          memory: 32Mi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: important-high
+  namespace: step21
+  labels:
+    app: preempt-demo
+spec:
+  priorityClassName: step21-high
+  nodeSelector:
+    kubernetes.io/hostname: learn-worker2
+  containers:
+    - name: pause
+      image: nginx:1.27-alpine
+      resources:
+        requests:
+          cpu: "5"        # low 가 자리를 비켜야만 들어갈 수 있음
+          memory: 32Mi

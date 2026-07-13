@@ -1,0 +1,15 @@
+# 증상 1: ImagePullBackOff — 존재하지 않는 이미지 태그
+# nginx:1.27-alpine 는 캐시돼 있지만, 아래는 일부러 없는 태그를 지정한다.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: broken-image
+  namespace: step24
+  labels:
+    demo: imagepullbackoff
+spec:
+  containers:
+    - name: web
+      image: nginx:1.27-does-not-exist   # 존재하지 않는 태그 → 풀 실패
+      ports:
+        - containerPort: 80

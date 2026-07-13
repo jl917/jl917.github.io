@@ -1,0 +1,8 @@
+apiVersion: v2
+name: webapp
+description: 학습용 nginx 웹앱 Helm 차트 (Step 17)
+type: application
+# version: 차트 자체의 버전 (차트 구조/템플릿이 바뀌면 올린다)
+version: 0.1.0
+# appVersion: 차트가 배포하는 애플리케이션의 버전 (표시용, 따옴표 권장)
+appVersion: "1.27"

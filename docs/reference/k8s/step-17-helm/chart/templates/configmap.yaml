@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "webapp.fullname" . }}-html
+  labels:
+    {{- include "webapp.labels" . | nindent 4 }}
+data:
+  # .Values 값을 HTML 안에 렌더링한다. upgrade 로 page.* 를 바꾸면 이 내용이 바뀐다.
+  index.html: |
+    <!doctype html>
+    <html>
+      <head><title>{{ .Values.page.title }}</title></head>
+      <body style="background:{{ .Values.page.color }};color:#fff;font-family:sans-serif;text-align:center;padding-top:80px">
+        <h1>{{ .Values.page.message }}</h1>
+        <p>release: {{ .Release.Name }} / revision rendered by chart {{ .Chart.Name }}-{{ .Chart.Version }}</p>
+        <p>replicas: {{ .Values.replicaCount }}</p>
+      </body>
+    </html>

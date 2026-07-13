@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# base 는 네임스페이스를 정하지 않는다(중립). 어디에 배포할지는 overlay 가 정한다.
+labels:
+  - pairs:
+      app: web
+      course: k8s-learn
+    includeSelectors: true
+
+resources:
+  - deployment.yaml
+  - service.yaml
+
+# configMapGenerator 는 내용의 해시를 이름 뒤에 붙인다(web-config-abc123...).
+# 내용이 바뀌면 해시가 바뀌고 → 참조하는 Deployment 도 롤링 업데이트된다.
+configMapGenerator:
+  - name: web-config
+    literals:
+      - MESSAGE=Hello from BASE (overlay 가 덮어씀)

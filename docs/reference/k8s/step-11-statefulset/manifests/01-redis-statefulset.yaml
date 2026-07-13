@@ -1,0 +1,61 @@
+# 1) 헤드리스 서비스: clusterIP: None → 파드마다 개별 DNS 가 생긴다
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: step11
+  labels:
+    app: redis
+spec:
+  clusterIP: None          # ← 헤드리스(headless). 로드밸런싱 VIP 를 만들지 않는다
+  selector:
+    app: redis
+  ports:
+    - name: redis
+      port: 6379
+      targetPort: 6379
+---
+# 2) 스테이트풀셋: 안정적 이름(redis-0,1,2) + 파드별 전용 스토리지
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+  namespace: step11
+  labels:
+    app: redis
+spec:
+  serviceName: redis       # ← 위 헤드리스 서비스 이름과 반드시 일치해야 한다
+  replicas: 3
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: redis
+          image: redis:7-alpine
+          command: ["redis-server", "--appendonly", "yes", "--dir", "/data"]
+          ports:
+            - name: redis
+              containerPort: 6379
+          volumeMounts:
+            - name: data           # ← 아래 volumeClaimTemplates 의 name 과 일치
+              mountPath: /data
+          readinessProbe:
+            exec:
+              command: ["redis-cli", "ping"]
+            initialDelaySeconds: 2
+            periodSeconds: 5
+  # 파드마다 자동으로 PVC 를 하나씩 만든다: data-redis-0, data-redis-1, data-redis-2
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 128Mi

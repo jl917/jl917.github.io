@@ -1,0 +1,137 @@
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "코스 개요"
+  },
+  {
+    "type": "file",
+    "name": "cluster/index",
+    "label": "실습 클러스터 구축"
+  },
+  {
+    "type": "dir",
+    "name": "step-01-setup",
+    "label": "Step 01 — 클러스터 구축과 kubectl"
+  },
+  {
+    "type": "dir",
+    "name": "step-02-architecture",
+    "label": "Step 02 — 아키텍처와 동작 원리"
+  },
+  {
+    "type": "dir",
+    "name": "step-03-pods",
+    "label": "Step 03 — 파드(Pod)"
+  },
+  {
+    "type": "dir",
+    "name": "step-04-labels-namespaces",
+    "label": "Step 04 — 레이블·셀렉터·네임스페이스"
+  },
+  {
+    "type": "dir",
+    "name": "step-05-deployments",
+    "label": "Step 05 — 디플로이먼트"
+  },
+  {
+    "type": "dir",
+    "name": "step-06-services",
+    "label": "Step 06 — 서비스와 DNS"
+  },
+  {
+    "type": "dir",
+    "name": "step-07-config-secret",
+    "label": "Step 07 — 설정과 시크릿"
+  },
+  {
+    "type": "dir",
+    "name": "step-08-health-probes",
+    "label": "Step 08 — 헬스 체크(프로브)"
+  },
+  {
+    "type": "dir",
+    "name": "step-09-resources",
+    "label": "Step 09 — 리소스 관리"
+  },
+  {
+    "type": "dir",
+    "name": "step-10-storage",
+    "label": "Step 10 — 스토리지"
+  },
+  {
+    "type": "dir",
+    "name": "step-11-statefulset",
+    "label": "Step 11 — 스테이트풀셋"
+  },
+  {
+    "type": "dir",
+    "name": "step-12-jobs-daemonset",
+    "label": "Step 12 — 잡·데몬셋"
+  },
+  {
+    "type": "dir",
+    "name": "step-13-scheduling",
+    "label": "Step 13 — 스케줄링 제어"
+  },
+  {
+    "type": "dir",
+    "name": "step-14-ingress",
+    "label": "Step 14 — 인그레스 (Ingress)"
+  },
+  {
+    "type": "dir",
+    "name": "step-15-network-policy",
+    "label": "Step 15 — 네트워크 정책 (NetworkPolicy)"
+  },
+  {
+    "type": "dir",
+    "name": "step-16-rbac",
+    "label": "Step 16 — RBAC와 인증 (Authentication & Authorization)"
+  },
+  {
+    "type": "dir",
+    "name": "step-17-helm",
+    "label": "Step 17 — Helm: Kubernetes 패키지 매니저"
+  },
+  {
+    "type": "dir",
+    "name": "step-18-autoscaling",
+    "label": "Step 18 — 오토스케일링: metrics-server와 HPA"
+  },
+  {
+    "type": "dir",
+    "name": "step-19-observability",
+    "label": "Step 19 — 관측성: 클러스터가 무슨 일을 하는지 읽어내기"
+  },
+  {
+    "type": "dir",
+    "name": "step-20-security",
+    "label": "Step 20 — 보안: SecurityContext와 Pod Security Standards"
+  },
+  {
+    "type": "dir",
+    "name": "step-21-disruptions",
+    "label": "Step 21 — 가용성과 중단 관리"
+  },
+  {
+    "type": "dir",
+    "name": "step-22-crd-operators",
+    "label": "Step 22 — CRD와 오퍼레이터"
+  },
+  {
+    "type": "dir",
+    "name": "step-23-kustomize-gitops",
+    "label": "Step 23 — Kustomize & GitOps"
+  },
+  {
+    "type": "dir",
+    "name": "step-24-troubleshooting",
+    "label": "Step 24 — 트러블슈팅 플레이북"
+  },
+  {
+    "type": "dir",
+    "name": "step-25-final-project",
+    "label": "Step 25 — 종합 실습: 3-tier 애플리케이션 배포와 운영"
+  }
+]

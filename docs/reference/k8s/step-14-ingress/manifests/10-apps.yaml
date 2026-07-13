@@ -1,0 +1,103 @@
+# manifests/10-apps.yaml
+# Ingress 라우팅을 눈으로 구분하기 위한 백엔드 3종.
+#  - tea  : http-echo 가 "tea"  를 응답
+#  - coffee: http-echo 가 "coffee" 를 응답
+#  - hello: 파드 이름/노드를 보여주는 데모 웹(호스트 기반 라우팅용)
+# 각 Deployment 앞에 ClusterIP Service 를 둡니다. Ingress 는 이 Service 로 라우팅합니다.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tea
+  namespace: step14
+  labels: { app: tea }
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: tea }
+  template:
+    metadata:
+      labels: { app: tea }
+    spec:
+      containers:
+        - name: echo
+          image: hashicorp/http-echo:1.0
+          args: ["-text=tea", "-listen=:5678"]
+          ports:
+            - containerPort: 5678
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tea
+  namespace: step14
+spec:
+  selector: { app: tea }
+  ports:
+    - port: 80
+      targetPort: 5678
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coffee
+  namespace: step14
+  labels: { app: coffee }
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: coffee }
+  template:
+    metadata:
+      labels: { app: coffee }
+    spec:
+      containers:
+        - name: echo
+          image: hashicorp/http-echo:1.0
+          args: ["-text=coffee", "-listen=:5678"]
+          ports:
+            - containerPort: 5678
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: coffee
+  namespace: step14
+spec:
+  selector: { app: coffee }
+  ports:
+    - port: 80
+      targetPort: 5678
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+  namespace: step14
+  labels: { app: hello }
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: hello }
+  template:
+    metadata:
+      labels: { app: hello }
+    spec:
+      containers:
+        - name: hello
+          image: paulbouwer/hello-kubernetes:1.10.1
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MESSAGE
+              value: "Hello from the hello service"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello
+  namespace: step14
+spec:
+  selector: { app: hello }
+  ports:
+    - port: 80
+      targetPort: 8080

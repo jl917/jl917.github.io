@@ -1,0 +1,4 @@
+.git
+*.tmp
+*.bak
+values-prod.yaml.orig

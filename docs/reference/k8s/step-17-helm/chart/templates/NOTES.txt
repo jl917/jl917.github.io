@@ -1,0 +1,10 @@
+{{ .Chart.Name }} ({{ .Release.Name }}) 릴리스가 배포되었습니다. revision: {{ .Release.Revision }}
+
+접속 확인:
+  kubectl -n {{ .Release.Namespace }} port-forward svc/{{ include "webapp.fullname" . }} 8080:{{ .Values.service.port }}
+  # 다른 터미널에서
+  curl -s localhost:8080
+
+현재 값:
+  replicas = {{ .Values.replicaCount }}
+  message  = {{ .Values.page.message }}

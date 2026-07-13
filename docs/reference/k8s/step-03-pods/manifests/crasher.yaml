@@ -1,0 +1,13 @@
+# 일부러 실패하는 파드 — CrashLoopBackOff 를 관찰하기 위한 예제
+#   컨테이너가 2초 후 exit 1 로 죽습니다. k8s 는 재시작하지만 또 죽고,
+#   재시작 간격을 점점 늘립니다(back-off). 이것이 CrashLoopBackOff 입니다.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: crasher
+  namespace: step03
+spec:
+  containers:
+    - name: boom
+      image: busybox:1.36
+      command: ['sh', '-c', 'echo starting; sleep 2; exit 1']

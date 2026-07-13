@@ -1,0 +1,29 @@
+# manifests/20-role-and-binding.yaml
+# Role : "무엇을(resources) 어떤 동사로(verbs)" 할 수 있는지의 규칙 묶음. 네임스페이스 범위.
+#   여기서는 step16 안의 pods 를 get/list/watch 만 허용. (secrets 는 일부러 뺌!)
+# RoleBinding : Role 을 특정 주체(subject, 여기선 pod-reader SA)에게 부여.
+#
+# 최소 권한(least privilege): 필요한 리소스/동사만. "*" 를 피하고 딱 필요한 것만.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pod-reader-role
+  namespace: step16
+rules:
+  - apiGroups: [""]           # "" = core API group (pods, services, secrets 등)
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pod-reader-binding
+  namespace: step16
+subjects:
+  - kind: ServiceAccount
+    name: pod-reader
+    namespace: step16
+roleRef:
+  kind: Role
+  name: pod-reader-role
+  apiGroup: rbac.authorization.k8s.io

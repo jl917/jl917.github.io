@@ -1,0 +1,110 @@
+# 프론트엔드(웹) 계층: hello-kubernetes.
+#  - 파드 이름/노드를 보여주는 데모 웹, MESSAGE 로 배너 문구 커스터마이즈
+#  - Deployment(2 replicas) + ClusterIP Service + NodePort(외부 노출 30080)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: step25
+  labels:
+    app: shop
+    tier: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: shop
+      tier: frontend
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: shop
+        tier: frontend
+    spec:
+      containers:
+        - name: hello
+          image: paulbouwer/hello-kubernetes:1.10.1
+          ports:
+            - containerPort: 8080
+              name: http
+          env:
+            - name: MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: MESSAGE
+            - name: BACKEND_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: BACKEND_URL
+          # hello-kubernetes(Node.js)는 기동에 ~13초 걸린다.
+          # startupProbe 가 성공할 때까지 liveness/readiness 를 유예 → 느린 기동을 CrashLoop 로 오인하지 않음.
+          startupProbe:
+            httpGet:
+              path: /
+              port: 8080
+            periodSeconds: 3
+            failureThreshold: 20     # 최대 60초까지 기동 대기
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 25m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi     # Node.js 런타임은 128Mi 로는 OOMKilled 된다
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: step25
+  labels:
+    app: shop
+    tier: frontend
+spec:
+  type: ClusterIP
+  selector:
+    app: shop
+    tier: frontend
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+---
+# 외부 접근용 NodePort. kind-cluster.yaml 이 30080 을 호스트로 매핑해 두었으므로
+# 브라우저에서 http://localhost:30080 으로 접속된다.
+# (ingress-nginx 가 설치돼 있다면 Ingress 로 대체 가능 — 40-ingress.yaml 참고)
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-nodeport
+  namespace: step25
+  labels:
+    app: shop
+    tier: frontend
+spec:
+  type: NodePort
+  selector:
+    app: shop
+    tier: frontend
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      nodePort: 30080

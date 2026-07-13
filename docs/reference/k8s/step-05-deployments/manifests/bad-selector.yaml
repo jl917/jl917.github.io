@@ -1,0 +1,23 @@
+# manifests/bad-selector.yaml
+# 셀렉터 불변 규칙 재현용: 기존 web Deployment 의 selector 에 키를 추가해 apply 하면
+# "field is immutable" 에러로 거부됩니다. (일부러 실패하는 예제)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: step05
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: web
+      tier: frontend      # <-- 셀렉터에 키 추가 = 변경 시도 → 거부됨
+  template:
+    metadata:
+      labels:
+        app: web
+        tier: frontend
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine

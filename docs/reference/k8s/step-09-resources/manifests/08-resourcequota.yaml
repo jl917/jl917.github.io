@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: step09-quota
+  namespace: step09
+spec:
+  hard:
+    # 네임스페이스 전체 requests/limits 총합 상한
+    requests.cpu: "500m"
+    requests.memory: "512Mi"
+    limits.cpu: "1"
+    limits.memory: "1Gi"
+    # 실행 중인 파드 개수 상한
+    pods: "3"

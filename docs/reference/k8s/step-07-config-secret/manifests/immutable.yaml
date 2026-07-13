@@ -1,0 +1,11 @@
+# manifests/immutable.yaml
+# immutable: true 인 ConfigMap. 생성 후 data 를 절대 못 바꿉니다(삭제 후 재생성만).
+# 성능 이점(kubelet 이 변경 감시를 안 함)과 실수 방지가 목적입니다.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: locked-config
+  namespace: step07
+immutable: true
+data:
+  VERSION: "1.0.0"

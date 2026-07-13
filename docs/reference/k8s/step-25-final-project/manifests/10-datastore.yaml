@@ -1,0 +1,96 @@
+# 데이터스토어 계층: PostgreSQL (StatefulSet + PVC)
+#  - StatefulSet: 안정적 이름(postgres-0)과 전용 스토리지를 보장
+#  - volumeClaimTemplates: 파드마다 PVC 를 자동 생성 → 재시작해도 데이터 유지
+#  - 헤드리스 Service(clusterIP: None): postgres-0.postgres 로 개별 파드 DNS 제공
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: step25
+  labels:
+    app: shop
+    tier: datastore
+spec:
+  clusterIP: None            # 헤드리스: 로드밸런싱 없이 파드별 DNS
+  selector:
+    app: shop
+    tier: datastore
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: 5432
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  namespace: step25
+  labels:
+    app: shop
+    tier: datastore
+spec:
+  serviceName: postgres      # 헤드리스 서비스 이름과 일치해야 함
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shop
+      tier: datastore
+  template:
+    metadata:
+      labels:
+        app: shop
+        tier: datastore
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+          ports:
+            - containerPort: 5432
+              name: postgres
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: POSTGRES_DB
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: POSTGRES_PASSWORD
+            # PV 루트에 lost+found 가 있으면 initdb 가 실패하므로 하위 디렉터리를 데이터 경로로
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          readinessProbe:
+            exec:
+              command: ["sh", "-c", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"]
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            exec:
+              command: ["sh", "-c", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"]
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi

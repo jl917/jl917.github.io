@@ -1,0 +1,15 @@
+# restricted 표준을 위반하는 파드. enforce=restricted 네임스페이스에서는
+# apply 시점에 admission 이 "거부"한다(파드가 아예 안 만들어진다).
+# 위반 요소: securityContext 없음(root 로 실행), allowPrivilegeEscalation 기본 true,
+#            capabilities 미드롭, seccompProfile 미지정.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bad
+  namespace: step20
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.27-alpine
+      ports:
+        - containerPort: 80

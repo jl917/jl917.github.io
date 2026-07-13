@@ -1,0 +1,142 @@
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "코스 개요"
+  },
+  {
+    "type": "file",
+    "name": "docker/index",
+    "label": "Docker 실습 환경"
+  },
+  {
+    "type": "file",
+    "name": "sql/index",
+    "label": "샘플 데이터베이스"
+  },
+  {
+    "type": "file",
+    "name": "step-01-setup/index",
+    "label": "Step 01 — 환경 구축과 첫 접속"
+  },
+  {
+    "type": "file",
+    "name": "step-02-ddl-datatypes/index",
+    "label": "Step 02 — 데이터베이스·테이블·데이터 타입"
+  },
+  {
+    "type": "file",
+    "name": "step-03-sample-database/index",
+    "label": "Step 03 — 예제 데이터베이스 구축과 탐색"
+  },
+  {
+    "type": "file",
+    "name": "step-04-select-basics/index",
+    "label": "Step 04 — SELECT 기본"
+  },
+  {
+    "type": "file",
+    "name": "step-05-where-operators/index",
+    "label": "Step 05 — 연산자와 조건"
+  },
+  {
+    "type": "file",
+    "name": "step-06-aggregate-groupby/index",
+    "label": "Step 06 — 집계함수와 GROUP BY"
+  },
+  {
+    "type": "file",
+    "name": "step-07-joins/index",
+    "label": "Step 07 — 조인(JOIN)"
+  },
+  {
+    "type": "file",
+    "name": "step-08-subqueries/index",
+    "label": "Step 08 — 서브쿼리"
+  },
+  {
+    "type": "file",
+    "name": "step-09-cte-recursive/index",
+    "label": "Step 09 — CTE와 재귀 쿼리"
+  },
+  {
+    "type": "file",
+    "name": "step-10-set-operations/index",
+    "label": "Step 10 — 집합 연산 (UNION / INTERSECT / EXCEPT)"
+  },
+  {
+    "type": "file",
+    "name": "step-11-dml/index",
+    "label": "Step 11 — DML (INSERT / UPDATE / DELETE)"
+  },
+  {
+    "type": "file",
+    "name": "step-12-builtin-functions/index",
+    "label": "Step 12 — 내장 함수"
+  },
+  {
+    "type": "file",
+    "name": "step-13-constraints/index",
+    "label": "Step 13 — 제약 조건과 정규화"
+  },
+  {
+    "type": "file",
+    "name": "step-14-views-generated/index",
+    "label": "Step 14 — 뷰와 생성 컬럼"
+  },
+  {
+    "type": "file",
+    "name": "step-15-indexes/index",
+    "label": "Step 15 — 인덱스"
+  },
+  {
+    "type": "file",
+    "name": "step-16-explain-optimizer/index",
+    "label": "Step 16 — EXPLAIN 과 옵티마이저"
+  },
+  {
+    "type": "file",
+    "name": "step-17-window-functions/index",
+    "label": "Step 17 — 윈도우 함수"
+  },
+  {
+    "type": "file",
+    "name": "step-18-json/index",
+    "label": "Step 18 — JSON"
+  },
+  {
+    "type": "file",
+    "name": "step-19-transactions/index",
+    "label": "Step 19 — 트랜잭션과 락"
+  },
+  {
+    "type": "file",
+    "name": "step-20-stored-programs/index",
+    "label": "Step 20 — 저장 프로그램"
+  },
+  {
+    "type": "file",
+    "name": "step-21-partitioning/index",
+    "label": "Step 21 — 파티셔닝"
+  },
+  {
+    "type": "file",
+    "name": "step-22-users-security/index",
+    "label": "Step 22 — 사용자와 보안"
+  },
+  {
+    "type": "file",
+    "name": "step-23-backup-replication/index",
+    "label": "Step 23 — 백업과 복제"
+  },
+  {
+    "type": "file",
+    "name": "step-24-monitoring-tuning/index",
+    "label": "Step 24 — 모니터링과 튜닝"
+  },
+  {
+    "type": "dir",
+    "name": "step-25-final-project",
+    "label": "Step 25 — 최종 프로젝트"
+  }
+]

@@ -1,0 +1,28 @@
+# manifests/30-allow-namespace.yaml
+# namespaceSelector — 특정 "네임스페이스" 에서 오는 트래픽만 허용.
+# 여기서는 team=trusted 레이블이 붙은 네임스페이스의 파드만 server 로 허용합니다.
+#
+# 보조 네임스페이스(step15-ext)는 commands.sh 에서 team=trusted 레이블과 함께 만듭니다.
+#
+# 함정: podSelector 와 namespaceSelector 를 "같은 from 항목의 리스트에" 나란히 두면
+#       'AND'(그 네임스페이스 && 그 레이블 파드) 가 됩니다.
+#       서로 다른 from 항목으로 분리하면 'OR' 가 됩니다. 아래는 AND 예시.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-trusted-namespace
+  namespace: step15
+spec:
+  podSelector:
+    matchLabels:
+      app: server
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              team: trusted
+      ports:
+        - protocol: TCP
+          port: 80

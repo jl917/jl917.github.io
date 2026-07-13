@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: inherit-defaults
+  namespace: step09
+  labels:
+    demo: limitrange
+spec:
+  containers:
+    - name: app
+      image: nginx:1.27-alpine
+      # resources를 일부러 비워둔다 → LimitRange 기본값이 주입되는지 확인

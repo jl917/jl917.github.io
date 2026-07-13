@@ -1,0 +1,14 @@
+# 증상 2: CrashLoopBackOff — 컨테이너가 즉시 비정상 종료
+# 시작하자마자 메시지를 찍고 exit 1 로 죽는다. kubelet 이 재시작 → 또 죽음 반복.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: crasher
+  namespace: step24
+  labels:
+    demo: crashloopbackoff
+spec:
+  containers:
+    - name: app
+      image: busybox:1.36
+      command: ["sh", "-c", "echo 'boot up...'; echo 'boom, fatal error'; exit 1"]

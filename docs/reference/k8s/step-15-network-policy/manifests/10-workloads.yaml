@@ -1,0 +1,66 @@
+# manifests/10-workloads.yaml
+# 트래픽 방화벽(NetworkPolicy)을 실험할 최소 구성.
+#
+#   server : nginx 웹(80). "보호 대상".
+#   client-allowed : role=frontend 레이블. 나중에 화이트리스트로 허용할 클라이언트.
+#   client-denied  : role=other    레이블. 정책 밖이라 차단되어야 할 클라이언트.
+#
+# 클라이언트는 busybox 로, wget 으로 server 에 접속을 시도합니다.
+apiVersion: v1
+kind: Service
+metadata:
+  name: server
+  namespace: step15
+spec:
+  selector: { app: server }
+  ports:
+    - port: 80
+      targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server
+  namespace: step15
+  labels: { app: server }
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: server }
+  template:
+    metadata:
+      labels: { app: server }
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client-allowed
+  namespace: step15
+  labels:
+    app: client
+    role: frontend
+spec:
+  containers:
+    - name: box
+      image: busybox:1.36
+      command: ["sh", "-c", "sleep 3600"]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client-denied
+  namespace: step15
+  labels:
+    app: client
+    role: other
+spec:
+  containers:
+    - name: box
+      image: busybox:1.36
+      command: ["sh", "-c", "sleep 3600"]

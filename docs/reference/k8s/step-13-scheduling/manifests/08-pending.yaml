@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: unschedulable
+  namespace: step13
+spec:
+  # 존재하지 않는 라벨을 요구한다 → 어떤 노드도 매칭되지 않아 영원히 Pending.
+  nodeSelector:
+    disktype: nvme-super-fast
+  containers:
+    - name: app
+      image: nginx:1.27-alpine
+      resources:
+        requests:
+          cpu: 10m
+          memory: 16Mi

@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: fail-job
+  namespace: step12
+spec:
+  backoffLimit: 2         # 2번까지만 재시도 → 초과하면 Job Failed
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: boom
+          image: busybox:1.36
+          command: ["sh", "-c", "echo trying...; exit 1"]   # 항상 실패

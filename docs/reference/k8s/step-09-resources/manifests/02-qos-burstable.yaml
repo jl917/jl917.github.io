@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: qos-burstable
+  namespace: step09
+  labels:
+    demo: qos
+    qos: burstable
+spec:
+  containers:
+    - name: app
+      image: nginx:1.27-alpine
+      resources:
+        # requests < limits → Burstable
+        requests:
+          cpu: "50m"
+          memory: "32Mi"
+        limits:
+          cpu: "200m"
+          memory: "128Mi"

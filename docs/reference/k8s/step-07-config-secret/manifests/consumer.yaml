@@ -1,0 +1,61 @@
+# manifests/consumer.yaml
+# ConfigMap/Secret 을 소비하는 Deployment.
+# 주입 방법 3가지를 한 번에 보여줍니다:
+#   (1) env: 개별 키를 환경변수로
+#   (2) envFrom: ConfigMap 전체를 환경변수로 한꺼번에
+#   (3) volume: 파일로 마운트
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  namespace: step07
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+        - name: main
+          image: busybox:1.36
+          command: ["sh", "-c", "sleep 3600"]
+          env:
+            # (1) ConfigMap 의 특정 키 → 환경변수 APP_COLOR
+            - name: APP_COLOR
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: APP_COLOR
+            # Secret 의 특정 키 → 환경변수 DB_PASSWORD
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: DB_PASSWORD
+          envFrom:
+            # (2) ConfigMap 전체 키를 환경변수로 (단순 키-값만 대상)
+            - configMapRef:
+                name: app-config
+            # Secret 전체도 envFrom 가능
+            - secretRef:
+                name: db-secret
+          volumeMounts:
+            # (3) ConfigMap 을 파일로 마운트
+            - name: config-vol
+              mountPath: /etc/config
+              readOnly: true
+            # Secret 을 파일로 마운트
+            - name: secret-vol
+              mountPath: /etc/secret
+              readOnly: true
+      volumes:
+        - name: config-vol
+          configMap:
+            name: app-config
+        - name: secret-vol
+          secret:
+            secretName: db-secret

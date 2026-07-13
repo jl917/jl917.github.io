@@ -1,0 +1,35 @@
+# values.yaml : 템플릿에 채워 넣는 기본값. install/upgrade 시 -f 나 --set 으로 덮어쓴다.
+
+replicaCount: 2
+
+image:
+  repository: nginx
+  tag: "1.27-alpine"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources:
+  requests:
+    cpu: 25m
+    memory: 32Mi
+  limits:
+    cpu: 100m
+    memory: 64Mi
+
+# index.html 에 렌더링할 값들. upgrade 실습에서 이 값을 바꾼다.
+page:
+  title: "Helm Webapp"
+  color: "#2b6cb0"
+  message: "Hello from Helm - v1"
+
+# range 문법 실습용: 추가로 노출할 임의의 어노테이션들
+extraAnnotations:
+  team: platform
+  owner: julong
+
+# if 문법 실습용: 켜면 Ingress 대신 간단히 표시만 (여기선 토글 데모)
+ingress:
+  enabled: false

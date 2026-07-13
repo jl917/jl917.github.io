@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hello-job
+  namespace: step12
+spec:
+  completions: 1          # 성공해야 하는 Pod 개수 (기본 1)
+  backoffLimit: 4         # 실패 시 재시도 횟수 (기본 6)
+  template:
+    spec:
+      restartPolicy: Never   # Job의 Pod는 Never 또는 OnFailure만 허용
+      containers:
+        - name: hello
+          image: busybox:1.36
+          command: ["sh", "-c", "echo hello from job; sleep 2; echo done"]

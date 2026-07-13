@@ -1,0 +1,39 @@
+# autoscaling/v2 HPA. CPU 평균 사용률이 request 의 50% 를 넘으면 replica 를 늘린다.
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: web
+  namespace: step18
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: web
+  minReplicas: 1
+  maxReplicas: 6
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50   # request(20m)의 50% = 평균 10m 초과 시 스케일업
+  behavior:
+    scaleUp:
+      # 급격한 부하에 빠르게 대응: 15초마다 최대 100%(2배) 또는 4개까지 증가
+      stabilizationWindowSeconds: 0
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 15
+        - type: Pods
+          value: 4
+          periodSeconds: 15
+      selectPolicy: Max
+    scaleDown:
+      # 축소는 신중하게: 60초 안정화 후, 60초마다 1개씩만 줄인다(플래핑 방지)
+      stabilizationWindowSeconds: 60
+      policies:
+        - type: Pods
+          value: 1
+          periodSeconds: 60

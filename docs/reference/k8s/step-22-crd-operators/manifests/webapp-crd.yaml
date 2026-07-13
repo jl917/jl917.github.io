@@ -1,0 +1,63 @@
+# WebApp CRD — Kubernetes API를 확장해 우리만의 리소스 종류를 추가한다.
+# group.plural 형식의 이름이 CRD의 metadata.name 이 되어야 한다.
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: webapps.learn.example.com
+spec:
+  group: learn.example.com          # API 그룹 (고유해야 함)
+  scope: Namespaced                 # 네임스페이스에 속함 (vs Cluster)
+  names:
+    plural: webapps                 # kubectl get webapps
+    singular: webapp                # kubectl get webapp
+    kind: WebApp                    # YAML의 kind:
+    shortNames: [wa]                # kubectl get wa
+    categories: [all, learn]        # kubectl get all / kubectl get learn
+  versions:
+    - name: v1alpha1
+      served: true                  # 이 버전을 API로 제공
+      storage: true                 # etcd에 이 버전으로 저장 (버전 중 하나만 true)
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              required: [image, replicas]   # 필수 필드
+              properties:
+                image:
+                  type: string
+                  description: "구동할 컨테이너 이미지"
+                replicas:
+                  type: integer
+                  minimum: 1                  # 검증: 1 이상
+                  maximum: 5                  # 검증: 5 이하
+                  description: "원하는 파드 수 (1~5)"
+                greeting:
+                  type: string
+                  default: "Hello"            # 미지정 시 기본값
+                tier:
+                  type: string
+                  enum: [frontend, backend, cache]   # 검증: 셋 중 하나만
+                  default: frontend
+            status:
+              type: object
+              properties:
+                availableReplicas:
+                  type: integer
+      subresources:
+        status: {}                  # /status 서브리소스 활성화
+      # kubectl get 시 보여줄 추가 컬럼 (JSONPath로 필드 추출)
+      additionalPrinterColumns:
+        - name: Image
+          type: string
+          jsonPath: .spec.image
+        - name: Replicas
+          type: integer
+          jsonPath: .spec.replicas
+        - name: Tier
+          type: string
+          jsonPath: .spec.tier
+        - name: Age
+          type: date
+          jsonPath: .metadata.creationTimestamp

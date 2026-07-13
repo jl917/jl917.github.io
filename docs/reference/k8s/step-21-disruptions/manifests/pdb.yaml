@@ -1,0 +1,12 @@
+# PodDisruptionBudget: 자발적 중단(drain 등) 시 최소 3개는 항상 살아있어야 한다.
+# 즉 한 번에 최대 1개까지만 evict 를 허용한다(4 - 3 = 1).
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: web-pdb
+  namespace: step21
+spec:
+  minAvailable: 3           # maxUnavailable: 1 로 써도 동일
+  selector:
+    matchLabels:
+      app: web

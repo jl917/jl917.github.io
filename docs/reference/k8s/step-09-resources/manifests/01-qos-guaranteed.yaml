@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: qos-guaranteed
+  namespace: step09
+  labels:
+    demo: qos
+    qos: guaranteed
+spec:
+  containers:
+    - name: app
+      image: nginx:1.27-alpine
+      resources:
+        # requests == limits (cpu, memory 모두) → Guaranteed
+        requests:
+          cpu: "100m"
+          memory: "64Mi"
+        limits:
+          cpu: "100m"
+          memory: "64Mi"

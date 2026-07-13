@@ -1,0 +1,37 @@
+# =====================================================================
+# kind-cluster.yaml : 학습용 Kubernetes 클러스터 정의
+# ---------------------------------------------------------------------
+# control-plane 1개 + worker 2개 = 3노드.
+#   워커를 2개 두는 이유: 스케줄링/어피니티/테인트/토폴로지 실습(Step 13, 21)에
+#   최소 2개의 워커가 필요하기 때문입니다.
+#
+# extraPortMappings: 노드의 NodePort(30080/30443)를 호스트로 노출.
+#   → 브라우저에서 http://localhost:30080 으로 서비스 접근 (Step 06, 14)
+# =====================================================================
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: learn
+nodes:
+  - role: control-plane
+    # Ingress 컨트롤러 실습(Step 14)을 위해 control-plane 에 ingress-ready 레이블
+    kubeadmConfigPatches:
+      - |
+        kind: InitConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-labels: "ingress-ready=true"
+    extraPortMappings:
+      - containerPort: 30080     # NodePort HTTP
+        hostPort: 30080
+        protocol: TCP
+      - containerPort: 30443     # NodePort HTTPS
+        hostPort: 30443
+        protocol: TCP
+      - containerPort: 80        # Ingress HTTP (ingress-nginx)
+        hostPort: 8080
+        protocol: TCP
+      - containerPort: 443       # Ingress HTTPS
+        hostPort: 8443
+        protocol: TCP
+  - role: worker
+  - role: worker

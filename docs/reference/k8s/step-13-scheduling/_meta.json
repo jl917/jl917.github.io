@@ -1,0 +1,12 @@
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "강의"
+  },
+  {
+    "type": "file",
+    "name": "challenge",
+    "label": "챌린지"
+  }
+]

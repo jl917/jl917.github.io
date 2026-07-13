@@ -1,0 +1,12 @@
+[
+  {
+    "type": "dir",
+    "name": "k8s",
+    "label": "Kubernetes"
+  },
+  {
+    "type": "dir",
+    "name": "mysql8",
+    "label": "MySQL 8"
+  }
+]

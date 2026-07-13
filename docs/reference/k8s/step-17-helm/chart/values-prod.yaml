@@ -1,0 +1,7 @@
+# values-prod.yaml : install/upgrade 때 -f 로 덮어쓰는 "환경별" 값 예시.
+# 기본 values.yaml 위에 병합되므로, 바꾸고 싶은 값만 적으면 된다.
+replicaCount: 3
+page:
+  title: "Helm Webapp (prod)"
+  color: "#276749"
+  message: "Hello from Helm - PROD"

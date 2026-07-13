@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: too-big
+  namespace: step09
+  labels:
+    demo: limitrange
+spec:
+  containers:
+    - name: app
+      image: nginx:1.27-alpine
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "64Mi"
+        limits:
+          # LimitRange의 max(memory 256Mi)를 초과 → 생성 거부됨
+          cpu: "200m"
+          memory: "512Mi"

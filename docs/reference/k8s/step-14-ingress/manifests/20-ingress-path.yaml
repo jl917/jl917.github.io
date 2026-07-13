@@ -1,0 +1,35 @@
+# manifests/20-ingress-path.yaml
+# 경로 기반 라우팅(path-based fanout).
+# 같은 호스트(cafe.example.com) 안에서 URL 경로로 서로 다른 Service 로 팬아웃합니다.
+#   /tea    -> tea Service
+#   /coffee -> coffee Service
+# nginx.ingress.kubernetes.io/rewrite-target: /  →  백엔드로 넘길 때 경로를 / 로 재작성.
+#   (http-echo 는 어떤 경로든 같은 문자열을 주므로 사실 없어도 되지만, 실제 앱에서
+#    /tea 를 떼고 넘기고 싶을 때 쓰는 대표적 어노테이션이라 예시로 넣었습니다.)
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cafe-path
+  namespace: step14
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: cafe.example.com
+      http:
+        paths:
+          - path: /tea
+            pathType: Prefix
+            backend:
+              service:
+                name: tea
+                port:
+                  number: 80
+          - path: /coffee
+            pathType: Prefix
+            backend:
+              service:
+                name: coffee
+                port:
+                  number: 80

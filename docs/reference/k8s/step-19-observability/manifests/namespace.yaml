@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: step19
+  labels:
+    course: k8s-learn
+    step: "19"

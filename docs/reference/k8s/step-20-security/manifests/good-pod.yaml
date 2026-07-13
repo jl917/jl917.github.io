@@ -1,0 +1,36 @@
+# restricted 표준을 "만족"하는 파드. enforce=restricted 네임스페이스에서 정상 생성된다.
+# 핵심: 포트 80 바인딩이 필요 없는 busybox 로 두고, 루트FS 는 읽기 전용,
+#       쓰기가 필요한 곳은 emptyDir 로 마운트한다.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: good
+  namespace: step20
+spec:
+  securityContext:
+    runAsNonRoot: true          # root(uid 0) 실행 금지
+    runAsUser: 10001            # 비특권 UID
+    runAsGroup: 10001
+    fsGroup: 10001
+    seccompProfile:
+      type: RuntimeDefault      # 커널 시스템콜 필터(위험한 syscall 차단)
+  containers:
+    - name: app
+      image: busybox:1.36
+      command: ["/bin/sh", "-c"]
+      args:
+        - |
+          echo "running as uid=$(id -u), rootfs is read-only"
+          # 루트FS 는 읽기 전용이므로 여기(마운트된 쓰기 볼륨)에만 쓸 수 있다
+          while true; do echo "$(date +%T) tick" >> /data/log.txt; sleep 5; done
+      securityContext:
+        allowPrivilegeEscalation: false   # setuid 등으로 권한 상승 금지
+        readOnlyRootFilesystem: true      # 루트 파일시스템 읽기 전용
+        capabilities:
+          drop: ["ALL"]                   # 모든 리눅스 capability 제거
+      volumeMounts:
+        - name: scratch
+          mountPath: /data
+  volumes:
+    - name: scratch
+      emptyDir: {}

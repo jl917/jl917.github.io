@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  labels:
+    app: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 80
+          env:
+            # 이 값의 실제 이름은 configMapGenerator 가 만든 해시 붙은 이름으로
+            # kustomize 가 자동으로 바꿔 준다. (아래 렌더 결과에서 확인)
+            - name: MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: web-config
+                  key: MESSAGE

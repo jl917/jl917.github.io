@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spread-app
+  namespace: step13
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: spread-app
+  template:
+    metadata:
+      labels:
+        app: spread-app
+    spec:
+      affinity:
+        podAntiAffinity:
+          # 같은 app=spread-app 파드끼리는 같은 노드에 두지 않는다.
+          # 워커가 2개이므로 replicas=2가 서로 다른 워커에 하나씩 뜬다.
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app: spread-app
+              topologyKey: kubernetes.io/hostname
+      containers:
+        - name: app
+          image: nginx:1.27-alpine
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi

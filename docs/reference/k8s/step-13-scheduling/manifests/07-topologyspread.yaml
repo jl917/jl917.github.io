@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: topo
+  namespace: step13
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: topo
+  template:
+    metadata:
+      labels:
+        app: topo
+    spec:
+      topologySpreadConstraints:
+        # 노드(hostname)별 파드 개수 차이를 최대 1로 유지한다.
+        # nodeTaintsPolicy: Honor → 톨러레이트하지 않는 테인트가 걸린 노드
+        # (control-plane)는 분배 대상 도메인에서 제외한다. 이걸 빼면 비어 있는
+        # control-plane 도메인 때문에 워커를 2개까지만 채우고 나머지는 Pending 이 된다.
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          nodeTaintsPolicy: Honor
+          labelSelector:
+            matchLabels:
+              app: topo
+      containers:
+        - name: app
+          image: nginx:1.27-alpine
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
