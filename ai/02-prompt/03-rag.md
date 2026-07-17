@@ -1,15 +1,17 @@
-# RAG Prompt 샘플
+# RAG 프롬프트 샘플
 
-### 프롬프트 어떻게 만들어야 할까?
+검색해온 자료를 근거로 답하게 만드는 프롬프트 모음입니다. RAG 자체의 개념과 구현은 [RAG 개요](/ai/04-rag/01-rag)와 [LangChain Step 16 — 검색과 RAG](/reference/langchain/step-16-retrieval-rag/)에 있습니다.
+
+## 프롬프트 어떻게 만들어야 할까?
 
 - AI에게 상황 설명을 충분히 제공해야 합니다.
 - 명확한 목표를 설정해야 합니다.
 - 결과물의 형식을 알려줘야 합니다.
 - 프롬프트 템플릿을 활용해서 일관성을 유지해야 합니다.
-- 프롬프트를 코드처럼 구조화 하는 방법도 있습니다.
-  - https://medium.com/@fullstackciso/prompts-as-code-is-this-the-future-of-prompting-aac7fadf69cc
+- 프롬프트를 코드처럼 구조화하는 방법도 있습니다.
+  - [Prompts as Code — Is this the future of prompting?](https://medium.com/@fullstackciso/prompts-as-code-is-this-the-future-of-prompting-aac7fadf69cc)
 
-### RAG 프롬프트
+## RAG 프롬프트
 
 ```markdown
 ### 사용자 프롬프트
@@ -21,11 +23,13 @@
 ### 응답 지침
 1. 제공된 참고자료를 근거로 사용자 질의에 대해 종합적이고 정확하며 일관성 있는 답변을 제공하세요.
 2. 검색된 참고자료가 충분하다면, 정확하고 관련성 있는 정보를 제공하는 데 집중하세요.
-3. 검색된 참고자료가 불충분한 경우에는 부족한 부분을 명시하고 추가 정보를 얻을 수 있는 잠재적 출처나 단 계를 제안하세요 .
+3. 검색된 참고자료가 불충분한 경우에는 부족한 부분을 명시하고 추가 정보를 얻을 수 있는 잠재적 출처나 단계를 제안하세요.
 4. 근거 없는 정보나 추측은 답변에 포함하지 마세요.
 ```
 
-### 대화 컨텍스트 요약 프롬프트
+## 대화 컨텍스트 요약 프롬프트
+
+대화가 컨텍스트 한도에 닿았을 때, 새 세션으로 맥락을 넘기기 위한 인수인계 프롬프트입니다.
 
 ```markdown
 # 🧾 대화 컨텍스트 인수인계 요약 요청

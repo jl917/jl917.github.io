@@ -1,9 +1,11 @@
-# Figma
+# Figma → 코드 변환 프롬프트
 
-### 샘플
+Figma 디자인을 React 컴포넌트로 옮길 때 쓰는 프롬프트입니다. 요구사항을 잘게 명시할수록 결과가 안정적입니다 — 특히 **"추측하지 말고 주석을 남겨라"** 가 임의로 지어내는 것을 막아줍니다.
 
-```markdown
-레이아웃 가로, 세로는 100% 로 맞춰주시고, figma섹션을 기준으로 UI를 다시 그려주세요. 
+## 전체 프롬프트
+
+```text
+레이아웃 가로, 세로는 100%로 맞춰주시고, figma 섹션을 기준으로 UI를 다시 그려주세요.
 
 Convert this Figma section into a production-ready React component.
 
@@ -80,5 +82,19 @@ Debugging & Class Naming Requirements:
 If something is unclear, leave a comment instead of guessing.
 If the generated layout differs from the Figma spec, explain why.
 
-Figma Specs: 
+Figma Specs:
 ```
+
+## 블록별 용도
+
+프롬프트 안의 `//` 주석은 블록의 목적을 표시한 것입니다. 상황에 따라 빼고 쓰면 됩니다.
+
+| 블록 | 언제 넣나 |
+|---|---|
+| Requirements | 항상. 스택과 "추측 금지" 규칙 |
+| 컴포넌트 슬라이스 | 섹션이 커서 한 덩어리로 나오는 것을 막고 싶을 때 |
+| 시맨틱 마크업 | 전부 `div` 로 뱉는 것을 막고 싶을 때 |
+| Scaling Rule | Figma 값이 **2배 스케일 프레임** 기준이라 결과가 2배로 나올 때 |
+| Debugging & Class Naming | styled-components 해시 클래스명 때문에 QA·디버깅이 어려울 때 |
+
+> 마지막 줄 `Figma Specs:` 뒤에 실제 스펙(치수, 색상, 폰트)을 붙여서 보냅니다.
