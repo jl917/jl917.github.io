@@ -1,0 +1,72 @@
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "코스 개요"
+  },
+  {
+    "type": "file",
+    "name": "project/index",
+    "label": "실습 프로젝트 셋업"
+  },
+  {
+    "type": "file",
+    "name": "step-01-why-deep-agents/index",
+    "label": "Step 01 — Deep Agent란 무엇인가"
+  },
+  {
+    "type": "file",
+    "name": "step-02-quickstart/index",
+    "label": "Step 02 — 첫 Deep Agent"
+  },
+  {
+    "type": "file",
+    "name": "step-03-planning-todos/index",
+    "label": "Step 03 — 계획 도구 (write_todos)"
+  },
+  {
+    "type": "file",
+    "name": "step-04-filesystem/index",
+    "label": "Step 04 — 가상 파일시스템"
+  },
+  {
+    "type": "file",
+    "name": "step-05-backends/index",
+    "label": "Step 05 — 백엔드와 권한"
+  },
+  {
+    "type": "file",
+    "name": "step-06-subagents/index",
+    "label": "Step 06 — 서브에이전트"
+  },
+  {
+    "type": "file",
+    "name": "step-07-prompting/index",
+    "label": "Step 07 — 시스템 프롬프트 설계"
+  },
+  {
+    "type": "file",
+    "name": "step-08-middleware/index",
+    "label": "Step 08 — 미들웨어 조합"
+  },
+  {
+    "type": "file",
+    "name": "step-09-hitl-permissions/index",
+    "label": "Step 09 — HITL과 권한 제어"
+  },
+  {
+    "type": "file",
+    "name": "step-10-memory-skills/index",
+    "label": "Step 10 — 장기 메모리와 스킬"
+  },
+  {
+    "type": "file",
+    "name": "step-11-streaming-production/index",
+    "label": "Step 11 — 스트리밍과 프로덕션"
+  },
+  {
+    "type": "dir",
+    "name": "step-12-final-project",
+    "label": "Step 12 — 종합 프로젝트"
+  }
+]

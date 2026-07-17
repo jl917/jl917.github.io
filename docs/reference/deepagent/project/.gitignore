@@ -1,0 +1,39 @@
+# ── 비밀 정보 (가장 중요) ─────────────────────────────────────
+# .env 로 시작하는 모든 파일을 막되, .env.example 만 예외로 되돌립니다.
+# 순서가 중요합니다 — 나중 줄이 앞 줄을 덮어씁니다.
+.env
+.env.*
+!.env.example
+
+# 혹시 모를 키 파일들
+*.pem
+*.key
+secrets/
+
+# ── 의존성 / 빌드 산출물 ──────────────────────────────────────
+node_modules/
+dist/
+build/
+*.tsbuildinfo
+
+# ── Deep Agent 가 만들어 내는 것들 ────────────────────────────
+# FilesystemBackend(Step 05) 로 실습하면 에이전트가 실제 디스크에 파일을 씁니다.
+# 그 작업 폴더가 통째로 커밋되지 않도록 막습니다.
+workspace/
+.deepagents/
+
+# Step 01 연습문제 3번이 시스템 프롬프트를 여기에 덤프합니다.
+prompt.txt
+
+# ── 로컬 캐시 / 로그 ──────────────────────────────────────────
+.cache/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-error.log*
+
+# ── 에디터 / OS ───────────────────────────────────────────────
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json

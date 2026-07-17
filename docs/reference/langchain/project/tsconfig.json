@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    /* ── 모듈 시스템 ───────────────────────────────────────────────
+       package.json 의 "type": "module" 과 짝을 이룹니다.
+       NodeNext 는 Node.js 의 실제 ESM 해석 규칙을 그대로 따라가므로,
+       "타입체크는 통과했는데 실행하면 못 찾는" 사고를 막아 줍니다. */
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
+    /* ── 언어 수준 ────────────────────────────────────────────────
+       Node 22 는 ES2022 를 전부 지원합니다. top-level await 도 됩니다. */
+    "target": "ES2022",
+    "lib": ["ES2022"],
+
+    /* ── 엄격 모드 ────────────────────────────────────────────────
+       usage_metadata 처럼 optional 인 필드를 그냥 읽으면 바로 잡아 줍니다.
+       LangChain 타입의 진가는 strict 에서 나옵니다. */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+
+    /* ── 실행 편의 ────────────────────────────────────────────────
+       tsx 가 트랜스파일만 하고 타입체크는 하지 않으므로 noEmit 으로 둡니다.
+       타입 검사는 `npm run typecheck` 로 따로 돌립니다. */
+    "noEmit": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "types": ["node"]
+  },
+  "include": ["src/**/*.ts", "../step-*/**/*.ts"],
+  "exclude": ["node_modules"]
+}

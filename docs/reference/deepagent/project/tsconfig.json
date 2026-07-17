@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    /* ── 모듈 시스템 ───────────────────────────────────────────────
+       package.json 의 "type": "module" 과 짝을 이룹니다.
+       NodeNext 는 Node.js 의 실제 ESM 해석 규칙을 그대로 따라가므로,
+       "타입체크는 통과했는데 실행하면 못 찾는" 사고를 막아 줍니다.
+
+       deepagents 는 "." / "./browser" / "./node" 세 개의 서브패스 export 를
+       가집니다(Step 02 의 2-2 참고). NodeNext 로 두어야 tsc 가 이 exports 맵을
+       실제 Node 와 같은 규칙으로 읽고, "deepagents/node 에는 있는데
+       deepagents/browser 에는 없는" 심볼을 타입 단계에서 잡아 줍니다.
+       moduleResolution 을 "node"(구버전)로 두면 서브패스 타입을 못 찾습니다. */
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
+    /* ── 언어 수준 ────────────────────────────────────────────────
+       Node 22 는 ES2022 를 전부 지원합니다. top-level await 도 됩니다.
+       이 코스의 실습 파일은 전부 top-level await 를 씁니다
+       (agent.invoke 가 비동기이므로). */
+    "target": "ES2022",
+    "lib": ["ES2022"],
+
+    /* ── 엄격 모드 ────────────────────────────────────────────────
+       Deep Agent 의 state 는 files / todos 처럼 optional 인 필드가 많습니다.
+       strict 가 아니면 "todos 가 undefined 인데 .length 를 읽는" 코드가
+       조용히 통과했다가 런타임에 터집니다. */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+
+    /* ── 실행 편의 ────────────────────────────────────────────────
+       tsx 는 트랜스파일만 하고 타입체크는 하지 않습니다.
+       타입 검사는 `npm run typecheck` 로 따로 돌립니다. */
+    "noEmit": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "types": ["node"]
+  },
+  /* 스텝 폴더의 .ts 파일들은 project/ 밖(../step-NN-slug/)에 있지만,
+     의존성과 타입은 이 프로젝트 것을 씁니다. 그래서 include 에 넣습니다. */
+  "include": ["src/**/*.ts", "../step-*/**/*.ts"],
+  "exclude": ["node_modules"]
+}

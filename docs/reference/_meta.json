@@ -1,12 +1,22 @@
 [
   {
     "type": "dir",
-    "name": "k8s",
-    "label": "Kubernetes"
+    "name": "mysql8",
+    "label": "MySQL 8"
   },
   {
     "type": "dir",
-    "name": "mysql8",
-    "label": "MySQL 8"
+    "name": "langchain",
+    "label": "LangChain (TypeScript)"
+  },
+  {
+    "type": "dir",
+    "name": "deepagent",
+    "label": "Deep Agents (TypeScript)"
+  },
+  {
+    "type": "dir",
+    "name": "k8s",
+    "label": "Kubernetes"
   }
 ]

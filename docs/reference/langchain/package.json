@@ -1,0 +1,10 @@
+{
+  "name": "langchain-course-root",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "//": "실습 워크스페이스 루트. 실제 의존성 선언은 project/package.json 에 있습니다. 이 파일이 하는 일은 두 가지뿐입니다. (1) node_modules 를 이 위치로 끌어올려 step-*/ 폴더의 .ts 파일에서도 'langchain' 같은 bare import 가 해석되게 합니다. (2) 'type': 'module' 로 step-*/*.ts 를 ESM 으로 인식시켜 top-level await 를 가능하게 합니다.",
+  "workspaces": [
+    "project"
+  ]
+}

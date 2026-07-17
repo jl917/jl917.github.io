@@ -1,0 +1,17 @@
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "강의"
+  },
+  {
+    "type": "file",
+    "name": "problems",
+    "label": "문제"
+  },
+  {
+    "type": "file",
+    "name": "solutions",
+    "label": "해설"
+  }
+]

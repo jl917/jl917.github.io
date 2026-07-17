@@ -1,0 +1,29 @@
+{
+  "name": "deepagent-course",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "DeepAgents(TypeScript) 학습 코스 Step 01~12 실습 환경",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "step": "tsx",
+    "typecheck": "tsc --noEmit",
+    "check:core": "npm ls @langchain/core"
+  },
+  "dependencies": {
+    "@langchain/anthropic": "^1.5.1",
+    "@langchain/core": "^1.2.3",
+    "@langchain/langgraph": "^1.4.8",
+    "deepagents": "^1.11.0",
+    "dotenv": "^17.2.1",
+    "langchain": "^1.5.3",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "tsx": "^4.20.3",
+    "typescript": "^5.9.2"
+  }
+}

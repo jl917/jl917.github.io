@@ -16,7 +16,7 @@
   },
   {
     "text": "Learn",
-    "link": "/reference/k8s/",
+    "link": "/reference/mysql8/",
     "activeMatch": "^/reference/"
   },
   {

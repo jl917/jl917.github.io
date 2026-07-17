@@ -1,0 +1,112 @@
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "코스 개요"
+  },
+  {
+    "type": "file",
+    "name": "project/index",
+    "label": "실습 프로젝트 셋업"
+  },
+  {
+    "type": "file",
+    "name": "step-01-setup/index",
+    "label": "Step 01 — 환경 구축과 첫 모델 호출"
+  },
+  {
+    "type": "file",
+    "name": "step-02-chat-models/index",
+    "label": "Step 02 — 챗 모델과 파라미터"
+  },
+  {
+    "type": "file",
+    "name": "step-03-messages/index",
+    "label": "Step 03 — 메시지와 콘텐츠 블록"
+  },
+  {
+    "type": "file",
+    "name": "step-04-prompts/index",
+    "label": "Step 04 — 프롬프트 설계와 템플릿"
+  },
+  {
+    "type": "file",
+    "name": "step-05-structured-output/index",
+    "label": "Step 05 — 구조화된 출력"
+  },
+  {
+    "type": "file",
+    "name": "step-06-tools/index",
+    "label": "Step 06 — 도구(Tool) 정의"
+  },
+  {
+    "type": "file",
+    "name": "step-07-tool-loop/index",
+    "label": "Step 07 — 도구 호출 루프 직접 구현"
+  },
+  {
+    "type": "file",
+    "name": "step-08-create-agent/index",
+    "label": "Step 08 — createAgent, 첫 에이전트"
+  },
+  {
+    "type": "file",
+    "name": "step-09-streaming/index",
+    "label": "Step 09 — 스트리밍"
+  },
+  {
+    "type": "file",
+    "name": "step-10-memory/index",
+    "label": "Step 10 — 단기 메모리와 스레드"
+  },
+  {
+    "type": "file",
+    "name": "step-11-middleware-builtin/index",
+    "label": "Step 11 — 내장 미들웨어"
+  },
+  {
+    "type": "file",
+    "name": "step-12-middleware-custom/index",
+    "label": "Step 12 — 커스텀 미들웨어"
+  },
+  {
+    "type": "file",
+    "name": "step-13-hitl/index",
+    "label": "Step 13 — Human-in-the-Loop"
+  },
+  {
+    "type": "file",
+    "name": "step-14-context-runtime/index",
+    "label": "Step 14 — 컨텍스트와 런타임"
+  },
+  {
+    "type": "file",
+    "name": "step-15-long-term-memory/index",
+    "label": "Step 15 — 장기 메모리와 Store"
+  },
+  {
+    "type": "file",
+    "name": "step-16-retrieval-rag/index",
+    "label": "Step 16 — 검색과 RAG"
+  },
+  {
+    "type": "file",
+    "name": "step-17-langgraph/index",
+    "label": "Step 17 — LangGraph 그래프 API"
+  },
+  {
+    "type": "file",
+    "name": "step-18-multi-agent/index",
+    "label": "Step 18 — 멀티 에이전트"
+  },
+  {
+    "type": "file",
+    "name": "step-19-observability-eval/index",
+    "label": "Step 19 — 관측·테스트·평가"
+  },
+  {
+    "type": "dir",
+    "name": "step-20-production",
+    "label": "Step 20 — 프로덕션과 종합 프로젝트"
+  }
+]
