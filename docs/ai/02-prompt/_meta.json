@@ -1,0 +1,37 @@
+[
+  {
+    "type": "file",
+    "name": "01-promptengineering",
+    "label": "프롬프트 엔지니어링"
+  },
+  {
+    "type": "file",
+    "name": "02-sample",
+    "label": "기법별 샘플 모음"
+  },
+  {
+    "type": "file",
+    "name": "03-rag",
+    "label": "RAG 프롬프트"
+  },
+  {
+    "type": "file",
+    "name": "04-figma",
+    "label": "Figma → 코드"
+  },
+  {
+    "type": "file",
+    "name": "05-rule",
+    "label": "Rule — AI 규칙 파일"
+  },
+  {
+    "type": "file",
+    "name": "06-skill",
+    "label": "Skill"
+  },
+  {
+    "type": "file",
+    "name": "07-claude",
+    "label": "CLAUDE.md 생성"
+  }
+]
