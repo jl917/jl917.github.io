@@ -46,6 +46,7 @@
 - [Spring Boot](/note/backend/spring-boot.md)
 - [Spring Boot2](/note/backend/spring-boot2.md)
 - [SQL](/note/backend/sql.md)
+- [STEP 10. 실전 종합 (7문제)](/note/backend/sql2.md)
 - [Doctype](/note/frontend/html/doctype.md)
 - [Markup Tag](/note/frontend/html/tag.md)
 - [HTML Entity](/note/frontend/html/entity.md)
