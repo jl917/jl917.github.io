@@ -112,3 +112,5 @@ getWeather(city);
 | [code-yeongyu/oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent) | 에이전트 설정 |
 | [yizhiyanhua-ai/fireworks-tech-graph](https://github.com/yizhiyanhua-ai/fireworks-tech-graph) | 기술 그래프 |
 | [rpamis/comet](https://github.com/rpamis/comet) | 범용 |
+
+https://github.com/nutlope/hallmark

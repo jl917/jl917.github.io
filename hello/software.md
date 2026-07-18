@@ -31,6 +31,9 @@
 - youtubedownload [https://ytdn.netlify.app/#mac](https://ytdn.netlify.app/#macr)
 - MacsyZones [https://github.com/rohanrhu/MacsyZones](https://github.com/rohanrhu/MacsyZones)
 - DBX [https://dbxio.com/en](https://dbxio.com/en)
+- beekeeper [https://github.com/beekeeper-studio/beekeeper-studio/](https://github.com/beekeeper-studio/beekeeper-studio/)
+
+
 ## AI
 
 - ollama [https://ollama.com/download](https://ollama.com/download)
