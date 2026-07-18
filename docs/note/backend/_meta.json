@@ -22,10 +22,14 @@
   {
     "type": "file",
     "name": "spring-boot2"
-  }
-  ,
+  },
   {
     "type": "file",
     "name": "sql"
+  },
+  {
+    "type": "file",
+    "name": "sql2",
+    "label": "SQL 문제 풀이"
   }
 ]
