@@ -127,6 +127,7 @@
 - [Step 25 — 최종 프로젝트](/reference/mysql8/step-25-final-project/index.md)
 - [Step 25 — 최종 프로젝트 : 문제](/reference/mysql8/step-25-final-project/problems.md)
 - [Step 25 — 최종 프로젝트 : 정답과 해설](/reference/mysql8/step-25-final-project/solutions.md)
+- [부록 A — NULL 완전 정복](/reference/mysql8/appendix-a-null/index.md)
 - [LangChain (TypeScript) 완전 학습 코스](/reference/langchain/index.md)
 - [실습 환경](/reference/langchain/project/index.md)
 - [Step 01 — 환경 구축과 첫 모델 호출](/reference/langchain/step-01-setup/index.md)

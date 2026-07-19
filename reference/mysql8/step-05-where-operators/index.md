@@ -1000,6 +1000,8 @@ LIMIT 8;
 
 → [Step 06 — 집계함수와 GROUP BY](../step-06-aggregate-groupby/index.md)
 
+> 📌 NULL(5-5 ~ 5-7)이 특히 헷갈렸다면 [**부록 A — NULL 완전 정복**](../appendix-a-null/index.md) 에 3값 논리 진리표부터 절(clause)별 NULL 규칙 표, 설계 지침까지 한자리에 정리돼 있습니다. Step 08 까지 마친 뒤 읽으면 가장 효과가 좋습니다.
+
 ---
 
 ## 실습 파일
