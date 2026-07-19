@@ -138,5 +138,10 @@
     "type": "dir",
     "name": "step-25-final-project",
     "label": "Step 25 — 최종 프로젝트"
+  },
+  {
+    "type": "file",
+    "name": "appendix-a-null/index",
+    "label": "부록 A — NULL 완전 정복"
   }
 ]

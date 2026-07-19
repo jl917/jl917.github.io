@@ -84,6 +84,15 @@ mysql -h127.0.0.1 -P3307 -ulearner -plearn1234 shop
 | [24](step-24-monitoring-tuning/) | 모니터링과 튜닝 | 슬로우 쿼리, `performance_schema`, `sys`, **트러블슈팅 플레이북** |
 | [25](step-25-final-project/) | 종합 실습 | 매출 리포트, 코호트/RFM 분석, 느린 쿼리 튜닝, 스키마 설계 |
 
+### 부록
+> 여러 스텝에 흩어진 주제를 한자리에 모아 다시 정리합니다.
+
+| 부록 | 주제 | 핵심 내용 |
+|---|---|---|
+| [A](appendix-a-null/) | **NULL 완전 정복** | 3값 논리, **절마다 다른 NULL 규칙**, `NOT IN` 함정, NULL 확장, `GROUPING()`, 설계 지침 |
+
+> 📌 Step 05~08 의 NULL 함정(3값 논리 · 집계의 NULL 무시 · `ON` vs `WHERE` · `NOT IN`)이 서로 따로 노는 느낌이면 [부록 A](appendix-a-null/) 를 먼저 읽으세요. 네 함정이 **하나의 원리**로 정리됩니다.
+
 ---
 
 ## 각 스텝의 구성

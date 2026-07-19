@@ -626,6 +626,8 @@ LIMIT 8;
 
 → [Step 09 — CTE와 재귀 쿼리](../step-09-cte-recursive/index.md)
 
+> 📌 Step 05~08 에서 NULL 함정을 네 번 만났습니다(3값 논리 · 집계의 NULL 무시 · `ON` vs `WHERE` · `NOT IN`). 아직 서로 따로 노는 느낌이라면 여기서 [**부록 A — NULL 완전 정복**](../appendix-a-null/index.md) 을 읽고 오세요. 네 함정이 하나의 원리로 정리됩니다.
+
 ---
 
 ## 실습 파일
