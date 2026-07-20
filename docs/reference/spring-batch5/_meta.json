@@ -1,0 +1,82 @@
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "코스 개요"
+  },
+  {
+    "type": "file",
+    "name": "project/index",
+    "label": "실습 프로젝트 셋업"
+  },
+  {
+    "type": "file",
+    "name": "step-01-setup/index",
+    "label": "Step 01 — 환경 구축과 첫 Job"
+  },
+  {
+    "type": "file",
+    "name": "step-02-job-step/index",
+    "label": "Step 02 — Job 과 Step 의 구조"
+  },
+  {
+    "type": "file",
+    "name": "step-03-job-parameters/index",
+    "label": "Step 03 — JobParameters 와 실행 식별"
+  },
+  {
+    "type": "file",
+    "name": "step-04-tasklet/index",
+    "label": "Step 04 — Tasklet Step"
+  },
+  {
+    "type": "file",
+    "name": "step-05-chunk/index",
+    "label": "Step 05 — 청크 지향 처리"
+  },
+  {
+    "type": "file",
+    "name": "step-06-item-reader/index",
+    "label": "Step 06 — ItemReader"
+  },
+  {
+    "type": "file",
+    "name": "step-07-item-processor/index",
+    "label": "Step 07 — ItemProcessor"
+  },
+  {
+    "type": "file",
+    "name": "step-08-item-writer/index",
+    "label": "Step 08 — ItemWriter"
+  },
+  {
+    "type": "file",
+    "name": "step-09-execution-context/index",
+    "label": "Step 09 — ExecutionContext 와 스코프"
+  },
+  {
+    "type": "file",
+    "name": "step-10-flow-control/index",
+    "label": "Step 10 — 흐름 제어"
+  },
+  {
+    "type": "file",
+    "name": "step-11-fault-tolerance/index",
+    "label": "Step 11 — 내결함성: skip · retry · 재시작"
+  },
+  {
+    "type": "file",
+    "name": "step-12-listeners/index",
+    "label": "Step 12 — 리스너"
+  },
+  {
+    "type": "file",
+    "name": "step-13-scaling/index",
+    "label": "Step 13 — 병렬 처리와 확장"
+  },
+  {
+    "type": "file",
+    "name": "step-14-operations/index",
+    "label": "Step 14 — 운영: 스케줄링 · 모니터링 · 최종 프로젝트"
+  }
+]

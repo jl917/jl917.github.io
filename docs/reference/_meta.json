@@ -6,6 +6,26 @@
   },
   {
     "type": "dir",
+    "name": "spring-batch5",
+    "label": "Spring Batch 5"
+  },
+  {
+    "type": "dir",
+    "name": "kafka",
+    "label": "Apache Kafka"
+  },
+  {
+    "type": "dir",
+    "name": "spring-kafka",
+    "label": "Spring Kafka"
+  },
+  {
+    "type": "dir",
+    "name": "temporal",
+    "label": "Temporal Workflow"
+  },
+  {
+    "type": "dir",
     "name": "langchain",
     "label": "LangChain (TypeScript)"
   },

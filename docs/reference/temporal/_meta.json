@@ -1,0 +1,77 @@
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "코스 개요"
+  },
+  {
+    "type": "file",
+    "name": "project/index",
+    "label": "실습 프로젝트 셋업"
+  },
+  {
+    "type": "file",
+    "name": "step-01-setup/index",
+    "label": "Step 01 — 환경 구축과 첫 워크플로우"
+  },
+  {
+    "type": "file",
+    "name": "step-02-concepts/index",
+    "label": "Step 02 — 핵심 개념과 실행 모델"
+  },
+  {
+    "type": "file",
+    "name": "step-03-workflow-definition/index",
+    "label": "Step 03 — 워크플로우 정의와 결정성"
+  },
+  {
+    "type": "file",
+    "name": "step-04-activities/index",
+    "label": "Step 04 — 액티비티"
+  },
+  {
+    "type": "file",
+    "name": "step-05-retry-failure/index",
+    "label": "Step 05 — 재시도와 실패 처리"
+  },
+  {
+    "type": "file",
+    "name": "step-06-timers-await/index",
+    "label": "Step 06 — 타이머와 대기"
+  },
+  {
+    "type": "file",
+    "name": "step-07-signal-query-update/index",
+    "label": "Step 07 — Signal · Query · Update"
+  },
+  {
+    "type": "file",
+    "name": "step-08-child-continue-as-new/index",
+    "label": "Step 08 — 자식 워크플로우와 Continue-As-New"
+  },
+  {
+    "type": "file",
+    "name": "step-09-saga/index",
+    "label": "Step 09 — Saga 보상 트랜잭션"
+  },
+  {
+    "type": "file",
+    "name": "step-10-versioning/index",
+    "label": "Step 10 — 버저닝과 무중단 배포"
+  },
+  {
+    "type": "file",
+    "name": "step-11-testing/index",
+    "label": "Step 11 — 테스트"
+  },
+  {
+    "type": "file",
+    "name": "step-12-operations/index",
+    "label": "Step 12 — 운영"
+  },
+  {
+    "type": "file",
+    "name": "step-13-final-project/index",
+    "label": "Step 13 — 최종 프로젝트: 주문 처리 Saga"
+  }
+]

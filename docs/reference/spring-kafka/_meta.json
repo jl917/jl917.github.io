@@ -1,0 +1,77 @@
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "코스 개요"
+  },
+  {
+    "type": "file",
+    "name": "project/index",
+    "label": "실습 프로젝트 셋업"
+  },
+  {
+    "type": "file",
+    "name": "step-01-setup/index",
+    "label": "Step 01 — 환경 구축과 첫 메시지"
+  },
+  {
+    "type": "file",
+    "name": "step-02-kafka-template/index",
+    "label": "Step 02 — KafkaTemplate 과 프로듀서"
+  },
+  {
+    "type": "file",
+    "name": "step-03-listener-basics/index",
+    "label": "Step 03 — @KafkaListener 기초"
+  },
+  {
+    "type": "file",
+    "name": "step-04-serialization/index",
+    "label": "Step 04 — 직렬화와 역직렬화"
+  },
+  {
+    "type": "file",
+    "name": "step-05-message-conversion/index",
+    "label": "Step 05 — 메시지 변환과 헤더"
+  },
+  {
+    "type": "file",
+    "name": "step-06-ack-modes/index",
+    "label": "Step 06 — 오프셋 커밋과 AckMode"
+  },
+  {
+    "type": "file",
+    "name": "step-07-error-handling/index",
+    "label": "Step 07 — 에러 처리와 재시도"
+  },
+  {
+    "type": "file",
+    "name": "step-08-retryable-topic/index",
+    "label": "Step 08 — @RetryableTopic 논블로킹 재시도"
+  },
+  {
+    "type": "file",
+    "name": "step-09-transactions/index",
+    "label": "Step 09 — 트랜잭션"
+  },
+  {
+    "type": "file",
+    "name": "step-10-container-control/index",
+    "label": "Step 10 — 리스너 컨테이너 제어"
+  },
+  {
+    "type": "file",
+    "name": "step-11-testing/index",
+    "label": "Step 11 — 테스트"
+  },
+  {
+    "type": "file",
+    "name": "step-12-observability/index",
+    "label": "Step 12 — 관측성과 운영"
+  },
+  {
+    "type": "file",
+    "name": "step-13-patterns/index",
+    "label": "Step 13 — 실전 패턴과 최종 프로젝트"
+  }
+]
