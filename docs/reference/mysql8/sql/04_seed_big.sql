@@ -4,9 +4,9 @@
 -- shop 의 600건짜리 orders 로는 인덱스 효과가 눈에 보이지 않습니다.
 -- (행이 적으면 옵티마이저가 그냥 풀스캔을 고르는 게 실제로 더 빠릅니다)
 --
--- 그래서 100만 행짜리 access_logs 를 만듭니다.
+-- 그래서 2000만 행짜리 access_logs 를 만듭니다.
 --   * 처음에는 "인덱스가 하나도 없는" 상태로 둡니다. Step 15/16 에서 직접 붙입니다.
---   * 소요 시간: 노트북 기준 20초 ~ 1분. 커피 한 잔 하고 오세요.
+--   * 소요 시간: 노트북 기준 5분 ~ 15분. 커피 여러 잔 하고 오세요.
 --
 -- 실행:  mysql -h127.0.0.1 -P3307 -ulearner -plearn1234 shop < 04_seed_big.sql
 -- =====================================================================
@@ -29,8 +29,8 @@ CREATE TABLE access_logs (
 
 SET SESSION cte_max_recursion_depth = 2000000;
 
--- 100만 행을 한 번에 만들면 언두 로그가 커지므로 10만 행씩 10번 나눠 넣습니다.
--- (한 번에 넣고 싶다면 아래 프로시저 대신 seq 조건을 1000000 으로 바꾸세요)
+-- 2000만 행을 한 번에 만들면 언두 로그가 커지므로 10만 행씩 200번 나눠 넣습니다.
+-- (배치 크기를 키우고 싶다면 SET SESSION cte_max_recursion_depth 값도 함께 키우세요)
 DROP PROCEDURE IF EXISTS gen_access_logs;
 DELIMITER $$
 CREATE PROCEDURE gen_access_logs(IN total_rows INT, IN batch_size INT)
@@ -64,8 +64,8 @@ BEGIN
 END$$
 DELIMITER ;
 
--- 100만 행 (10만 x 10 배치)
-CALL gen_access_logs(1000000, 100000);
+-- 2000만 행 (10만 x 200 배치)
+CALL gen_access_logs(20000000, 100000);
 
 DROP PROCEDURE gen_access_logs;
 
