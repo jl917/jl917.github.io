@@ -20,14 +20,14 @@ MYSQL="mysql -h${HOST} -P${PORT} -u${USER} -p${PASS} --default-character-set=utf
 echo "▶ MySQL 접속 확인 (${HOST}:${PORT})"
 $MYSQL -e "SELECT VERSION() AS mysql_version;"
 
-# echo "▶ 01_schema.sql"
-# $MYSQL < "${HERE}/01_schema.sql"
+echo "▶ 01_schema.sql"
+$MYSQL < "${HERE}/01_schema.sql"
 
-# echo "▶ 02_seed_master.sql"
-# $MYSQL shop < "${HERE}/02_seed_master.sql"
+echo "▶ 02_seed_master.sql"
+$MYSQL shop < "${HERE}/02_seed_master.sql"
 
-# echo "▶ 03_seed_orders.sql"
-# $MYSQL shop < "${HERE}/03_seed_orders.sql"
+echo "▶ 03_seed_orders.sql"
+$MYSQL shop < "${HERE}/03_seed_orders.sql"
 
 if [[ "${1:-}" == "--big" ]]; then
   echo "▶ 04_seed_big.sql (100만 행 생성 — 20초~1분 소요)"
