@@ -31,5 +31,15 @@
     "type": "file",
     "name": "sql2",
     "label": "SQL 문제 풀이"
+  },
+  {
+    "type": "file",
+    "name": "sql3",
+    "label": "MySQL 마스터 체크리스트"
+  },
+  {
+    "type": "dir",
+    "name": "leetcode-sql",
+    "label": "LeetCode SQL 문제 해설"
   }
 ]

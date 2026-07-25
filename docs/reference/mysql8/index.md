@@ -90,8 +90,12 @@ mysql -h127.0.0.1 -P3307 -ulearner -plearn1234 shop
 | 부록 | 주제 | 핵심 내용 |
 |---|---|---|
 | [A](appendix-a-null/) | **NULL 완전 정복** | 3값 논리, **절마다 다른 NULL 규칙**, `NOT IN` 함정, NULL 확장, `GROUPING()`, 설계 지침 |
+| [B](appendix-b-foreign-keys/) | **외래키(FK) 실무 완전 정복** | 에러 코드 카탈로그(`1452`/`1451`/`3780`…), 애플리케이션 레벨 FK, ORM·마이그레이션·온라인 스키마 변경 함정, FK 데드락, 고아 행 정리 |
+| [C](appendix-c-normalization/) | **정규화 완전 정복 (1NF~BCNF)** | 함수 종속·이상현상, 하나의 예제를 0NF→BCNF 관통, 4NF/5NF 개관, 실무 위반 패턴 카탈로그, 반정규화와 동기화 검증 |
 
 > 📌 Step 05~08 의 NULL 함정(3값 논리 · 집계의 NULL 무시 · `ON` vs `WHERE` · `NOT IN`)이 서로 따로 노는 느낌이면 [부록 A](appendix-a-null/) 를 먼저 읽으세요. 네 함정이 **하나의 원리**로 정리됩니다.
+>
+> 📌 [Step 13](step-13-constraints/) 의 FK 를 배운 뒤 실무에서 FK 로 겪는 에러·성능·마이그레이션 이슈가 궁금하면 [부록 B](appendix-b-foreign-keys/) 로 이어지세요.
 
 ---
 

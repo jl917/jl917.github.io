@@ -1,0 +1,57 @@
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "개요"
+  },
+  {
+    "type": "file",
+    "name": "step-01-basics",
+    "label": "STEP 1 — SQL 기초"
+  },
+  {
+    "type": "file",
+    "name": "step-02-sort-filter",
+    "label": "STEP 2 — 정렬과 조건"
+  },
+  {
+    "type": "file",
+    "name": "step-03-groupby-having",
+    "label": "STEP 3 — GROUP BY & HAVING"
+  },
+  {
+    "type": "file",
+    "name": "step-04-join",
+    "label": "STEP 4 — JOIN"
+  },
+  {
+    "type": "file",
+    "name": "step-05-subquery",
+    "label": "STEP 5 — 서브쿼리"
+  },
+  {
+    "type": "file",
+    "name": "step-06-case-when",
+    "label": "STEP 6 — CASE WHEN"
+  },
+  {
+    "type": "file",
+    "name": "step-07-string-date",
+    "label": "STEP 7 — 문자열 / 날짜 함수"
+  },
+  {
+    "type": "file",
+    "name": "step-08-window",
+    "label": "STEP 8 — Window Function"
+  },
+  {
+    "type": "file",
+    "name": "step-09-cte",
+    "label": "STEP 9 — CTE"
+  },
+  {
+    "type": "file",
+    "name": "step-10-final",
+    "label": "STEP 10 — 실전 종합"
+  }
+]

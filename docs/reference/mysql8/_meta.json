@@ -143,5 +143,15 @@
     "type": "file",
     "name": "appendix-a-null/index",
     "label": "부록 A — NULL 완전 정복"
+  },
+  {
+    "type": "file",
+    "name": "appendix-b-foreign-keys/index",
+    "label": "부록 B — 외래키(FK) 실무 완전 정복"
+  },
+  {
+    "type": "file",
+    "name": "appendix-c-normalization/index",
+    "label": "부록 C — 정규화 완전 정복 (1NF~BCNF)"
   }
 ]
