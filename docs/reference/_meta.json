@@ -6,6 +6,11 @@
   },
   {
     "type": "dir",
+    "name": "querydsl6",
+    "label": "QueryDSL 6"
+  },
+  {
+    "type": "dir",
     "name": "spring-batch5",
     "label": "Spring Batch 5"
   },

@@ -1,0 +1,18 @@
+[
+  { "type": "file", "name": "index", "label": "코스 개요" },
+  { "type": "file", "name": "project/index", "label": "실습 프로젝트 셋업" },
+  { "type": "file", "name": "step-01-setup/index", "label": "Step 01 — 환경 구축과 첫 쿼리" },
+  { "type": "file", "name": "step-02-qtype/index", "label": "Step 02 — Q타입의 정체" },
+  { "type": "file", "name": "step-03-basic-query/index", "label": "Step 03 — 기본 조회" },
+  { "type": "file", "name": "step-04-where-conditions/index", "label": "Step 04 — 조건과 동적 쿼리" },
+  { "type": "file", "name": "step-05-projections/index", "label": "Step 05 — 프로젝션과 DTO" },
+  { "type": "file", "name": "step-06-joins/index", "label": "Step 06 — 조인" },
+  { "type": "file", "name": "step-07-subqueries/index", "label": "Step 07 — 서브쿼리" },
+  { "type": "file", "name": "step-08-aggregation/index", "label": "Step 08 — 집계와 그룹핑" },
+  { "type": "file", "name": "step-09-sorting-paging/index", "label": "Step 09 — 정렬과 페이징" },
+  { "type": "file", "name": "step-10-dynamic-sort/index", "label": "Step 10 — 동적 정렬과 검색 조건 조립" },
+  { "type": "file", "name": "step-11-bulk-operations/index", "label": "Step 11 — 벌크 연산" },
+  { "type": "file", "name": "step-12-spring-data/index", "label": "Step 12 — Spring Data JPA 통합" },
+  { "type": "file", "name": "step-13-advanced/index", "label": "Step 13 — 고급 표현식" },
+  { "type": "file", "name": "step-14-performance/index", "label": "Step 14 — 성능과 최종 프로젝트" }
+]
