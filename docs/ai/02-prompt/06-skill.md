@@ -112,5 +112,13 @@ getWeather(city);
 | [code-yeongyu/oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent) | 에이전트 설정 |
 | [yizhiyanhua-ai/fireworks-tech-graph](https://github.com/yizhiyanhua-ai/fireworks-tech-graph) | 기술 그래프 |
 | [rpamis/comet](https://github.com/rpamis/comet) | 범용 |
-
-https://github.com/nutlope/hallmark
+| [nutlope/hallmark](https://github.com/nutlope/hallmark) | 디자인 |
+| [vercel-labs/agent-skills — composition-patterns](https://github.com/vercel-labs/agent-skills/tree/main/skills/composition-patterns) | React 합성 패턴 (boolean prop 남발 대신 compound component) |
+| [vercel-labs/agent-skills — web-design-guidelines](https://github.com/vercel-labs/agent-skills/tree/main/skills/web-design-guidelines) | Vercel Web Interface Guidelines 기준 UI·접근성 감사 |
+| [mattpocock/skills — improve-codebase-architecture](https://github.com/mattpocock/skills/tree/main/skills/engineering/improve-codebase-architecture) | 코드베이스 아키텍처 개선 (deep module 관점 리팩터링 RFC) |
+| [mattpocock/skills — prototype](https://github.com/mattpocock/skills/tree/main/skills/engineering/prototype) | 설계 질문 검증용 일회성 프로토타입 |
+| [mattpocock/skills — to-spec](https://github.com/mattpocock/skills/tree/main/skills/engineering/to-spec) | 대화 내용을 스펙(PRD)으로 정리해 이슈 트래커에 발행 (구 `to-prd`) |
+| [mattpocock/skills — to-tickets](https://github.com/mattpocock/skills/tree/main/skills/engineering/to-tickets) | 스펙·계획을 tracer-bullet 티켓으로 분해 (구 `to-issues`) |
+| [browser-use/browser-use](https://github.com/browser-use/browser-use) | 브라우저 자동화 (`browser-use skill install` 로 등록) |
+| [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | 최소한의 코드만 작성하도록 강제 |
+| [iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) | Word·Excel·PowerPoint 문서 읽기/편집 (Office 설치 불필요) |
