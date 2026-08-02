@@ -215,7 +215,7 @@ build/generated/sources/annotationProcessor/java/main/com/example/shop/entity/QR
 
 `.gitignore` 는 이렇게 둡니다.
 
-```gitignore
+```bash
 # Gradle
 .gradle/
 build/
