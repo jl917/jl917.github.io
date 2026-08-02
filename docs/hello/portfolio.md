@@ -2,6 +2,13 @@
 
 ## Library
 
+#### MCP-KIT
+
+AI 도구를 만들고 쉽게 에이전트에서 사용할수 있는 유틸
+
+- site: https://mcp-kit.netlify.app/
+- github: https://github.com/jl917/mcp-kit
+
 #### JECO
 
 별도의 셋팅이 필요없는 React 개발 환경을 만들어 보고 싶어서 도전했던 프로젝트
