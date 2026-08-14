@@ -122,3 +122,4 @@ getWeather(city);
 | [browser-use/browser-use](https://github.com/browser-use/browser-use) | 브라우저 자동화 (`browser-use skill install` 로 등록) |
 | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | 최소한의 코드만 작성하도록 강제 |
 | [iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) | Word·Excel·PowerPoint 문서 읽기/편집 (Office 설치 불필요) |
+| [emilkowalski/skills](https://github.com/emilkowalski/skills) | Skills For Designers and Engineers |
