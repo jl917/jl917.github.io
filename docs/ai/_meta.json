@@ -25,6 +25,11 @@
     "label": "파인튜닝",
     "name": "06-fineTuning"
   },
+  {
+    "type": "dir",
+    "label": "Agent-고급",
+    "name": "07-agent-advanced"
+  },
   "50-FunctionCalling",
   "70-Embedding",
   "100-Evaluation",

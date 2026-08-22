@@ -16,7 +16,14 @@ const config: UserConfig = {
     extensions: [".md", ".mdx"],
     // 실습 프로젝트에서 npm install 하면 docs 아래에 node_modules 가 생긴다.
     // 그 안의 마크다운이 페이지로 잡히지 않도록 제외한다.
-    exclude: ["**/node_modules/**"],
+    exclude: [
+      "**/node_modules/**",
+      // [임시] Learn(reference) 코스 전체를 빌드에서 제외한다.
+      // 다시 살릴 때: 아래 한 줄을 지우고, docs/_nav.json 의 "Note" 와 "Mark" 사이에
+      //   { "text": "Learn", "link": "/reference/mysql8/", "activeMatch": "^/reference/" },
+      // 를 되돌리면 된다.
+      "**/reference/**",
+    ],
   },
   title: "Document",
   description: "Web Information",
