@@ -63,7 +63,7 @@ AI 에이전트는 자연어 처리 외에도 의사 결정, 문제 해결, 외�
 
 ### 워크플로우 / AI 어시스턴트 / AI 에이전트
 
-워크플로는 LLM(Learning Leadership Machine)과 도구가 미리 정의된 코드 경로를 통해 조율되는 시스템입니다.
+워크플로는 LLM(Large Language Model)과 도구가 미리 정의된 코드 경로를 통해 조율되는 시스템입니다.
 
 AI 에이전트
 
@@ -75,44 +75,44 @@ AI 어시스턴트
 
 ### 기타
 
-##### 流程
+##### 동작 흐름
 
-- 规划 Planning
-  - 概念
-    - 观察与思考怎么完成任务
-    - 利用拥有的工具实现目的
-    - 任务拆分成子任务
-    - 执行任务的过程中进行反思和完善 吸取教训以完善未来的步骤
-- 记忆 Memory
-  - 分类
-    - 感觉记忆(Sensory Memory)
-    - 短期记忆
-    - 长期记忆
-- 工具 Tools
-  - 预制工具
+- 계획 Planning
+  - 개념
+    - 작업을 어떻게 완수할지 관찰하고 사고한다
+    - 보유한 도구를 활용해 목적을 달성한다
+    - 작업을 하위 작업으로 분해한다
+    - 실행 도중에 스스로를 되돌아보고 보완한다. 그 교훈으로 이후 단계를 개선한다
+- 기억 Memory
+  - 분류
+    - 감각 기억(Sensory Memory)
+    - 단기 기억
+    - 장기 기억
+- 도구 Tools
+  - 내장 도구
     - Bing Search
-    - dall-E Image
-  - 自定义工具
-  - 工具集
-- 执行 Action
-  - 执行任务
-  - 反馈结果
+    - DALL·E Image
+  - 커스텀 도구
+  - 도구 모음(툴셋)
+- 실행 Action
+  - 작업을 수행한다
+  - 결과를 피드백한다
 
-##### 举例
+##### 예시
 
-1. 输入: 请问现任美国总统是谁？他的年龄的平方是多少？请用中文告诉我这两个问题
-2. 规划: 我需要使用搜索引擎来找到美国现任总统的名字 然后使用计算器来计算他的年龄的平方'
-3. 执行: search
-4. 执行输入: 美国现任总统
+1. 입력: 현직 미국 대통령은 누구인가요? 그리고 그 사람 나이의 제곱은 얼마인가요? 두 질문 모두 한국어로 알려 주세요
+2. 계획: 검색 엔진으로 현직 미국 대통령의 이름을 찾은 다음, 계산기로 그 사람의 나이를 제곱해야 한다
+3. 실행: search
+4. 실행 입력: 현직 미국 대통령
 5. Observation: joe biden
-6. Thought: 现任美国总统是 joe biden
-7. 执行: Calculator
-8. 执行输入: 68^2
+6. Thought: 현직 미국 대통령은 joe biden이다
+7. 실행: Calculator
+8. 실행 입력: 68^2
 9. Observation: 4624
-10. Thought: 我现在知道了美国现任总统是 joe biden 他的年龄的平方是 4624
-11. Final Answer: 美国现任总统是 joe biden 他的年龄的平方是 4624
+10. Thought: 이제 현직 미국 대통령이 joe biden이고 나이의 제곱이 4624임을 알았다
+11. Final Answer: 현직 미국 대통령은 joe biden이고, 나이의 제곱은 4624입니다
 
-##### 框架
+##### 프레임워크
 
 - Plan and Execute
   1. user request
@@ -123,9 +123,9 @@ AI 어시스턴트
   6. rePlan
   7. response to user
 - Self Ask
-- Thiking and Self-Reflection 思考并自我反思
-  - 框架主要用于模拟和实现复杂决策过程，通过不断自我评估和调整，使系统能够学习并改进决策过程，从而在面对复杂问题时做出更加有效的决策
+- Thinking and Self-Reflection — 사고하고 스스로 되돌아보기
+  - 복잡한 의사결정 과정을 모사하고 구현하기 위한 프레임워크다. 끊임없이 자기 평가와 조정을 반복함으로써 시스템이 의사결정 과정을 학습하고 개선하게 만들고, 그 결과 복잡한 문제 앞에서 더 효과적인 판단을 내리도록 한다
   - Thinking
-    - LLM ⇒ Thougth1 ⇒ Action1 ⇒ Thougth2 ⇒ Action2 ⇒ Thougth3 ⇒ Action3 ⇒ End
+    - LLM ⇒ Thought1 ⇒ Action1 ⇒ Thought2 ⇒ Action2 ⇒ Thought3 ⇒ Action3 ⇒ End
   - Self-Reflection
-    - LLM ⇒ Thougth1 ⇒ Action1 ⇒ LLM ⇒ Thougth2 ⇒ Action2 ⇒ LLM ⇒ End
+    - LLM ⇒ Thought1 ⇒ Action1 ⇒ LLM ⇒ Thought2 ⇒ Action2 ⇒ LLM ⇒ End

@@ -5,9 +5,9 @@
 ```json
 {
   "messages": [
-    { "role": "system", "content": "<放入系统讯息>" },
-    { "role": "user", "content": "<放入使用者的问题>" },
-    { "role": "assistant", "content": "<放入理想的回答>." }
+    { "role": "system", "content": "<시스템 메시지를 넣는 자리>" },
+    { "role": "user", "content": "<사용자의 질문을 넣는 자리>" },
+    { "role": "assistant", "content": "<이상적인 답변을 넣는 자리>." }
   ]
 }
 ```

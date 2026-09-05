@@ -1,4 +1,4 @@
-# Fine-tuning 微调
+# Fine-tuning 파인튜닝
 
 ## 소개
 
