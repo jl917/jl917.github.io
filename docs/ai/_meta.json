@@ -30,6 +30,16 @@
     "label": "Agent-고급",
     "name": "07-agent-advanced"
   },
+  {
+    "type": "dir",
+    "label": "LLM-고급",
+    "name": "08-llm-advanced"
+  },
+  {
+    "type": "dir",
+    "label": "RAG-고급",
+    "name": "09-rag-advanced"
+  },
   "50-FunctionCalling",
   "70-Embedding",
   "100-Evaluation",
