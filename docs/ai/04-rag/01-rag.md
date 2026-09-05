@@ -164,7 +164,7 @@ Return only the JSON structure, with no additional output.
 - https://zhuanlan.zhihu.com/p/722159912
 - https://rabiloo.com/blog/the-3-types-of-rag-models-naive-rag-modular-rag-and-advanced-rag
 - https://zhuanlan.zhihu.com/p/1924487055976670911
-- [https://www.zhihu.com/search?type=content&q=rag 如何评估](https://www.zhihu.com/search?type=content&q=rag%20%E5%A6%82%E4%BD%95%E8%AF%84%E4%BC%B0)
+- [RAG를 어떻게 평가할 것인가 (검색 결과 모음)](https://www.zhihu.com/search?type=content&q=rag%20%E5%A6%82%E4%BD%95%E8%AF%84%E4%BC%B0)
 - https://zhuanlan.zhihu.com/p/1975321777342260763
 - https://zhuanlan.zhihu.com/p/1956865613138986501
 - https://zhuanlan.zhihu.com/p/1920459703399462751

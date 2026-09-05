@@ -1,8 +1,8 @@
 # langchain
 
-LangChain은 2022년 10월, 하버드 대학의 Harrison Chase가 주도한 LLM을 활용한 애플리케이션을 구축하기 위한 프레임워크입니다. LangChain핵심목표는 AI어플리케이션을 쉽고 빠르게 구현하는것입니다.예를 들면 Agent, QA시스템, 대햐형 로봇등등입니다. LangChain은 다양한 언어 모델과 도구들을 통합하여 복잡한 작업을 수행할 수 있도록 지원합니다.
+LangChain은 2022년 10월 Harrison Chase가 주도해 만든, LLM 기반 애플리케이션을 구축하기 위한 프레임워크입니다. 핵심 목표는 AI 애플리케이션을 쉽고 빠르게 구현하는 것입니다. Agent, QA 시스템, 대화형 봇 등이 대표적인 활용 사례입니다. LangChain은 다양한 언어 모델과 도구를 하나의 인터페이스로 통합해 복잡한 작업을 수행할 수 있도록 지원합니다.
 
-## 왜서 langchain을 사용할까?
+## 왜 LangChain을 사용할까?
 
 LangChain은 다음과 같은 이유로 사용됩니다:
 
@@ -11,9 +11,9 @@ LangChain은 다음과 같은 이유로 사용됩니다:
 3. **체인 구성**: LangChain은 여러 단계를 거쳐 작업을 수행하는 체인을 쉽게 구성할 수 있도록 도와줍니다.
 4. **커뮤니티 및 생태계**: LangChain은 활발한 커뮤니티와 다양한 플러그인 및 확장 기능을 제공하여 개발자가 최신 기술을 활용할 수 있도록 지원합니다.
 
-## langchain과 LLM직접 구현의 차이점
+## LangChain과 LLM 직접 구현의 차이점
 
-| 비교 항목                    | 직접 대모델 API 호출                                             | LangChain 사용 개발                                                           |
+| 비교 항목                    | 모델 API 직접 호출                                               | LangChain 기반 개발                                                           |
 | ---------------------------- | ---------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | **개발 방식**                | 단순 작업에는 직관적이지만, 복잡한 기능은 많은 커스텀 코드 필요  | 모듈을 조합하는 방식으로 복잡한 기능도 쉽게 구현 가능                         |
 | **여러 모델 지원**           | 모델 제공업체마다 다른 API를 직접 구현해야 함                    | 통합 인터페이스 제공 → OpenAI, Anthropic, Hugging Face 등 쉽게 전환/조합 가능 |
@@ -22,7 +22,7 @@ LangChain은 다음과 같은 이유로 사용됩니다:
 | **복잡한 작업 자동화**       | 다단계 추론, 도구 호출 등을 구현하려면 논리 구조 설계가 어려움   | Agent 기능 제공 → 모델이 스스로 도구를 선택·호출해 작업 수행                  |
 | **운영(배포·모니터링) 지원** | 표준화된 디버깅/모니터링 도구 부족                               | LangSmith로 추적, 디버깅, 평가, 모니터링 지원                                 |
 
-## langchain 아키텍처
+## LangChain 아키텍처
 
 - LangChain
   - langchain
@@ -36,7 +36,7 @@ LangChain은 다음과 같은 이유로 사용됩니다:
   - langchain-core
     - LCEL(LangChain Expression Language)
 - LangGraph
-  - Directed Graph와 Conditional Edge를 기반으로 멀티에이전트 애플리케이션을 구축할수 있으려 조건 분기, 반복, 병렬 등 복잡한 제어 흐름을 지원한다, 또한 상태 지속성, 중단후 재실행, 시간여행, 인간-에이전트 협업과 같은 고급기능을 구현 할수 있다.
+  - Directed Graph와 Conditional Edge를 기반으로 멀티 에이전트 애플리케이션을 구축할 수 있으며, 조건 분기·반복·병렬 같은 복잡한 제어 흐름을 지원한다. 또한 상태 지속성, 중단 후 재실행, 시간 여행(time travel), 인간-에이전트 협업 같은 고급 기능도 구현할 수 있다.
 - LangSmith
   - Debugging
   - Playground
@@ -45,13 +45,13 @@ LangChain은 다음과 같은 이유로 사용됩니다:
   - Testing
   - Monitoring
 - LangServe
-  LangChain개발한 chain, agent등을 쉽게 배포하고 운영할수 있도록 지원하는 서비스
+  - LangChain으로 개발한 chain, agent 등을 손쉽게 배포하고 운영할 수 있도록 지원하는 서비스
 
 ## LangChain 주요 컴포넌트
 
 ### Model I/O
 
-LLM모델과 상호작용 하는 컴포넌트로서 Format, Predict, Parse 단계가 있다. 대응하는 컴포넌트는 PromptTemplate, Model(LLM), OutputParser가 있다.
+LLM과 상호작용하는 컴포넌트로, Format → Predict → Parse 세 단계로 구성된다. 각 단계에 대응하는 컴포넌트는 순서대로 PromptTemplate, Model(LLM), OutputParser다.
 
 ![](https://raw.githubusercontent.com/jl917/s/master/image/202511291401265.jpeg)
 
@@ -91,7 +91,7 @@ LLM모델과 상호작용 하는 컴포넌트로서 Format, Predict, Parse 단�
 
 ### Chains
 
-chain은 여러개 컴포넌트(prompt template, llm, memory, tool등)를 연결하여 특정 작업을 수행하는 단위입니다. chain에서 실행한 결과를 다음 체인에 전달하여 복잡한 작업을 수행할수 있습니다.
+chain은 여러 컴포넌트(prompt template, LLM, memory, tool 등)를 연결해 특정 작업을 수행하는 단위입니다. 한 체인의 실행 결과를 다음 체인의 입력으로 넘겨 복잡한 작업을 단계적으로 처리할 수 있습니다.
 
 ![](https://raw.githubusercontent.com/jl917/s/master/image/202511291411934.jpg)
 
@@ -145,26 +145,26 @@ chain은 여러개 컴포넌트(prompt template, llm, memory, tool등)를 연결
 
 ### Tools
 
-Tools는 LLM, Agent가 외부 시스템과 상호작용할수 있도록 도와주는 컴포넌트입니다. 본질은 함수(function)이며, 입력을 받아 특정 작업을 수행한후 출력을 반환합니다. 예를들어 검색도구, 계산기, 데이터베이스, API통신 등이 있습니다.
+Tools는 LLM과 Agent가 외부 시스템과 상호작용할 수 있게 해 주는 컴포넌트입니다. 본질은 함수(function)로, 입력을 받아 특정 작업을 수행한 뒤 출력을 반환합니다. 검색 도구, 계산기, 데이터베이스 조회, API 통신 등이 대표적입니다.
 
 ##### 구성
 
 - name: 도구 이름
-- description: 도구에 대한 설명으로 프롬프트에 포함되어 LLM이 도구를 선택하는데 도움을 줌
+- description: 도구에 대한 설명. 프롬프트에 그대로 포함되어 LLM이 어떤 도구를 쓸지 판단하는 근거가 됨
 - parameters: 도구에 전달되는 매개변수 정의
 - return type: 도구가 반환하는 출력 형식
 
 ![](https://raw.githubusercontent.com/jl917/s/master/image/202511291524298.jpeg)
 
-##### 도구 호출 안되는 이슈
+##### 도구가 호출되지 않는 문제
 
-- LLM이 판단하기에 도구 호출이 필요하지 않다고 판단하는 경우
-- 도구 설명이 모호하여 LLM이 적절한 도구를 선택하지 못하는 경우
-- 일부 LLM 자체가 도구 호출을 선호하지 않는 경우(예: DeepSeek-R1)
+- LLM이 도구를 쓸 필요가 없다고 판단한 경우
+- 도구 설명이 모호해 LLM이 적절한 도구를 고르지 못하는 경우
+- 모델 자체가 도구 호출을 잘 하지 않는 경우(예: DeepSeek-R1)
 
-해결: 도구에 대한 description이나 제시어를 바꿔 보거나 다른 LLM을 사용
+해결: 도구의 description이나 프롬프트 문구를 다듬어 보고, 그래도 안 되면 다른 LLM으로 교체한다.
 
-##### langchain tool과 MCP Server차이점
+##### LangChain Tool과 MCP Server의 차이점
 
 | 비교 항목                | 내장 Tools                    | MCP Server                                       |
 | ------------------------ | ----------------------------- | ------------------------------------------------ |
@@ -232,7 +232,7 @@ const researchInstructions = `당신은 전문 연구자입니다. 당신의 임
 
 ### Retrieval Augmented Generation
 
-Retrieval은 외부 지식 소스에서 관련 정보를 검색하여 LLM에 제공하는 컴포넌트입니다. 이를 통해 모델이 최신 정보에 접근하거나 도메인 특화 지식을 활용할 수 있습니다. LLM은 학습동결 모델이기 때문에 사전학습된 지식 외의 정보를 제공하려면 Retrieval기능이 필수적입니다. 또한 환각 문제를 완화하는데도 도움이 됩니다. RAG(Retrieval Augmented Generation)시스템의 핵심 구성 요소입니다.
+Retrieval은 외부 지식 소스에서 관련 정보를 검색해 LLM에 제공하는 컴포넌트입니다. 이를 통해 모델이 최신 정보에 접근하거나 도메인 특화 지식을 활용할 수 있습니다. LLM은 학습 시점에 지식이 고정되는 모델이므로, 사전학습 범위 밖의 정보를 다루려면 Retrieval이 필수적입니다. 환각(hallucination)을 완화하는 데도 도움이 됩니다. RAG(Retrieval Augmented Generation) 시스템의 핵심 구성 요소입니다.
 
 ![](https://raw.githubusercontent.com/jl917/s/master/image/202511301632417.png)
 
@@ -242,7 +242,7 @@ Retrieval은 외부 지식 소스에서 관련 정보를 검색하여 LLM에 제
 
 1. 문서 파싱
 2. 텍스트 분할
-3. 백터화(EmbeddingModel사용)
+3. 벡터화(Embedding Model 사용)
 
    - nomic-embed-text
    - mxbai-embed-large
@@ -250,26 +250,26 @@ Retrieval은 외부 지식 소스에서 관련 정보를 검색하여 LLM에 제
 
 4. 벡터 DB 저장
 5. 질문
-6. 검색알고리즘(Cosine Similarity, Dot Product, Euclidean Distance 등)
-7. 지식 재배치(RerankModels): 유사한 값이 높은 순으로 정렬
-8. 증강: 사용자 질문과 함께 검색된 내용을 LLM에 전달
+6. 검색 알고리즘(Cosine Similarity, Dot Product, Euclidean Distance 등)
+7. 재정렬(Rerank Model): 유사도가 높은 순으로 다시 정렬
+8. 증강: 사용자 질문과 검색된 내용을 함께 LLM에 전달
 9. 응답 생성
 
 ##### Retrieval Augmented Generation 장점
 
-- 실시간 업데이트
-- 비용 대비 효율성
-- 출처를 제공하는 응답이여서 믿음직함
-- 안전하고 제어 가능: 제공한 문서에 기반한 응답만 생성 가능하게 제어 가능
+- 지식을 실시간으로 갱신할 수 있음
+- 재학습 대비 비용 효율이 높음
+- 출처를 함께 제시하므로 답변을 신뢰하고 검증할 수 있음
+- 안전하고 통제 가능: 제공한 문서에 근거한 응답만 생성하도록 제어할 수 있음
 
 ##### Retrieval Augmented Generation 단점
 
-- 검색품질의 한계
-- 시스템 복잡도 증가
-- context가 영향을 받음
-- 제공한 문서의 영향도가 큼
+- 검색 품질이 곧 답변 품질의 상한이 됨
+- 시스템 복잡도가 올라감
+- 컨텍스트 길이와 구성에 결과가 좌우됨
+- 제공한 문서의 품질에 크게 의존함
 
-##### langchain에서 구현
+##### LangChain에서의 구현
 
 1. Document Loaders
 
@@ -282,7 +282,7 @@ Retrieval은 외부 지식 소스에서 관련 정보를 검색하여 LLM에 제
 
    우선 세분화한 후 병합하는 전략을 따릅니다. 먼저 텍스트를 작은 문장 단위로 분할한 다음, 이러한 문장들을 순서대로 결합하여 설정된 블록 크기 제한에 도달할 때까지 더 큰 블록으로 만듭니다. 새 블록을 생성할 때는 이전 블록과 일부 중복되는 부분을 유지하여 문맥의 연속성을 보장합니다.
 
-   ###### 왜 구분이 필요한가
+   ###### 왜 분할이 필요한가
 
    - 생성된 답변의 품질 보장: 검색된 텍스트 블록이 너무 크고 관련 없는 정보가 많으면 LLM이 관련 없는 내용에 방해를 받아 핵심 문제에 집중하지 못할 수 있습니다. 심지어 관련 없는 정보를 잘못 통합하여 부정확하거나 장황한 답변을 생성할 수도 있습니다.
    - 모델의 컨텍스트 창 제한 극복: 모든 대형 모델에는 고정된 컨텍스트 창이 있으며, 이는 모델이 한 번에 "보고" 처리할 수 있는 텍스트의 총량이 제한되어 있음을 의미합니다.
@@ -294,17 +294,17 @@ Retrieval은 외부 지식 소스에서 관련 정보를 검색하여 LLM에 제
    - CharacterTextSplitter: 문자/문단 단위로 단순하게 분할하는 기본 방식.
    - RecursiveCharacterTextSplitter: 여러 분리자를 계층적으로 적용하여 자연스럽게 텍스트를 분할하는 권장 방식.
    - TokenTextSplitter: 토큰 개수 기준으로 텍스트를 분할하는 방식(OpenAI 등 토큰 제한 대응).
-   - LatexTextSplitter: LaTeX 문서 프로그래밍 언어를 이해
-   - MarkdownTextSplitter: Markdown 구조를 이해
+   - LatexTextSplitter: LaTeX 문서 구조를 이해하고 그에 맞춰 분할
+   - MarkdownTextSplitter: Markdown 구조를 이해하고 그에 맞춰 분할
 
-3. Text Embedding Models(모델: nomic-embed-text등등.)
+3. Text Embedding Models(예: nomic-embed-text 등)
 4. Vector Stores
 
 - 저장
 - 검색
 
 5. Retrievers
-   Vector Stores가 함수 제공(알고리즘포함)
+   - Vector Stores가 검색 알고리즘을 포함한 인터페이스를 제공
 
 ### Callbacks
 
@@ -319,14 +319,15 @@ Retrieval은 외부 지식 소스에서 관련 정보를 검색하여 LLM에 제
 
 ##### MMR
 
-LangChain 支持对检索结果进行基于 maximum marginal relevance（MMR，最大边界相关法）的重新排序
+LangChain은 검색 결과를 MMR(Maximum Marginal Relevance, 최대 한계 관련성) 기준으로 재정렬하는 기능을 지원한다. 관련성만 보고 상위를 채우면 비슷한 문서가 중복되기 쉬운데, MMR은 관련성과 다양성을 함께 고려해 순위를 다시 매긴다.
 
-##### 多查询检索
+##### 다중 쿼리 검색(Multi-Query Retrieval)
 
-以距离为度量的向量数据库检索，是通过将 query 进行 embedding（表征）到高维的向量空间，然后基于距离检索相似文档（embedding 到相同向量空间）。
+거리를 척도로 삼는 벡터 DB 검색은 query를 고차원 벡터 공간에 embedding한 뒤, 같은 공간에 embedding된 문서들과의 거리를 기준으로 유사 문서를 찾는 방식이다.
 
-但有时 query 中词语的轻微改变，或者 embedding 无法很好地捕获 query 的语义信息，那么将导致无法有效检索到相似文档。
-而多 query 检索便是应对这个问题，会通过提示词工程，将 query 输入到 LLM 从不同角度生成多个类似的查询，再分别用多个 query 去进行检索，然后汇聚这些检索结果，并进行去重，这样能够获取更多潜在的相似文档。
+그런데 query에 쓰인 단어가 조금만 달라지거나, embedding이 query의 의미를 충분히 담아내지 못하면 정작 필요한 유사 문서를 찾지 못하는 일이 생긴다.
+
+다중 쿼리 검색은 바로 이 문제를 겨냥한 기법이다. 프롬프트 엔지니어링을 통해 원본 query를 LLM에 넣어 서로 다른 관점의 유사 질의를 여러 개 생성하고, 각각으로 검색을 돌린 다음 그 결과를 한데 모아 중복을 제거한다. 이렇게 하면 놓칠 뻔한 유사 문서까지 더 폭넓게 확보할 수 있다.
 
 - https://reference.langchain.com/javascript/classes/_langchain_classic.retrievers_multi_query.MultiQueryRetriever.html
 
@@ -344,5 +345,5 @@ const retrievedDocs = await retriever.invoke("What are mitochondria made of?");
 - https://zhuanlan.zhihu.com/p/684209043
 - https://zhuanlan.zhihu.com/p/684216350
 - https://zhuanlan.zhihu.com/p/1975217069487313790
-- [基于LangChain的RAG开发教程（二)](https://zhuanlan.zhihu.com/p/706889931)
-- [LLM(大语言模型)「Agent」开发教程-LangChain（三）](https://zhuanlan.zhihu.com/p/712459598)
+- [LangChain 기반 RAG 개발 튜토리얼 (2)](https://zhuanlan.zhihu.com/p/706889931)
+- [LLM 「Agent」 개발 튜토리얼 - LangChain (3)](https://zhuanlan.zhihu.com/p/712459598)
