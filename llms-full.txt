@@ -31460,7 +31460,7 @@ getWeather(city);
 | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | 최소한의 코드만 작성하도록 강제 |
 | [iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) | Word·Excel·PowerPoint 문서 읽기/편집 (Office 설치 불필요) |
 | [emilkowalski/skills](https://github.com/emilkowalski/skills) | Skills For Designers and Engineers |
-| [emilkowalski/skills](https://github.com/tt-a1i/archify) | knowledge base that brings planning, sorting and creating |
+| [tt-a1i/archify](https://github.com/tt-a1i/archify) | knowledge base that brings planning, sorting and creating |
 | [i-have-adhd](https://github.com/ayghri/i-have-adhd) | ADHD 관련 스킬 모음 |
 
 
