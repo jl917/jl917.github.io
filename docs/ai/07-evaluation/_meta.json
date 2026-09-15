@@ -1,0 +1,12 @@
+[
+  {
+    "type": "file",
+    "name": "01-evaluation",
+    "label": "평가"
+  },
+  {
+    "type": "file",
+    "name": "02-llm-judge",
+    "label": "LLM Judge"
+  }
+]

@@ -1,53 +1,52 @@
 [
-  "01-summary",
   {
-    "type": "dir",
-    "label": "프롬프트",
-    "name": "02-prompt"
+    "type": "file",
+    "name": "01-overview",
+    "label": "AI 개요"
   },
   {
     "type": "dir",
-    "label": "LLM",
-    "name": "03-largeLanguageModel"
+    "name": "02-llm",
+    "label": "LLM"
   },
   {
     "type": "dir",
-    "label": "RAG",
-    "name": "04-rag"
+    "name": "03-prompt",
+    "label": "프롬프트"
   },
   {
     "type": "dir",
-    "label": "Agent",
-    "name": "05-agent"
+    "name": "04-rag",
+    "label": "RAG"
   },
   {
     "type": "dir",
-    "label": "파인튜닝",
-    "name": "06-fineTuning"
+    "name": "05-agent",
+    "label": "Agent"
   },
   {
     "type": "dir",
-    "label": "Agent-고급",
-    "name": "07-agent-advanced"
+    "name": "06-fine-tuning",
+    "label": "파인튜닝"
   },
   {
     "type": "dir",
-    "label": "LLM-고급",
-    "name": "08-llm-advanced"
+    "name": "07-evaluation",
+    "label": "평가"
+  },
+  {
+    "type": "file",
+    "name": "08-embodied",
+    "label": "체화 지능"
   },
   {
     "type": "dir",
-    "label": "RAG-고급",
-    "name": "09-rag-advanced"
+    "name": "09-tools",
+    "label": "도구"
   },
-  "50-FunctionCalling",
-  "70-Embedding",
-  "100-Evaluation",
-  "110-Embodied",
-  "9990-LLMJudge",
   {
     "type": "dir",
-    "label": "도구",
-    "name": "tools"
+    "name": "advanced",
+    "label": "심화 시리즈"
   }
 ]

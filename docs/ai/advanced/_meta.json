@@ -1,0 +1,17 @@
+[
+  {
+    "type": "dir",
+    "name": "llm",
+    "label": "LLM 심화"
+  },
+  {
+    "type": "dir",
+    "name": "rag",
+    "label": "RAG 심화"
+  },
+  {
+    "type": "dir",
+    "name": "agent",
+    "label": "Agent 심화"
+  }
+]

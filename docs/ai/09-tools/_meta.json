@@ -1,0 +1,27 @@
+[
+  {
+    "type": "file",
+    "name": "01-claude-code",
+    "label": "Claude Code"
+  },
+  {
+    "type": "file",
+    "name": "02-ollama",
+    "label": "Ollama"
+  },
+  {
+    "type": "file",
+    "name": "03-langchain",
+    "label": "LangChain"
+  },
+  {
+    "type": "file",
+    "name": "04-langgraph",
+    "label": "LangGraph"
+  },
+  {
+    "type": "file",
+    "name": "05-deepagents",
+    "label": "Deep Agents"
+  }
+]

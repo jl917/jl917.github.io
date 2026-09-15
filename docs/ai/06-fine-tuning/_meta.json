@@ -1,0 +1,12 @@
+[
+  {
+    "type": "file",
+    "name": "01-fine-tuning",
+    "label": "파인튜닝"
+  },
+  {
+    "type": "file",
+    "name": "02-sample",
+    "label": "실습 예제"
+  }
+]

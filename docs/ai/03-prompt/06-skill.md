@@ -91,7 +91,7 @@ getWeather(city);
 ## 스킬 저장소
 
 - [anthropics/skills](https://github.com/anthropics/skills) — 공식
-- [skillsmp.com](https://skillsmp.com/zh)
+- [skillsmp.com](https://skillsmp.com/)
 - [ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome-claude-skills)
 
 ## 추천 스킬

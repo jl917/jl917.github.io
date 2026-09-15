@@ -1,349 +1,391 @@
-# langchain
+# LangChain
 
-LangChain은 2022년 10월 Harrison Chase가 주도해 만든, LLM 기반 애플리케이션을 구축하기 위한 프레임워크입니다. 핵심 목표는 AI 애플리케이션을 쉽고 빠르게 구현하는 것입니다. Agent, QA 시스템, 대화형 봇 등이 대표적인 활용 사례입니다. LangChain은 다양한 언어 모델과 도구를 하나의 인터페이스로 통합해 복잡한 작업을 수행할 수 있도록 지원합니다.
+LLM 애플리케이션과 에이전트를 만들기 위한 오픈소스 프레임워크입니다. 2022년 10월 Harrison Chase 가 시작했고, 2025년 10월 v1 에서 크게 정리됐습니다. v1 의 핵심은 **공급자에 독립적인 모델 인터페이스 + `createAgent`(모델·도구·프롬프트·미들웨어로 조립하는 에이전트 하네스)** 입니다. 이 문서는 TypeScript(`langchain` npm 패키지) 기준입니다.
 
-## 왜 LangChain을 사용할까?
+## 왜 쓰나
 
-LangChain은 다음과 같은 이유로 사용됩니다:
+1. **표준 모델 인터페이스** — Anthropic, OpenAI, Google, Ollama 등을 같은 코드로 호출하고 문자열 하나로 교체합니다.
+2. **조립형 에이전트** — `createAgent` 에 도구와 미들웨어를 붙여 가며 재시도·요약·승인(HITL)·가드레일을 점진적으로 추가합니다.
+3. **LangGraph 기반** — 에이전트가 내부적으로 LangGraph 그래프라서 체크포인트(대화 지속), 중단/재개, 스트리밍을 그대로 씁니다.
+4. **통합 생태계** — 문서 로더, 벡터 스토어, 임베딩, MCP 어댑터 등 수백 개 통합과 LangSmith(추적·평가)가 붙어 있습니다.
 
-1. **모듈화**: LangChain은 다양한 구성 요소(예: LLM, 프롬프트 템플릿, 메모리 등)를 모듈화하여 개발자가 쉽게 조합하고 확장할 수 있도록 합니다.
-2. **도구 통합**: LangChain은 외부 도구(예: 검색 엔진, 데이터베이스 등)와의 통합을 지원하여 LLM의 기능을 확장합니다.
-3. **체인 구성**: LangChain은 여러 단계를 거쳐 작업을 수행하는 체인을 쉽게 구성할 수 있도록 도와줍니다.
-4. **커뮤니티 및 생태계**: LangChain은 활발한 커뮤니티와 다양한 플러그인 및 확장 기능을 제공하여 개발자가 최신 기술을 활용할 수 있도록 지원합니다.
+## 모델 API 직접 호출과의 차이
 
-## LangChain과 LLM 직접 구현의 차이점
+| 비교 항목 | 모델 API 직접 호출 | LangChain |
+|---|---|---|
+| **여러 모델 지원** | 공급자마다 SDK·메시지 형식·도구 호출 형식이 달라 어댑터를 직접 작성 | `"anthropic:..."` → `"openai:..."` 문자열만 교체 |
+| **도구 호출 루프** | `tool_calls` 파싱 → 실행 → `tool_call_id` 맞춰 결과 반환 → 재호출을 직접 구현 | `createAgent` 가 루프와 종료 조건 처리 |
+| **대화 상태** | 이력 저장·잘라내기·토큰 초과 처리를 직접 구현 | 체크포인터 + `thread_id`, 요약 미들웨어 |
+| **횡단 관심사** | 재시도, 폴백, PII 마스킹, 호출 제한을 호출부마다 반복 | 미들웨어 한 줄씩 추가 |
+| **외부 데이터 연동** | 로딩·분할·임베딩·검색 전부 직접 | 로더·스플리터·벡터 스토어 통합 제공 |
+| **관측·평가** | 로그를 직접 설계 | LangSmith 트레이싱·평가 연동 |
 
-| 비교 항목                    | 모델 API 직접 호출                                               | LangChain 기반 개발                                                           |
-| ---------------------------- | ---------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| **개발 방식**                | 단순 작업에는 직관적이지만, 복잡한 기능은 많은 커스텀 코드 필요  | 모듈을 조합하는 방식으로 복잡한 기능도 쉽게 구현 가능                         |
-| **여러 모델 지원**           | 모델 제공업체마다 다른 API를 직접 구현해야 함                    | 통합 인터페이스 제공 → OpenAI, Anthropic, Hugging Face 등 쉽게 전환/조합 가능 |
-| **외부 데이터 연동**         | 데이터 로딩, 전처리, 벡터화, 검색 기능까지 모두 직접 구현해야 함 | PDF, DB, API 등과 쉽게 연결할 수 있는 RAG 기능과 다양한 도구 기본 제공        |
-| **문맥(컨텍스트) 관리**      | 대화 히스토리를 직접 관리해야 하며 Token 초과 위험 있음          | Memory 컴포넌트 제공 → 단기·장기 기억을 자동 관리                             |
-| **복잡한 작업 자동화**       | 다단계 추론, 도구 호출 등을 구현하려면 논리 구조 설계가 어려움   | Agent 기능 제공 → 모델이 스스로 도구를 선택·호출해 작업 수행                  |
-| **운영(배포·모니터링) 지원** | 표준화된 디버깅/모니터링 도구 부족                               | LangSmith로 추적, 디버깅, 평가, 모니터링 지원                                 |
+> ⚠️ **함정**: 추상화에는 비용이 있습니다. 모델 한 번 호출하고 끝나는 기능이라면 공급자 SDK 가 더 단순하고 디버깅도 쉽습니다. LangChain 은 **도구 루프·상태·모델 교체가 필요해질 때** 이득이 커집니다. 또 공급자 고유 기능(최신 베타 파라미터 등)은 통합 패키지에 반영되기까지 시차가 있을 수 있습니다.
 
-## LangChain 아키텍처
+## v0 에서 v1 으로 바뀐 것
 
-- LangChain
-  - langchain
-    - Chains
-    - Agents
-    - Retrieval strategies
-  - langchain-community
-    - Model I/O
-    - Retrival
-    - Tool
-  - langchain-core
-    - LCEL(LangChain Expression Language)
-- LangGraph
-  - Directed Graph와 Conditional Edge를 기반으로 멀티 에이전트 애플리케이션을 구축할 수 있으며, 조건 분기·반복·병렬 같은 복잡한 제어 흐름을 지원한다. 또한 상태 지속성, 중단 후 재실행, 시간 여행(time travel), 인간-에이전트 협업 같은 고급 기능도 구현할 수 있다.
-- LangSmith
-  - Debugging
-  - Playground
-  - Prompt Management
-  - Annotation
-  - Testing
-  - Monitoring
-- LangServe
-  - LangChain으로 개발한 chain, agent 등을 손쉽게 배포하고 운영할 수 있도록 지원하는 서비스
+인터넷의 LangChain 예제 상당수가 v0 기준이라, 차이를 알고 읽어야 합니다.
 
-## LangChain 주요 컴포넌트
+| v0 | v1 |
+|---|---|
+| `LLMChain`, `RetrievalQA`, `SequentialChain` 등 수십 개의 체인 | 제거. 에이전트는 `createAgent`, 고정 흐름은 LangGraph 로 직접 |
+| `initializeAgentExecutorWithOptions`, `AgentExecutor` | `createAgent` (LangGraph 기반) |
+| `ConversationBufferMemory` 등 메모리 클래스 | 체크포인터(단기) + Store(장기) + 요약 미들웨어 |
+| 에이전트 동작 커스터마이징이 어려움 | 미들웨어 훅 (`beforeModel`, `wrapToolCall` …) |
+| 옛 API 가 `langchain` 에 섞여 있음 | 레거시는 `@langchain/classic` 으로 분리 |
 
-### Model I/O
+v0 시절의 체인·메모리 개념(프롬프트 → 모델 → 파서를 파이프로 연결, 대화 버퍼/요약 메모리 등)은 여전히 **설계 아이디어로는 유효**합니다. 다만 새 코드에서는 아래 v1 구성 요소로 표현합니다.
 
-LLM과 상호작용하는 컴포넌트로, Format → Predict → Parse 세 단계로 구성된다. 각 단계에 대응하는 컴포넌트는 순서대로 PromptTemplate, Model(LLM), OutputParser다.
+## 아키텍처와 패키지 구성
+
+```mermaid
+flowchart TD
+    App[내 애플리케이션] --> DA[deepagents<br/>계획·파일시스템·서브에이전트 하네스]
+    App --> LC[langchain<br/>createAgent · tool · 미들웨어 · initChatModel]
+    DA --> LC
+    LC --> LG["@langchain/langgraph<br/>StateGraph · 체크포인터 · 스트리밍"]
+    LC --> Core["@langchain/core<br/>메시지 · 프롬프트 · Runnable · 도구 인터페이스"]
+    LG --> Core
+    Core --> P["공급자 패키지<br/>@langchain/anthropic · openai · ollama …"]
+    App -.-> LS[LangSmith<br/>추적 · 평가]
+```
+
+| 패키지 | 역할 |
+|---|---|
+| `langchain` | `createAgent`, `tool`, `initChatModel`, 내장 미들웨어, 메시지 클래스 재수출 |
+| `@langchain/core` | 모든 패키지가 공유하는 기반 추상화 (메시지, 프롬프트 템플릿, Runnable, 도구 인터페이스) |
+| `@langchain/anthropic`, `@langchain/openai`, `@langchain/ollama` … | 공급자별 채팅 모델·임베딩 구현 |
+| `@langchain/langgraph` | 저수준 오케스트레이션: 상태 그래프, 체크포인트, 인터럽트 → [LangGraph](./04-langgraph) |
+| `@langchain/textsplitters` | 텍스트 분할기 |
+| `@langchain/community` | 커뮤니티 통합 (벡터 DB, 로더 등) |
+| `@langchain/classic` | v0 레거시 (체인, 옛 리트리버, `MemoryVectorStore` 등) |
+| `@langchain/mcp-adapters` | MCP 서버의 도구를 LangChain 도구로 변환 |
+| `deepagents` | LangChain 위의 "배터리 포함" 에이전트 하네스 → [Deep Agents](./05-deepagents) |
+| `langsmith` | 트레이싱·데이터셋·평가 클라이언트 |
+
+> ⚠️ **함정**: `@langchain/core` 가 `node_modules` 에 **두 벌** 설치되면 `instanceof` 검사가 깨져, 정상 메시지가 "알 수 없는 타입"으로 취급되는 기묘한 에러가 납니다. 공급자 패키지를 추가한 뒤에는 `npm ls @langchain/core` 로 버전이 하나로 모이는지 확인하세요.
+
+```bash
+npm install langchain @langchain/core @langchain/anthropic zod
+```
+
+## 주요 컴포넌트
+
+### Models
+
+LLM 과 주고받는 과정은 **Format(프롬프트 구성) → Predict(모델 호출) → Parse(출력 해석)** 세 단계로 볼 수 있습니다.
 
 ![](https://raw.githubusercontent.com/jl917/s/master/image/202511291401265.jpeg)
 
-##### LLM 분류
+모델 종류는 크게 두 가지입니다.
 
-- LLMs: 단순히 텍스트 생성
-- Chat Models: 대화형 모델
-- Embedding Models: 텍스트를 벡터로 변환
+- **Chat Models** — 메시지 배열을 받아 메시지를 돌려주는 대화형 모델. 도구 호출·구조화 출력이 여기에 붙습니다. 오늘날 사실상 표준입니다.
+- **Embedding Models** — 텍스트를 벡터로 변환. 검색·RAG 에 씁니다. → [임베딩](/ai/02-llm/02-embedding)
 
-##### Message
+(문자열을 받아 문자열을 내는 옛 "text completion LLM" 인터페이스는 레거시입니다.)
 
-- System Message: 모델의 동작방식을 정의
-- Human Message: 사용자 입력
-- AI Message: 모델의 응답
+```typescript
+import { initChatModel } from "langchain";
+import { ChatAnthropic } from "@langchain/anthropic";
 
-##### PromptTemplate
+// 1) 공급자:모델 문자열 — 교체가 쉬움
+const model = await initChatModel("anthropic:claude-sonnet-4-6", { temperature: 0 });
 
-- Prompt: 모델에 전달되는 전체 텍스트
-- PromptTemplate: 변수화된 프롬프트
-- ChatPromptTemplate: 대화형 프롬프트 템플릿
-- XxxMessagePromptTemplate: 특정 유형의 메시지에 대한 프롬프트 템플릿
-- FewShotPromptTemplate: 몇 가지 예시를 포함하는 프롬프트 템플릿
+// 2) 공급자 클래스 직접 생성 — 공급자 고유 옵션을 쓸 때
+const claude = new ChatAnthropic({ model: "claude-sonnet-4-6", maxTokens: 4096 });
 
-##### OutputParser
+const reply = await model.invoke("RAG 를 한 문장으로 설명해줘");
+console.log(reply.text);
+```
 
-- StrOutputParser: 단순 문자열 출력 파서
-- JsonOutputParser: JSON 형식의 출력 파서
-- CommaSeparatedListOutputParser: 쉼표로 구분된 리스트 출력 파서
-- DatetimeOutputParser: 날짜 및 시간 출력 파서
-- XmlOutputParser: XML 형식의 출력 파서
+| 메서드 | 용도 |
+|---|---|
+| `invoke` | 단일 입력 → 완성된 응답 |
+| `stream` | 토큰 단위 스트리밍 |
+| `batch` | 여러 입력을 병렬 처리 |
+| `bindTools` | 도구 스키마를 모델에 연결 (도구 호출 가능 모델) |
+| `withStructuredOutput` | 스키마에 맞는 객체를 반환하도록 래핑 |
 
-##### 사용방식
+### Messages
 
-- invoke: 단일 입력에 대한 예측 수행(ainvoke : 비동기 버전)
-- stream: 스트리밍 출력을 지원하는 예측 수행(astream : 비동기 버전)
-- batch: 배치 입력에 대한 예측 수행(abatch : 비동기 버전)
+| 메시지 | 역할 |
+|---|---|
+| `SystemMessage` | 모델의 동작 방식 정의 |
+| `HumanMessage` | 사용자 입력 |
+| `AIMessage` | 모델 응답. 도구 요청 시 `tool_calls`, 토큰 사용량은 `usage_metadata` |
+| `ToolMessage` | 도구 실행 결과. 어떤 요청에 대한 답인지 `tool_call_id` 로 연결 |
 
-### Chains
+클래스 대신 `{ role: "user", content: "..." }` 같은 객체 형태도 받습니다. 응답 본문은 공급자마다 구조가 달라서, 텍스트만 필요하면 `.text`, 추론·이미지 등 블록 단위로 보려면 표준화된 `.contentBlocks` 를 씁니다.
 
-chain은 여러 컴포넌트(prompt template, LLM, memory, tool 등)를 연결해 특정 작업을 수행하는 단위입니다. 한 체인의 실행 결과를 다음 체인의 입력으로 넘겨 복잡한 작업을 단계적으로 처리할 수 있습니다.
+### Prompts
 
-![](https://raw.githubusercontent.com/jl917/s/master/image/202511291411934.jpg)
+```typescript
+import { ChatPromptTemplate, MessagesPlaceholder } from "@langchain/core/prompts";
 
-##### 종류
+const prompt = ChatPromptTemplate.fromMessages([
+  ["system", "너는 {domain} 전문가다. 세 문장 이내로 답한다."],
+  new MessagesPlaceholder("history"),
+  ["human", "{question}"],
+]);
 
-- LLMChain: prompt템플릿과 LLM을 package화한 가장 기본적인 체인
-- MultiPromptChain: 여러 개의 프롬프트 템플릿을 준비해두고, 입력을 **가장 적합한 프롬프트(템플릿)**로 LLM이 자동 선택하도록 하는 라우터.
-- LLMRouterChain: LLM이 입력을 읽고, **어떤 체인(또는 프롬프트)**으로 보낼지 결정하는 Router Chain.
-- EmbeddingRouterChain: 입력을 **임베딩(Embedding)**하여 미리 정의된 “주제 벡터들”과의 유사도 계산을 통해 어떤 체인으로 보낼지 결정하는 Router Chain.
-- MultiRetrievalQaRouter: 여러 개의 Retriever(벡터DB or 검색 소스)를 준비해두고, 입력을 보고 어떤 Retriever에서 자료를 가져올지 라우팅하는 체인.
-- SimpleSequentialChain: 여러개의 체인을 순차적으로 연결하여 실행, 앞 체인의 출력이 다음 체인의 입력.
-- SequentialChain: 여러개의 체인을 순차적으로 연결하여 실행, 여러 입력·출력을 각각 지정
-- RetrievalQA: Retriever로 문서를 검색한 뒤 LLM에 넣어 답변 생성.
-- ConversationalRetrievalQAChain: 대화형 문맥을 유지하면서 Retriever로 문서를 검색한 뒤 LLM에 넣어 답변 생성.
-- LCELChain: LangChain Expression Language(LCEL)을 사용하여 체인을 정의하는 방식
-- StuffDocumentsChain: 여러 문서를 하나로 합쳐서 LLM에 전달하는 체인
-- MapReduceDocumentsChain: 여러 문서를 각각 LLM에 전달하여 요약한 뒤, 그 요약들을 다시 LLM에 전달하여 최종 요약 생성
-- MapReRankDocumentsChain: 여러 문서를 각각 LLM에 전달하여 점수를 매긴 뒤, 상위 문서들을 다시 LLM에 전달하여 답변 생성
-- RefineChain: 초기 요약을 생성한 뒤, 추가 문서들을 순차적으로 반영하여 요약을 점진적으로 개선
-- LLMMathChain: 수학 문제 해결을 위해 LLM과 계산기를 결합한 체인
-- APIChain: API 호출을 위해 프롬프트 템플릿과 LLM을 결합한 체인
-- SQLDatabaseChain: 데이터베이스 질의를 위해 프롬프트 템플릿, LLM, 데이터베이스 커넥터를 결합한 체인
-- Hypothetical Document Embeddings: 문서의 가상 임베딩을 생성하여 검색 효율성을 높이는 체인
-- VectorDBQAChain: 벡터 데이터베이스에서 문서를 검색한 뒤 LLM에 넣어 답변 생성
-- ConversationalQAChain: 대화형 문맥을 유지하면서 LLM에 답변 생성
-- TransformChain: 입력 데이터를 변환하는 함수를 체인에 통합
-- LLMCheckerChain: LLM의 출력을 검증하는 체인
-- AnalyzeDocumentChain: 문서를 분석하는 체인
-- ConstitutionalChain: LLM의 출력을 헌법적 원칙에 따라 수정하는 체인
-- ExtractionChain: 구조화된 데이터를 추출하는 체인
-- LLMRequestChain: LLM에 대한 요청을 관리하는 체인
-  .....
+const messages = await prompt.invoke({ domain: "데이터베이스", history: [], question: "인덱스란?" });
+```
 
-### Memory
+| 구성 요소 | 설명 |
+|---|---|
+| `PromptTemplate` | 변수가 들어간 문자열 프롬프트 |
+| `ChatPromptTemplate` | 역할별 메시지로 구성된 프롬프트 |
+| `MessagesPlaceholder` | 대화 이력 같은 메시지 배열을 끼워 넣을 자리 |
+| `FewShotChatMessagePromptTemplate` | 퓨샷 예시를 포함하는 프롬프트 |
 
-![](https://raw.githubusercontent.com/jl917/s/master/image/202511291504913.jpeg)
-
-##### 종류
-
-| Memory 종류                         | 설명                                                                     | 특징                               | 장점                                                          |
-| ----------------------------------- | ------------------------------------------------------------------------ | ---------------------------------- | ------------------------------------------------------------- |
-| **ConversationBufferMemory**        | 전체 대화를 _원문 그대로_ 저장하여 LLM에 전달하는 기본 메모리            | 단순 버퍼 방식, 시간순 메시지 저장 | 구현이 쉽고 맥락 전달이 가장 자연스러움                       |
-| **ConversationBufferWindowMemory**  | 전체 이력을 보관하되 LLM에는 *최근 N개 메시지*만 전달                    | 최근 맥락 중심, 비용 절감형 방식   | 최신 대화 맥락을 유지하면서 토큰 비용을 크게 줄일 수 있음     |
-| **ConversationSummaryMemory**       | 오래된 대화를 LLM이 *요약(summary)*하여 축약 저장                        | 장기 대화에 최적화, 핵심 정보 중심 | 매우 긴 대화도 효율적으로 유지 가능하며 토큰 사용량 최소화    |
-| **ConversationSummaryBufferMemory** | 오래된 대화는 요약, 최신 대화는 원문 유지하는 혼합형 메모리              | 요약 + 최근 메시지 버퍼 결합       | 자연스러운 대화 흐름 유지와 비용 절감을 동시에 실현           |
-| **ConversationKGMemory**            | 대화에서 엔티티·관계·사실을 추출해 _지식 그래프(KG)_ 형태로 저장         | 구조적 지식 표현, 관계 기반 메모리 | 장기적 사실·관계를 명확하고 체계적으로 저장 가능              |
-| **VectorStoreRetrieverMemory**      | 대화를 임베딩하여 VectorStore에 저장 후 유사도 검색으로 관련 내용만 로드 | 벡터 기반 검색, 확장성 높음        | 매우 큰 대화 기록도 효율적으로 검색 가능하여 장기 기억에 강함 |
-| **EntityMemory**                    | 대화에서 사람·사물·장소 등 *엔티티 기반 정보*를 추출해 저장              | 엔티티 중심 구조화 메모리          | 사용자 정보·속성·선호 등을 장기적으로 안정적으로 기억         |
-| **ChatMessageHistory**              | 메모리 구성에 사용되는 기본 메시지 히스토리 객체                         | 단순 메시지 저장 구조              | 커스텀 메모리 개발 시 가장 유연하고 확장성이 좋음             |
-| **Custom Memory**                   | BaseMemory를 상속해 직접 구현하는 맞춤형 메모리                          | 완전 사용자 정의 가능              | 서비스 요구에 맞춘 고급 메모리 구조를 구축할 수 있음          |
+에이전트에서는 템플릿 대신 `createAgent({ systemPrompt })` 를 주로 쓰고, 요청마다 프롬프트를 바꿔야 하면 `dynamicSystemPromptMiddleware` 나 커스텀 미들웨어로 처리합니다. 프롬프트 작성 원칙은 [프롬프트 엔지니어링](/ai/03-prompt/01-promptengineering)을 참고하세요.
 
 ### Tools
 
-Tools는 LLM과 Agent가 외부 시스템과 상호작용할 수 있게 해 주는 컴포넌트입니다. 본질은 함수(function)로, 입력을 받아 특정 작업을 수행한 뒤 출력을 반환합니다. 검색 도구, 계산기, 데이터베이스 조회, API 통신 등이 대표적입니다.
-
-##### 구성
-
-- name: 도구 이름
-- description: 도구에 대한 설명. 프롬프트에 그대로 포함되어 LLM이 어떤 도구를 쓸지 판단하는 근거가 됨
-- parameters: 도구에 전달되는 매개변수 정의
-- return type: 도구가 반환하는 출력 형식
+도구는 LLM 이 외부 시스템과 상호작용하게 해주는 **함수 + 스키마**입니다. 모델은 함수를 직접 실행하지 않고 "이 도구를 이 인자로 불러 달라"고 요청만 합니다. → [Function Calling](/ai/05-agent/03-function-calling)
 
 ![](https://raw.githubusercontent.com/jl917/s/master/image/202511291524298.jpeg)
 
-##### 도구가 호출되지 않는 문제
+```typescript
+import { tool } from "langchain";
+import * as z from "zod";
 
-- LLM이 도구를 쓸 필요가 없다고 판단한 경우
-- 도구 설명이 모호해 LLM이 적절한 도구를 고르지 못하는 경우
-- 모델 자체가 도구 호출을 잘 하지 않는 경우(예: DeepSeek-R1)
+const getWeather = tool(
+  async ({ city }) => `${city}: 맑음, 21도`,
+  {
+    name: "get_weather",
+    description: "특정 도시의 현재 날씨를 조회한다. 도시 이름은 한국어로 받는다.",
+    schema: z.object({
+      city: z.string().describe("날씨를 조회할 도시 이름 (예: 서울)"),
+    }),
+  },
+);
+```
 
-해결: 도구의 description이나 프롬프트 문구를 다듬어 보고, 그래도 안 되면 다른 LLM으로 교체한다.
+| 구성 | 설명 |
+|---|---|
+| `name` | 도구 이름. 모델이 호출할 때 쓰는 식별자 |
+| `description` | **프롬프트에 그대로 들어가** 모델이 도구 선택을 판단하는 근거 |
+| `schema` | 인자 스키마 (zod). 필드별 `.describe()` 도 모델에게 전달됨 |
+| 반환값 | 문자열 또는 콘텐츠. `ToolMessage` 로 모델에게 돌아감 |
 
-##### LangChain Tool과 MCP Server의 차이점
+도구 함수의 두 번째 인자(`ToolRuntime`)로 실행 컨텍스트(`runtime.context`), 장기 저장소(`runtime.store`), 커스텀 스트림(`runtime.writer`)에 접근할 수 있습니다.
 
-| 비교 항목                | 내장 Tools                    | MCP Server                                       |
-| ------------------------ | ----------------------------- | ------------------------------------------------ |
-| **배포 위치**            | 에이전트 내부(동일 프로세스)  | 독립 서비스(별도 프로세스/네트워크)              |
-| **코드 결합도**          | 강한 결합(직접 코드 참조)     | 느슨한 결합(프로토콜 기반 통신)                  |
-| **재사용성**             | 해당 에이전트에서만 사용 가능 | 여러 에이전트 간 공유 가능                       |
-| **업데이트 및 유지보수** | 수정 시 에이전트 재빌드 필요  | 독립적으로 업데이트 가능, 에이전트 재빌드 불필요 |
-| **성능**                 | 로컬 직접 호출로 매우 빠름    | 네트워크/IPC 통신 필요로 상대적으로 느림         |
-| **적합한 사용 시나리오** | 단순·특화 기능 도구           | 범용·복잡·확장 가능한 도구                       |
+**도구가 호출되지 않는 경우**
+
+- 모델이 도구가 필요 없다고 판단한 경우 → 시스템 프롬프트에 "날씨를 물으면 반드시 `get_weather` 로 확인한다"처럼 사용 조건을 명시
+- `description` 이 모호하거나 도구끼리 설명이 겹치는 경우 → 언제 쓰는지·언제 쓰지 않는지를 구체적으로
+- 모델 자체의 도구 호출 능력이 약한 경우(일부 추론 특화·소형 로컬 모델) → 도구 호출을 지원하는 모델로 교체
+
+> ⚠️ **함정**: 도구는 프롬프트가 아니라 **권한**입니다. 프롬프트 인젝션으로 모델이 속으면 모델이 가진 도구가 그대로 공격 수단이 됩니다. 삭제·결제·메일 발송 같은 되돌릴 수 없는 도구는 최소 권한으로 만들고 사람 승인(HITL 미들웨어)을 거치게 하세요.
+
+**LangChain 도구 vs MCP 서버**
+
+| 비교 항목 | LangChain 내장 도구 | MCP 서버 |
+|---|---|---|
+| **배포 위치** | 에이전트와 같은 프로세스 | 독립 프로세스 / 원격 서비스 |
+| **결합도** | 코드 직접 참조 (강결합) | 프로토콜 기반 (느슨한 결합) |
+| **재사용성** | 해당 코드베이스 안에서 | Claude Code, IDE, 다른 에이전트와 공유 |
+| **변경 배포** | 에이전트 재배포 필요 | 서버만 독립적으로 갱신 |
+| **성능** | 함수 호출이라 가장 빠름 | stdio/HTTP 통신 비용 |
+| **적합한 경우** | 이 에이전트 전용 로직 | 여러 클라이언트가 쓰는 범용 도구 |
+
+MCP 서버의 도구는 `@langchain/mcp-adapters` 로 LangChain 도구로 변환해 그대로 넘깁니다. → [MCP](/ai/05-agent/05-mcp)
+
+```typescript
+import { MultiServerMCPClient } from "@langchain/mcp-adapters";
+
+const client = new MultiServerMCPClient({
+  math: { transport: "stdio", command: "node", args: ["/path/to/math_server.js"] },
+  weather: { transport: "http", url: "http://localhost:8000/mcp" },
+});
+
+const mcpTools = await client.getTools();
+```
 
 ### Agents
 
-에이전트는 LLM과 도구를 결합하여 복잡한 작업을 수행하는 컴포넌트입니다. 에이전트는 사용자의 입력을 받아 적절한 도구를 선택하고 호출하여 작업을 수행한 후 결과를 반환합니다.
+에이전트는 **모델이 스스로 도구를 고르고, 결과를 보고, 다음 행동을 정하는 루프**입니다(ReAct). 개념과 설계 패턴은 [Agent](/ai/05-agent/01-agent), [에이전트 패턴](/ai/05-agent/02-pattern)에 있습니다.
 
 ![](https://raw.githubusercontent.com/jl917/s/master/image/202511300941888.png)
 
-##### 구성요소
+`createAgent` 는 이 루프를 LangGraph 그래프로 만들어 줍니다. 내부 구조는 노드 두 개입니다.
 
-- Memory 관리: 대화형 에이전트는 Memory컴포넌트를 사용하여 대화 히스토리를 관리하고 문맥을 유지합니다.
-  - short-term memory: 최근 대화 내용을 기억
-  - long-term memory: 장기적인 정보나 사실을 기억
-- Tools 활용: 에이전트는 다양한 도구를 활용하여 외부 시스템과 상호작용하고 복잡한 작업을 수행합니다.
-- Planning: 에이전트는 작업을 여러 단계로 나누어 계획을 세우고 실행할 수 있습니다.
-  - Reflection
-  - Self-critics
-  - Chain of Thoughts
-  - Subgoal decomposition
-- Action and Observation: 에이전트는 도구를 호출하고 그 결과를 관찰하여 다음 행동을 결정합니다.
-
-##### Deepagents
-
-deepagents는 복잡하고 다단계 작업을 처리할 수 있는 에이전트를 구축하기 위한 독립형 라이브러리입니다.
-
-###### 사용해야 하는 경우
-
-- 계획 및 분해가 필요한 복잡하고 다단계 작업을 처리할 때
-- 파일 시스템 도구를 통해 대량의 컨텍스트를 관리할 때
-- 컨텍스트 격리를 위해 특수 하위 에이전트에 작업을 위임할 때
-- 대화 및 스레드 간에 메모리를 유지할 때
-
-###### 핵심 역량
-
-- 계획 및 분해: 작업을 여러 단계로 나누어 계획을 세우고 실행
-- Context관리: 파일 시스템 도구를 통해 대량의 컨텍스트 관리
-- 하위 에이전트: 특수 하위 에이전트를 통해 작업 위임 및 컨텍스트 관리
-- Long-term memory: LangGraph의 Store를 사용하여 스레드 간에 영구 메모리를 확장
-
-###### 예제
-
-```
-// 에이전트를 전문 연구자로 안내하는 시스템 프롬프트
-const researchInstructions = `당신은 전문 연구자입니다. 당신의 임무는 철저한 조사를 수행하고 완성도 높은 보고서를 작성하는 것입니다.
-
-정보 수집의 주요 수단으로 인터넷 검색 도구를 사용할 수 있습니다.
-
-## \`internet_search\`
-
-이 기능을 사용하여 특정 쿼리에 대한 인터넷 검색을 실행합니다. 반환할 최대 결과 수, 주제, 그리고 원본 콘텐츠 포함 여부를 지정할 수 있습니다.
-`;
+```mermaid
+flowchart TD
+    S([START]) --> M[model_request]
+    M -.도구 호출 있음.-> T[tools]
+    T --> M
+    M -.도구 호출 없음.-> E([END])
 ```
 
-###### 참고
+| 파라미터 | 설명 |
+|---|---|
+| `model` | `"공급자:모델"` 문자열 또는 모델 인스턴스 (필수) |
+| `tools` | 도구 배열 |
+| `systemPrompt` | 시스템 프롬프트 |
+| `middleware` | 미들웨어 배열 (앞에 둘수록 바깥쪽) |
+| `responseFormat` | 구조화 출력 스키마 |
+| `checkpointer` | 단기 메모리(대화 상태) 저장소 |
+| `store` | 장기 메모리 저장소 |
+| `contextSchema` / `stateSchema` | 호출별 불변 컨텍스트 / 확장 상태 스키마 |
 
-- https://zhuanlan.zhihu.com/p/1935481980641863575
+> ⚠️ **함정**: `createAgent` 는 기본적으로 **기억이 없습니다.** `checkpointer` 없이 `thread_id` 만 넘겨도 두 번째 호출은 첫 대화를 모릅니다. 또 에이전트는 확률적이라, 한 번 실행해서 잘 됐다고 끝내면 안 되고 여러 번 돌려 도구 호출 여부를 확인해야 합니다.
 
-### Retrieval Augmented Generation
+### Middleware
 
-Retrieval은 외부 지식 소스에서 관련 정보를 검색해 LLM에 제공하는 컴포넌트입니다. 이를 통해 모델이 최신 정보에 접근하거나 도메인 특화 지식을 활용할 수 있습니다. LLM은 학습 시점에 지식이 고정되는 모델이므로, 사전학습 범위 밖의 정보를 다루려면 Retrieval이 필수적입니다. 환각(hallucination)을 완화하는 데도 도움이 됩니다. RAG(Retrieval Augmented Generation) 시스템의 핵심 구성 요소입니다.
+미들웨어는 에이전트 루프의 각 지점에 끼어드는 훅입니다. v1 에서 에이전트 커스터마이징의 중심입니다.
 
-![](https://raw.githubusercontent.com/jl917/s/master/image/202511301632417.png)
+| 훅 | 시점 | 대표 용도 |
+|---|---|---|
+| `beforeAgent` / `afterAgent` | 실행 시작 / 종료 시 1회 | 입력 검증, 결과 저장 |
+| `beforeModel` / `afterModel` | 모델 호출 전 / 후 | 메시지 정리, 응답 검사 |
+| `wrapModelCall` | 모델 호출을 감쌈 | 모델 라우팅, 폴백, 동적 프롬프트, 캐싱 |
+| `wrapToolCall` | 도구 호출을 감쌈 | 로깅, 재시도, 권한 검사 |
 
-##### Retrieval Augmented Generation 흐름1
+자주 쓰는 내장 미들웨어입니다.
 
-![](https://raw.githubusercontent.com/jl917/s/master/image/202511301646916.jpeg)
+| 미들웨어 | 기능 |
+|---|---|
+| `summarizationMiddleware` | 토큰/메시지 임계치 도달 시 오래된 대화를 요약 |
+| `humanInTheLoopMiddleware` | 지정 도구 실행 전 승인·수정·거절 대기 |
+| `modelRetryMiddleware` / `toolRetryMiddleware` | 실패 시 재시도 |
+| `modelFallbackMiddleware` | 주 모델 실패 시 대체 모델 |
+| `modelCallLimitMiddleware` / `toolCallLimitMiddleware` | 무한 루프·비용 폭주 방지 |
+| `piiMiddleware` | 이메일·카드번호 등 마스킹/차단 |
+| `contextEditingMiddleware` | 오래된 도구 결과 정리 |
+| `llmToolSelectorMiddleware` | 도구가 많을 때 요청마다 관련 도구만 선택 |
+| `todoListMiddleware` | 할 일 목록 도구로 계획 수립 |
+| `anthropicPromptCachingMiddleware` | Anthropic 프롬프트 캐싱 적용 |
 
-1. 문서 파싱
-2. 텍스트 분할
-3. 벡터화(Embedding Model 사용)
+```typescript
+import { createMiddleware } from "langchain";
 
-   - nomic-embed-text
-   - mxbai-embed-large
-   - embedding-gemma
-
-4. 벡터 DB 저장
-5. 질문
-6. 검색 알고리즘(Cosine Similarity, Dot Product, Euclidean Distance 등)
-7. 재정렬(Rerank Model): 유사도가 높은 순으로 다시 정렬
-8. 증강: 사용자 질문과 검색된 내용을 함께 LLM에 전달
-9. 응답 생성
-
-##### Retrieval Augmented Generation 장점
-
-- 지식을 실시간으로 갱신할 수 있음
-- 재학습 대비 비용 효율이 높음
-- 출처를 함께 제시하므로 답변을 신뢰하고 검증할 수 있음
-- 안전하고 통제 가능: 제공한 문서에 근거한 응답만 생성하도록 제어할 수 있음
-
-##### Retrieval Augmented Generation 단점
-
-- 검색 품질이 곧 답변 품질의 상한이 됨
-- 시스템 복잡도가 올라감
-- 컨텍스트 길이와 구성에 결과가 좌우됨
-- 제공한 문서의 품질에 크게 의존함
-
-##### LangChain에서의 구현
-
-1. Document Loaders
-
-- page_content: 문서의 실제 텍스트 내용
-- metadata: 문서에 대한 추가 정보
-
-2. Text Splitters
-
-   ###### 작동 원리
-
-   우선 세분화한 후 병합하는 전략을 따릅니다. 먼저 텍스트를 작은 문장 단위로 분할한 다음, 이러한 문장들을 순서대로 결합하여 설정된 블록 크기 제한에 도달할 때까지 더 큰 블록으로 만듭니다. 새 블록을 생성할 때는 이전 블록과 일부 중복되는 부분을 유지하여 문맥의 연속성을 보장합니다.
-
-   ###### 왜 분할이 필요한가
-
-   - 생성된 답변의 품질 보장: 검색된 텍스트 블록이 너무 크고 관련 없는 정보가 많으면 LLM이 관련 없는 내용에 방해를 받아 핵심 문제에 집중하지 못할 수 있습니다. 심지어 관련 없는 정보를 잘못 통합하여 부정확하거나 장황한 답변을 생성할 수도 있습니다.
-   - 모델의 컨텍스트 창 제한 극복: 모든 대형 모델에는 고정된 컨텍스트 창이 있으며, 이는 모델이 한 번에 "보고" 처리할 수 있는 텍스트의 총량이 제한되어 있음을 의미합니다.
-   - 검색 정확도 향상: 검색 시스템은 특정 질문에 답할 수 있는 단락을 직접 찾을 수 있어 검색 결과의 관련성과 정확성을 크게 향상시킵니다.
-
-   ###### langchain의 Text Splitters
-
-   - TextSplitter: LangChain에서 모든 텍스트 분할기의 기반이 되는 추상(Base) 클래스입니다.
-   - CharacterTextSplitter: 문자/문단 단위로 단순하게 분할하는 기본 방식.
-   - RecursiveCharacterTextSplitter: 여러 분리자를 계층적으로 적용하여 자연스럽게 텍스트를 분할하는 권장 방식.
-   - TokenTextSplitter: 토큰 개수 기준으로 텍스트를 분할하는 방식(OpenAI 등 토큰 제한 대응).
-   - LatexTextSplitter: LaTeX 문서 구조를 이해하고 그에 맞춰 분할
-   - MarkdownTextSplitter: Markdown 구조를 이해하고 그에 맞춰 분할
-
-3. Text Embedding Models(예: nomic-embed-text 등)
-4. Vector Stores
-
-- 저장
-- 검색
-
-5. Retrievers
-   - Vector Stores가 검색 알고리즘을 포함한 인터페이스를 제공
-
-### Callbacks
-
-### 기타 미정리
-
-##### chunk
-
-- chunkSize
-- chunkOverlap
-
-![](https://raw.githubusercontent.com/jl917/s/master/image/202512141139545.png)
-
-##### MMR
-
-LangChain은 검색 결과를 MMR(Maximum Marginal Relevance, 최대 한계 관련성) 기준으로 재정렬하는 기능을 지원한다. 관련성만 보고 상위를 채우면 비슷한 문서가 중복되기 쉬운데, MMR은 관련성과 다양성을 함께 고려해 순위를 다시 매긴다.
-
-##### 다중 쿼리 검색(Multi-Query Retrieval)
-
-거리를 척도로 삼는 벡터 DB 검색은 query를 고차원 벡터 공간에 embedding한 뒤, 같은 공간에 embedding된 문서들과의 거리를 기준으로 유사 문서를 찾는 방식이다.
-
-그런데 query에 쓰인 단어가 조금만 달라지거나, embedding이 query의 의미를 충분히 담아내지 못하면 정작 필요한 유사 문서를 찾지 못하는 일이 생긴다.
-
-다중 쿼리 검색은 바로 이 문제를 겨냥한 기법이다. 프롬프트 엔지니어링을 통해 원본 query를 LLM에 넣어 서로 다른 관점의 유사 질의를 여러 개 생성하고, 각각으로 검색을 돌린 다음 그 결과를 한데 모아 중복을 제거한다. 이렇게 하면 놓칠 뻔한 유사 문서까지 더 폭넓게 확보할 수 있다.
-
-- https://reference.langchain.com/javascript/classes/_langchain_classic.retrievers_multi_query.MultiQueryRetriever.html
-
-```javascript
-const retriever = new MultiQueryRetriever.fromLLM({
-  llm: new ChatAnthropic({}),
-  retriever: new MemoryVectorStore().asRetriever(),
-  verbose: true,
+const logToolCalls = createMiddleware({
+  name: "LogToolCalls",
+  wrapToolCall: async (request, handler) => {
+    console.log(`→ ${request.toolCall.name}`, request.toolCall.args);
+    const result = await handler(request);
+    console.log(`← ${request.toolCall.name}`);
+    return result;
+  },
 });
-const retrievedDocs = await retriever.invoke("What are mitochondria made of?");
 ```
 
-### 링크
+### Structured output
 
-- https://zhuanlan.zhihu.com/p/684209043
-- https://zhuanlan.zhihu.com/p/684216350
-- https://zhuanlan.zhihu.com/p/1975217069487313790
-- [LangChain 기반 RAG 개발 튜토리얼 (2)](https://zhuanlan.zhihu.com/p/706889931)
-- [LLM 「Agent」 개발 튜토리얼 - LangChain (3)](https://zhuanlan.zhihu.com/p/712459598)
+```typescript
+import { createAgent } from "langchain";
+import * as z from "zod";
+
+const Contact = z.object({
+  name: z.string(),
+  email: z.string().describe("이메일 주소"),
+});
+
+const extractor = createAgent({
+  model: "anthropic:claude-sonnet-4-6",
+  responseFormat: Contact,
+});
+
+const result = await extractor.invoke({
+  messages: [{ role: "user", content: "홍길동, hong@example.com 으로 연락 주세요" }],
+});
+console.log(result.structuredResponse); // { name: "홍길동", email: "hong@example.com" }
+```
+
+- 스키마만 넘기면 전략이 자동 선택됩니다. 명시하려면 `providerStrategy(schema)`(공급자 네이티브 구조화 출력) 또는 `toolStrategy(schema)`(도구 호출로 흉내)를 씁니다.
+- 에이전트 없이 모델 한 번이면 `model.withStructuredOutput(schema).invoke(...)` 가 더 간단합니다.
+
+### Retrieval
+
+외부 문서를 검색해 모델에 근거로 넣는 구성 요소입니다. RAG 의 개념·파이프라인·고급 기법은 [RAG](/ai/04-rag/01-rag) 문서에서 다루고, 여기서는 LangChain 에서의 대응만 정리합니다.
+
+| 단계 | LangChain 구성 요소 | 예 |
+|---|---|---|
+| 로드 | Document Loader → `Document { pageContent, metadata }` | `@langchain/classic/document_loaders/fs/text` |
+| 분할 | Text Splitter | `RecursiveCharacterTextSplitter` (`@langchain/textsplitters`) |
+| 임베딩 | Embeddings | `OpenAIEmbeddings`, `OllamaEmbeddings` |
+| 저장·검색 | Vector Store | `MemoryVectorStore`(학습용), `PGVectorStore` 등 |
+| 조회 인터페이스 | Retriever | `vectorStore.asRetriever({ k: 3 })`, MMR 검색 |
+
+v1 에서는 리트리버를 **도구로 만들어 에이전트에 넘기는 방식(에이전틱 RAG)** 이 기본입니다. 모델이 검색 여부와 검색어를 스스로 결정하고, 필요하면 검색어를 바꿔 다시 찾습니다.
+
+### Memory
+
+| 종류 | 범위 | LangChain v1 구현 |
+|---|---|---|
+| **단기 메모리** | 한 대화(스레드) 안 | `checkpointer` + `configurable.thread_id` |
+| **컨텍스트 관리** | 긴 대화의 토큰 한도 | `summarizationMiddleware`, `contextEditingMiddleware`, 메시지 트리밍 |
+| **장기 메모리** | 스레드를 넘어 사용자·조직 단위 | `store` (`InMemoryStore`, Postgres 스토어 등) + 도구에서 `runtime.store` |
+
+v0 의 메모리 클래스는 이렇게 대응됩니다.
+
+| v0 메모리 | v1 에서의 대응 |
+|---|---|
+| `ConversationBufferMemory` (전체 원문) | 체크포인터 기본 동작 |
+| `ConversationBufferWindowMemory` (최근 N개) | 트리밍 미들웨어 / `trimMessages` |
+| `ConversationSummaryMemory`, `SummaryBufferMemory` (요약 + 최근 원문) | `summarizationMiddleware` (`trigger`, `keep`) |
+| `VectorStoreRetrieverMemory`, `EntityMemory` (검색·엔티티 기반) | `store` 에 저장 + 검색 도구 |
+
+체크포인터 구현은 개발용 `MemorySaver`, 운영용 `PostgresSaver`(`@langchain/langgraph-checkpoint-postgres`) 등이 있습니다.
+
+## 짧은 예제 — 기억하는 도구 사용 에이전트
+
+```typescript
+import { createAgent, tool, summarizationMiddleware, modelCallLimitMiddleware } from "langchain";
+import { MemorySaver } from "@langchain/langgraph";
+import * as z from "zod";
+
+const getWeather = tool(async ({ city }) => `${city}: 맑음, 21도`, {
+  name: "get_weather",
+  description: "특정 도시의 현재 날씨를 조회한다.",
+  schema: z.object({ city: z.string().describe("도시 이름") }),
+});
+
+const agent = createAgent({
+  model: "anthropic:claude-sonnet-4-6",
+  tools: [getWeather],
+  systemPrompt: "너는 날씨 비서다. 날씨는 반드시 get_weather 로 확인하고, 결과에 없는 정보는 추측하지 않는다.",
+  checkpointer: new MemorySaver(),
+  middleware: [
+    summarizationMiddleware({ model: "anthropic:claude-haiku-4-5", trigger: { tokens: 4000 } }),
+    modelCallLimitMiddleware({ runLimit: 8 }),
+  ],
+});
+
+const config = { configurable: { thread_id: "user-42" } };
+
+await agent.invoke({ messages: [{ role: "user", content: "내 이름은 지은이야. 서울 날씨 알려줘." }] }, config);
+const second = await agent.invoke({ messages: [{ role: "user", content: "내 이름이 뭐였지?" }] }, config);
+
+console.log(second.messages.at(-1)?.text); // 같은 thread_id 라 첫 대화를 기억함
+```
+
+실행 과정을 보려면 `agent.stream(input, { ...config, streamMode: "updates" })` 로 노드별 업데이트를, 토큰 스트리밍은 `streamMode: "messages"` 를 씁니다.
+
+## LangChain vs LangGraph vs Deep Agents
+
+셋은 경쟁 관계가 아니라 **층위**입니다. Deep Agents 는 LangChain 위에, LangChain 에이전트는 LangGraph 위에 올라가 있습니다.
+
+| | LangChain `createAgent` | LangGraph | Deep Agents |
+|---|---|---|---|
+| **추상화 수준** | 중간 — 에이전트 하네스 | 낮음 — 상태 그래프 런타임 | 높음 — 배터리 포함 하네스 |
+| **제어 흐름** | 모델이 결정하는 도구 루프 | 개발자가 노드·엣지로 명시 (결정적 + 에이전틱 혼합) | 모델이 계획·위임까지 결정 |
+| **기본 제공** | 도구 루프, 미들웨어, 구조화 출력 | 체크포인트, 인터럽트, 스트리밍, 병렬 분기 | 할 일 목록, 가상 파일시스템, 서브에이전트, 요약, 스킬, 메모리 |
+| **적합한 작업** | 도구 몇 개로 끝나는 챗봇·어시스턴트 | 승인 단계·분기·재시도가 정해진 워크플로, 멀티 에이전트 | 리서치·코딩처럼 수십 단계에 걸친 긴 작업 |
+| **시작 비용** | 낮음 | 높음 | 낮음 (하지만 토큰 사용량이 큼) |
+| **문서** | 이 문서 | [LangGraph](./04-langgraph) | [Deep Agents](./05-deepagents) |
+
+선택 요령은 간단합니다. **`createAgent` 로 시작하고**, 흐름을 코드로 강제해야 하면 LangGraph 로 내려가고, 긴 작업에서 에이전트가 계획을 잃거나 컨텍스트가 넘치면 Deep Agents 로 올라갑니다.
+
+## 참고 자료
+
+- [LangChain 공식 문서 (JavaScript)](https://docs.langchain.com/oss/javascript/langchain/overview)
+- [LangChain — Agents](https://docs.langchain.com/oss/javascript/langchain/agents)
+- [LangChain — Middleware](https://docs.langchain.com/oss/javascript/langchain/middleware)
+- [LangChain — Structured output](https://docs.langchain.com/oss/javascript/langchain/structured-output)
+- [LangChain — Model Context Protocol (MCP)](https://docs.langchain.com/oss/javascript/langchain/mcp)
+- [LangChain API Reference (JavaScript)](https://reference.langchain.com/javascript/)
+- [GitHub — langchain-ai/langchainjs](https://github.com/langchain-ai/langchainjs)
+- [LangSmith](https://docs.langchain.com/langsmith/home)

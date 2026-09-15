@@ -1,6 +1,6 @@
 # RAG 프롬프트 샘플
 
-검색해온 자료를 근거로 답하게 만드는 프롬프트 모음입니다. RAG 자체의 개념과 구현은 [RAG 개요](/ai/04-rag/01-rag)와 [LangChain Step 16 — 검색과 RAG](/reference/langchain/step-16-retrieval-rag/)에 있습니다.
+검색해온 자료를 근거로 답하게 만드는 프롬프트 모음입니다. RAG 자체의 개념과 구현은 [RAG 개요](/ai/04-rag/01-rag)와 [RAG 심화 시리즈](/ai/advanced/rag/RAG)에 있습니다. 검색 품질의 바탕인 임베딩은 [임베딩 · 벡터DB](/ai/02-llm/02-embedding)를 보세요.
 
 ## 프롬프트 어떻게 만들어야 할까?
 

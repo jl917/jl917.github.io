@@ -1,0 +1,12 @@
+[
+  {
+    "type": "file",
+    "name": "01-rag",
+    "label": "RAG 개요"
+  },
+  {
+    "type": "dir",
+    "name": "techniques",
+    "label": "쿼리 변환 기법"
+  }
+]

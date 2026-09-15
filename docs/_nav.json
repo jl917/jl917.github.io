@@ -26,7 +26,7 @@
   },
   {
     "text": "AI",
-    "link": "/ai/01-summary.html",
+    "link": "/ai/01-overview.html",
     "activeMatch": "^/ai/"
   }
 ]

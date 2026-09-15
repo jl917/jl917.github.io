@@ -80,7 +80,7 @@ OpenAI 공식 가이드의 8가지 권고입니다.
 - **Generated Knowledge Prompting**
   - 개념
     - 답하기 전에 **관련 지식을 먼저 생성**하게 하고, 그 지식을 근거로 답하게 합니다. 모델이 이미 아는 것을 꺼내 쓰게 만드는 기법이라, 모델이 **모르는** 정보에는 효과가 없습니다.
-  - 모르는 정보는 아래처럼 외부에서 넣어줘야 합니다 (→ RAG).
+  - 모르는 정보는 아래처럼 외부에서 넣어줘야 합니다 (→ [RAG 개요](/ai/04-rag/01-rag)).
     - 실시간으로 바뀌는 정보 (주가, 스포츠 스코어 등)
     - 사내 정책, 계약서
     - 논문 등 전문 분야 자료
@@ -90,7 +90,7 @@ OpenAI 공식 가이드의 8가지 권고입니다.
 
 ### 에이전트 계열
 
-여기서부터는 프롬프트 한 번으로 끝나지 않고 **여러 번의 호출·도구 사용·상태**가 얽힙니다. 사실상 에이전트의 구성 요소입니다.
+여기서부터는 프롬프트 한 번으로 끝나지 않고 **여러 번의 호출·도구 사용·상태**가 얽힙니다. 사실상 에이전트의 구성 요소입니다. → [Agent 개요](/ai/05-agent/01-agent), [디자인 패턴](/ai/05-agent/02-pattern)
 
 - **Prompt Chaining**
   - 작업을 하위 작업으로 쪼개고, 한 프롬프트의 응답을 다음 프롬프트의 입력으로 넘깁니다. 각 단계가 단순해져 안정성과 성능이 올라가고, 어느 단계에서 틀렸는지 추적할 수 있습니다.
@@ -123,6 +123,8 @@ OpenAI 공식 가이드의 8가지 권고입니다.
 | **assistant** | 답변하는 AI |
 
 ## OpenAI 공식 6대 전략
+
+2023년 말 공개된 OpenAI 프롬프트 엔지니어링 가이드의 골격입니다. 현재 공식 가이드는 모델별 권고 중심으로 개편되어 이 목록이 그대로 실려 있지는 않지만, 원칙 자체는 여전히 유효합니다.
 
 ### 1. 지시를 명확하게 (write clear instructions)
 
@@ -184,9 +186,11 @@ Markdown 목록으로 작성해줘. 마지막으로 발언자가 제안한 후�
 계산: 23 곱하기 47
 ```
 
+요즘은 이런 텍스트 규약 대신 API 의 도구 호출 기능으로 구현합니다. → [Function Calling](/ai/05-agent/03-function-calling)
+
 ### 6. 변경을 체계적으로 테스트한다 (test changes systematically)
 
-프롬프트 수정이나 전략을 확정할 때는 포괄적인 테스트를 정의하고 체계적으로 평가해야 합니다. 그래야 그 변경이 **전체적으로** 긍정적인 영향을 주는지 확인할 수 있습니다. 한두 개 예시로 좋아 보이는 프롬프트가 전체 데이터셋에서는 나빠지는 경우가 흔합니다. → [평가(Evaluation)](/ai/100-Evaluation)
+프롬프트 수정이나 전략을 확정할 때는 포괄적인 테스트를 정의하고 체계적으로 평가해야 합니다. 그래야 그 변경이 **전체적으로** 긍정적인 영향을 주는지 확인할 수 있습니다. 한두 개 예시로 좋아 보이는 프롬프트가 전체 데이터셋에서는 나빠지는 경우가 흔합니다. → [평가(Evaluation)](/ai/07-evaluation/01-evaluation), [LLM Judge](/ai/07-evaluation/02-llm-judge)
 
 ## 프롬프트 인젝션
 
@@ -205,11 +209,11 @@ Markdown 목록으로 작성해줘. 마지막으로 발언자가 제안한 후�
 - 최소 권한
 - 상황·시나리오 기반 안내
 
-> 위 목록은 전부 **완화책**이지 차단책이 아닙니다. 프롬프트는 울타리일 뿐이고, 실제 자물쇠는 권한입니다. 에이전트가 도구로 DB 를 지울 수 있다면 인젝션은 곧 데이터 삭제가 됩니다. → [LangChain Step 06 — 도구 정의](/reference/langchain/step-06-tools/)
+> 위 목록은 전부 **완화책**이지 차단책이 아닙니다. 프롬프트는 울타리일 뿐이고, 실제 자물쇠는 권한입니다. 에이전트가 도구로 DB 를 지울 수 있다면 인젝션은 곧 데이터 삭제가 됩니다. → [프로덕션 운영 — 가드레일](/ai/05-agent/04-production), [Agent 심화 — 인젝션 방어](/ai/advanced/agent/AGENT)
 
 ## 참고 자료
 
 - [IBM — 프롬프트 엔지니어링이란](https://www.ibm.com/kr-ko/think/prompt-engineering)
 - [OpenAI — Best practices for prompt engineering with the OpenAI API](https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-the-openai-api)
-- [OpenAI — Prompt engineering guide (6대 전략 원문)](https://platform.openai.com/docs/guides/prompt-engineering)
+- [OpenAI — Prompt engineering guide (현행 공식 가이드)](https://developers.openai.com/api/docs/guides/prompt-engineering)
 - [Prompt Engineering Guide (한국어)](https://www.promptingguide.ai/kr)

@@ -1,0 +1,12 @@
+[
+  {
+    "type": "file",
+    "name": "01-llm",
+    "label": "LLM 기초"
+  },
+  {
+    "type": "file",
+    "name": "02-embedding",
+    "label": "임베딩 · 벡터DB"
+  }
+]

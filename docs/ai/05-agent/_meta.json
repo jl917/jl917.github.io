@@ -1,0 +1,32 @@
+[
+  {
+    "type": "file",
+    "name": "01-agent",
+    "label": "Agent 개요"
+  },
+  {
+    "type": "file",
+    "name": "02-pattern",
+    "label": "디자인 패턴"
+  },
+  {
+    "type": "file",
+    "name": "03-function-calling",
+    "label": "Function Calling"
+  },
+  {
+    "type": "file",
+    "name": "04-production",
+    "label": "프로덕션 운영"
+  },
+  {
+    "type": "file",
+    "name": "05-mcp",
+    "label": "MCP"
+  },
+  {
+    "type": "file",
+    "name": "06-a2a",
+    "label": "A2A"
+  }
+]

@@ -547,15 +547,15 @@ Step 7 이터레이션   → 증상별 처방 후 Step 2로 순환
 
 ## 부록 A · Agent 편에서 이미 다룬 LLM 주제
 
-아래 주제들은 같은 소스 시리즈에 속하지만 [07-agent-advanced](../07-agent-advanced/AGENT.md)에서 이미 한글로 정리되어 있어, 중복을 피하고 링크로 대신한다.
+아래 주제들은 같은 소스 시리즈에 속하지만 [Agent 심화](../agent/AGENT.md)에서 이미 한글로 정리되어 있어, 중복을 피하고 링크로 대신한다.
 
 | 주제 | 링크 | 한 줄 요약 |
 |---|---|---|
-| LLM의 4가지 기억 메커니즘 | [AGENT 02](../07-agent-advanced/AGENT/02-LLM-4가지-기억-메커니즘.md) | 모델 자체는 기억하지 않는다. 전체 이어붙이기 / 슬라이딩 윈도우 / 요약 / 벡터 검색은 **시간 척도별 분업** |
-| Prompt는 변수 이스케이프를 해야 한다 | [AGENT 03](../07-agent-advanced/AGENT/03-Prompt-변수-이스케이프.md) | 프롬프트 템플릿은 문자열 결합이 아니라 **입력 경계 관리**. 구분자 + 출처 선언 + 권한 다운그레이드 |
-| 프롬프트 인젝션 취약점 방어 | [AGENT 04](../07-agent-advanced/AGENT/04-Agent-프롬프트-인젝션-방어.md) | 모든 텍스트가 하나의 Token 열이 되므로 **천연의 하드 격리는 없다.** 방어선은 모델 바깥에 |
-| JSON 출력과 Function Calling의 차이 | [AGENT 12](../07-agent-advanced/AGENT/12-JSON출력과-Function-Calling-차이.md) | 자유 텍스트 JSON과 구조화된 도구 호출은 신뢰도 보장 수준이 다르다 |
-| JSON 안정 출력 4층 방어선 | [AGENT 13](../07-agent-advanced/AGENT/13-JSON-안정-출력-4층-방어선.md) | 모델 출력은 계약이 아니다. 스키마·파싱·재시도·폴백의 4층 |
+| LLM의 4가지 기억 메커니즘 | [AGENT 02](../agent/AGENT/02-LLM-4가지-기억-메커니즘.md) | 모델 자체는 기억하지 않는다. 전체 이어붙이기 / 슬라이딩 윈도우 / 요약 / 벡터 검색은 **시간 척도별 분업** |
+| Prompt는 변수 이스케이프를 해야 한다 | [AGENT 03](../agent/AGENT/03-Prompt-변수-이스케이프.md) | 프롬프트 템플릿은 문자열 결합이 아니라 **입력 경계 관리**. 구분자 + 출처 선언 + 권한 다운그레이드 |
+| 프롬프트 인젝션 취약점 방어 | [AGENT 04](../agent/AGENT/04-Agent-프롬프트-인젝션-방어.md) | 모든 텍스트가 하나의 Token 열이 되므로 **천연의 하드 격리는 없다.** 방어선은 모델 바깥에 |
+| JSON 출력과 Function Calling의 차이 | [AGENT 12](../agent/AGENT/12-JSON출력과-Function-Calling-차이.md) | 자유 텍스트 JSON과 구조화된 도구 호출은 신뢰도 보장 수준이 다르다 |
+| JSON 안정 출력 4층 방어선 | [AGENT 13](../agent/AGENT/13-JSON-안정-출력-4층-방어선.md) | 모델 출력은 계약이 아니다. 스키마·파싱·재시도·폴백의 4층 |
 
 ---
 
