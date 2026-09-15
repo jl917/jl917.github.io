@@ -173,6 +173,6 @@ LangChain 으로 만든 에이전트에게 "리서치 보고서를 써줘" 같�
 ## 관련 문서
 
 - [AI — 에이전트 개요](/ai/05-agent/01-agent)
-- [AI — 에이전트 패턴](/ai/05-agent/02-agentPattern)
+- [AI — 에이전트 패턴](/ai/05-agent/02-pattern)
 - [AI — RAG](/ai/04-rag/01-rag)
-- [AI — Function Calling](/ai/50-FunctionCalling)
+- [AI — Function Calling](/ai/05-agent/03-function-calling)

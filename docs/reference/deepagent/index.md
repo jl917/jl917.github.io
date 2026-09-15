@@ -160,6 +160,6 @@ LLM 은 확률적입니다. 출력 예시는 `**출력 예시** (모델 응답�
 ## 관련 문서
 
 - [LangChain (TypeScript) 코스](../langchain/) — 선행 코스
-- [AI — 에이전트 패턴](/ai/05-agent/02-agentPattern)
-- [AI — 에이전트 프로젝트](/ai/05-agent/03-agentProject)
-- [AI — MCP](/ai/05-agent/04-mcp)
+- [AI — 에이전트 패턴](/ai/05-agent/02-pattern)
+- [AI — 에이전트 프로젝트](/ai/05-agent/04-production)
+- [AI — MCP](/ai/05-agent/05-mcp)

@@ -1,36 +1,6 @@
 [
   {
     "type": "dir",
-    "name": "mysql8",
-    "label": "MySQL 8"
-  },
-  {
-    "type": "dir",
-    "name": "querydsl6",
-    "label": "QueryDSL 6"
-  },
-  {
-    "type": "dir",
-    "name": "spring-batch5",
-    "label": "Spring Batch 5"
-  },
-  {
-    "type": "dir",
-    "name": "kafka",
-    "label": "Apache Kafka"
-  },
-  {
-    "type": "dir",
-    "name": "spring-kafka",
-    "label": "Spring Kafka"
-  },
-  {
-    "type": "dir",
-    "name": "temporal",
-    "label": "Temporal Workflow"
-  },
-  {
-    "type": "dir",
     "name": "langchain",
     "label": "LangChain (TypeScript)"
   },
@@ -38,10 +8,5 @@
     "type": "dir",
     "name": "deepagent",
     "label": "Deep Agents (TypeScript)"
-  },
-  {
-    "type": "dir",
-    "name": "k8s",
-    "label": "Kubernetes"
   }
 ]
