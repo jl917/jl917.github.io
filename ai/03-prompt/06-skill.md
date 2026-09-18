@@ -126,3 +126,6 @@ getWeather(city);
 | [tt-a1i/archify](https://github.com/tt-a1i/archify) | knowledge base that brings planning, sorting and creating |
 | [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd) | ADHD 관련 스킬 모음 |
 | [deanpeters/Product-Manager-Skills](https://github.com/deanpeters/Product-Manager-Skills) | 프로덕트 매니지먼트 프레임워크 77종 (전략·발굴·로드맵·리서치) |
+| [alibaba/open-code-review](https://github.com/alibaba/open-code-review) | AI 코드 리뷰 (CLI 본체 + Claude Code·Codex·Cursor 플러그인) |
+| [alibaba/skill-up](https://github.com/alibaba/skill-up) | 스킬을 평가·개선하는 스킬 (eval 생성 → 실패 진단 → 케이스 보강 반복) |
+| [claude-dev-suite/claude-dev-suite](https://github.com/claude-dev-suite/claude-dev-suite) | 기술 스택별 전문 에이전트 67종 · MCP 서버 · 프레임워크 스킬 모음 |
