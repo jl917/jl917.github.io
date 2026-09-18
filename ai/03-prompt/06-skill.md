@@ -125,3 +125,4 @@ getWeather(city);
 | [emilkowalski/skills](https://github.com/emilkowalski/skills) | Skills For Designers and Engineers |
 | [tt-a1i/archify](https://github.com/tt-a1i/archify) | knowledge base that brings planning, sorting and creating |
 | [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd) | ADHD 관련 스킬 모음 |
+| [deanpeters/Product-Manager-Skills](https://github.com/deanpeters/Product-Manager-Skills) | 프로덕트 매니지먼트 프레임워크 77종 (전략·발굴·로드맵·리서치) |
