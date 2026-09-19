@@ -32,6 +32,7 @@
 - MacsyZones [https://github.com/rohanrhu/MacsyZones](https://github.com/rohanrhu/MacsyZones)
 - DBX [https://dbxio.com/en](https://dbxio.com/en)
 - beekeeper [https://github.com/beekeeper-studio/beekeeper-studio/](https://github.com/beekeeper-studio/beekeeper-studio/)
+- conductor [https://www.conductor.build/](https://www.conductor.build/)
 
 
 ## AI
