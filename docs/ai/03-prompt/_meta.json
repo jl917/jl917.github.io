@@ -33,5 +33,10 @@
     "type": "file",
     "name": "07-claude",
     "label": "CLAUDE.md 생성"
+  },
+  {
+    "type": "file",
+    "name": "08-blend",
+    "label": "blend 생성"
   }
 ]
