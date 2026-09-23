@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="robots" content="noindex, nofollow" />
+<title>기술 면접 Q&amp;A 정리</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --bg-alt: #f6f7f9;
+  --text: #1c1f24;
+  --text-dim: #5b6472;
+  --border: #e3e6ea;
+  --accent: #2f6fed;
+  --accent-bg: #eaf1ff;
+  --code-bg: #f0f2f5;
+  --shadow: rgba(20, 24, 32, 0.06);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14161a;
+    --bg-alt: #1b1e24;
+    --text: #e7e9ec;
+    --text-dim: #9aa3af;
+    --border: #2b2f37;
+    --accent: #6f9bff;
+    --accent-bg: #1d2636;
+    --code-bg: #1f232a;
+    --shadow: rgba(0, 0, 0, 0.35);
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Segoe UI", Pretendard, sans-serif;
+  line-height: 1.65;
+  padding: 2.5rem 1.25rem 5rem;
+}
+.wrap { max-width: 880px; margin: 0 auto; }
+header.page-head { margin-bottom: 2rem; }
+h1 { font-size: 1.8rem; margin: 0 0 0.4rem; letter-spacing: -0.01em; }
+.subtitle { color: var(--text-dim); font-size: 0.95rem; margin: 0; }
+.badge {
+  display: inline-block;
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  margin-left: 0.5rem;
+}
+nav.toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.5rem 0 2.5rem;
+  padding: 1rem;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+nav.toc a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+nav.toc a:hover { border-color: var(--accent); color: var(--accent); }
+nav.toc a .count { color: var(--text-dim); font-weight: 400; }
+section.category { margin-bottom: 3rem; scroll-margin-top: 1rem; }
+section.category h2 {
+  font-size: 1.3rem;
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+section.category h2 .count { font-size: 0.85rem; font-weight: 500; color: var(--text-dim); }
+details.qa {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 0.6rem;
+  padding: 0;
+  box-shadow: 0 1px 2px var(--shadow);
+}
+details.qa summary {
+  cursor: pointer;
+  padding: 0.85rem 1.1rem;
+  font-weight: 600;
+  list-style: none;
+  display: flex;
+  gap: 0.6rem;
+}
+details.qa summary::-webkit-details-marker { display: none; }
+details.qa summary::before {
+  content: "Q.";
+  color: var(--accent);
+  flex-shrink: 0;
+}
+details.qa summary:hover { color: var(--accent); }
+details.qa[open] summary { border-bottom: 1px solid var(--border); }
+.answer {
+  padding: 0.9rem 1.1rem 1.05rem;
+  color: var(--text);
+}
+.answer p { margin: 0.5rem 0; }
+.answer p:first-child { margin-top: 0; }
+.answer p:last-child { margin-bottom: 0; }
+.answer ul, .answer ol { margin: 0.5rem 0; padding-left: 1.3rem; }
+.answer li { margin: 0.2rem 0; }
+.answer code {
+  background: var(--code-bg);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.answer pre {
+  background: var(--code-bg);
+  padding: 0.9rem 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 0.6rem 0;
+}
+.answer pre code { background: none; padding: 0; font-size: 0.85rem; line-height: 1.55; }
+.answer a { color: var(--accent); }
+.answer img { max-width: 100%; border-radius: 8px; border: 1px solid var(--border); }
+.answer figure { margin: 0.6rem 0; }
+.back-to-top {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  text-decoration: none;
+}
+.back-to-top:hover { color: var(--accent); }
+footer.note {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 0.82rem;
+}
+</style>
+</head>
+<body>
+<div class="wrap" id="top">
+  <header class="page-head">
+    <h1>기술 면접 Q&amp;A 정리<span class="badge">총 148개</span></h1>
+    <p class="subtitle">HTML · CSS · JavaScript · React · 네트워크 · 성능 · 빌드 도구 · Node.js · 기타로 분류한 프론트엔드 기술 질문 모음입니다.</p>
+  </header>
+
+  <nav class="toc">
+    <a href="#cat-html">HTML <span class="count">7</span></a>
+<a href="#cat-css">CSS <span class="count">12</span></a>
+<a href="#cat-js">JavaScript <span class="count">36</span></a>
+<a href="#cat-react">React <span class="count">16</span></a>
+<a href="#cat-network">네트워크 &amp; 보안 <span class="count">27</span></a>
+<a href="#cat-perf">성능 최적화 <span class="count">18</span></a>
+<a href="#cat-build">빌드 도구 <span class="count">11</span></a>
+<a href="#cat-node">Node.js &amp; 서버 <span class="count">7</span></a>
+<a href="#cat-etc">기타 <span class="count">14</span></a>
+  </nav>
+
+  
+<section class="category" id="cat-html">
+  <h2>HTML <span class="count">(7)</span></h2>
+  <details class="qa" open><summary>script태그를 body 최하단에 넣는 이유</summary><div class="answer"><ul><li>head에 넣을 경우 스크립트 실행이 페이지 랜딩하기 전에 처리 되어서 흰 화면이 보일 수 있다.</li><li>페이지 랜딩에 관련된 의존성 때문에 head에 넣는 경우도 있다.(css, image등등)</li></ul></div></details><details class="qa" open><summary>html중 void element가 무엇인가요?</summary><div class="answer"><p>시작 태그만 존재하는 요소를 void element라고 한다.</p></div></details><details class="qa" open><summary>input 태그를 사용해서 이미지를 업로드 할때 카메라 기능을 어떻게 사용하나요?</summary><div class="answer"><p>&lt;input type=”file” accept=”image/*;” capture=”camera”&gt;</p></div></details><details class="qa" open><summary>input에 history가 뜨지 않게 할려면?</summary><div class="answer"><p>autocomplete=”off”</p></div></details><details class="qa" open><summary>html에서 form에서 입력한 데이터를 어떻게 http로 전송 하나요?</summary><div class="answer"><ul><li>application/x-www-form-urlencoded</li><li>multipart/form-data</li></ul></div></details><details class="qa" open><summary>Viewport란?</summary><div class="answer"><p>사용자가 디바이스로 웹을 볼수 있는 영역.</p></div></details><details class="qa" open><summary>javascript 스크립트를 랜딩 이후 실행하는 방식은?</summary><div class="answer"><ul><li>defer, async 속성 사용.</li><li>script DOM 방식으로 append</li><li>setTimeout</li><li>최하단 배치</li><li>contentloaded, onload 이벤트</li></ul></div></details>
+  <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+</section>
+
+
+<section class="category" id="cat-css">
+  <h2>CSS <span class="count">(12)</span></h2>
+  <details class="qa" open><summary>CSS box model 에 대해서 설명</summary><div class="answer"><ul><li>브라우저는 모든 요소를 box model로 표현을 하고 box model을 기반으로 크기와 위치가 정해진다.</li><li>영향을 주는 요소<ul><li>content, padding, border, margin</li></ul></li></ul></div></details><details class="qa" open><summary>flexbox는 무엇인가요? ,어떤 경우에 사용하나요?</summary><div class="answer"><p>레이아웃을 쉽고 유연하게 처리할수 있는 css 방식입니다.</p></div></details><details class="qa" open><summary>flex-grow, flex-shrink, flex-basis는 각각 무엇인가요?</summary><div class="answer"><p><code>flex</code>는 <code>flex-grow</code> · <code>flex-shrink</code> · <code>flex-basis</code>를 한 번에 지정하는 축약 속성이며, 값을 선언하지 않으면 기본값인 <code>0 1 auto</code>가 적용된다.</p>
+<ul>
+<li><strong>flex-grow</strong>: 남는 공간을 얼마나 나눠 가질지 정하는 확대 비율이다. 기본값 0이면 공간이 남아도 늘어나지 않는다.</li>
+<li><strong>flex-shrink</strong>: 공간이 부족할 때 얼마나 줄어들지 정하는 축소 비율이다. 기본값 1이면 공간이 모자랄 때 함께 축소된다.</li>
+<li><strong>flex-basis</strong>: flex-grow/shrink를 적용하기 전, 아이템의 기준(초기) 크기다. <code>auto</code>면 width/height 값을, 지정하지 않았다면 콘텐츠 크기를 기준으로 삼는다.</li>
+</ul></div></details><details class="qa" open><summary>flex: 1은 어떤 뜻인가요?</summary><div class="answer"><p>flex: 1은 타요소의 사이즈에 영향을 주지 않는 선에서 여유의 공간을 가져 가겠다는 뜻으로 해석이 되구요. </p></div></details><details class="qa" open><summary>BFC에 대해서 설명해주 실수 있나요?</summary><div class="answer"><p>요소들이 어떻게 배치되고 정렬되는지를 제어하는 CSS 레이아웃 개념 중 하나입니다.</p><p>요소 속성</p><ul><li>inline</li><li>block</li><li>flex</li><li>table-cell</li></ul><p>요소 흐름</p><ul><li>absolute, fixed</li><li>float</li><li>overflow: hidden, auto, scroll</li></ul></div></details><details class="qa" open><summary>요소중 inline요소랑 block요소의 차이점이 무엇인가요?</summary><div class="answer"><p>inline은 기본적으로 요소의 줄바꿈 없이 처리한다. block은 줄바꿈 된다.</p><p>inline은 내부요소에 inline만 포함 할 수 있다. block은 inline, block 전부 포함한다.</p><p>inline은 크기가 내부 요소의 영향을 받고 지정할수 없다, block은 크기를 지정 할 수 있다.</p><p>inline은 좌우 margin, padding 만 처리 가능하고 block은 상화좌우 전부 가능하다.</p></div></details><details class="qa" open><summary>css중 em px rem vh vw 차이점</summary><div class="answer"><ul><li>px 은 절대 단위이고 정확한 픽셀을 표시</li><li>em은 상대 단위이고 부모요소의 font-size에 영향을 받는다.</li><li>rem은 상대 단위이고 root em 의 영향을 받는다.</li><li>vh, vw는 뷰포트 관련된 사이즈 이고 레이아웃 작성시 편리하다.</li></ul></div></details><details class="qa" open><summary>단항 생략 및 다항 생략을 css로 어떻게 처리 하는건가요?</summary><div class="answer"><ul><li>text-overflow: ellipisis, white-space: nowrap, overflow: hidden</li><li>-webkit-line-clamp: 2, display: -webkit-box; -webkit-box-orient: vertical </li></ul></div></details><details class="qa" open><summary>css중 어떤 방식으로 요소를 숨길수 있나요?</summary><div class="answer"><ul><li>display: none</li><li>visibility: hidden</li><li>opacity: 0</li><li>position: absolute, top: 0;</li></ul></div></details><details class="qa" open><summary>레이아웃 흐름에서 벗어나는 방법은 무엇인가요?</summary><div class="answer"><ul><li>float</li><li>absolute</li><li>fixed</li></ul></div></details><details class="qa" open><summary>inline-block 요소를 연속으로 배치시 공백이 생기는 이유는? 해결 방법은?</summary><div class="answer"><p>표준에서 정의 된것으로 이해하기 있고, 요소사이에 공백이 존재한다면 white-space로 처리 된다.</p><p>해결방법</p><ul><li>요소사이 붙여서 쓰기</li><li>font-size: 0</li></ul></div></details><details class="qa" open><summary>css로 mobile페이지의 좌우 슬라이드를 금지하는 방법은?</summary><div class="answer"><p>touch-action: none; touch-action: pan-y</p></div></details>
+  <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+</section>
+
+
+<section class="category" id="cat-js">
+  <h2>JavaScript <span class="count">(36)</span></h2>
+  <details class="qa" open><summary>JavaScript는 왜 Event Loop가 필요한가?</summary><div class="answer"><p>Event Loop는 JavaScript의 Call Stack이 비었는지 지속적으로 확인하고, 비어 있으면 먼저 Microtask Queue(Promise, async/await)를 모두 처리한 뒤 Task Queue(setTimeout, DOM 이벤트 등)의 작업을 Call Stack으로 이동시켜 실행하는 메커니즘입니다. 이를 통해 싱글 스레드 환경에서도 비동기 작업을 효율적으로 처리할 수 있습니다.</p></div></details><details class="qa" open><summary>addEventListener args에 대해서 설명 해주세요.</summary><div class="answer"><p>addEventListener(type, listener)</p><p>addEventListener(type, listener, useCapture)</p><p>addEventListener(type, listener, options: {once, capture, signal, passive})<br/></p></div></details><details class="qa" open><summary>js에서 요청을 어떻게 취소 하나요?</summary><div class="answer"><p>new AbortController() 생성해주고 요청시 signal을 추가하고 abort()함수를 실행하면 된다.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerpolicy="no-referrer"/><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js" integrity="sha512-m3JYEI6gx5fh9jF10FjGoMzVKcV2N6nchcDcqPCdI1L3R2WQV7br2XVNR8iTLb2daOMRl3zldbcfT40xU2ntVw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><pre><code class="lang-jsx">// XHR
+const xhr = new XMLHttpRequest();
+xhr.open(&#x27;GET&#x27;, &#x27;&lt;http://127.0.0.1:3000/api/get&gt;&#x27;, true);
+xhr.send();
+setTimeout(() =&gt; {
+	 xhr.abort();
+}, 1000);
+
+// FETCH
+const controller = new AbortController();
+void (async function () {
+    const response = await fetch(&#x27;&lt;http://127.0.0.1:3000/api/get&gt;&#x27;, {
+        signal: controller.signal,
+    });
+    const data = await response.json();
+})();
+
+setTimeout(() =&gt; {
+    controller.abort();
+}, 1000);
+
+// AXIOS
+const controller = new AbortController();
+const API_URL = &#x27;&lt;http://127.0.0.1:3000/api/get&gt;&#x27;;
+void (async function () {
+    const response = await axios.get(API_URL, {
+        signal: controller.signal,
+    });
+    const { data } = response;
+})();
+setTimeout(() =&gt; {
+    controller.abort();
+}, 1000);</code></pre></div></details><details class="qa" open><summary>크로스페이지 통신에 어떤 것들이 있나요?</summary><div class="answer"><ul><li>localStorage, sessionStorage</li><li>Cookie</li><li>PostMessage</li><li>Broadcast Channel</li><li>SharedWorker</li><li>indexedDB</li><li>webSocket</li></ul></div></details><details class="qa" open><summary>map, forEach 차이점은?</summary><div class="answer"><ul><li>실행결과: forEach는 실행결과 undefinded,  map은 새로운 배열</li></ul></div></details><details class="qa" open><summary>promise, async/await, generator 어떤 연관이 있고 어떤 차이점이 있나요?</summary><div class="answer"><p>연관성</p><ul><li>async/await는 generator + promise 기초로 만들어 졌고 </li><li>async함수 실행시 Promise 를 return 되고, await는 Promise실행 성공할 때 까지 멈춘다.</li><li>Promise는 pending, fulfilled, rejected 상태를 가지고 처리 한다.</li><li>generator는 iterator 이고 yield로 실행을 멈추고 next()  로 실행을 계속한다.</li></ul><p>차이점</p><ul><li>async/await는 비동기 스타일을 동기처럼 처리하기 위해서 사용</li><li>promise는 then, catch, finally 로 콜백을 받아서 처리 할수 있고, race, all등 방법으로 비동기를 처리한다.</li></ul></div></details><details class="qa" open><summary>apply, call, bind이 어떤 건가요?</summary><div class="answer"><p>실행 context를 바꿔주는 function이다. (this 방향을 바꿔주는…)</p></div></details><details class="qa" open><summary>bind를 여러번 셋팅하면 어떤 문제가 발생하나요?</summary><div class="answer"><p>bind는 한번만 바인딩 가능하고 이후 바인딩은 무효화 처리 됩니다.</p></div></details><details class="qa" open><summary>Proxy를 사용해서 object의 변화를 감지시 nestedObject 속성에 변화가 있을때 handler에서 캐치 가능한가요?</summary><div class="answer"><p>가능하다.</p></div></details><details class="qa" open><summary>Proxy를 사용해서 string, number, boolean 같은 데이터 유형의 변화를 감지 하는 방법?</summary><div class="answer"><p>Proxy는 object만 감지가 가능하다. 필요에 따라 WrapProxy를 만들수도 있다.</p></div></details><details class="qa" open><summary>로컬에서만 작동하는 챗팅 같은 여러 탭사이 통신 가능한 기능을 만들라고 하면 어떤 방식으로 처리 할것인지? (websocket, polling은 제외하고)</summary><div class="answer"><ul><li>localStorage, sesstionStorage활용</li><li>indexedDB 활용</li><li>Broadcast Channel API활용</li><li>SharedWorker 활용</li></ul></div></details><details class="qa" open><summary>js 논리연산자중 ??랑 || 차이점이 무엇인가요?</summary><div class="answer"><p>||은 true, false를 판단하는 논리 연산자 이고 ??는 undefinded 또는 null 인지를 판단하는 논리 연산자 이다.</p></div></details><details class="qa" open><summary>ES6 중에서 배열 관련하여서 추가된 부분이 어떤게 있나요?</summary><div class="answer"><ul><li>spread operator</li><li>destruct</li><li>Array.from</li><li>find, findIndex, findLast findLastIndex</li><li>includes</li><li>entries, keys, values</li><li>fill</li><li>at, of</li><li>toReversed, toSorted, toSpliced, with</li><li>flat, flatMap</li><li>group, groupMap;</li><li>toSorted()</li></ul></div></details><details class="qa" open><summary>Promise중 then 두번째 argument 와 catch 차이점이 무엇인가요?</summary><div class="answer"><ul><li>Promise reject 시 발생하는 에러를 출력하는 것이고 사용법이 조금 다르다.</li><li>then에서 두번째 argument는 then에서 발생하는 에러를 캐치 못하고 다음 then에서 두번째 argument로 처리 가능하다.</li><li>then, catch두개 존재할 경우 선언한 순서대로 에러 처리한다.</li></ul></div></details><details class="qa" open><summary>JS중 microTask, macroTask가 무엇인가요?</summary><div class="answer"><p>구분은 서로 다른 task사이 실행 순서를 보장하기 위함이다.</p><p>macroTask에는 setTimeout, setInterval 들이 존재하고 microTask에는 Promise then, catch,  await가 있다.</p></div></details><details class="qa" open><summary>js ToPrimitive 가 무엇인가요?</summary><div class="answer"><p>object를 원시형( string, number, boolean)으로 변환할때 실행되는 fn</p></div></details><details class="qa" open><summary>재귀가 반복문에 비해서 어떤 장단점이 있나요?</summary><div class="answer"><p>장점: 코드가 간결하고 명확하고 단계별 데이터 검증이 쉽다.</p><p>단점: 반복할 때마다 별도의 함수를 불러야 하고 별도의 scope 환경이 생성 되다 보니 성능에 영향을 줄수 있다.</p></div></details><details class="qa" open><summary>e.target 이랑 e.currentTarget 의 차이점.</summary><div class="answer"><p>target: 이벤트가 발생한 요소</p><p>currentTarget: 이벤트를 바인딩한 요소</p></div></details><details class="qa" open><summary>배열과 객체를 구분할 수 있는 방법은 무엇인가요?</summary><div class="answer"><ul><li>Array.isArray([])</li><li>[] instanceof Array</li><li>[].constructor</li><li>Object.prototype.toString.call([])</li></ul></div></details><details class="qa" open><summary>js중 배열이 메모리에 저장되는 방식</summary><div class="answer"><ul><li>기본 유형은 stack에 저장되고 사이즈가 고정이다. key를 통해서 방문 가능하다.</li><li>object 유형은 heap에 저장되고 사이즈는 유동적이다. stack에서 heap 저장 경로만 저장하고 직접 heap에 접근이 불가능 하다.</li></ul><p><a target="_blank" rel="noopener noreferrer" href="https://fe.ecool.fun/topic/7a9f621a-416f-4c2b-8d08-8f8e0a113c6a?orderBy=updateTime&order=desc&tagId=0">https://fe.ecool.fun/topic/7a9f621a-416f-4c2b-8d08-8f8e0a113c6a?orderBy=updateTime&amp;order=desc&amp;tagId=0</a></p></div></details><details class="qa" open><summary>js Garbage Collection 에 대해서 설명 해주세요.</summary><div class="answer"><ul><li>Reference counting(값이 0이면 제거)</li><li>Mark-and-sweep</li></ul><p><a target="_blank" rel="noopener noreferrer" href="https://fe.ecool.fun/topic/cecf2aa7-4281-4255-95c9-e8ae487760f1?orderBy=updateTime&order=desc&tagId=0">https://fe.ecool.fun/topic/cecf2aa7-4281-4255-95c9-e8ae487760f1?orderBy=updateTime&amp;order=desc&amp;tagId=0</a></p><p><a target="_blank" rel="noopener noreferrer" href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Memory_management">https://developer.mozilla.org/ko/docs/Web/JavaScript/Memory_management</a></p></div></details><details class="qa" open><summary>a == 1 && a == 2 && a ==3</summary><div class="answer"><pre><code class="lang-jsx">const a = {
+	value: 1,
+	toString: function(){
+		return a.value++	
+	}
+}</code></pre></div></details><details class="qa" open><summary>js중 settimeout으로 countdown을 처리하면 오차가 생기는데 해당 이슈는 어떻게 해결하는가?</summary><div class="answer"><ul><li>프론트에서 일정 시간마다 서버에서 최신 시간을 불러온다.</li><li>프론트에서 Date getTime으로 시간을 체크해서 오차를 줄인다.</li></ul></div></details><details class="qa" open><summary>mouseenter, mouseover의 차이점</summary><div class="answer"><p>mouseenter는 버블 단계를 지원하지 않는다.</p></div></details><details class="qa" open><summary>Polyfill이 무엇인가요?</summary><div class="answer"><p>Polyfill은 브라우저가 지원하지 않는 API에 대해서도 지원하게 기능을 추가한것.</p></div></details><details class="qa" open><summary>JS중 에러 유형</summary><div class="answer"><ul><li>Error</li><li>ReferenceError (console.log(b))</li><li>EvalError (new eval(),   eval = a)</li><li>RangeError (new Array(-1))</li><li>SyntaxError</li><li>TypeError (var a = new 10)</li><li>URIError (encodeURI, decodeURI)</li></ul></div></details><details class="qa" open><summary>js에서 데이터 유형을 검사 하는 방법에 어떤 것들이 있나요?</summary><div class="answer"><ul><li>typeof</li><li>instanceof</li><li>constructor</li><li>Object.prototype.toString.call</li></ul></div></details><details class="qa" open><summary>isNaN, Number.isNaN 함수의 차이점은?</summary><div class="answer"><p>Number.isNaN 함수는 강제 형 변환을 해주지 않는다. 오로지 값이 NaN인 숫자일때만 true를 반환한다.</p></div></details><details class="qa" open><summary>js중 이벤트 버블링과 이벤트 기본 실행을 중지하나요?</summary><div class="answer"><p>event.stopPropagation()</p><p>event.preventDefault()</p><p>return false</p></div></details><details class="qa" open><summary>document.write 와 innerHTML 차이점은?</summary><div class="answer"><p>document.write는 body내에 내용을 넣고 innerHTML은 특정 요소의 내부에 내용을 추가하는 방식</p></div></details><details class="qa" open><summary>client, offset, scroll 관련</summary><div class="answer"><ul><li>clientWidth, clientHeight: content + padding(스크롤바 제외)</li><li>clientTop: 요소의 Y축 위치 값(부모 기준)</li><li>clientLeft: 요소의 X축 위치 값(부모 기준)</li><li>offsetWidth, offsetHeight: content + padding + border(스크롤바 포함)</li><li>offsetTop: 요소의 Y축 위치 값(문서 기준)</li><li>offsetLeft: 요소의 X축 위치 값(문서 기준)</li><li>scrollWidth, scrollHeight: 요소 total크기(스크롤 영역 포함)</li><li>scrollTop: 요소의 가려진 Y축 위치값</li><li>scrollLeft: 요소의 가려진 X축 위치값</li></ul></div></details><details class="qa" open><summary>forEach에서 await를 사용 할수 있는가?</summary><div class="answer"><p>안된다, forEach는 동기로 실행한다.  for를 사용하거나, for of를 사용해서 해결 할수 있다.</p><pre><code class="lang-jsx">while (index &lt; arr.length) {
+	callback(item, index) // polyfill 참고
+}</code></pre></div></details><details class="qa" open><summary>Promise를 중단 가능한지요?</summary><div class="answer"><p>기본 Promise는 불가능 하다.</p><pre><code class="lang-jsx">function timeoutWrapper(p, timeout = 2000) {
+  const wait = new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      reject(&#x27;오류&#x27;)
+    }, timeout)
+  })
+  return Promise.race([p, wait])
+}</code></pre></div></details><details class="qa" open><summary>엄격 모드는 무엇인가요? use strict</summary><div class="answer"><ul><li>자바스크립트 문법중에서 불합리하거나 엄격하지 않은 부분에 대해서 잡아줍니다.</li><li>가끔씩 엄격 모드의 코드는 비-엄격 모드의 동일한 코드보다 더 빨리 작동하도록 만들어집니다.</li><li>미래 자바스크립트 버전을 위해서 미리 준비를 합니다.</li></ul><p>코드:</p><ul><li>의외의 전역변수 를 생성 불가하다.</li><li>NaN 같은 전역 변수에 값을 주면 Error를 반환(writable: false인 경우도 포함.)</li><li>삭제 불가능한 속성을 삭제한 경우 Error를 반환</li><li>객체에 동일한 속성을 여러개 선언하지 못하고, function 파리미터 값도 여러개 선언 하지 못한다.</li><li>8진수 표현을 금지한다.</li><li>primitive속성 변경을 금지한다.</li><li>with사용을 금지</li><li>eval에서 사용되는 scope범위가 따로 있다.</li><li>this는 undefinded이다 .</li><li>함수의 arguments, caller 사용시 오류</li><li>함수는 전역이나 함수 scope내에서만 선선이 가능하다.(for, if에서 사용 불가)</li><li>keyword 사용 불가(let, private, yield 등등)</li></ul></div></details><details class="qa" open><summary>Object.create 와 new로 생성 하는 방법이 어떻게 다르나요?</summary><div class="answer"><p>Object.create 로 생성한 객체는 해당 함수의 속성과 방법을 상속받지 않는다.</p></div></details><details class="qa" open><summary>getBoundingClientRect와 getClientRects의 차이점은 무엇인가요?</summary><div class="answer"><ul>
+<li><strong>getBoundingClientRect()</strong>: 요소 하나의 크기와 뷰포트 기준 위치(top/left/right/bottom/width/height)를 담은 <code>DOMRect</code> 객체 하나를 반환한다. 요소가 여러 줄(inline)에 걸쳐 있어도 전체를 감싸는 하나의 사각형만 알려준다.</li>
+<li><strong>getClientRects()</strong>: 요소를 렌더링하는 데 사용된 각 사각형(줄바꿈된 inline 요소라면 줄마다 하나씩)의 목록을 <code>DOMRectList</code>로 반환한다. 즉 getBoundingClientRect는 이 목록 전체를 감싸는 경계 상자와 같다.</li>
+</ul></div></details>
+  <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+</section>
+
+
+<section class="category" id="cat-react">
+  <h2>React <span class="count">(16)</span></h2>
+  <details class="qa" open><summary>React 18 신기능</summary><div class="answer"><ul><li>automatic Batching, flushSync</li><li>useid</li><li>useTranstion, useDefferedValue, startTranstion</li><li>createRoot</li><li>useSyncExternalStore</li><li>useInsertionEffect</li></ul></div></details><details class="qa" open><summary>VDOM 장점, 단점을 설명해주세요.</summary><div class="answer"><p>장점</p><ul><li>일괄 업데이트 가능하고</li><li>diff를 통해서 불필요한 부분을 처리하지 않는다.</li><li>플랫폼이나 os에 영향을 받지 않는다.</li></ul><p>단점</p><ul><li>메모리 사용이 많다.</li><li>복잡한 diff 계산이 느릴때도 있다.</li></ul><p><strong>일부 라이브러리는 VDOM을 사용하지 않는데 성능이 좋은 이유는?</strong></p><ul><li>리얼 DOM을 직접 건드리기 때문에 관련 diff로직을 처리 하지 않는다.</li><li>VDOM보다 더 정확한 노드 업데이트 체계로 필요한 부분만 업데이트 한다.</li><li>VDOM이 일부 경우에 유연성, 개발 편의성을 제공해서 성능을 개선 시킬수 있지만 모든 경우는 아니다.</li></ul></div></details><details class="qa" open><summary>VDOM에서 realDOM으로 랜딩할때 라이브러리에서 보통 어떤 처리를 하나요?</summary><div class="answer"><ul><li>Diff 처리</li><li>Diff에 따른 node생성, 수정, 삭제</li><li>이벤트 처리</li><li>lifecycle처리</li></ul></div></details><details class="qa" open><summary>SSR장점은?</summary><div class="answer"><ul><li>첫 화면 랜더링이 빨라서 사용자 경험이 좋다.</li><li>검색엔진 최적화가 좋다</li></ul></div></details><details class="qa" open><summary>React 에서 스타일 분리를 어떻게 처리하나요?</summary><div class="answer"><ul><li>네이밍 규칙 정의</li><li>CSS Modules</li><li>CSS in JS</li></ul></div></details><details class="qa" open><summary>React synthetic 이벤트와 native 이벤트 실행 순서가 어떻게 되나요?</summary><div class="answer"><pre><code class="lang-jsx">&lt;html&gt;
+&lt;body&gt;
+	&lt;div id=&quot;root&quot;&gt;
+		&lt;h1&gt;&lt;/h1&gt;
+	&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><p>16 native먼저 실행 되고 document bubble 단계에서 synthetic이벤트가 처리된다.</p><ul><li>native document capture</li><li>native div capture</li><li>native h1 capture</li><li>native h1 bubble</li><li>native div bubble</li><li>synthetic div capture</li><li>synthetic h1 capture</li><li>synthetic h1 bubble</li><li>synthetic div bubble</li><li>native document bubble</li></ul><p>17 document제외한 native 이벤트 실행전 synthetic이벤트 capture단계를 실행하고 native이벤트 capture, bubble단계를 실행하고 다시 synthetic이벤트 bubble 단계를 실행한다. 마지막 root 에서 synthetic이벤트가 처리된다.</p><ul><li>native document capture</li><li>synthetic div capture</li><li>synthetic h1 capture</li><li>native div capture</li><li>native h1 capture</li><li>native h1 bubble</li><li>native div bubble</li><li>synthetic h1 bubble</li><li>synthetic div bubble</li><li>native document bubble</li></ul><p>stopImmediatePropagation 는 관련 하위 모든 노드의 eventLisntener에 영향을 준다.</p></div></details><details class="qa" open><summary>React 자식요소의 function을 부모요소에서 실행할려면 어떤 방법이 있나요?</summary><div class="answer"><p>자식요소를 forwardRef로 감싸주고 useImperativeHandel을 사용해서 전달 받은 ref로 관련 메소드를 처리한다. 부모요소에서 childRef.current.childMethod();</p></div></details><details class="qa" open><summary>useMemo와 useCallback 차이점이 무엇인가요?</summary><div class="answer"><ul><li>useMemo는 계산 결과를 캐싱 하는 것</li><li>useCallback는 콜백함수를 캐싱 하는 것</li></ul></div></details><details class="qa" open><summary>react중 Element, Component, Node, Instance 가 각각 어떤 것인가요?</summary><div class="answer"><ul><li>Element는 기본 구성원이고 DOM노드 또는 React Component 가 될수 있다.</li><li>Component는 Element가 모여서 구성된것이다. 함수 또는 클래스 컴포넌트가 있고 props속성을 받을 수 있다.</li><li>Node는 React Vdom중 element의 대응하는 개념이고 element관련된 정보를 가지고 있다.</li><li>Instance는 React Vdom중 Component의 대응하는 개념이다.</li></ul></div></details><details class="qa" open><summary>useEffect의 빈 배열과 배열에 의존성 있는 경우의 차이점이 무엇인가요?</summary><div class="answer"><ul><li>빈 배열일 경우 mount, unmount인 경우에 처리된다.</li><li>배열에 의존성이 있는 경우 mount, unmount, 의존성 값이 변경되는 경우마다 처리된다. </li></ul></div></details><details class="qa" open><summary>React.memo 와 memorize 차이점</summary><div class="answer"><p>함수를 캐싱해서 성능 향상 해주는 공통좀이 있지만.</p><ul><li>범위: React.memo는 컴포넌트를 처리하고 memorize는 javascript함수를 캐싱한다.</li><li>구현: React.memo는 props shallow비교를 통해서 랜딩 여브를 결정한다면 memorize함수는 캐시할때 값을 저장하는 방식이다.</li><li>사용환경: React.memo는 컴포넌트 성능개선을 하고 memorize는 많은 계산을 캐싱한다.</li></ul></div></details><details class="qa" open><summary>react ssr 작동과정(동형: isomorphism, 아이썸폴피즘)</summary><div class="answer"><ul><li>Node server에서 client요청을 받는다.</li><li>url 경로에 필요한 자원을 props, context또는 store방식으로 컴포넌트에게 전달한다.</li><li>url경로 에 따라서 staticRouter 주소에 해당하는 컴포넌트를 랜딩한다.</li><li>renderToString 을 통해서 html파일을 브라우저에 전송한다.</li></ul></div></details><details class="qa" open><summary>react Fiber가 무엇인가?</summary><div class="answer"><p>react fiber는 큰 task를 우선순위에 따른 여러개 작은 task(노드단위)로 나누고 매개 task가 실행 완료후 항상 우선순위를 체크하고 순서에 따라 실행한다.(예: 사용자 입력)</p></div></details><details class="qa" open><summary>useEffect 와 useLayoutEffect 차이점</summary><div class="answer"><p>useEffect는 비동기, useLayoutEffect는 동기</p></div></details><details class="qa" open><summary>react 중 props랑 state 차이점</summary><div class="answer"><ul><li>props는 외부에서 속성 전달하는 방식이고 state는 컴포넌트 내부에서 사용</li><li>props는 수정 불가, state는 수정 가능</li></ul></div></details><details class="qa" open><summary>react 버전별 어떤 최적화를 했나요?</summary><div class="answer"><p>15 ⇒ 16</p><p>stack Reconciler를 fiber reconciler로 개선</p><p>Scheduler로 task관리</p><p>16 ⇒ 17</p><p>expirationTimes모델을 lanes모델로 변경(더 세부적인 우선 순위 관리)</p><p>17 ⇒ 18</p><p>동시성 기능 사용 가능(useTranstion, useDeferredValue)</p></div></details>
+  <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+</section>
+
+
+<section class="category" id="cat-network">
+  <h2>네트워크 &amp; 보안 <span class="count">(27)</span></h2>
+  <details class="qa" open><summary>브라우저에서 x.com을 쳤을때 어떤 과정들이 이뤄지나요</summary><div class="answer"><p>사용자가 브라우저에 <code>x.com</code>을 입력하면 브라우저는 URL을 파싱한 뒤 DNS 조회를 통해 IP 주소를 찾고, TCP 연결과 HTTPS의 경우 TLS Handshake를 수행합니다. 이후 HTTP 요청을 서버로 전송하고 응답으로 받은 HTML을 파싱하여 DOM을 생성하고, CSS로 CSSOM을 만든 뒤 Render Tree를 생성합니다. 브라우저는 Layout, Paint, Composite 과정을 거쳐 화면을 렌더링하며, JavaScript를 실행하면서 추가 리소스를 요청하거나 DOM을 변경합니다. 이러한 과정이 반복되며 최종적으로 사용자가 상호작용할 수 있는 웹 페이지가 완성됩니다.</p></div></details><details class="qa" open><summary>xhr, fetch로 쿠키를 전송 할려면?</summary><div class="answer"><pre><code class="lang-js">// XHR
+xhr.withCredentials = true;
+
+// Fetch
+fetch('http://abc.com', { credentials: 'include' });
+
+// 서버(Express) - CORS 허용 오리진을 명시하고 credentials 옵션을 켜야 브라우저가 쿠키를 실어 보낸다
+app.use(cors({ origin: 'http://example.com', credentials: true }));</code></pre></div></details><details class="qa" open><summary>사용자 인증을 어떻게 하나요?</summary><div class="answer"><p>대표적으로 세 가지 방식이 있습니다.</p>
+<ul>
+<li><strong>Session-Cookie</strong>: 서버가 로그인 성공 시 세션을 생성해 저장하고, 클라이언트에는 세션 ID만 쿠키로 내려준다. 이후 요청마다 쿠키를 자동으로 전송해 서버가 세션 저장소를 조회해 사용자를 식별한다.</li>
+<li><strong>Token(JWT 등)</strong>: 서버가 사용자 정보를 담은 토큰을 발급하고, 클라이언트가 매 요청마다 Authorization 헤더 등에 토큰을 담아 보낸다. 서버는 별도 저장소 조회 없이 토큰 서명만 검증하면 되므로 확장(scale-out)에 유리하다.</li>
+<li><strong>SSO(Single Sign-On)</strong>: 여러 서비스(도메인)를 하나의 인증 서버로 통합해, 한 번 로그인하면 다른 서비스에서도 재로그인 없이 인증 상태를 공유하는 방식이다. OAuth2, SAML 등을 기반으로 구현한다.</li>
+</ul></div></details><details class="qa" open><summary>Cookie의 속성에 어떤것들이 있나요?</summary><div class="answer"><ul><li>Name, Value, Domain, Path, Size, HttpOnly, Secure, Expires, sameSite</li></ul></div></details><details class="qa" open><summary>Access Token, Refresh Token은 어떻게 사용했나요?</summary><div class="answer"><ul><li>인증 성공 이후 AT, RT를 넘겨주고 </li><li>사용자는 AT를 통해서 자원서버에 요청을 보내고 </li><li>실패시 RT를 가지고 인증 서버에서 AT, RT를 다시 받아 온다.</li></ul><p><a target="_blank" rel="noopener noreferrer" href="https://is.docs.wso2.com/en/5.9.0/learn/refresh-token-grant/">https://is.docs.wso2.com/en/5.9.0/learn/refresh-token-grant/</a></p></div></details><details class="qa" open><summary>http 요청중 자주 사용하는 Content-Type에 어떤것들이 있나요?</summary><div class="answer"><ul><li>application/x-www-form-urlencoded</li><li>multipart/form-data</li><li>application/json</li><li>text/plain</li><li>application/xml</li><li>text/html</li></ul></div></details><details class="qa" open><summary>Cookie 의 expires 시간을 0으로 설정하면 어떤 일이 발생하나요?</summary><div class="answer"><p>시스템 기본설정을 따르고 destory 시간이 Session 의 destory 시간과 동일하게 처리된다. 즉 브라우저 닫으면 삭제된다.</p></div></details><details class="qa" open><summary>http3.0은 udp기반인데 어떻게 전송의 신뢰성을 보장 하나요?</summary><div class="answer"><p>http3.0은 udp기반의 QUIC 방식을 사용하고 있습니다.</p><ul><li>연결설정: QUIC는 초기 연결 설정을 통해 클라이언트와 서버 간에 암호화된 연결을 빠르게 설정합니다.</li><li>흐름제어: QUIC는 데이터 전송시 흐름제어와 혼잡제어 매커니즘을 통해 전송 속도와 네트워크 혼잡 상태를 모니터링 하고 조절합니다.</li><li>오류제어: QUIC는 패킷 손실이나 지연이 발생할 경우 재전송 매커니즘을 사용하여 데이터의 신뢰성을 보장합니다.</li><li>다중화: QUIC는 하나의 연결을 통해 여러개의 스트림을 병렬로 전송할 수 있습니다.</li></ul></div></details><details class="qa" open><summary>DOS 및 DDOS의 방어를 어떻게 하나요?</summary><div class="answer"><ul><li>방화벽을 사용해서 트래픽을 제한한다.</li><li>limitRate를 걸어서 트래픽을 제한한다.</li><li>사용자 인증을 강화하고 인증된 사용자만 접근 가능하게 한다.</li><li>하드웨어, 소프트웨어를 업그레이드 한다.</li><li>로드밸런스 처리</li></ul></div></details><details class="qa" open><summary>JWT token은 어떻게 구성 되나요?</summary><div class="answer"><p>Header(알고리즘, 타입)</p><p>Payload(custom data)</p><p>Signature</p></div></details><details class="qa" open><summary>http는 왜 stateless 라고 하는가?</summary><div class="answer"><p>매개 요청마다 독립적이고 필요한 데이터만 처리하기 때문이다.</p></div></details><details class="qa" open><summary>get요청에서 parameter나 URI크기에 대한 제한이 있는지?</summary><div class="answer"><ul><li>HTTP 자체는 get나 post에 대한 제한을 두지 않았다.</li><li>URI의 크기는 브라우저나 WEB 서버에서 제한을 두는 경우가 있다.</li><li>브라우저 마다 차이가 있지만 chrome같은 경우 8kb 정도로 제한이 있다.</li></ul></div></details><details class="qa" open><summary>http status 304 과정</summary><div class="answer"><p>클라이언트는 요청을 보낼때 자신의 캐시 파일의 Last Modified체크하고 요청시 If Modified Since를 보낸다. 서버는 해당 시간과 현재 파일의 수정 시간을 체크해서 304를 반환할지 200을 반환할지를 결정한다.</p></div></details><details class="qa" open><summary>http 프록시에 대한 이해</summary><div class="answer"><p>용도</p><ul><li>로드 밸런스 역할</li><li>보안 처리</li><li>캐시 처리</li></ul><p>속성</p><ul><li><strong><strong>Via</strong></strong><pre><code class="lang-jsx">客户端 -&gt; 代理1 -&gt; 代理2 -&gt; 源服务器
+request: Via: proxy_server1, proxy_server2
+response: Via: proxy_server2, proxy_server1</code></pre></li><li><strong>X-Forwarded-For (request IP)</strong></li><li><strong>X-Real-IP (client IP)</strong></li></ul></div></details><details class="qa" open><summary>http 3xx 상태에 대한 설명</summary><div class="answer"><p>301: Moved Permanently(자원 영구 삭제시 사용)</p><p>302: Found (임시 자원 redirect)</p><p>303: See Other (redirection 무조건 get)</p><p>307: Temporary Redirect(302동일 단 method 변경 불가)</p><p>308: Permanent Redirect(영원히 redirect, method 변경 불가)</p></div></details><details class="qa" open><summary>cookie의 단점</summary><div class="answer"><ul><li>용량이 작다(4kb)</li><li>성능문제(동일 도메인에서 불필요한 경우에도 전송한다.)</li><li>보안 이슈(스크립트로 쉽게 가져올수 있다.)</li></ul></div></details><details class="qa" open><summary>Same origin policy는 무엇인가요?</summary><div class="answer"><p>브라우저의 가장 기본 적인 보안 기능입니다. Same origin은 도메인, 프로토콜, 포트 가 동일한 경우입니다.</p><ul><li>DOM (서로 다른 도메인의 DOM에 대해서 접근 불가, 예: Iframe)</li><li>XMLHttpRequest (서로 다른 도메인에 요청 불가)</li></ul></div></details><details class="qa" open><summary>Forward Proxy 와 Reverse Proxy가 어떤건가요?</summary><div class="answer"><p>Forward Proxy는 클라이언트 대신 서버로 요청</p><p>Reverse Proxy는 서버 대신 클라이언트 요청을 처리</p></div></details><details class="qa" open><summary>websocket중 ping/pong 은 어떤 문제를 해결하나요?</summary><div class="answer"><p>정기적으로 서버와 클라이언트 사이에서 발생시켜서 connection 상태를 확인한다.</p></div></details><details class="qa" open><summary>IP, TCP, UDP는 각각 무엇의 약자 인가?</summary><div class="answer"><p>Internet Protocol, Transmission Control Protocol, User Datagram Protocol</p></div></details><details class="qa" open><summary>OSI(Open Systems Interconnection) 7 계층은?</summary><div class="answer"><p>OSI 모델은 7개의 계층으로 나뉩니다. 각 계층은 네트워킹 스택 내에서 중요한 역할을 수행하며 PDU(Protocol Data Unit)를 교환하여 다른 계층과 통신합니다.</p><ol><li>물리적 계층(物理层)<p>원시 비트스트림이 물리적 매체를 통해 물리적으로 전송되는 곳</p></li><li>데이터 링크 계층(数据链路层)<ol><li>물리 계층에서 전송하기 위해 프레임으로 전송할 데이터를 분할</li><li>연결 설정, 물리적 계층에서 발생하는 비트 오류 식별 및 수정</li><li>세션이 완료되면 연결 종료를 포함하여 서로 다른 두 노드 간의 연결을 관리</li></ol></li><li>네트워크 계층(网络层)<p>네트워크 계층 디바이스는 패킷에서 작동하며 IP 주소를 기반으로 트래픽을 대상으로 라우팅하는 역할</p></li><li>전송 계층(传输层)<p>데이터가 올바른 순서로 도착하고 오류가 수정되도록 하는 것을 포함하여 노드 간의 데이터 전송을 관리(TCP, UDP)</p></li><li>세션 계층(会话层)<p>세션 관리에는 설정, 인증, 종료 및 재연결이 포함</p></li><li>프레젠테이션 계층(表示层)<p>네트워크 데이터의 데이터를 애플리케이션에 필요한 형식으로 변환하는 작업을 담당</p></li><li>애플리케이션 계층(应用层)<p>애플리케이션을 위한 서비스 제공(http, https, ftp, smtp등등)</p></li></ol></div></details><details class="qa" open><summary>TCP/IP 와 OSI 관계가 어떻게 되나요?</summary><div class="answer"><p>OSI 모델은 하나의 네트워킹 모델일 뿐입니다. 다른 하나는 OSI 모델보다 앞서고 네트워킹 스택을 구현하는 프로토콜에 더 가깝게 매핑되는 TCP/IP 모델입니다.</p><p>OSI 모델은 보다 이론적이며, 애플리케이션 계층 데이터를 전기, 빛 또는 전파를 통해 전송하기 위해 수행해야 하는 다양한 작업을 설명합니다. TCP/IP 모델은 보다 실용적이며 실제 네트워크 프로토콜에 가깝게 매핑됩니다.</p><figure><img src="/assets/network-osi-layers.png" alt="OSI 7계층과 TCP/IP 4계층 비교" /></figure></div></details><details class="qa" open><summary>TCP와 UDP의 차이점</summary><div class="answer"><ul><li>연결지향성<ul><li>TCP는 연결 지향적 프로토콜이고 UDP는 연결 지향적이지 않은 프로토콜입니다.</li></ul></li><li>신뢰성<ul><li>TCP는 데이터 전송 중 오류가 발생하면 재 전송을 통해 정확성과 순서를 보장합니다.</li><li>UDP는 신뢰성이 낮지만 실시간 스트리밍 게임 등 빠른 전송이 필요한 경우에 사용됩니다.</li></ul></li><li>헤더 오버헤드<ul><li>TCP는 헤더의 크기가 크며 핸드쉐이킹 정보, 순서 번호, 오류제어 매커니즘 등의 추가 정보를 포함합니다.</li><li>UDP는 헤더의 크기가 작습니다.</li></ul></li><li>속도<ul><li>TCP는 UDP에 비해서 느리다.</li></ul></li><li>멀티캐스트, 브로드캐스트<ul><li>TCP는 멀티캐스트, 브로드캐스트를 지원하지 않고 UDP는 지원합니다.</li></ul></li></ul></div></details><details class="qa" open><summary>TCP, UDP 사용 범위</summary><div class="answer"><ul><li>TCP(효율은 낮지만 정확성을 요구하는 환경)<ul><li>웹브라우징, 이메일 전송, 파일전송, 원격 로그인 등등</li></ul></li><li>UDP는 (빠른 전송이 필요한 환경)<ul><li>실시간 스트리밍, 게임, DNS조회, 멀티캐스트 등등</li></ul></li></ul></div></details><details class="qa" open><summary>TCP의 흐름 제어(Flow Control)와 혼잡 제어(Congestion Control)는 어떻게 동작하나요?</summary><div class="answer"><p>TCP는 신뢰성 있는 전송을 위해 흐름 제어와 혼잡 제어를 함께 사용한다.</p>
+<p><strong>흐름 제어(Flow Control)</strong> — 수신 측 처리 속도가 송신 측보다 느릴 때 수신 버퍼가 넘치는 것을 막는다.</p>
+<ul>
+<li>Stop and Wait: 세그먼트 하나를 보낼 때마다 ACK를 기다린 뒤 다음 세그먼트를 전송한다.</li>
+<li>Sliding Window: 수신 측이 자신의 수신 가능 버퍼 크기(윈도우 크기)를 ACK에 실어 알려주고, 송신 측은 그 범위 내에서만 밀어넣듯 여러 세그먼트를 연속 전송한다.</li>
+</ul>
+<p><strong>혼잡 제어(Congestion Control)</strong> — 네트워크 경로 자체가 감당할 수 있는 양보다 많은 데이터가 몰려 성능이 저하되는 것을 막는다. cwnd(congestion window), ssthresh(slow start threshold) 값으로 전송량을 조절한다.</p>
+<ul>
+<li><strong>느린 시작(Slow Start)</strong>: cwnd = 1에서 시작해 ACK를 받을 때마다 cwnd를 2배로 늘린다.</li>
+<li><strong>혼잡 회피(Congestion Avoidance)</strong>: cwnd가 ssthresh에 도달하면 배수 증가 대신 1씩 선형으로 증가시켜 폭주를 억제한다.</li>
+<li><strong>빠른 재전송 / 빠른 회복(Fast Retransmit / Fast Recovery)</strong>: 동일한 ACK를 3번 중복 수신하면 타임아웃을 기다리지 않고 즉시 재전송하며, ssthresh와 cwnd를 절반으로 줄인 뒤 혼잡 회피 모드로 전환한다(느린 시작으로 되돌아가지 않는다).</li>
+</ul>
+<p>정리하면 <code>cwnd &lt; ssthresh</code>이면 느린 시작, <code>cwnd ≥ ssthresh</code>이면 혼잡 회피 상태이며, 타임아웃으로 손실이 확인되면 ssthresh = cwnd/2, cwnd = 1로 초기화하고 다시 느린 시작을 수행한다.</p></div></details><details class="qa" open><summary>TCP flag 정리</summary><div class="answer"><ul><li>SYN Synchronization</li><li>ACK Acknowledgement</li><li>RST Reset</li><li>PSH Push</li><li>URG Urgent</li><li>FIN Finish</li></ul></div></details><details class="qa" open><summary>3, 4 way handshake</summary><div class="answer"><p>연결 성립</p><ol><li>클라이언트가 서버에게 Synchronization 보낸다.</li><li>서버가 클라이언트에게 Synchronization, Acknowledgement 보낸다.</li><li>클라이언트가 서버에게 Acknowledgement 보낸다.</li></ol><p>연결해제</p><ol><li>클라이언트가 서버에게 Finish 보낸다.</li><li>서버가 클라이언트에게 Acknowledgement 보낸다.</li><li>서버가 클라이언트에게 Finish 보낸다.</li><li>클라이언트가 서버에게 Acknowledgement 보낸다.</li></ol></div></details>
+  <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+</section>
+
+
+<section class="category" id="cat-perf">
+  <h2>성능 최적화 <span class="count">(18)</span></h2>
+  <details class="qa" open><summary>대용량 파일을 업로드 할려면 어떻게 하나요?</summary><div class="answer"><ul><li>Chunked Upload</li><li>Streaming Upload</li><li>정적 호스팅 서비스(S3, GCS)</li><li>병렬 업로드 및 이어서 올리기.</li></ul><p><a target="_blank" rel="noopener noreferrer" href="https://fe.ecool.fun/topic/8c5e8658-706c-448c-bce9-3bdbb615b625?orderBy=updateTime&order=desc&tagId=0">https://fe.ecool.fun/topic/8c5e8658-706c-448c-bce9-3bdbb615b625?orderBy=updateTime&amp;order=desc&amp;tagId=0</a></p><p>프론트에서 <strong>Blob.prototype.slice로 파일 슬라이스 하고 allSettled를 통해서 업로드 한다.(파일 실패시 관련 파일 정보를 서버에서 response해줘야 한다.)</strong></p></div></details><details class="qa" open><summary>jpg, png, gif, webp 차이점.</summary><div class="answer"><ul><li>jpeg 특징<ul><li>많은 색상을 표시할 수 있어서 배너나 배경을 사용할 때 많이 사용된다.</li><li>호환이슈가 없다.</li><li>투명 및 애니메이션이 불가능하다.</li></ul></li><li>PNG특징<ul><li>8bit 이미지는 256가지 색상을 지원하는 반면 24비트는 1600만 이상의 색상을 표시 할수 있다.</li><li>투명도 처리가 가능하다.</li><li>단점은 용량이 큰 문제가 있다.</li></ul></li><li>GIF<ul><li>256가지 색상만 가능하고 애니메이션이 가능하고 투명처리 가능하다.</li></ul></li><li>WebP<ul><li>png와 jpg, gif 장점을 다 가지고 있지만 호환성에 이슈가 많다.</li></ul></li></ul></div></details><details class="qa" open><summary>이미지 최적화에 어떤 방법들이 있을가</summary><div class="answer"><ul><li>sprites</li><li>minify</li><li>iconfont</li><li>base64</li><li>lazyload</li><li>responsive image(화면 크기에 따른 이미지 로드)</li><li>baseline mode ⇒ progreesive mode</li></ul></div></details><details class="qa" open><summary>만약 특정 페이지에 몇 백개 function을 실행해야 한다면 어떻게 처리 하실 건가요?</summary><div class="answer"><ul><li>비동기 처리</li><li>task분리</li><li>web worker</li><li>중복 function을 제거</li><li>제3방 library사용(async.js, p-queue)</li></ul></div></details><details class="qa" open><summary>브라우저에 어떤 캐시방식이 있나요?</summary><div class="answer"><ul><li>통신 관련 캐시</li><li>service worker</li><li>web storage</li><li>브라우저 자체 캐시(디스크에 저장)</li></ul></div></details><details class="qa" open><summary>web worker는 무엇인가요?</summary><div class="answer"><p>web worker는 html5에서 제공하는 기술이고 javascript를 다른 스레드에서 실행하고 UI스레드에 영향을 주지 않음으로서 사용자 경험을 향상시킬수 있다. node에서도 사용 가능하다.</p></div></details><details class="qa" open><summary>SPA 속도 개선</summary><div class="answer"><ul><li>entry파일 용량 최소화</li><li>static자원 캐시화</li><li>lazyload 처리</li><li>이미지 최적화</li><li>gzip, brotli 처리</li><li>서버사이드 랜더링</li></ul></div></details><details class="qa" open><summary>js메모리 누수 오류 어떻게 체크 할것인가?</summary><div class="answer"><ul><li>브라우저는 개발자 도구에서 녹음후 메모리 사용량을 체크한다</li><li>Node는 process.memoryUsage</li></ul></div></details><details class="qa" open><summary>브라우저에서 1프레임에서 어떤 것들이 발생하나요?</summary><div class="answer"><ul><li>입력 이벤트</li><li>이벤트 callback</li><li>프레임 시작</li><li>RequestAnimationFrame 실행</li><li>레이아웃 및 스타일 계산</li><li>페인트 및 render</li><li>RequestIdleCallback 실행(위 내용이 완료되어야 실행, 30ms이내로 처리)</li></ul></div></details><details class="qa" open><summary>브라우저 캐시에 어떤 것들이 있나요?</summary><div class="answer"><ul><li>Service Worker</li><li>Memory Cache</li><li>Disk Cache</li></ul></div></details><details class="qa" open><summary>Cache-Control에서 자주 사용하는 속성</summary><div class="answer"><ul><li>no-cache</li><li>no-store</li><li>max-age</li><li>max-stale</li><li>min-fresh</li><li>no-transfrom</li><li>only-if-cache</li><li>cache-extension</li><li>public</li><li>private</li><li>s-max-age</li><li>must-revalidate</li><li>proxy-revalidate</li></ul></div></details><details class="qa" open><summary>Last-Modified가 있는데 ETag도 사용하는 이유는?</summary><div class="answer"><ul><li>일부 서버에서 파일 최종 변경 시간을 정확하게 반영되지 않는 경우가 있다.</li><li>Last-Modified는 초단위 까지 지원하다 보니 빈번하게 변경되는 부분에 대해서 대응이 불가능하다.</li><li>일부 파일은 수정시간만 변경되고 내용이 변경 되지 않는 경우도 있다.</li></ul></div></details><details class="qa" open><summary>브라우저는 왜 http 동시 요청을 제한을 두었는지?</summary><div class="answer"><ul><li>OS 포트 자원 제한(보통 65536개 포포, http, tcp 요청 하나당 포트 하나씩 사용)</li><li>빈번하게 large 자원을 요청시 퍼포먼스 이슈가 발생한다. (동일한 도메인 연결풀을 4~8정도로 제한을 둬서 해결)</li><li>서버에 대량 요청을 막기 위함.</li><li>서로 다른 프로그램 사이에 포트 자원을 남용할 수 있음. </li></ul></div></details><details class="qa" open><summary>모바일 웹개발시 클릭시 delay가 발생하는데 구체적으로 어떤것인가요?</summary><div class="answer"><p>모바일 웹 클릭시 300ms 의 딜레이가 발생하는데 더블 클릭시 확대하는 기능 때문에 발생하는 문제입니다.</p><p>해결방법(meta 태그 설정)</p><p>&lt;meta name=&quot;viewport&quot; content=&quot;user-scalable=no&quot;&gt;<br/>&lt;meta name=&quot;viewport&quot; content=&quot;initial-scale=1, maximum-scale=1&quot;&gt;<br/>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;&gt;</p></div></details><details class="qa" open><summary>IconFont의 장단점</summary><div class="answer"><p>장점: </p><ul><li>css로 크기, 색상을 제어할 수 있다.</li><li>백터이미지로 확장이 가능하다.</li><li>여러 요청을 보내지 않고 이미지를 표현할 수 있다.</li><li>로딩 속도가 빠르다</li></ul><p>단점:</p><ul><li>복잡한 이미지를 표현하기 어렵다.</li><li>단일 색상의 이미지만 가능하다.</li><li>일부 사이즈에서 이미지가 흐트러 질수 있다.</li></ul></div></details><details class="qa" open><summary>css sprites</summary><div class="answer"><p>css sprites는 여러 이미지를 한장의 이미지에 넣고 css background 방식으로 노출 시키는 기법이다.</p><p>장점:</p><ul><li>http요청을 줄인다.</li><li>사이즈 용량을 줄인다.</li></ul><p>단점:</p><ul><li>이미지 조합이 귀찮다.</li><li>배경 설정시 정확한 위치를 알아야 한다.</li><li>추후 유지보수 시 위, 아래 순서대로 넣어야 한다.</li></ul></div></details><details class="qa" open><summary>requestAnimationFrame에 대해서 설명 해주세요.</summary><div class="answer"><p>브라우저에게 수행명령을 내리고 다음 repaint 바로 전에 해당 함수를 호출</p><p>실행 주기는 모니터의 새로고침 빈도에 따른다(1000/60hz   1000/75hz 등등)</p><p>최적화된 계산으로 CPU 계산을 낭비하지 않는다.</p></div></details><details class="qa" open><summary>requestIdleCallback에 대한 이해가 있으신가요?</summary><div class="answer"><p>브라우저 API이고 requestIdleCallback 작용은 중요하지 않은 작업을 메인 스레드에서 분리해 나와서 추후 메인스레드에 태스크가 없을때 실행 하는 역할을 한다.</p></div></details>
+  <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+</section>
+
+
+<section class="category" id="cat-build">
+  <h2>빌드 도구 <span class="count">(11)</span></h2>
+  <details class="qa" open><summary>webpack-dev-server 는 어떻게 작동 하나요?</summary><div class="answer"><ol><li>cli 또는 설정에 따라서 서버 시작</li><li>컴파일 및 빌드</li><li>메모리 파일시스템 사용</li><li>request 메모리로 redirect</li><li>live reloading, HMR</li></ol></div></details><details class="qa" open><summary>webpack번들 과정</summary><div class="answer"><ol><li>entry 기준으로 모듈 내용을 읽는다.</li><li>모듈 내용을 분석한다. (ast)</li><li>모듈 내용을 처리해서 새로운 정보를 가져온다(ast)<ol><li>파일경로 </li><li>의존성 모듈 경로</li><li>모듈내 변환된 코드</li></ol></li><li>의존성 모듈 경로기준으로 동일하게 파일들을 처리한다.(dependency graph 생성)</li><li>코드 생성.</li></ol><p><a target="_blank" rel="noopener noreferrer" href="https://fe.ecool.fun/topic/54891e04-5769-477b-8687-f55cf18feae2?orderBy=updateTime&order=desc&tagId=0">https://fe.ecool.fun/topic/54891e04-5769-477b-8687-f55cf18feae2?orderBy=updateTime&amp;order=desc&amp;tagId=0</a></p></div></details><details class="qa" open><summary>webpack중 module, bundle, chunk는 각각 어떤 것들인가요?</summary><div class="answer"><ul><li>module은 웹팩이 처리해야 하는 모든 파일을 가리킨다.</li><li>bundle은 최종 output된 파일이다.</li><li>chunk는 빌드중 생성되는 코드 블럭이다.</li></ul></div></details><details class="qa" open><summary>vite 작동 프로세스</summary><div class="answer"><ul><li>개발 서버 기동</li><li>entry모듈 분석</li><li>설정에 따른 컴파일(이미 빌드 됐으면 해당 빌드 파일 사용)<ul><li>js, jsx, vue에 따라서  서로 다른 컴파일 방법 사용</li></ul></li><li>static자원 처리</li><li>HMR처리 </li></ul></div></details><details class="qa" open><summary>Webpack5 Module Federation은 무엇인가요?</summary><div class="answer"><ul><li>여러개 프로젝트사이 모듈을 공유 해서 중복된 코드를 제거한다.</li><li>프로젝트 규모를 줄일수 있다.</li></ul></div></details><details class="qa" open><summary>캐시 정책 관련하여서 새로운 빌드후 사용자가 화면을 새로고침 하지 않은 상황에서 어떻게 새로 빌드된 파일을 읽을수 있게 하나요?</summary><div class="answer"><p>신규 파일을 불러올때 오류 발생시 페이지 reload를 발생시킨다.</p></div></details><details class="qa" open><summary>Webpack 빌드 속도를 어떻게 개선 하나요?</summary><div class="answer"><ul><li>module federation</li><li>auto-dll</li><li>happypack 멀티 스레드</li><li>loader개선</li><li>내장된 캐시파일</li><li>파일 검색 범위 </li></ul></div></details><details class="qa" open><summary>Webpack treeShaking은 어떻게 작동 하나요? (전문 용어 Dead code elemination)</summary><div class="answer"><p>특징:</p><p>require() 방식은 동적으로 처리 하는 방식이고 필요에 따라서 로드 하다 보니 tree shaking 최적화 체계에 부합되지 않는다.</p><p>es6 표준 방식은 정적 import문법이고 초기 분석이 가능하고 tree shaking으로 최적화 할 수 있다.</p><p>비교:</p><p>commonjs 모듈 export는 값의 복사본이고 , es6 모듈 export는 값의 레퍼런스</p><p>commonjs 모듈은 JIT 방식이고, ES6 모듈은 AOT방식으로 interface를 공개한다.</p><p>commonjs 는 조건내부에서 사용 가능 하고 ES6 module은 최상단에서 import 해야 된다.</p></div></details><details class="qa" open><summary>SourceMap관련</summary><div class="answer"><p><a target="_blank" rel="noopener noreferrer" href="https://fe.ecool.fun/topic/2f8aa80e-e3b0-4d10-843d-83e947dda744?orderBy=updateTime&order=desc&tagId=0">https://fe.ecool.fun/topic/2f8aa80e-e3b0-4d10-843d-83e947dda744?orderBy=updateTime&amp;order=desc&amp;tagId=0</a></p><p>Source Map 파일은 웹성능에 영향을 주는가?</p><p>대부분 영향을 주지 않는다. 다만 sourceMap은 devtool을 사용할 때 다운로드 받는다.</p><p>SourceMap 표준은 ?</p><p><a target="_blank" rel="noopener noreferrer" href="https://github.com/mozilla/source-map">https://github.com/mozilla/source-map</a></p></div></details><details class="qa" open><summary>webpack HMR은 어떻게 구현 했는가?</summary><div class="answer"><ul><li>webpack-dev-server를 통해서 2개 서버를 가동한다.</li><li>express server는 static자원만 제공한다.</li><li>socket server는 통신용도로 사용한다.</li><li>파일의 변화를 감지하여  manifest 와 js파일을 생성한다.</li><li>socket 서버를 통해서 두개 파일을 클라이언트로 전송한다.</li><li>브라우저는 파일을 받고 HMR runtime 환경에 해당 파일을 로드 하고 해당 모듈에 대해서 업데이트 처리 한다.</li></ul></div></details><details class="qa" open><summary>Babel은 무엇인가요?</summary><div class="answer"><p>javascript 컴파일러이고 es6 문법을 브라우저가 실행가능한 es5로 변환 해주는 도구이다. </p></div></details>
+  <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+</section>
+
+
+<section class="category" id="cat-node">
+  <h2>Node.js &amp; 서버 <span class="count">(7)</span></h2>
+  <details class="qa" open><summary>koa또는 express중 middleware에서 next()를 실행하지 않으면 이후 middleware가 실행이 되나요?</summary><div class="answer"><p>실행되지 않고  에러가 발생한다.</p></div></details><details class="qa" open><summary>body-parser middleware는 어떤경우에 사용하는 건가요?</summary><div class="answer"><ul><li>JSON, URLEncode, Multipart로 넘어오는 데이터들을 js object로 변환해주는 역할을 한다.</li></ul></div></details><details class="qa" open><summary>nodejs는 어떻게 디버깅을 하나요?</summary><div class="answer"><ul><li>console.log</li><li>노드 기본: —inspect, —inspect-brk, chrome://inspect</li><li>제3방 모듈: node-inspector、ndb、VS Code등등</li></ul></div></details><details class="qa" open><summary>PM2는 어떻게 작동하나요?</summary><div class="answer"><p>PM2는 nodejs 스레드 관리하는 도구이다.</p><ul><li>앱 스레드 관리</li><li>앱 모니터링</li><li>앱 안정성 체크</li><li>log 관리</li></ul></div></details><details class="qa" open><summary>nodejs중 전역변수에 대해서 알려주세요.</summary><div class="answer"><p>전역객체(process, console, setInterval, setTimeout, global)</p><p>모듈단위 전역(__dirname, __filename, exports, module, require)</p></div></details><details class="qa" open><summary>node 성능은 어떻게 모니터링 하고 개선 할것인가?</summary><div class="answer"><p>모니터링</p><ul><li>CPU부하, 및 사용률 체크</li><li>메모리(프로세스당 최대 1.5기가까지 지원)</li><li>I/O 관련 체크</li></ul><p>최적화는 어떻게 할것인가?</p><ul><li>최신버전 node사용</li><li>stream을 잘 사용했는지 체크</li><li>프로그래밍 단계 최적화</li><li>메모리 관리</li></ul></div></details><details class="qa" open><summary>nodejs app 사이 통신은 어떻게 하나요?</summary><div class="answer"><ul><li>서로 다른 서버일 경우 TCP, HTTP로 통신</li><li>같은 서버 일 경우 IPC통신으로 진행, </li></ul><p><a target="_blank" rel="noopener noreferrer" href="https://fe.ecool.fun/topic/b317da28-bef7-4cb2-8fb4-2d41f1ec09d8?orderBy=updateTime&order=desc&tagId=0">https://fe.ecool.fun/topic/b317da28-bef7-4cb2-8fb4-2d41f1ec09d8?orderBy=updateTime&amp;order=desc&amp;tagId=0</a></p></div></details>
+  <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+</section>
+
+
+<section class="category" id="cat-etc">
+  <h2>기타 <span class="count">(14)</span></h2>
+  <details class="qa" open><summary>AI 도구에서 어떻게 입/출력 하는 JSON을 보장하나요?</summary><div class="answer"><p>AI Agent의 JSON은 LLM이 스스로 100% 보장하는 것은 아닙니다. LLM은 확률 기반 모델이기 때문에 같은 질문이라도 출력이 달라질 수 있습니다.</p><p>그래서 실제 서비스에서는 REST API처럼 LLM을 신뢰하는 것이 아니라, <strong>Schema를 신뢰하는 구조</strong>로 설계합니다.</p><p>Tool이나 Function을 JSON Schema로 정의하고, LLM은 그 Schema에 맞는 arguments만 생성합니다. 이후 런타임에서 Schema Validation(Zod, JSON Schema 등)을 수행하고, 검증을 통과한 경우에만 실제 Tool이나 API를 실행합니다.</p><p>만약 Validation에 실패하면 재시도(Retry)하거나 오류를 반환하기 때문에, 비즈니스 로직은 항상 검증된 데이터만 처리하게 됩니다.</p><p>즉, AI는 자연어를 구조화된 데이터로 변환하는 역할을 하고, <strong>데이터의 정확성과 안정성은 시스템이 보장하는 구조</strong>라고 생각합니다.</p><p>&quot;REST API는 서버가 계약을 보장하지만, AI Agent는 Schema Validation이 계약을 보장합니다.”<br/>그래도 AI가 틀리면 어떡하나요?</p><p>그래서 AI는 비즈니스 로직을 직접 수행하지 않습니다.</p><p>예를 들어 &quot;주문을 취소해줘&quot;라고 사용자가 말하면, LLM은 <code>orderId</code>와 <code>reason</code> 같은 구조화된 데이터를 생성할 뿐입니다.</p><p>실제 주문 취소는 기존의 REST API나 서비스 로직이 수행합니다.</p><p>따라서 AI는 <strong>의사결정자가 아니라 입력을 해석하는 역할</strong>만 하고, 중요한 비즈니스 검증은 기존 시스템이 담당합니다.</p></div></details><details class="qa" open><summary>JSBridge는 무엇인가요?</summary><div class="answer"><p>native와 webview 사이에 통신하는 체계.</p><p>대부분의 경우 URL 요청을 케치해서 native와 webview간 통신을 진행한다.</p></div></details><details class="qa" open><summary>Webview는 무엇인가요?</summary><div class="answer"><p>Webview는 모바일단 javascript 실행 환경이다.</p><p>Webview실행은 브라우저가 url실행하는 과정이랑 조금 다르게 init과정이 필요하다.(대부분 app부팅시 처리)</p></div></details><details class="qa" open><summary>어떻게 사용자가 여러번 클릭해서 요청을 여러번 보내는걸 막을 수 있을가요?</summary><div class="answer"><ul><li>css pointer-events를 none로 설정</li><li>html button일 경우 disabled로 설정.</li><li>debounce를 활용.</li><li>modal 로딩 기능 추가.</li></ul></div></details><details class="qa" open><summary>Vue3.0에서 Proxy API로 defineProperty API를 교체 했는데 이유가 무엇인가요?</summary><div class="answer"><ul><li>성능개선</li><li>더 포괄적인 trigger 능력</li><li>더 좋은 배열에 대한 trigger능력</li><li>더 쉽게 객체를 감싸주는 부분</li><li>더 좋은 에러 메시지</li></ul><p><a target="_blank" rel="noopener noreferrer" href="https://fe.ecool.fun/topic/cf173a5c-bf67-4121-ad14-ed7404bc77a4?orderBy=updateTime&order=desc&tagId=0">https://fe.ecool.fun/topic/cf173a5c-bf67-4121-ad14-ed7404bc77a4?orderBy=updateTime&amp;order=desc&amp;tagId=0</a></p></div></details><details class="qa" open><summary>CI/CD란 무엇인가?</summary><div class="answer"><p>Continuous Integration 지속적으로 통합. (단위테스트 및 통합테스트등 전체 테스트 수행)</p><p>Continuous Delivery 유효한 코드를 리포지토리에 자동으로 릴리즈</p><p>Continuous Deployment 유효한 코드를 리포지토리에 자동으로 릴리즈</p></div></details><details class="qa" open><summary>typescript중 method overloading이 어떤 건가요?</summary><div class="answer"><pre><code class="lang-jsx">function great(name: string): string
+function great(first: string, last: string): string</code></pre></div></details><details class="qa" open><summary>canvas 랑 webgl 차이점이 무엇인지?</summary><div class="answer"><p>canvas는 2D기반으로 작성되고 javascript로 처리 가능하다.</p><p>WebGL은 3D 기반으로 작성 되고 OpenGL ES과 같은 그패픽 프로그래밍 관련 기술이 필요하다.</p></div></details><details class="qa" open><summary>Electron에 대한 이해</summary><div class="answer"><ul><li>크로스 플랫폼: windows, mac, 리눅스 같은 OS에서 잘 실행 된다.</li><li>유연성: 다양한 시스템 관련된 API를 제공 한다.</li><li>생태계: 오픈 소스이고 생태계가 잘되어 있다. Slack, vscode등등 성공사례</li><li>성능이슈: node랑 Chromium동시 실행하다보니 구동이나 메모리 점유율에서 불리하다.</li></ul></div></details><details class="qa" open><summary>Electron중 메인 스레드랑 render스레드 가 각각 무엇인가요?</summary><div class="answer"><ul><li>메인 스레드는 프로그램 entry이고 모든 화면 관리하고 시스템 자원을 방문한다. 대부분 nodejs스레드이다.</li><li>render스레드는 주로 웹페이지를 보여주고 javascript를 통해서 webAPI에 접근 가능하다.</li><li>통신은 IPC(Inter-Process Communication)， BrowserWindow를 통해서 진행한다.</li></ul></div></details><details class="qa" open><summary>JSON, XML의 차이가 무엇인가요?</summary><div class="answer"><p>Javascript Object Notation 은 데이터 포맷이고 Extensible Markup Language 는 마크업 언어 입니다.</p></div></details><details class="qa" open><summary>마이크로 프론트엔드가 무엇인가요?</summary><div class="answer"><p>일종 프론트엔드애서 사용하고 있는 웹개발 아키텍처 방식이고 여러개 작은 웹들이 모여서 한개 웹을 형성한다.</p><p>SPA페이지의 규모가 커짐에 따라서 운영이나 유지보수가 어려워 지는 경우가 있다보니 각 기능별로 구분해서 관리한다. </p><ul><li>각 작은 웹마다 독립적으로 실행, 개발, 배포 된다.</li><li>기술 스택에 영향을 받지 않는다.</li><li>필요한 부분만 버전업 가능하다</li><li>프로젝트 규모가 커져도 빌드나 배포에 영향을 주지 않는다.</li></ul></div></details><details class="qa" open><summary>마이크로 프론트엔드 구현 방식에는 어떤 방식들이 있나요?</summary><div class="answer"><ul><li>iframe</li><li>web component</li><li>js로 직접 구현</li></ul></div></details><details class="qa" open><summary>마이크로 프론트엔드 각 앱사이 격리를 어떻게 처리 하나요?</summary><div class="answer"><ul><li>css 격리는 css in js 또는 css module로 사용</li><li>js는 SandBox 룰을 만들거나 webpack 설정</li></ul></div></details>
+  <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+</section>
+
+
+  <footer class="note">
+    <p>비공개 개인 학습 자료입니다. 검색엔진에 노출되지 않도록 별도로 링크되어 있지 않습니다.</p>
+  </footer>
+</div>
+</body>
+</html>
