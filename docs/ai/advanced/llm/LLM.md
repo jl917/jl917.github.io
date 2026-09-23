@@ -1,5 +1,7 @@
 # LLM 추론·컨텍스트·파인튜닝 단계별 지식 정리
 
+📊 **<a href="/diagrams/llm-pipeline-flow.html" target="_blank" rel="noopener noreferrer">한눈에 보는 흐름 다이어그램 →</a>** — 21개 문서를 3레인 9단계 프로세스로 압축
+
 ## 📑 목차
 
 **[0. 전체 지도 한눈에 보기](#overview)**

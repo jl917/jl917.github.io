@@ -1,5 +1,7 @@
 # RAG 파이프라인 단계별 지식 정리
 
+📊 **<a href="/diagrams/rag-closed-loop.html" target="_blank" rel="noopener noreferrer">한눈에 보는 흐름 다이어그램 →</a>** — 30개 문서를 5환 클로즈드 루프로 압축
+
 ## 📑 목차
 
 **[0. 전체 파이프라인 한눈에 보기](#overview)**
