@@ -43630,6 +43630,8 @@ url: /ai/advanced/llm/LLM.md
 
 # LLM 추론·컨텍스트·파인튜닝 단계별 지식 정리
 
+📊 **<a href="/diagrams/llm-pipeline-flow.html" target="_blank" rel="noopener noreferrer">한눈에 보는 흐름 다이어그램 →</a>** — 21개 문서를 3레인 9단계 프로세스로 압축
+
 ## 📑 목차
 
 **[0. 전체 지도 한눈에 보기](#overview)**
@@ -44343,6 +44345,8 @@ url: /ai/advanced/rag/RAG.md
 ---
 
 # RAG 파이프라인 단계별 지식 정리
+
+📊 **<a href="/diagrams/rag-closed-loop.html" target="_blank" rel="noopener noreferrer">한눈에 보는 흐름 다이어그램 →</a>** — 30개 문서를 5환 클로즈드 루프로 압축
 
 ## 📑 목차
 
@@ -45314,6 +45318,8 @@ url: /ai/advanced/agent/AGENT.md
 ---
 
 # Agent 실행 과정과 단계별 지식 정리
+
+📊 **<a href="/diagrams/agent-lifecycle-flow.html" target="_blank" rel="noopener noreferrer">한눈에 보는 흐름 다이어그램 →</a>** — 85개 문서를 6레인 12단계 프로세스로 압축
 
 ## 📑 목차
 

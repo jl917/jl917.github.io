@@ -1,5 +1,7 @@
 # Agent 실행 과정과 단계별 지식 정리
 
+📊 **<a href="/diagrams/agent-lifecycle-flow.html" target="_blank" rel="noopener noreferrer">한눈에 보는 흐름 다이어그램 →</a>** — 85개 문서를 6레인 12단계 프로세스로 압축
+
 ## 📑 목차
 
 **[0. 전체 실행 과정 한눈에 보기](#overview)**

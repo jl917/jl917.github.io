@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLM · RAG · Agent 처리 흐름</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Open+Sans:wght@400;600;700&family=Geist+Mono:wght@400;500;600&family=Noto+Serif:ital@0;1&family=Noto+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --paper:#fafaf7;--paper-2:#f1f1f1;--ink:#213547;--muted:#52606f;--soft:#7c8797;
+  --accent:#0095ff;--accent-tint:rgba(0,149,255,.08);
+  --rule:rgba(33,53,71,.12);--label-rule:rgba(33,53,71,.20);--lane:rgba(33,53,71,.018);
+  --node:#fff;--node-stroke:rgba(33,53,71,.25);--chip:rgba(33,53,71,.12);--dot:rgba(33,53,71,.10);
+  --db:#5e7a9b;--ls:#7c8f6f;--fl:#9c6b50;--tb:#b8915a;
+  --sans:'Open Sans','Noto Sans KR',system-ui,sans-serif;
+  --serif:'Instrument Serif','Noto Serif KR','Noto Serif',serif;
+  --mono:'Geist Mono',ui-monospace,monospace;
+}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);min-height:100vh;padding:3rem 1.5rem 4rem}
+.frame{max-width:1200px;width:100%;margin:0 auto}
+.eyebrow{font:500 .66rem var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+h1{font:400 clamp(1.4rem,2.2vw + .7rem,2rem)/1.2 var(--serif);letter-spacing:-.01em;color:var(--ink);margin-bottom:.6rem}
+.sub{font:400 .95rem/1.6 var(--sans);color:var(--muted);max-width:760px;margin-bottom:2rem}
+svg{width:100%;min-width:1100px;display:block}
+svg text{font-family:var(--sans)}
+.mono{font-family:var(--mono)}
+.lane-tint{fill:var(--lane)}
+.rule{stroke:var(--rule)}
+.label-rule{stroke:var(--label-rule)}
+.actor{fill:var(--muted);font:500 8px var(--mono);letter-spacing:.08em}
+.step-label{fill:var(--muted);font:500 6px var(--mono);letter-spacing:.12em}
+.step-chip{fill:var(--chip)}
+.step-num{fill:var(--ink);font:600 7px var(--mono)}
+.connector{fill:none;stroke:var(--muted);stroke-width:1}
+.connector.focal{stroke:var(--accent);stroke-width:1.2}
+.node-mask{fill:var(--paper)}
+.node{fill:var(--node);stroke:var(--node-stroke)}
+.node.focal{fill:var(--accent-tint);stroke:var(--accent);stroke-width:1.2}
+.role{fill:rgba(33,53,71,.10)}
+.role.focal{fill:rgba(0,149,255,.20)}
+.role-text{fill:var(--ink);font:600 6px var(--mono)}
+.role-text.focal{fill:var(--accent)}
+.node-title{fill:var(--ink);font:600 11px var(--sans)}
+.node-sub{fill:var(--muted);font:6.5px var(--mono)}
+.node-tool{fill:var(--soft);font:6.5px var(--mono)}
+.data-text{fill:#fff;font:700 5px var(--mono)}
+.legend-key{fill:var(--muted);font:500 7px var(--mono);letter-spacing:.12em}
+.legend-text{fill:var(--muted);font:8px var(--sans)}
+
+.cards{display:grid;grid-template-columns:1.1fr 1fr .9fr;gap:1rem;margin-top:2rem}
+@media (max-width:800px){.cards{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid rgba(33,53,71,.12);border-radius:6px;padding:1.1rem 1.25rem}
+.card .eyebrow{margin-bottom:.6rem}
+.card-header{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem}
+.card-dot{width:7px;height:7px;border-radius:50%}
+.card-dot.ink{background:var(--ink)}
+.card-dot.muted{background:var(--muted)}
+.card-dot.soft{background:var(--soft)}
+.card h3{font:600 .95rem var(--sans);color:var(--ink)}
+.card p{font:400 .82rem/1.55 var(--sans);color:var(--muted)}
+.card code{font-family:var(--mono);font-size:.72rem;color:var(--soft)}
+
+footer{margin-top:2.5rem;padding-top:1rem;border-top:1px solid rgba(33,53,71,.12);font:400 .72rem var(--mono);color:var(--soft)}
+</style>
+</head>
+<body>
+<div class="frame">
+  <p class="eyebrow">Process · Multi-actor sequential workflow</p>
+  <h1>LLM · RAG · Agent 요청 처리 흐름</h1>
+  <p class="sub">사용자 요청 한 건이 Agent 오케스트레이션을 거쳐 LLM 라우팅·계획·생성, RAG 혼합검색, 외부 도구 실행, 상태 저장소 사이를 오가는 전체 경로. <code class="mono">docs/ai/advanced/{llm,rag,agent}</code> 지식 위키에서 그라운딩.</p>
+
+  <svg viewBox="0 0 1400 576" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="marw-title marw-desc">
+    <title id="marw-title">LLM · RAG · Agent 요청 처리 흐름</title>
+    <desc id="marw-desc">사용자 요청이 Agent, LLM, RAG, 외부 도구, 상태 저장소 여섯 액터 사이를 열한 단계에 걸쳐 순차적으로 오가며, Agent의 결과 검증 단계가 전체 흐름의 핵심 관문으로 강조된 프로세스 다이어그램.</desc>
+    <defs>
+      <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="11" cy="11" r="0.8" fill="var(--dot)"/></pattern>
+      <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="var(--muted)"/></marker>
+      <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="var(--accent)"/></marker>
+    </defs>
+
+    <rect width="1400" height="576" fill="var(--paper)"/><rect width="1400" height="576" fill="url(#dots)" opacity=".55"/>
+
+    <!-- alternating lane tints: USER / LLM / TOOL -->
+    <rect class="lane-tint" x="140" y="36"  width="1260" height="80"/>
+    <rect class="lane-tint" x="140" y="196" width="1260" height="80"/>
+    <rect class="lane-tint" x="140" y="356" width="1260" height="80"/>
+
+    <g class="rule" stroke-width=".8">
+      <line x1="0" y1="36"  x2="1400" y2="36"/>
+      <line x1="0" y1="116" x2="1400" y2="116"/>
+      <line x1="0" y1="196" x2="1400" y2="196"/>
+      <line x1="0" y1="276" x2="1400" y2="276"/>
+      <line x1="0" y1="356" x2="1400" y2="356"/>
+      <line x1="0" y1="436" x2="1400" y2="436"/>
+      <line x1="0" y1="516" x2="1400" y2="516"/>
+    </g>
+    <line class="label-rule" x1="140" y1="36" x2="140" y2="516"/>
+
+    <g class="actor" text-anchor="middle">
+      <text x="70" y="80">USER</text>
+      <text x="70" y="160">AGENT</text>
+      <text x="70" y="240">LLM</text>
+      <text x="70" y="320">RAG</text>
+      <text x="70" y="392">TOOL /</text>
+      <text x="70" y="400">EXT</text>
+      <text x="70" y="480">MEMORY</text>
+    </g>
+
+    <g text-anchor="middle">
+      <rect class="step-chip" x="190"  y="8" width="16" height="16" rx="8"/><text class="step-num" x="198"  y="19">1</text><text class="step-label" x="198"  y="32">INPUT</text>
+      <rect class="step-chip" x="302"  y="8" width="16" height="16" rx="8"/><text class="step-num" x="310"  y="19">2</text><text class="step-label" x="310"  y="32">BOUNDARY</text>
+      <rect class="step-chip" x="414"  y="8" width="16" height="16" rx="8"/><text class="step-num" x="422"  y="19">3</text><text class="step-label" x="422"  y="32">PLAN</text>
+      <rect class="step-chip" x="526"  y="8" width="16" height="16" rx="8"/><text class="step-num" x="534"  y="19">4</text><text class="step-label" x="534"  y="32">STATE</text>
+      <rect class="step-chip" x="638"  y="8" width="16" height="16" rx="8"/><text class="step-num" x="646"  y="19">5</text><text class="step-label" x="646"  y="32">RETRIEVE</text>
+      <rect class="step-chip" x="750"  y="8" width="16" height="16" rx="8"/><text class="step-num" x="758"  y="19">6</text><text class="step-label" x="758"  y="32">GATE</text>
+      <rect class="step-chip" x="862"  y="8" width="16" height="16" rx="8"/><text class="step-num" x="870"  y="19">7</text><text class="step-label" x="870"  y="32">EXECUTE</text>
+      <rect x="974"  y="8" width="16" height="16" rx="8" fill="rgba(0,149,255,.20)"/><text x="982"  y="19" fill="var(--accent)" font-size="7" font-weight="600" class="mono">8</text><text x="982"  y="32" fill="var(--accent)" font-size="6" font-weight="500" letter-spacing=".12em" class="mono">VERIFY</text>
+      <rect class="step-chip" x="1086" y="8" width="16" height="16" rx="8"/><text class="step-num" x="1094" y="19">9</text><text class="step-label" x="1094" y="32">GENERATE</text>
+      <rect class="step-chip" x="1196" y="8" width="20" height="16" rx="8"/><text class="step-num" x="1206" y="19">10</text><text class="step-label" x="1206" y="32">MEMORY</text>
+      <rect class="step-chip" x="1308" y="8" width="20" height="16" rx="8"/><text class="step-num" x="1318" y="19">11</text><text class="step-label" x="1318" y="32">RESPOND</text>
+    </g>
+
+    <!-- Connectors: right exit, r=8 orthogonal bend, top/bottom entry. Drawn before nodes. -->
+    <path class="connector"       d="M248 76 H302 Q310 76 310 84 V124"    marker-end="url(#arrow)"/>
+    <path class="connector"       d="M360 156 H414 Q422 156 422 164 V204" marker-end="url(#arrow)"/>
+    <path class="connector"       d="M472 236 H526 Q534 236 534 244 V444" marker-end="url(#arrow)"/>
+    <path class="connector"       d="M584 476 H638 Q646 476 646 468 V348" marker-end="url(#arrow)"/>
+    <path class="connector"       d="M696 316 H750 Q758 316 758 308 V188" marker-end="url(#arrow)"/>
+    <path class="connector"       d="M808 156 H862 Q870 156 870 164 V364" marker-end="url(#arrow)"/>
+    <path class="connector focal" d="M920 396 H974 Q982 396 982 388 V188" marker-end="url(#arrow-accent)"/>
+    <path class="connector focal" d="M1032 156 H1086 Q1094 156 1094 164 V204" marker-end="url(#arrow-accent)"/>
+    <path class="connector"       d="M1144 236 H1198 Q1206 236 1206 244 V444" marker-end="url(#arrow)"/>
+    <path class="connector"       d="M1256 476 H1310 Q1318 476 1318 468 V108" marker-end="url(#arrow)"/>
+
+    <!-- Nodes -->
+    <g text-anchor="middle">
+      <g><rect class="node-mask" x="148" y="44" width="100" height="64" rx="6"/><rect class="node" x="148" y="44" width="100" height="64" rx="6"/>
+        <rect class="role" x="152" y="48" width="20" height="10" rx="2"/><text class="role-text" x="162" y="56">USR</text>
+        <text class="node-title" x="198" y="70">요청 입력</text><text class="node-sub" x="198" y="84">goal + constraints</text><text class="node-tool" x="198" y="96">natural language</text>
+        <rect x="228" y="98" width="16" height="8" rx="2" fill="var(--ls)"/><text class="data-text" x="236" y="104">LS</text></g>
+
+      <g><rect class="node-mask" x="260" y="124" width="100" height="64" rx="6"/><rect class="node" x="260" y="124" width="100" height="64" rx="6"/>
+        <rect class="role" x="264" y="128" width="20" height="10" rx="2"/><text class="role-text" x="274" y="136">AGT</text>
+        <text class="node-title" x="310" y="150">경계 격리</text><text class="node-sub" x="310" y="164">trust-tag · guard</text><text class="node-tool" x="310" y="176">input boundary</text>
+        <rect x="264" y="178" width="16" height="8" rx="2" fill="var(--ls)"/><text class="data-text" x="272" y="184">LS</text>
+        <rect x="340" y="178" width="16" height="8" rx="2" fill="var(--ls)"/><text class="data-text" x="348" y="184">LS</text></g>
+
+      <g><rect class="node-mask" x="372" y="204" width="100" height="64" rx="6"/><rect class="node" x="372" y="204" width="100" height="64" rx="6"/>
+        <rect class="role" x="376" y="208" width="20" height="10" rx="2"/><text class="role-text" x="386" y="216">LLM</text>
+        <text class="node-title" x="422" y="230">라우팅·계획</text><text class="node-sub" x="422" y="244">route → 4 fields</text><text class="node-tool" x="422" y="256">router · planner</text>
+        <rect x="376" y="258" width="16" height="8" rx="2" fill="var(--ls)"/><text class="data-text" x="384" y="264">LS</text>
+        <rect x="452" y="258" width="16" height="8" rx="2" fill="var(--ls)"/><text class="data-text" x="460" y="264">LS</text></g>
+
+      <g><rect class="node-mask" x="484" y="444" width="100" height="64" rx="6"/><rect class="node" x="484" y="444" width="100" height="64" rx="6"/>
+        <rect class="role" x="488" y="448" width="20" height="10" rx="2"/><text class="role-text" x="498" y="456">MEM</text>
+        <text class="node-title" x="534" y="470">상태 기록</text><text class="node-sub" x="534" y="484">pending → running</text><text class="node-tool" x="534" y="496">state store</text>
+        <rect x="488" y="498" width="16" height="8" rx="2" fill="var(--ls)"/><text class="data-text" x="496" y="504">LS</text>
+        <rect x="564" y="498" width="16" height="8" rx="2" fill="var(--db)"/><text class="data-text" x="572" y="504">DB</text></g>
+
+      <g><rect class="node-mask" x="596" y="284" width="100" height="64" rx="6"/><rect class="node" x="596" y="284" width="100" height="64" rx="6"/>
+        <rect class="role" x="600" y="288" width="20" height="10" rx="2"/><text class="role-text" x="610" y="296">RAG</text>
+        <text class="node-title" x="646" y="310">혼합검색</text><text class="node-sub" x="646" y="324">hybrid → rerank</text><text class="node-tool" x="646" y="336">retriever</text>
+        <rect x="600" y="338" width="16" height="8" rx="2" fill="var(--db)"/><text class="data-text" x="608" y="344">DB</text>
+        <rect x="676" y="338" width="16" height="8" rx="2" fill="var(--tb)"/><text class="data-text" x="684" y="344">TB</text></g>
+
+      <g><rect class="node-mask" x="708" y="124" width="100" height="64" rx="6"/><rect class="node" x="708" y="124" width="100" height="64" rx="6"/>
+        <rect class="role" x="712" y="128" width="20" height="10" rx="2"/><text class="role-text" x="722" y="136">AGT</text>
+        <text class="node-title" x="758" y="150">권한 게이트</text><text class="node-sub" x="758" y="164">4-tier permission</text><text class="node-tool" x="758" y="176">policy engine</text>
+        <rect x="712" y="178" width="16" height="8" rx="2" fill="var(--tb)"/><text class="data-text" x="720" y="184">TB</text>
+        <rect x="788" y="178" width="16" height="8" rx="2" fill="var(--ls)"/><text class="data-text" x="796" y="184">LS</text></g>
+
+      <g><rect class="node-mask" x="820" y="364" width="100" height="64" rx="6"/><rect class="node" x="820" y="364" width="100" height="64" rx="6"/>
+        <rect class="role" x="824" y="368" width="20" height="10" rx="2"/><text class="role-text" x="834" y="376">EXT</text>
+        <text class="node-title" x="870" y="390">도구 실행</text><text class="node-sub" x="870" y="404">idempotent · retry</text><text class="node-tool" x="870" y="416">external API/DB</text>
+        <rect x="824" y="418" width="16" height="8" rx="2" fill="var(--ls)"/><text class="data-text" x="832" y="424">LS</text>
+        <rect x="900" y="418" width="16" height="8" rx="2" fill="var(--db)"/><text class="data-text" x="908" y="424">DB</text></g>
+
+      <g><rect class="node-mask" x="932" y="124" width="100" height="64" rx="6"/><rect class="node focal" x="932" y="124" width="100" height="64" rx="6"/>
+        <rect class="role focal" x="936" y="128" width="20" height="10" rx="2"/><text class="role-text focal" x="946" y="136">AGT</text>
+        <text class="node-title" x="982" y="150">결과 검증</text><text class="node-sub" x="982" y="164">200 ≠ success</text><text class="node-tool" x="982" y="176">verify gate</text>
+        <rect x="936" y="178" width="16" height="8" rx="2" fill="var(--db)"/><text class="data-text" x="944" y="184">DB</text>
+        <rect x="1012" y="178" width="16" height="8" rx="2" fill="var(--db)"/><text class="data-text" x="1020" y="184">DB</text></g>
+
+      <g><rect class="node-mask" x="1044" y="204" width="100" height="64" rx="6"/><rect class="node" x="1044" y="204" width="100" height="64" rx="6"/>
+        <rect class="role" x="1048" y="208" width="20" height="10" rx="2"/><text class="role-text" x="1058" y="216">LLM</text>
+        <text class="node-title" x="1094" y="230">근거 생성</text><text class="node-sub" x="1094" y="244">cite · flag unsure</text><text class="node-tool" x="1094" y="256">generator</text>
+        <rect x="1048" y="258" width="16" height="8" rx="2" fill="var(--db)"/><text class="data-text" x="1056" y="264">DB</text>
+        <rect x="1124" y="258" width="16" height="8" rx="2" fill="var(--fl)"/><text class="data-text" x="1132" y="264">FL</text></g>
+
+      <g><rect class="node-mask" x="1156" y="444" width="100" height="64" rx="6"/><rect class="node" x="1156" y="444" width="100" height="64" rx="6"/>
+        <rect class="role" x="1160" y="448" width="20" height="10" rx="2"/><text class="role-text" x="1170" y="456">MEM</text>
+        <text class="node-title" x="1206" y="470">경험 저장</text><text class="node-sub" x="1206" y="484">log → next task</text><text class="node-tool" x="1206" y="496">experience lib</text>
+        <rect x="1160" y="498" width="16" height="8" rx="2" fill="var(--fl)"/><text class="data-text" x="1168" y="504">FL</text>
+        <rect x="1236" y="498" width="16" height="8" rx="2" fill="var(--fl)"/><text class="data-text" x="1244" y="504">FL</text></g>
+
+      <g><rect class="node-mask" x="1268" y="44" width="100" height="64" rx="6"/><rect class="node" x="1268" y="44" width="100" height="64" rx="6"/>
+        <rect class="role" x="1272" y="48" width="20" height="10" rx="2"/><text class="role-text" x="1282" y="56">USR</text>
+        <text class="node-title" x="1318" y="70">응답 수신</text><text class="node-sub" x="1318" y="84">answer + citations</text><text class="node-tool" x="1318" y="96">—</text>
+        <rect x="1272" y="98" width="16" height="8" rx="2" fill="var(--fl)"/><text class="data-text" x="1280" y="104">FL</text></g>
+    </g>
+
+    <!-- Legend: STEPS already carried by the numbered header row above (11 columns);
+         repeating all 11 chips here would only duplicate it, so this strip covers
+         the two things the header can't show — payload type and connector meaning. -->
+    <g>
+      <text class="legend-key" x="144" y="532">DATA TYPE</text>
+      <rect x="228" y="525" width="16" height="8" rx="2" fill="var(--ls)"/><text class="legend-text" x="252" y="532">LS · task/goal</text>
+      <rect x="368" y="525" width="16" height="8" rx="2" fill="var(--db)"/><text class="legend-text" x="392" y="532">DB · records</text>
+      <rect x="504" y="525" width="16" height="8" rx="2" fill="var(--tb)"/><text class="legend-text" x="528" y="532">TB · evidence table</text>
+      <rect x="688" y="525" width="16" height="8" rx="2" fill="var(--fl)"/><text class="legend-text" x="712" y="532">FL · document</text>
+      <text class="legend-key" x="920" y="532">LEFT IN · RIGHT OUT</text>
+      <text class="legend-key" x="144" y="553">FLOW</text>
+      <line x1="228" y1="549" x2="256" y2="549" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#arrow-accent)"/><text class="legend-text" x="268" y="553">Verification handoff</text>
+      <line x1="452" y1="549" x2="480" y2="549" stroke="var(--muted)" marker-end="url(#arrow)"/><text class="legend-text" x="492" y="553">Sequential handoff</text>
+    </g>
+  </svg>
+
+  <div class="cards">
+    <div class="card">
+      <p class="eyebrow">State &amp; boundary</p>
+      <div class="card-header"><span class="card-dot ink"></span><h3>상태는 Agent의 작업 현장</h3></div>
+      <p>세션·작업·사용자·외부시스템 4계층 상태를 명시적으로 관리하지 않으면 같은 API를 반복 호출하거나 확정된 제약을 잊는다. 입력은 언제나 신뢰 불가 데이터로 취급해 경계를 격리한다. <code>AGENT 04 · 09 · 10</code></p>
+    </div>
+    <div class="card">
+      <p class="eyebrow">Permission gate &amp; verification</p>
+      <div class="card-header"><span class="card-dot muted"></span><h3>검증이 곧 Agent의 정의</h3></div>
+      <p>도구 결과의 200 응답은 성공을 증명하지 않는다. 폐루프의 핵심은 실행이 아니라 검증이며, 권한은 4단계로 파라미터 단위까지 판정한다. <code>AGENT 02 · 29 · 39 · 40</code></p>
+    </div>
+    <div class="card">
+      <p class="eyebrow">Retrieval</p>
+      <div class="card-header"><span class="card-dot soft"></span><h3>완전함과 정확함은 다른 목표</h3></div>
+      <p>리콜층은 완전함을, Rerank는 정확함을 추구한다. 하나의 K로 둘을 동시에 만족시킬 수 없어 혼합검색 → 융합 → 재정렬 3층으로 분리한다. <code>RAG 07 · 09 · 13</code></p>
+    </div>
+  </div>
+
+  <footer>SOURCE · docs/ai/advanced/{llm,rag,agent} — Diagram Design · Process type · jl917-blog profile (accent #0095ff / Open Sans, onboarded 2026-09-23)</footer>
+</div>
+</body>
+</html>
