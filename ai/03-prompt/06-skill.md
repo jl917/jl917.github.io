@@ -131,4 +131,5 @@ getWeather(city);
 | [claude-dev-suite/claude-dev-suite](https://github.com/claude-dev-suite/claude-dev-suite) | 기술 스택별 전문 에이전트 67종 · MCP 서버 · 프레임워크 스킬 모음 |
 | [lackeyjb/playwright-skill](https://github.com/lackeyjb/playwright-skill) | Playwright 기반 테스트 스킬 |
 | [IvanMurzak/Unity-MCP](https://github.com/IvanMurzak/Unity-MCP) | Unity 게임 개발 스킬 (MCP) |
+| [guiguiyan930-source/game-ui-design-workflow](https://github.com/guiguiyan930-source/game-ui-design-workflow) | 게임 UI 디자인 워크플로우 |
 | [Agents365-ai/drawio-skill](https://github.com/Agents365-ai/drawio-skill) | draw.io 다이어그램 생성·편집 |
