@@ -36548,6 +36548,9 @@ getWeather(city);
 | [alibaba/open-code-review](https://github.com/alibaba/open-code-review) | AI 코드 리뷰 (CLI 본체 + Claude Code·Codex·Cursor 플러그인) |
 | [alibaba/skill-up](https://github.com/alibaba/skill-up) | 스킬을 평가·개선하는 스킬 (eval 생성 → 실패 진단 → 케이스 보강 반복) |
 | [claude-dev-suite/claude-dev-suite](https://github.com/claude-dev-suite/claude-dev-suite) | 기술 스택별 전문 에이전트 67종 · MCP 서버 · 프레임워크 스킬 모음 |
+| [lackeyjb/playwright-skill](https://github.com/lackeyjb/playwright-skill) | Playwright 기반 테스트 스킬 |
+| [IvanMurzak/Unity-MCP](https://github.com/IvanMurzak/Unity-MCP) | Unity 게임 개발 스킬 (MCP) |
+| [Agents365-ai/drawio-skill](https://github.com/Agents365-ai/drawio-skill) | draw.io 다이어그램 생성·편집 |
 
 
 
