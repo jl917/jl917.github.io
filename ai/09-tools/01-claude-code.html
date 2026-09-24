@@ -9,8 +9,8 @@
 <script defer src="/static/js/styles.878654a4.js"></script>
 <script defer src="/static/js/lib-react.b02d59f9.js"></script>
 <script defer src="/static/js/lib-router.54e949a1.js"></script>
-<script defer src="/static/js/6934.104ab816.js"></script>
-<script defer src="/static/js/index.927661c8.js"></script>
+<script defer src="/static/js/6716.0c7cd8cf.js"></script>
+<script defer src="/static/js/index.66267371.js"></script>
 <meta http equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-beta.21">
 <link rel="icon" href="/favicon.png">
@@ -157,10 +157,10 @@
 <li class="[&amp;:not(:first-child)]:rp-mt-2">릴리스·배포 절차</li>
 </ul>
 <div class="language-markdown"><div class="rspress-code-content rspress-scrollbar"><div><pre class="shiki css-variables" style="background-color:var(--shiki-background);color:var(--shiki-foreground)" tabindex="0"><code class="language-markdown"><span class="line"><span style="color:var(--shiki-foreground)">---</span></span>
-<span class="line"><span style="color:var(--shiki-foreground)">name: fix-issue</span></span>
-<span class="line"><span style="color:var(--shiki-foreground)">description: GitHub 이슈를 분석하고 수정한다</span></span>
-<span class="line"><span style="color:var(--shiki-foreground)">disable-model-invocation: true</span></span>
-<span class="line"><span style="color:var(--shiki-foreground)">allowed-tools: Bash(gh issue view *) Bash(pnpm test *)</span></span>
+<span class="line"><span style="color:var(--shiki-token-keyword)">name</span><span style="color:var(--shiki-token-keyword)">:</span><span style="color:var(--shiki-token-string-expression)"> fix-issue</span></span>
+<span class="line"><span style="color:var(--shiki-token-keyword)">description</span><span style="color:var(--shiki-token-keyword)">:</span><span style="color:var(--shiki-token-string-expression)"> GitHub 이슈를 분석하고 수정한다</span></span>
+<span class="line"><span style="color:var(--shiki-token-keyword)">disable-model-invocation</span><span style="color:var(--shiki-token-keyword)">:</span><span style="color:var(--shiki-token-constant)"> true</span></span>
+<span class="line"><span style="color:var(--shiki-token-keyword)">allowed-tools</span><span style="color:var(--shiki-token-keyword)">:</span><span style="color:var(--shiki-token-string-expression)"> Bash(gh issue view *) Bash(pnpm test *)</span></span>
 <span class="line"><span style="color:var(--shiki-foreground)">---</span></span>
 <span class="line"><span style="color:var(--shiki-foreground)">GitHub 이슈 $ARGUMENTS 를 분석하고 수정한다.</span></span>
 <span class="line"></span>
@@ -189,8 +189,8 @@
 <li class="[&amp;:not(:first-child)]:rp-mt-2">모델이 <strong class="rp-font-semibold">실제로 틀렸을 때</strong> 한 줄씩 추가하고, 지켜지지 않거나 낡은 규칙은 지웁니다 (living doc).</li>
 </ul>
 <div class="language-markdown"><div class="rspress-code-content rspress-scrollbar"><div><pre class="shiki css-variables" style="background-color:var(--shiki-background);color:var(--shiki-foreground)" tabindex="0"><code class="language-markdown"><span class="line"><span style="color:var(--shiki-foreground)">---</span></span>
-<span class="line"><span style="color:var(--shiki-foreground)">paths:</span></span>
-<span class="line"><span style="color:var(--shiki-foreground)">  - &quot;src/api/*</span><span style="color:var(--shiki-foreground);font-style:italic">*/*</span><span style="color:var(--shiki-foreground)">.ts&quot;</span></span>
+<span class="line"><span style="color:var(--shiki-token-keyword)">paths</span><span style="color:var(--shiki-token-keyword)">:</span></span>
+<span class="line"><span style="color:var(--shiki-foreground)">  - </span><span style="color:var(--shiki-token-string-expression)">&quot;src/api/**/*.ts&quot;</span></span>
 <span class="line"><span style="color:var(--shiki-foreground)">---</span></span>
 <span class="line"><span style="color:var(--shiki-foreground);font-weight:bold"># API 규칙</span></span>
 <span class="line"><span style="color:var(--shiki-foreground)">- 모든 엔드포인트는 zod 로 입력을 검증한다</span></span>
@@ -246,10 +246,10 @@
 <h3 id="73-subagents--역할-단위-분해" class="rspress-doc-outline rp-mt-10 rp-mb-2 rp-leading-7 rp-text-xl title_fb7eb"><a class="link_a7cea header-anchor link_a9ef4 inline-link_f855c" aria-hidden="true" href="#73-subagents--역할-단위-분해">#</a>7.3 Subagents — 역할 단위 분해</h3>
 <p class="rp-my-4 rp-leading-7">서브에이전트는 <strong class="rp-font-semibold">자기만의 컨텍스트, 시스템 프롬프트, 허용 도구</strong>로 실행되고 결과 요약만 돌려줍니다. 파일을 많이 읽는 조사·리뷰를 맡기면 메인 대화가 깨끗하게 유지됩니다.</p>
 <div class="language-markdown"><div class="rspress-code-content rspress-scrollbar"><div><pre class="shiki css-variables" style="background-color:var(--shiki-background);color:var(--shiki-foreground)" tabindex="0"><code class="language-markdown"><span class="line"><span style="color:var(--shiki-foreground)">---</span></span>
-<span class="line"><span style="color:var(--shiki-foreground)">name: security-reviewer</span></span>
-<span class="line"><span style="color:var(--shiki-foreground)">description: 코드의 보안 취약점을 검토한다. 인증·결제 코드 변경 후 사용한다.</span></span>
-<span class="line"><span style="color:var(--shiki-foreground)">tools: Read, Grep, Glob, Bash</span></span>
-<span class="line"><span style="color:var(--shiki-foreground)">model: opus</span></span>
+<span class="line"><span style="color:var(--shiki-token-keyword)">name</span><span style="color:var(--shiki-token-keyword)">:</span><span style="color:var(--shiki-token-string-expression)"> security-reviewer</span></span>
+<span class="line"><span style="color:var(--shiki-token-keyword)">description</span><span style="color:var(--shiki-token-keyword)">:</span><span style="color:var(--shiki-token-string-expression)"> 코드의 보안 취약점을 검토한다. 인증·결제 코드 변경 후 사용한다.</span></span>
+<span class="line"><span style="color:var(--shiki-token-keyword)">tools</span><span style="color:var(--shiki-token-keyword)">:</span><span style="color:var(--shiki-token-string-expression)"> Read, Grep, Glob, Bash</span></span>
+<span class="line"><span style="color:var(--shiki-token-keyword)">model</span><span style="color:var(--shiki-token-keyword)">:</span><span style="color:var(--shiki-token-string-expression)"> opus</span></span>
 <span class="line"><span style="color:var(--shiki-foreground)">---</span></span>
 <span class="line"><span style="color:var(--shiki-foreground)">너는 시니어 보안 엔지니어다. 다음을 검토한다:</span></span>
 <span class="line"><span style="color:var(--shiki-foreground)">- 인젝션 (SQL, XSS, 명령어)</span></span>
@@ -360,7 +360,7 @@
 <li class="[&amp;:not(:first-child)]:rp-mt-2"><a href="https://code.claude.com/docs/en/headless" rel="noopener noreferrer" target="_blank" class="link_a7cea  link_a9ef4 inline-link_f855c">Claude Code — Run programmatically (headless)</a></li>
 <li class="[&amp;:not(:first-child)]:rp-mt-2"><a href="https://code.claude.com/docs/en/github-actions" rel="noopener noreferrer" target="_blank" class="link_a7cea  link_a9ef4 inline-link_f855c">Claude Code — GitHub Actions</a></li>
 <li class="[&amp;:not(:first-child)]:rp-mt-2"><a href="https://www.anthropic.com/engineering/claude-code-best-practices" rel="noopener noreferrer" target="_blank" class="link_a7cea  link_a9ef4 inline-link_f855c">Anthropic — Claude Code best practices (engineering blog)</a></li>
-</ul><!--/$--></div><div class="rspress-doc-footer"><footer class="rp-mt-8"><div class="xs:rp-flex rp-pb-5 rp-px-2 rp-justify-end rp-items-center"><div class="rp-flex rp-text-sm rp-text-text-2 rp-leading-6 sm:rp-leading-8 rp-font-medium"><p>Last Updated<!-- -->: <span>2026/9/24 10:26:31</span></p></div></div><div class="rp-flex rp-flex-col"></div><div class="rp-flex rp-flex-col sm:rp-flex-row sm:rp-justify-around rp-gap-4 rp-pt-6"><div class="prev_c92d1 rp-flex rp-flex-col"><a href="/ai/08-embodied.html" class="link_a7cea pager-link_e0d2d"><span class="desc_dcc01">Previous Page</span><span class="title_a3acb">체화 지능</span></a></div><div class="next_c11be rp-flex rp-flex-col"><a href="/ai/09-tools/02-ollama.html" class="link_a7cea pager-link_e0d2d next_ad355"><span class="desc_dcc01">Next Page</span><span class="title_a3acb">Ollama</span></a></div></div></footer></div></div><div class="aside-container_bc5fa"></div></div></div></div></section></div>
+</ul><!--/$--></div><div class="rspress-doc-footer"><footer class="rp-mt-8"><div class="xs:rp-flex rp-pb-5 rp-px-2 rp-justify-end rp-items-center"><div class="rp-flex rp-text-sm rp-text-text-2 rp-leading-6 sm:rp-leading-8 rp-font-medium"><p>Last Updated<!-- -->: <span>2026/9/24 14:43:31</span></p></div></div><div class="rp-flex rp-flex-col"></div><div class="rp-flex rp-flex-col sm:rp-flex-row sm:rp-justify-around rp-gap-4 rp-pt-6"><div class="prev_c92d1 rp-flex rp-flex-col"><a href="/ai/08-embodied.html" class="link_a7cea pager-link_e0d2d"><span class="desc_dcc01">Previous Page</span><span class="title_a3acb">체화 지능</span></a></div><div class="next_c11be rp-flex rp-flex-col"><a href="/ai/09-tools/02-ollama.html" class="link_a7cea pager-link_e0d2d next_ad355"><span class="desc_dcc01">Next Page</span><span class="title_a3acb">Ollama</span></a></div></div></footer></div></div><div class="aside-container_bc5fa"></div></div></div></div></section></div>
 <div id="search-container"></div>
 </body>
 </html>
