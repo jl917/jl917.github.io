@@ -28,5 +28,10 @@
     "type": "file",
     "name": "06-a2a",
     "label": "A2A"
+  },
+  {
+    "type": "file",
+    "name": "07-other",
+    "label": "오픈소스 모음"
   }
 ]
