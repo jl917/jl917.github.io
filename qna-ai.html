@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="robots" content="noindex, nofollow" />
+<title>AI(LLM·RAG·Agent) Q&amp;A 정리</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --bg-alt: #f6f7f9;
+  --text: #1c1f24;
+  --text-dim: #5b6472;
+  --border: #e3e6ea;
+  --accent: #2f6fed;
+  --accent-bg: #eaf1ff;
+  --code-bg: #f0f2f5;
+  --shadow: rgba(20, 24, 32, 0.06);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14161a;
+    --bg-alt: #1b1e24;
+    --text: #e7e9ec;
+    --text-dim: #9aa3af;
+    --border: #2b2f37;
+    --accent: #6f9bff;
+    --accent-bg: #1d2636;
+    --code-bg: #1f232a;
+    --shadow: rgba(0, 0, 0, 0.35);
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Segoe UI", Pretendard, sans-serif;
+  line-height: 1.65;
+  padding: 2.5rem 1.25rem 5rem;
+}
+.wrap { max-width: 880px; margin: 0 auto; }
+header.page-head { margin-bottom: 2rem; }
+h1 { font-size: 1.8rem; margin: 0 0 0.4rem; letter-spacing: -0.01em; }
+.subtitle { color: var(--text-dim); font-size: 0.95rem; margin: 0; }
+.badge {
+  display: inline-block;
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  margin-left: 0.5rem;
+}
+nav.toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.5rem 0 2.5rem;
+  padding: 1rem;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+nav.toc a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+nav.toc a:hover { border-color: var(--accent); color: var(--accent); }
+nav.toc a .count { color: var(--text-dim); font-weight: 400; }
+nav.toc .group-label {
+  width: 100%;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-dim);
+  margin: 0.5rem 0 0.1rem;
+}
+nav.toc .group-label:first-child { margin-top: 0; }
+section.category { margin-bottom: 3rem; scroll-margin-top: 1rem; }
+section.category h2 {
+  font-size: 1.3rem;
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+section.category h2 .count { font-size: 0.85rem; font-weight: 500; color: var(--text-dim); }
+section.domain { margin: 2.5rem 0 1rem; }
+section.domain h1.domain-title {
+  font-size: 1.55rem;
+  margin: 0 0 0.3rem;
+  padding-top: 1.5rem;
+  border-top: 3px solid var(--accent);
+}
+section.domain .domain-sub { color: var(--text-dim); font-size: 0.9rem; margin: 0 0 1rem; }
+details.qa {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 0.6rem;
+  padding: 0;
+  box-shadow: 0 1px 2px var(--shadow);
+}
+details.qa summary {
+  cursor: pointer;
+  padding: 0.85rem 1.1rem;
+  font-weight: 600;
+  list-style: none;
+  display: flex;
+  gap: 0.6rem;
+}
+details.qa summary::-webkit-details-marker { display: none; }
+details.qa summary::before {
+  content: "Q.";
+  color: var(--accent);
+  flex-shrink: 0;
+}
+details.qa summary:hover { color: var(--accent); }
+details.qa[open] summary { border-bottom: 1px solid var(--border); }
+.answer {
+  padding: 0.9rem 1.1rem 1.05rem;
+  color: var(--text);
+}
+.answer p { margin: 0.5rem 0; }
+.answer p:first-child { margin-top: 0; }
+.answer p:last-child { margin-bottom: 0; }
+.answer ul, .answer ol { margin: 0.5rem 0; padding-left: 1.3rem; }
+.answer li { margin: 0.2rem 0; }
+.answer code {
+  background: var(--code-bg);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.answer a { color: var(--accent); }
+.back-to-top {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  text-decoration: none;
+}
+.back-to-top:hover { color: var(--accent); }
+footer.note {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 0.82rem;
+}
+</style>
+</head>
+<body>
+<div class="wrap" id="top">
+  <header class="page-head">
+    <h1>AI(LLM·RAG·Agent) Q&amp;A 정리<span class="badge">총 136개</span></h1>
+    <p class="subtitle"><code>docs/ai/advanced/{llm,rag,agent}</code> 지식 위키(총 136개 문서)를 문답 형태로 압축한 모음입니다. LLM 21 · RAG 30 · Agent 85.</p>
+  </header>
+
+  <nav class="toc">
+    <span class="group-label">LLM</span>
+    <a href="#cat-llm-model">모델구조 <span class="count">3</span></a>
+<a href="#cat-llm-perf">추론성능·비용 <span class="count">7</span></a>
+<a href="#cat-llm-context">컨텍스트 <span class="count">3</span></a>
+<a href="#cat-llm-prompt">프롬프트 <span class="count">5</span></a>
+<a href="#cat-llm-finetune">파인튜닝 <span class="count">3</span></a>
+    <span class="group-label">RAG</span>
+    <a href="#cat-rag-overview">총론 <span class="count">3</span></a>
+<a href="#cat-rag-index">인덱싱 <span class="count">5</span></a>
+<a href="#cat-rag-search">검색 <span class="count">7</span></a>
+<a href="#cat-rag-multiturn">다중턴·캐시 <span class="count">2</span></a>
+<a href="#cat-rag-gen">조립·생성 <span class="count">7</span></a>
+<a href="#cat-rag-ops">인덱스운영 <span class="count">2</span></a>
+<a href="#cat-rag-kg">지식그래프 <span class="count">4</span></a>
+    <span class="group-label">Agent</span>
+    <a href="#cat-agent-concept">개념 <span class="count">3</span></a>
+<a href="#cat-agent-state">상태·기억 <span class="count">5</span></a>
+<a href="#cat-agent-input">입력·라우팅 <span class="count">6</span></a>
+<a href="#cat-agent-plan">계획 <span class="count">5</span></a>
+<a href="#cat-agent-tools">도구 결정 <span class="count">9</span></a>
+<a href="#cat-agent-permission">권한 게이트 <span class="count">3</span></a>
+<a href="#cat-agent-exec">실행 <span class="count">12</span></a>
+<a href="#cat-agent-context">컨텍스트·멀티에이전트 <span class="count">10</span></a>
+<a href="#cat-agent-output">출력·성능·관측 <span class="count">11</span></a>
+<a href="#cat-agent-eval">평가·사후처리 <span class="count">7</span></a>
+<a href="#cat-agent-ext">확장편 <span class="count">14</span></a>
+  </nav>
+
+  <section class="domain">
+    <h1 class="domain-title">LLM <span class="badge">21</span></h1>
+    <p class="domain-sub">모델 구조부터 추론 성능·컨텍스트·프롬프트·파인튜닝까지.</p>
+  </section>
+
+  <section class="category" id="cat-llm-model">
+    <h2>모델구조 <span class="count">(3)</span></h2>
+    <details class="qa" open><summary>왜 대규모 모델은 전부 Transformer를 선택했나요?</summary><div class="answer"><p>장거리 의존성·병렬 계산·규모화 학습 세 가지를 동시에 만족하는 유일한 구조라서다. RNN은 병렬화가 안 되고 CNN은 국소 특징에 강하지만 장거리 의존이 약하다.</p><p>아키텍처 선택은 결국 "하드웨어를 채울 수 있는가"의 문제였다 — 이론적 표현력이 좋아도 GPU를 못 채우면 scaling의 기회가 없다.</p></div></details>
+    <details class="qa" open><summary>Attention의 Q, K, V는 각각 어떤 역할을 하나요?</summary><div class="answer"><ul><li>Q(Query) = 무엇을 찾는가</li><li>K(Key) = 자기가 무엇인지 설명 — 점수 계산에만 참여하고 출력엔 안 들어간다</li><li>V(Value) = 실제 내용 — 점수 계산엔 안 쓰이고 출력을 구성한다</li></ul><p>Q와 K가 같은 시퀀스에서 나오면 Self-Attention, 다른 시퀀스면 Cross-Attention이다.</p></div></details>
+    <details class="qa" open><summary>LLM 추론은 실제로 어떤 단계를 거치나요?</summary><div class="answer"><p>분절(Tokenization) → 임베딩 → 자기회귀 생성(순전파→확률분포→샘플링) → 디코딩(그리디/샘플링+온도) 4단계다.</p><p>추론은 한 번의 순전파가 아니라 매 라운드 "원 프롬프트 + 생성된 전부"를 다시 입력하는, 상태를 가진 순환이다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <section class="category" id="cat-llm-perf">
+    <h2>추론성능·비용 <span class="count">(7)</span></h2>
+    <details class="qa" open><summary>KV Cache는 왜 필요하고 무엇을 아끼나요?</summary><div class="answer"><p>매 스텝 전체 시퀀스를 재계산하는 대신 K/V만 캐싱해 "메모리로 연산력을 사는" 트레이드오프다.</p><p>Q는 한 번만 쓰여 캐싱 가치가 없고 K/V는 이후 모든 토큰이 반복 조회하므로 캐싱한다. 다만 캐시가 커지면 그 자체가 새 병목이 된다.</p></div></details>
+    <details class="qa" open><summary>MoE는 일부 전문가만 쓰는데 왜 메모리를 많이 먹나요?</summary><div class="answer"><p>계산은 희소(토큰마다 소수 전문가)하지만 저장은 희소하지 않다 — 언제든 어떤 전문가로도 라우팅될 수 있어 전체 전문가 가중치를 상주시켜야 한다.</p><p>활성 파라미터가 적다고 단일 카드 메모리가 작은 건 아니다.</p></div></details>
+    <details class="qa" open><summary>배치 처리로 처리량을 올렸는데 왜 P99 지연이 나빠지나요?</summary><div class="answer"><p>짧은 요청이 긴 요청과 같은 배치에 묶여 함께 기다리기 때문이다.</p><ul><li>입출력 길이별 버킷 분리</li><li>최대 대기 윈도우</li><li>실시간/오프라인 큐 물리적 격리</li></ul></div></details>
+    <details class="qa" open><summary>GPU는 남는데 서비스가 먼저 무너지는 이유는?</summary><div class="answer"><p>병목이 연산력이 아니라 "연산력 이전"의 서비스 진입 큐에 있기 때문이다. 타임아웃 → 재시도가 큐를 더 길게 만드는 눈사태를 부른다.</p><p>대응은 업무 등급별 스케줄링, 링크 하한책, 아키텍처 최적화 3층이다.</p></div></details>
+    <details class="qa" open><summary>추론 최적화는 어디부터 손봐야 하나요?</summary><div class="answer"><p>엔진 층 &gt; 서비스 층 &gt; 모델 층 &gt; 업무 층 순서다.</p><p>PagedAttention·Chunked Prefill·Continuous Batching 같은 엔진 층이 투자 대비 효율이 가장 높고, 모델 압축(양자화)은 마지막 순서다.</p></div></details>
+    <details class="qa" open><summary>추측 디코딩은 어떻게 속도를 올리면서 답이 안 바뀌나요?</summary><div class="answer"><p>작은 초안 모델이 K개 후보를 생성하고 목표 모델이 같은 forward pass에서 일괄 검증해 일치분만 채택하는 방식이라, 재정권이 항상 목표 모델에 있어 무손실이다.</p><p>다만 적중률이 낮으면 오히려 감속되는 음의 수익 구간이 있다.</p></div></details>
+    <details class="qa" open><summary>첫 글자 지연은 왜 주로 Prefill이 좌우하나요?</summary><div class="answer"><p>Prefill은 프롬프트 전체에 대한 O(N²) 연산이고 Decode는 토큰당 선형 연산이라 계산량 차이가 수천 배 날 수 있다.</p><p>접두사 캐시가 적중하면 극적으로 빨라지지만, 접두사가 조금만 깨져도 적중률이 0으로 떨어진다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <section class="category" id="cat-llm-context">
+    <h2>컨텍스트 <span class="count">(3)</span></h2>
+    <details class="qa" open><summary>컨텍스트 윈도우에 자리가 있으면 그만큼 다 기억하나요?</summary><div class="answer"><p>아니다. 담을 수 있는 양(용량)과 모델이 실제로 돌볼 수 있는 양(가용성)은 다르다.</p><p>주의력 희석과 Lost in the Middle 때문에 넣을수록 중간 정보가 사라진다. 핵심 지시는 앞/뒤로 배치하고 잡담은 삭제해야 한다.</p></div></details>
+    <details class="qa" open><summary>다중 턴 대화에서 왜 이력을 그냥 다 밀어 넣으면 안 되나요?</summary><div class="answer"><p>담기는 문제가 아니라 정보 품질 문제다. 만료된 정보·무관한 디테일·초기 오류가 쌓여 환각을 유발한다.</p><p>이력은 현재 턴(원문 보존) / 장기 상태(구조화 추출) / 이력 요약(압축) 3층으로 나누고, 충돌 정보는 "최신 확인·실효"로 명시해야 한다.</p></div></details>
+    <details class="qa" open><summary>접두사 캐시와 시맨틱 캐시는 뭐가 다른가요?</summary><div class="answer"><p>접두사 캐시는 추론 엔진 층에서 글자 단위 완전 일치로 prefill 비용을 줄이고, 시맨틱 캐시는 애플리케이션 층에서 의미 유사도로 모델 호출 자체를 줄인다.</p><p>전자는 리스크가 "느려짐" 뿐이지만 후자는 오적중하면 곧바로 오답이 나간다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <section class="category" id="cat-llm-prompt">
+    <h2>프롬프트 <span class="count">(5)</span></h2>
+    <details class="qa" open><summary>Zero-shot, Few-shot, CoT는 뭐가 다른가요?</summary><div class="answer"><p>세 방식의 진짜 차이는 "추론 사슬을 얼마나 보여주는가"뿐이다.</p><ul><li>Zero-shot: 사전학습 본능에 의존 — 환각 위험이 크다</li><li>Few-shot: 형식·스타일만 가르친다(능력이 아니다)</li><li>CoT: 중간 단계까지 보여줘 추론 경로를 감사 가능하게 만든다</li></ul></div></details>
+    <details class="qa" open><summary>프로덕션급 프롬프트는 어떤 요소로 조립하나요?</summary><div class="answer"><p>역할 정의, 명확한 과업 지시, 고정 출력 포맷, 엄격한 경계 제약, 이상 처리 규칙 5요소다.</p><p>각 요소는 발산·답변불안정·포맷붕괴·환각 같은 특정 실패 모드를 정확히 막는다. RAG를 붙여도 "참고 문서에 근거하라"를 명시하지 않으면 환각은 그대로다.</p></div></details>
+    <details class="qa" open><summary>프롬프트가 길어지면 정확히 뭐가 나빠지나요?</summary><div class="answer"><p>알고리즘 층(주의력 희석, Lost in the Middle)과 물리 층(캐시 병목, 비용 지수 상승)을 동시에 압박한다.</p><p>모델이 system prompt를 안 지키기 시작하면 어휘보다 먼저 컨텍스트 길이를 의심해야 한다.</p></div></details>
+    <details class="qa" open><summary>모델도 템플릿도 안 바꿨는데 프롬프트 효과가 왜 시간이 지나며 나빠지나요?</summary><div class="answer"><p>입력 분포 변화, 긴 컨텍스트의 제약 희석, 모델 벤더의 조용한 업데이트, 모니터링 부재가 누적되기 때문이다.</p><p>골든셋 회귀 테스트를 CI에 넣고 긴 대화는 핵심 규칙을 주기적으로 재주입해야 한다.</p></div></details>
+    <details class="qa" open><summary>Temperature는 창의력 다이얼인가요?</summary><div class="answer"><p>아니다. Softmax 이후 샘플링 이전에만 개입하는 확률분포 평활 계수일 뿐 모델의 추론(무엇을 아는가)에는 관여하지 않는다.</p><p>온도를 낮춰도 모델이 틀리게 알고 있으면 "확정적으로 틀리게" 답할 뿐이다. 환각이 보이면 온도가 아니라 지식·검증 계층을 의심해야 한다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <section class="category" id="cat-llm-finetune">
+    <h2>파인튜닝 <span class="count">(3)</span></h2>
+    <details class="qa" open><summary>파인튜닝은 새 지식을 넣는 건가요?</summary><div class="answer"><p>아니다. 더 안정적인 출력 습관(형식·어조·판단 기준)을 만드는 것이다.</p><p>"모델이 더 많이 알기를 원하는가(→RAG), 내가 원하는 모습으로 행동하기를 원하는가(→파인튜닝)"로 먼저 갈라야 한다.</p></div></details>
+    <details class="qa" open><summary>SFT와 RLHF는 뭐가 다른가요?</summary><div class="answer"><ul><li>SFT: token 단위 표준 답안으로 "일을 할 줄 알게" — 모방 학습, 시범 데이터 품질이 천장</li><li>RLHF: 답변 전체에 대한 인간 선호 순위로 "가치관에 부합" — 시범 데이터를 넘어설 수 있음</li></ul></div></details>
+    <details class="qa" open><summary>파인튜닝은 어떤 절차로 진행하나요?</summary><div class="answer"><p>목표 명확화 → 데이터 준비(깨끗한 100건 &gt; 뒤죽박죽 1만 건) → 세정·형식화 → 전량/LoRA 선택 → 학습 → 평가(5점검) → 이터레이션, 7단계 순환 공정이다.</p><p>데이터 품질의 수익은 초선형이라 인력은 라벨링·세정에 우선 투입해야 한다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <section class="domain">
+    <h1 class="domain-title">RAG <span class="badge">30</span></h1>
+    <p class="domain-sub">전체 설계부터 인덱싱·검색·다중턴·생성·평가·인덱스 운영·지식 그래프까지.</p>
+  </section>
+
+  <section class="category" id="cat-rag-overview">
+    <h2>총론 <span class="count">(3)</span></h2>
+    <details class="qa" open><summary>RAG를 제대로 하려면 벡터 DB 말고 뭘 더 봐야 하나요?</summary><div class="answer"><p>데이터 거버넌스 → 검색 품질 → 생성 제약 → 평가 → 프로덕션 피드백까지 5개 고리가 클로즈드 루프로 돌아야 한다.</p><p>텍스트를 리콜할 수 있는가가 아니라 그 텍스트가 어디서 왔고, 정확하고, 권한이 있는지가 진짜 난점이다.</p></div></details>
+    <details class="qa" open><summary>RAG 효과는 Rouge·BLEU로 평가하면 되나요?</summary><div class="answer"><p>안 된다. 검색층(리콜율·MRR·NDCG)과 생성층(충실도·상관성·완전성)을 분리해서 채점해야 "못 찾음"과 "찾았는데 안 씀"을 구분할 수 있다.</p><p>오프라인 지표는 회귀 기준선일 뿐, 온라인 지표와 충돌하면 온라인이 우선이다.</p></div></details>
+    <details class="qa" open><summary>코드 검색에는 왜 RAG보다 Grep이 낫나요?</summary><div class="answer"><p>코드는 청킹하면 구조(타입 정의, 호출 관계)가 끊기고, 정확 일치가 의미 유사도에 밀리며, 인덱스가 코드 변경 속도를 못 따라간다.</p><p>검색 결정권을 모델에게 주는 "탐색형 에이전트"가 일회성 검색보다 능력 상한이 높다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <section class="category" id="cat-rag-index">
+    <h2>인덱싱 <span class="count">(5)</span></h2>
+    <details class="qa" open><summary>문서를 일률적으로 자르면 왜 안 되나요?</summary><div class="answer"><p>컴퓨터는 문장 의미가 어디서 끝나는지 모르기 때문에 핵심 용어가 절단되면 임베딩이 틀어져 리콜이 실패한다.</p><p>Overlap 10~20%를 "안전 매트"로 두고, 청킹 오류는 하류에서 100% 누락으로 증폭된다는 점을 기억해야 한다.</p></div></details>
+    <details class="qa" open><summary>Overlap을 줬는데도 남는 문제는 뭔가요?</summary><div class="answer"><p>완결된 하나의 업무 로직이 애초에 여러 chunk에 분산 저장된 경우다.</p><p>chunk 크기를 조정하는 게 아니라 검색 이후 인접·관련 조각을 자동으로 연결·재조합해야 한다.</p></div></details>
+    <details class="qa" open><summary>PDF는 왜 순수 텍스트처럼 처리하면 안 되나요?</summary><div class="answer"><p>PDF는 레이아웃 컨테이너라 목차·표·이미지·2단 조판이 섞여 있다.</p><p>유형 식별(원생/스캔/도문혼합) → 구조 복원(위치=정보) → 의미 단위 청킹 → 다중 인덱스 → Agent 도구화 순서로 처리해야 한다.</p></div></details>
+    <details class="qa" open><summary>표를 Markdown으로 바꿔 청킹하면 되나요?</summary><div class="answer"><p>통계·집계 앞에서는 무너진다. 표는 데이터이지 문서가 아니다.</p><p>구조·설명만 색인하고 실제 수치는 독립 안전 실행 엔진(읽기 전용·타임아웃)이 그때그때 조회·계산해야 한다.</p></div></details>
+    <details class="qa" open><summary>파일명만 보고 권한을 판단하면 안 되는 이유는?</summary><div class="answer"><p>권한은 디렉터리·역할·보안등급·부서·공유범위 5차원이 결정하는데 파일명은 그중 어디에도 없다.</p><p>권한 메타데이터는 chunk 층까지 함께 인덱스에 들어가야 하며, 인증은 컨텍스트 진입 전에 완료돼야 한다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <section class="category" id="cat-rag-search">
+    <h2>검색 <span class="count">(7)</span></h2>
+    <details class="qa" open><summary>BM25와 벡터 검색 중 뭘 써야 하나요?</summary><div class="answer"><p>둘 다 써야 한다(혼합 검색). BM25는 고유명사·번호 같은 정확 매칭에, 벡터는 동의 표현 같은 의미 매칭에 강하다.</p><p>"표현만 바꾸면 리콜 안 됨"은 순수 BM25의 서명, "주문번호를 못 찾음"은 순수 벡터의 서명이다.</p></div></details>
+    <details class="qa" open><summary>범용 Embedding으로 의료·법률 지식베이스를 돌리면 왜 실패하나요?</summary><div class="answer"><p>전문용어가 압축된 의미 공간에서 잘못 배치되는 표현 층 문제라, 청킹을 아무리 잘게 잘라도 해결되지 않는다.</p><p>초기엔 BM25 가중치를 올리고, 데이터가 쌓이면 Embedding을 도메인 파인튜닝한다.</p></div></details>
+    <details class="qa" open><summary>완전함과 정확함을 동시에 만족하는 Top K는 있나요?</summary><div class="answer"><p>없다. 리콜층(다경로, 완전함, 50~100편) → 융합층 → 정밀 정렬층(Rerank, 정확함, Top5~10) 3층으로 분리해야 한다.</p><p>하나의 K로 둘을 만족시키는 건 수학적으로 불가능하다.</p></div></details>
+    <details class="qa" open><summary>리콜률도 높고 유사도도 높은데 답이 이상하면 뭘 봐야 하나요?</summary><div class="answer"><p>검색 편향이다 — "닮았는가"만 재고 "이 조각이 진짜 질문에 답하는가"는 안 잰다.</p><p>검색 전에 의도 인식층을 두고 매칭 단위를 토큰에서 문단으로 올려야 한다.</p></div></details>
+    <details class="qa" open><summary>쿼리 재작성은 왜 함부로 하면 안 되나요?</summary><div class="answer"><p>한번 잘못 고치면 잘못된 방향에서 더 정확하게 찾을 뿐이다.</p><p>원 질문은 항상 리콜 집합에 백스톱으로 남겨두고, 인명·주문번호 같은 하드 엔티티는 재작성 금지 화이트리스트로 못 박아야 한다.</p></div></details>
+    <details class="qa" open><summary>Top K는 어떻게 정하나요?</summary><div class="answer"><p>고정 상수가 아니라 2단계 검색(거친 정렬 Top50 → 정밀 정렬 Top5~10) + 동적 임계값 문제다.</p><p>K가 너무 작으면 의미만 비슷한 조각으로 환각이 생기고, 너무 크면 주의력이 분산되고 비용이 오른다.</p></div></details>
+    <details class="qa" open><summary>Rerank는 항상 붙여야 하나요?</summary><div class="answer"><p>아니다. 1단계 리콜의 핵심 증거 적중률이 낮으면 Rerank는 무효하고 리콜 자체를 고쳐야 한다.</p><p>질문이 구체적이거나 chunk가 고도로 동질화됐거나 혼합검색 이후일 때만 필요하다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <section class="category" id="cat-rag-multiturn">
+    <h2>다중턴·캐시 <span class="count">(2)</span></h2>
+    <details class="qa" open><summary>단일 라운드는 완벽한데 다중턴만 가면 왜 무너지나요?</summary><div class="answer"><p>원인은 생성 측이 아니라 검색 측이다 — 지시 대상 모호, 이력 중복 희석, 고정 검색 로직, 윈도우 절단 4가지가 검색 단서를 흐린다.</p><p>대화가 이어지면 원 질문 대신 재작성된 독립 질문으로 검색해야 한다.</p></div></details>
+    <details class="qa" open><summary>질문을 그대로 캐시 키로 쓰면 되나요?</summary><div class="answer"><p>그건 정확 매칭 캐시일 뿐이다. 시맨틱 캐시는 실패 모드가 정반대(누락이 아니라 오적중)다.</p><p>유사도 임계값을 업무 등급별로 나누고, 지식베이스 갱신과 연동된 능동 실효가 필요하다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <section class="category" id="cat-rag-gen">
+    <h2>조립·생성 <span class="count">(7)</span></h2>
+    <details class="qa" open><summary>본문·각주·부록을 그냥 이어붙이면 왜 위험한가요?</summary><div class="answer"><p>문서의 구조 계층을 잃어 부록의 세부 조항이 본문과 동급으로 취급될 수 있다.</p><p>블록 유형·문서 트리 경로를 메타데이터로 남기고 본문&gt;부록&gt;각주 순으로 출처 가중해야 한다.</p></div></details>
+    <details class="qa" open><summary>"A판과 B판 뭐가 다르나요" 같은 질문에서 왜 한쪽만 답하나요?</summary><div class="answer"><p>의미적으로 가까운 두 주체가 같은 TopK 자리를 두고 경쟁하기 때문이다.</p><p>K를 늘리는 게 아니라 하위 질문으로 분해해 각각 독립 검색하고, 답변에 모든 주체가 등장하는지 완전성을 검증해야 한다.</p></div></details>
+    <details class="qa" open><summary>신구 제도가 동시에 존재할 때 최신 문서만 리콜하면 되나요?</summary><div class="answer"><p>안 된다. 최신·적용·발효는 서로 다른 개념이다.</p><p>제도명·버전·발효일 등 9필드를 적재하고, 검색 시 메타데이터 필터(조직+시간+상태)를 의미 유사도보다 먼저 적용해야 한다.</p></div></details>
+    <details class="qa" open><summary>대량 제로 리콜이 발생했는데 에러 로그가 없으면 어디부터 봐야 하나요?</summary><div class="answer"><p>벡터 DB 연결부터 보는 건 방향 착오다. 먼저 인덱스 안의 문서 본문에 실제 내용이 있는지 확인해야 한다.</p><p>"Job SUCCESS"는 절차가 돌았다는 뜻일 뿐 내용이 유효하다는 증명이 아니다.</p></div></details>
+    <details class="qa" open><summary>검색 결과가 많을수록 답이 나빠지면 윈도우를 늘려야 하나요?</summary><div class="answer"><p>아니다. 그건 용량 부족(오버플로우)이 아니라 노이즈 과다(오염)다.</p><p>검색층 감소 → 상하문 동적 절삭 → 중복제거+권위우선 → 압축 제련 4층으로 "정보 순도"를 높여야 한다.</p></div></details>
+    <details class="qa" open><summary>RAG에서 프롬프트 인젝션은 어디서 들어오나요?</summary><div class="answer"><p>검색되어 나온 문서 안에 악성 지시가 숨어 있는 경우가 가장 위험하다.</p><p>컨텍스트 계층화(system/user/evidence 분리), 자료 격리, 적재 스캔, 출력 검증, 도구 최소 권한 5층으로 방어해야 한다.</p></div></details>
+    <details class="qa" open><summary>검색은 완벽했는데 답이 틀리면 뭐가 문제인가요?</summary><div class="answer"><p>생성 단계가 자체 사전학습 지식으로 틀린 것이다 — "근거 있는 오답"이 RAG에서 가장 위험한 실패다.</p><p>"상하문 기반 생성만"을 하드 제약으로 걸고 생성 후 사실 함의 검증을 별도로 둬야 한다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <section class="category" id="cat-rag-ops">
+    <h2>인덱스운영 <span class="count">(2)</span></h2>
+    <details class="qa" open><summary>지식베이스가 매일 바뀌면 인덱스는 어떻게 맞추나요?</summary><div class="answer"><p>문서ID+chunkID+내용Hash로 증분 갱신하고, 권한은 검색 시점(query-time)에 실시간 필터링해야 한다.</p><p>"신규만 하고 삭제는 안 하는 것"이 가장 은밀한 정확성 버그다.</p></div></details>
+    <details class="qa" open><summary>지식베이스를 정기적으로 전량 재구축하면 안 되는 이유는?</summary><div class="answer"><p>느려서가 아니라 문서·조각·벡터·요약·권한·인용기록이 협동 갱신되지 않으면 신구 자료가 뒤섞이기 때문이다.</p><p>구축과 발행을 디커플링(블루-그린)해서 반제품이 프로덕션 리콜에 들어가지 않게 해야 한다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <section class="category" id="cat-rag-kg">
+    <h2>지식그래프 <span class="count">(4)</span></h2>
+    <details class="qa" open><summary>지식 그래프는 그냥 그래프 DB에 데이터를 넣은 건가요?</summary><div class="answer"><p>아니다. 노드(엔티티)·간선(관계)·속성으로 "누가 누구와 어떤 구체적 관계로 연결됐는가"를 표현하는 조직 방식이다.</p><p>엔티티 정합(중복 제거)이 가장 뒤집히기 쉬운 단계이며, 규모는 증폭기라 오류도 함께 커진다.</p></div></details>
+    <details class="qa" open><summary>그래프 DB를 사면 지식 그래프도 생기는 건가요?</summary><div class="answer"><p>아니다. 그래프 DB는 저장 기술(저층)이고 지식 그래프는 지식 조직 방식(상층)이다.</p><p>개념 정의·엔티티 병합·출처 추적이라는 모델링 작업은 DB 선택과 별개다.</p></div></details>
+    <details class="qa" open><summary>AI는 애플(회사)과 사과(과일)를 어떻게 구분하나요?</summary><div class="answer"><p>엔티티 추출(이름 위치 찾기) → 링킹(같은 대상의 여러 호칭을 하나로) → 중의성 해소(문맥 어휘+엔티티 유형으로 판단) 3단계를 거친다.</p><p>링킹에서 대상을 잘못 고르면 이후 모든 연관 관계가 오염된다.</p></div></details>
+    <details class="qa" open><summary>지식 그래프가 벡터 DB를 대체하나요?</summary><div class="answer"><p>아니다. 벡터 DB는 의미 유사(자연어 표현 다양성)에 강하고, 지식 그래프는 명확한 관계 경로(누가 누구를 관리하는가)에 강하다.</p><p>"이 질문이 의미 유사에 의존하는가 논리 관계에 의존하는가"로 골라야 한다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <section class="domain">
+    <h1 class="domain-title">Agent <span class="badge">85</span></h1>
+    <p class="domain-sub">개념부터 상태·기억, 라우팅·계획, 도구·권한·실행, 컨텍스트·멀티에이전트, 출력·성능·관측, 평가·사후처리, 확장편까지.</p>
+  </section>
+
+  <section class="category" id="cat-agent-concept">
+    <h2>개념 <span class="count">(3)</span></h2>
+    <details class="qa" open><summary>Agent와 Workflow는 뭐가 다른가요?</summary><div class="answer"><p>다음 스텝을 코드가 정하면 Workflow, 모델이 그때그때 정하면 Agent다.</p><p>절차가 고정적이고 예외가 드물면 Workflow, 판단이 필요하면 Agent — 실무 정답은 고정 구간+판단 구간의 혼합 구조다.</p></div></details>
+    <details class="qa" open><summary>도구를 호출하면 다 Agent인가요?</summary><div class="answer"><p>아니다. Chatbot·RAG와 Agent를 가르는 선은 "목표를 받은 뒤 누가 다음 스텝을 계속 결정하는가"다.</p><p>사용자가 목표만 주고 개입 없이 끝까지 완료하면 Agent, 검증·반성 모듈이 없으면 위험한 자동화 스크립트에 불과하다.</p></div></details>
+    <details class="qa" open><summary>같은 모델인데 완수율이 팀마다 80%와 40%로 다른 이유는?</summary><div class="answer"><p>모델이 상한을 긋고 엔지니어링(계획 전략, 도구 체인, 기억 메커니즘)이 그 상한에 얼마나 도달하는지를 결정한다.</p><p>여러 스텝을 거치는 오차는 더해지는 게 아니라 증폭된다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <section class="category" id="cat-agent-state">
+    <h2>상태·기억 <span class="count">(5)</span></h2>
+    <details class="qa" open><summary>Agent 설계에서 왜 상태 관리가 핵심인가요?</summary><div class="answer"><p>도구는 "손"이고 상태는 "작업 현장"이다.</p><p>세션/작업/사용자/외부시스템 4계층으로 나누고, 사용자 상태는 벡터 유사도가 아니라 결정론적으로 조회해야 한다.</p></div></details>
+    <details class="qa" open><summary>LLM은 어떻게 대화를 "기억"하나요?</summary><div class="answer"><p>모델 자체는 무상태다.</p><ul><li>전체 이어붙이기(비용↑)</li><li>슬라이딩 윈도우(눈앞)</li><li>요약(큰 줄기)</li><li>벡터 검색(먼 디테일)</li></ul><p>네 전략을 시간 척도별로 함께 쓴다.</p></div></details>
+    <details class="qa" open><summary>안 잊는 Agent는 왜 상용화할 수 없나요?</summary><div class="answer"><p>저장된 모든 줄이 Token·검색시간·주의력을 영구히 담보로 잡는 부채이기 때문이다.</p><p>순간/단기/장기 기억을 쇠퇴 곡선으로 분리하고, 회수 순위를 낮추는 것도 사실상의 망각이다.</p></div></details>
+    <details class="qa" open><summary>session_id로 기억을 나누면 충분한가요?</summary><div class="answer"><p>아니다. session_id는 "누구 것인가"만 답하고 "지금 필요한가"는 못 답한다.</p><p>semantic_tag 이중 필터와 활성 → 보관 → 망각 → 격리 상태머신이 필요하다.</p></div></details>
+    <details class="qa" open><summary>방금 업로드했는데 왜 Agent가 옛 데이터로 답하나요?</summary><div class="answer"><p>"입고 성공"과 "인덱스 생효(검색 가능)" 사이에 시간차가 있기 때문이다.</p><p>강한 시효 요구가 있는 데이터는 벡터 검색을 우회해 짧은 컨텍스트에 강제 주입해야 한다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <section class="category" id="cat-agent-input">
+    <h2>입력·라우팅 <span class="count">(6)</span></h2>
+    <details class="qa" open><summary>사용자 입력을 프롬프트에 그냥 끼워 넣으면 안 되는 이유는?</summary><div class="answer"><p>지시 구조가 깨져 모델이 사용자 내용을 시스템 지시로 오해할 수 있다.</p><p><code>&lt;USER_INPUT&gt;</code> 같은 구분자+출처 선언으로 "데이터일 뿐 지시가 아니다"를 명시해야 한다.</p></div></details>
+    <details class="qa" open><summary>Agent 프롬프트 인젝션은 왜 완전히 막을 수 없나요?</summary><div class="answer"><p>시스템 지시와 외부 콘텐츠가 결국 같은 컨텍스트 윈도우의 한 줄 Token으로 합쳐지기 때문이다.</p><p>보장은 모델 밖의 결정론적 메커니즘(툴 권한 등급, 최소 권한)에서만 나온다.</p></div></details>
+    <details class="qa" open><summary>모델 라우팅은 뭘 라우팅하는 건가요?</summary><div class="answer"><p>단일 모델이 아니라 "모델+검색여부+Rerank여부+툴호출여부+플로우"라는 실행 방안 전체다.</p><p>비용·품질·지연·리스크 등급을 함께 봐야 하며 리스크 등급이 가장 잘 빠뜨리는 축이다.</p></div></details>
+    <details class="qa" open><summary>Skill을 처음부터 다 로딩하면 안 되는 이유는?</summary><div class="answer"><p>컨텍스트는 창고가 아니라 예산이라서다.</p><p>메타데이터(상주) → 본문(트리거 후) → 번들 리소스(단계별) 3계층으로 점진적으로 공개해야 무관 정보의 비용(돈+정확도)을 막을 수 있다.</p></div></details>
+    <details class="qa" open><summary>Skill이 수백 개면 라우팅이 왜 검색 문제가 되나요?</summary><div class="answer"><p>입구 설명을 "무엇을 하나"가 아니라 "언제 쓰나"로 최적화하고, 계층 라우팅(Skill Tree)으로 100지선다를 4→25지선다로 줄여야 한다.</p><p>오적중은 대부분 경계 불명확에서 온다.</p></div></details>
+    <details class="qa" open><summary>Skill 적중률을 어떻게 보장하나요?</summary><div class="answer"><p>이건 스케줄링이 아니라 글쓰기 문제다. 트리거 키워드가 담긴 description, 단일 책임, 의미 중첩 제거가 핵심이다.</p><p>실패 모드는 "에러"가 아니라 "망설임"(오늘 A, 내일 B)이다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <section class="category" id="cat-agent-plan">
+    <h2>계획 <span class="count">(5)</span></h2>
+    <details class="qa" open><summary>모르면 되물으라고만 해두면 되나요?</summary><div class="answer"><p>안 된다. 되묻기는 최후 방어선이지 정렬 방안 자체가 아니다.</p><p>문자 의미+도메인 지식으로 암묵 의도를 보완하고, 다중 턴에서는 최초 목표를 닻으로 저장해 표류를 교정해야 한다.</p></div></details>
+    <details class="qa" open><summary>실행 전에 왜 계획을 먼저 만들어야 하나요?</summary><div class="answer"><p>계획은 실행기의 화이트리스트 역할을 하는 안전 메커니즘이다.</p><p>목표 / 입력·도구 / 읽기·쓰기 권한 / 실패 처리 4가지가 반드시 담겨야 한다.</p></div></details>
+    <details class="qa" open><summary>복잡한 계획을 모델에게 통째로 맡기면 안 되는 이유는?</summary><div class="answer"><p>모델은 긴 체인 전체의 논리를 끝까지 못 붙든다.</p><p>엔지니어링층이 전치 계획 → 의존 위상 정렬 → 서브태스크별 상태머신 → 분급 재시도로 관리해야 하며, "가용하다"는 실패해도 이어지는 것으로 재정의해야 한다.</p></div></details>
+    <details class="qa" open><summary>계획이 실행 중 통째로 무너지면 어떻게 하나요?</summary><div class="answer"><p>전역 굵은 계획+국소 세밀 계획으로 나누고 편차 크기에 따라 파라미터 보정 또는 국소 재계획을 한다.</p><p>완료된 유효 성과는 절대 처음부터 다시 하지 않는 것이 프로덕션급의 분수령이다.</p></div></details>
+    <details class="qa" open><summary>같은 도구를 N번 부르면 중단하는 규칙은 왜 뚫리나요?</summary><div class="answer"><p>도구를 바꿔가며 맴돌면 카운터를 피하기 때문이다.</p><p>순환은 "호출 횟수"가 아니라 "의미 지문"으로 판정해야 하며, 종료권을 환각을 일으킬 수 있는 모델 자신에게 맡기면 안 된다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <section class="category" id="cat-agent-tools">
+    <h2>도구 결정 <span class="count">(9)</span></h2>
+    <details class="qa" open><summary>Agent는 어떤 도구를 쓸지 어떻게 결정하나요?</summary><div class="answer"><p>Agent가 아니라 LLM이 tools 정의를 읽고 tool_calls를 반환한다.</p><p>존재하지 않는 도구를 부르면 에러를 컨텍스트로 되먹여 모델이 자가 치유하게 하는 것이 정상 아키텍처다.</p></div></details>
+    <details class="qa" open><summary>도구가 50개가 되면 정확률이 왜 급락하나요?</summary><div class="answer"><p>평면 나열 구조는 결정 공간이 지수적으로 늘기 때문이다.</p><p>분류 내비게이션, 복합 도구, 실행 검증층, 결과 전처리층으로 결정 공간을 압축해야 한다.</p></div></details>
+    <details class="qa" open><summary>파라미터가 자꾸 빠지는 게 모델 탓인가요?</summary><div class="answer"><p>아니다, 확률적 생성기의 잔여 오류율은 0이 될 수 없어 해법이 모델 밖에 있어야 한다.</p><p>Prompt는 건의, Schema는 경계다 — 추론 가능한 값은 자동 채움, 필수값만 단건으로 되묻는다.</p></div></details>
+    <details class="qa" open><summary>도구를 열어주면 왜 잡담에도 도구를 호출하나요?</summary><div class="answer"><p>도구 목록이 보이는 것 자체가 이미 강한 프롬프트라서 이어쓰기 관성이 생긴다.</p><p>전치 의도 게이트로 잡담은 도구 흐름 진입을 원천 차단해야 한다.</p></div></details>
+    <details class="qa" open><summary>좋은 도구 Schema는 어떻게 만드나요?</summary><div class="answer"><p>REST를 1:1로 매핑하지 말고 업무 동작에 밀착해 명명하고(<code>query_user_order</code> 등), 파라미터는 적고 정확하게, 읽기/쓰기는 분리한다.</p><p>나쁜 Schema의 실패는 "호출 안 함"이 아니라 "잘못 호출함"이라 더 위험하다.</p></div></details>
+    <details class="qa" open><summary>JSON 출력과 Function Calling은 뭐가 다른가요?</summary><div class="answer"><p>JSON 출력은 여전히 자연어 생성이라 신뢰 불가 입력이고, Function Calling은 실행권을 시스템 측에 남긴다는 게 핵심 차이다.</p><p>선택 기준은 "부작용이 생기는가"다.</p></div></details>
+    <details class="qa" open><summary>JSON을 안정적으로 뽑으려면 어떻게 하나요?</summary><div class="answer"><p>프롬프트 Few-shot(확률급) → 인터페이스 네이티브(프로세스급) → 제약 디코딩(문법급) → 코드 검증+에러 되먹임(결과급, 유일하게 생략 불가) 4층이다.</p><p>모델의 "예의"(인사말·설명)가 최대 포맷 오염원이다.</p></div></details>
+    <details class="qa" open><summary>MCP는 왜 필요한가요?</summary><div class="answer"><p>M개 모델×N개 데이터소스의 접착 코드 곱셈 비용을 M+N으로 줄이는 표준화된 연결 방식이다.</p><p>능력 선언 → 권한 규칙 → 데이터 조회 → 표준 반환의 4관문을 거친다.</p></div></details>
+    <details class="qa" open><summary>MCP와 A2A는 언제 각각 쓰나요?</summary><div class="answer"><p>MCP는 모델↔도구를 잇는 세로축, A2A는 Agent↔Agent를 잇는 가로축이다.</p><p>먼저 도구 접속·권한·감사를 해결하고, 정말 다중 Agent 통신이 필요할 때만 A2A로 간다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <section class="category" id="cat-agent-permission">
+    <h2>권한 게이트 <span class="count">(3)</span></h2>
+    <details class="qa" open><summary>도구 권한은 온오프면 충분한가요?</summary><div class="answer"><p>아니다. 자동실행 / 사용자확인 / 관리자승인 / 금지 4단계로 나누고, 판정 기준은 (도구, 파라미터, 컨텍스트) 조합의 "영향 범위"여야 한다.</p></div></details>
+    <details class="qa" open><summary>사람의 확인은 어디에 둬야 하나요?</summary><div class="answer"><p>불가역·고위험·고비용·외부영향 동작 직전이며, 형식은 버튼 하나가 아니라 수신자·본문·근거·리스크가 담긴 구조화 확인이어야 한다.</p></div></details>
+    <details class="qa" open><summary>업무 규칙을 시스템 프롬프트에 적어두면 지켜지나요?</summary><div class="answer"><p>한 번 찔러보면 뚫리는 종이 방어선이다.</p><p>규칙을 조건/동작/우선순위/예외로 구조화해 독립 규칙 엔진에서 실행 전 전치 검증하고, 출력 후에도 후치 스캔해야 한다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <section class="category" id="cat-agent-exec">
+    <h2>실행 <span class="count">(12)</span></h2>
+    <details class="qa" open><summary>여러 도구 결과가 다르면 누구 말을 듣나요?</summary><div class="answer"><p>도구 반환은 증거이지 진리가 아니다.</p><p>권위 소스는 "도구" 단위가 아니라 "문제 유형×필드" 단위로 정의하고, 판정 불가 시 정답은 추측이 아니라 멈춤이다.</p></div></details>
+    <details class="qa" open><summary>10개 중 1개 실패하면 재시도해도 되나요?</summary><div class="answer"><p>동작이 읽기전용 / 멱등쓰기 / 롤백가능쓰기 / 불가역쓰기 중 어디인지에 따라 다르다.</p><p>타임아웃은 실패가 아니므로 결제 타임아웃 시 첫 동작은 언제나 상태 조회여야 한다.</p></div></details>
+    <details class="qa" open><summary>딱 한 번만 실행되게 하려면 분산락이면 되나요?</summary><div class="answer"><p>아니다, 분산락은 동시성 제어일 뿐 멱등성이 아니다.</p><p>유일 요청ID+DB 유일 제약(1층) + 상태머신(2층) + 분산락(3층, 동시성 전용)이 필요하다.</p></div></details>
+    <details class="qa" open><summary>중간에 실패하면 어떻게 전부 되돌리나요?</summary><div class="answer"><p>try-catch는 프로그램 흐름만 지킨다.</p><p>Saga 패턴으로 정방향+역방향 보상을 처음부터 등록하고 실패 시 마지막 성공 스텝부터 역순으로 보상해야 한다. 불가역 조작은 체인 맨 끝에 배치한다.</p></div></details>
+    <details class="qa" open><summary>여러 Agent가 같은 도구를 동시에 부를 수 있나요?</summary><div class="answer"><p>충돌 여부는 도구 이름이 아니라 인스턴스 단위다.</p><p>인스턴스 재사용은 여전히 직렬이고, 진짜 병렬은 도구 풀링(여러 인스턴스)이 있어야 가능하다.</p></div></details>
+    <details class="qa" open><summary>병렬 호출 시 대화 상태는 언제 갱신하나요?</summary><div class="answer"><p>순서를 바꾸는 건 불일치를 없애는 게 아니라 형태만 바꾸는 것이다.</p><p>선실행+트랜잭션 커밋 후 비동기 갱신, 동시성엔 버전 번호를 쓰는 최종 일관성이 현실적 답이다.</p></div></details>
+    <details class="qa" open><summary>타임아웃되면 재시도하면 되나요?</summary><div class="answer"><p>재시도가 오히려 회복 중인 인터페이스를 다시 무너뜨릴 수 있다.</p><p>토큰 버킷 쿼터+서킷브레이커(정상→경계→차단→강등→반개방)로 등급별 강등이 필요하다.</p></div></details>
+    <details class="qa" open><summary>도구가 200을 반환해도 뭘 더 검증해야 하나요?</summary><div class="answer"><p>재고 음수, 빈 문자열처럼 형식은 정상인데 내용만 틀린 경우가 가장 위험하다.</p><p>기본 형식 → 업무 규칙 → 의미 일관성 3층 검증에 결과 시효 관리를 더해야 한다.</p></div></details>
+    <details class="qa" open><summary>비동기 인터페이스가 200을 반환하면 성공인가요?</summary><div class="answer"><p>접수됐다는 뜻일 뿐이다.</p><p>Agent는 반드시 능동적으로 정합성을 대조해야 하며, "200"은 success가 아니라 accepted로 이름 붙여야 한다.</p></div></details>
+    <details class="qa" open><summary>장시간 작업은 어떻게 설계하나요?</summary><div class="answer"><p>작업ID / 상태머신 / 결과저장 / 권한검증 / 만료정책 / 알림 6요소가 필요하다.</p><p>랜덤 URL을 자격증명처럼 쓰는 게 가장 흔한 잘못된 설계다.</p></div></details>
+    <details class="qa" open><summary>그냥 기다리는 것과 MCP Tasks는 뭐가 다른가요?</summary><div class="answer"><p>블로킹 대기는 커넥션 생명주기에 의존하고 MCP Tasks는 taskId로 영속화돼 커넥션과 독립적이다.</p><p>30초가 동기/Tasks를 나누는 실무 분수령이다.</p></div></details>
+    <details class="qa" open><summary>진행률 보고는 왜 필요한가요?</summary><div class="answer"><p>UX가 아니라 통제 가능성의 입구다.</p><p>"로딩 중"과 "실패"를 같은 신호로 압축하면 모델타임아웃/툴타임아웃/권한실패/외부불가 4가지 다른 장애를 구분할 수 없게 된다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <section class="category" id="cat-agent-context">
+    <h2>컨텍스트·멀티에이전트 <span class="count">(10)</span></h2>
+    <details class="qa" open><summary>컨텍스트를 압축할 때 뭘 절대 지우면 안 되나요?</summary><div class="answer"><p>사용자 목표·금지항목, 툴 결과 핵심 필드, 실패 경로, 증거와 시효 4가지다.</p><p>실패 경로를 지우면 이미 안 된다고 증명된 방안을 다시 실행하게 된다.</p></div></details>
+    <details class="qa" open><summary>요약이 맞는데 왜 갈수록 규칙을 안 지키나요?</summary><div class="answer"><p>요약이 맞다는 게 제약이 남았다는 뜻은 아니다.</p><p>목표·제약은 압축 시 디테일보다 먼저 버려지므로 하드 제약은 압축 엄금 화이트리스트로, 목표는 고정 포맷으로 매 턴 재주입해야 한다.</p></div></details>
+    <details class="qa" open><summary>멀티턴 대화는 왜 갈수록 느려지고 비싸지나요?</summary><div class="answer"><p>"모른다"가 아니라 "다시 한다"가 원흉이다 — 전체 이력 무차별 전송, 무차별 재추론, 도구·연결 매턴 재구축.</p><p>동적 트리밍+구조화 스냅샷+캐시 재사용+세션 풀링으로 막는다.</p></div></details>
+    <details class="qa" open><summary>사용자가 중간에 다른 질문을 끼우면 왜 주작업을 놓치나요?</summary><div class="answer"><p>모델 기억에만 의존하고 상태 진실 소스가 없기 때문이다.</p><p>강일관성 작업은 상태머신으로 강제 관리하고, 모델 추론 이전에 명령 우선순위를 판정하는 규칙 레이어를 둬야 한다.</p></div></details>
+    <details class="qa" open><summary>Handoff 시 전체 대화 이력을 다 넘기면 되나요?</summary><div class="answer"><p>안 된다. 민감 정보(권한 불일치), 노이즈·잘못된 가정, 책임 경계는 넘기면 안 된다.</p><p>목표/확인된사실/증거링크/시도한동작/실패원인/리스크/다음단계제안이 담긴 고정 스키마로 티켓처럼 인계해야 한다.</p></div></details>
+    <details class="qa" open><summary>역할극처럼 Agent끼리 대화시키면 왜 무너지나요?</summary><div class="answer"><p>대화 이력을 상태 저장소로 쓰면 암묵적이고 잠금이 안 된다.</p><p>중앙조정기+전역상태머신(유일 진실소스)+분층기억풀로 통신 위상을 그물망(n²)에서 별모양(n)으로 바꿔야 한다.</p></div></details>
+    <details class="qa" open><summary>여러 Agent가 동시에 뛰면 뭐가 사고로 이어지나요?</summary><div class="answer"><p>"덮어쓰기"가 아니라 "잘못 읽음"이 진짜 사고다.</p><p>의미 지문+DB 유니크 제약으로 중복을 원자적으로 판정하고, 저장 인스턴스를 여러 세션이 풀링 공유하는 걸 가장 조심해야 한다.</p></div></details>
+    <details class="qa" open><summary>여러 Agent가 같은 MCP 서버를 써도 되나요?</summary><div class="answer"><p>"동시에 한 회화만"은 절반만 맞다 — 기본 설정(유상태 단일회화)의 결과일 뿐이다.</p><p>인증은 연결이 아니라 Agent 신원 단위로 바인딩해야 에러 없는 월권을 막는다.</p></div></details>
+    <details class="qa" open><summary>Agent 하나가 멈췄는데 왜 전체 스케줄링 클러스터가 무너지나요?</summary><div class="answer"><p>타임아웃은 호출만 끊을 뿐 순환 의존 교착을 못 푼다.</p><p>업무 등급 분류 → 전링크 트레이싱으로 근본 원인 특정 → 자원격리+강등 최저선 준비의 3층 거버넌스가 필요하다.</p></div></details>
+    <details class="qa" open><summary>중단된 작업을 재개할 때 그냥 이어서 하면 되나요?</summary><div class="answer"><p>안 된다. 기억은 과거를 알려줄 뿐 지금도 유효하다는 증명은 못 한다.</p><p>모든 외부 의존의 신선도를 재검증하고, 고위험 동작은 재개 후 재확인이 필수다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <section class="category" id="cat-agent-output">
+    <h2>출력·성능·관측 <span class="count">(11)</span></h2>
+    <details class="qa" open><summary>출력이 길어지는 걸 그냥 프롬프트로 줄이면 되나요?</summary><div class="answer"><p>길이는 부작용이 아니라 설계 파라미터다.</p><p>max_tokens·문단수·필드수와 함께 "부족하면 뭘 먼저 버릴지"를 우선순위로 정해야 절단이 사고가 아니라 우아한 다운그레이드가 된다.</p></div></details>
+    <details class="qa" open><summary>숫자를 모델이 지어내지 않게 하려면?</summary><div class="answer"><p>대원칙은 숫자는 데이터 시스템에서 나와야 한다는 것이다.</p><p>데이터층(조회)/계산층(코드)/표현층(모델)을 분리하고 결측은 지어내지 않고 표기해야 한다.</p></div></details>
+    <details class="qa" open><summary>같은 모델인데 대화는 멀쩡하고 Agent만 환각을 일으키는 이유는?</summary><div class="answer"><p>도구는 "모델이 모르는 것"만 메울 뿐 "알면서도 지어내는 것"은 못 고친다.</p><p>환각은 의도이해→계획→파라미터생성→결과총괄 전체 체인에서 생기며 완전 제거는 불가능하다.</p></div></details>
+    <details class="qa" open><summary>"한 번 더 검토해"는 반성인가요?</summary><div class="answer"><p>아니다, 한 번 더 비싼 추론일 뿐이다.</p><p>진짜 반성은 당장 고치기+사후 복기+영구 축적+다음번 회피의 폐루프이며, 산출물은 "더 나은 답"이 아니라 "재사용 가능한 규칙"이어야 한다.</p></div></details>
+    <details class="qa" open><summary>표를 읽고 계산하는 걸 모델에게 시켜도 되나요?</summary><div class="answer"><p>계산할 수 있는 건 코드에, 설명할 수 있는 건 모델에 맡겨야 한다.</p><p>전년비·임계판정 같은 계산은 반드시 코드로 처리한다.</p></div></details>
+    <details class="qa" open><summary>OCR 결과는 텍스트만 저장하면 되나요?</summary><div class="answer"><p>안 된다. "글자가 어디에 있는가"가 "무엇인가"와 동등하게 중요하다.</p><p>좌표는 읽기 순서 복원, 필드-값 매칭, 사람 재검토를 가능하게 하는 검증 가능한 구조다.</p></div></details>
+    <details class="qa" open><summary>LLM 응답도 그냥 캐싱하면 되나요?</summary><div class="answer"><p>어려운 건 저장이 아니라 "언제 재사용하면 안 되는가"다.</p><p>캐시 키는 답변에 영향을 주는 모든 변수(모델버전·프롬프트버전·지식베이스버전)의 곱이어야 하고 권한은 반드시 키에 포함돼야 한다.</p></div></details>
+    <details class="qa" open><summary>비용 절감을 위해 다운그레이드하면 뭘 조심해야 하나요?</summary><div class="answer"><p>경계 없는 다운그레이드가 다운그레이드 안 하는 것보다 위험하다 — 정상처럼 보이는 오답을 만든다.</p><p>다운그레이드 상태는 응답에 명시해야 한다.</p></div></details>
+    <details class="qa" open><summary>비용은 사람이 계산서를 확인하면 관리되나요?</summary><div class="answer"><p>아니다, 그건 사후 기록이다.</p><p>전체 링크 비용 계량 → 등급별 라우팅 → 중복 제거 → 예산 쿼터 하드 관제 순서로 호출 이전에 관제를 당겨야 한다.</p></div></details>
+    <details class="qa" open><summary>업무 로그와 모델 로그를 같이 저장하면 되나요?</summary><div class="answer"><p>안 된다. 분리의 제1동기는 컴플라이언스다 — 모델 입력의 프라이버시가 일반 로그 플랫폼에 노출될 수 있다.</p><p>request_id로 양쪽을 연결한다.</p></div></details>
+    <details class="qa" open><summary>최종 답변만 저장하면 되나요?</summary><div class="answer"><p>최종 답변은 종종 가장 쓸모없는 부분이다.</p><p>원시입력/세정후입력/모델컨텍스트/모델원시출력/최종출력 5형태와 5종 버전 정보를 함께 남겨야 트러블슈팅이 가능하다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <section class="category" id="cat-agent-eval">
+    <h2>평가·사후처리 <span class="count">(7)</span></h2>
+    <details class="qa" open><summary>투입 전 평가는 뭘 봐야 하나요?</summary><div class="answer"><p>모델 출력·검색·툴호출·업무결과를 분리해서 측정해야 한다.</p><p>월권 동작은 품질이 아니라 보안 차원의 독립 평가 항목으로 무관용 레드라인이다.</p></div></details>
+    <details class="qa" open><summary>Agent 성능은 성공률 하나로 재면 되나요?</summary><div class="answer"><p>결과층(성공률)+과정층(궤적: 툴호출정확성·자기교정능력)+시스템층(지연·비용·안정성) 3층이 필요하다.</p><p>코드 assertion이 가능하면 절대 모델 심판을 쓰지 않는다.</p></div></details>
+    <details class="qa" open><summary>성공률 지표는 조작될 수 있나요?</summary><div class="answer"><p>그렇다. Agent는 바라는 일이 아니라 지표가 정량화할 수 있는 일만 한다(Goodhart's Law).</p><p>결과검증+과정감사+다차원 연동 판정으로 지름길을 막아야 한다.</p></div></details>
+    <details class="qa" open><summary>답이 맞으면 경로가 위험해도 통과인가요?</summary><div class="answer"><p>아니다. 월권·유출·확인생략 리스크를 생산했다면 보안 사고를 성공 사례로 기록하는 셈이다.</p><p>경로 위반 레드라인은 원-스트라이크 관문으로 다뤄야 한다.</p></div></details>
+    <details class="qa" open><summary>AI가 짠 코드의 리스크는 "버그"인가요?</summary><div class="answer"><p>리스크의 중심은 "못 쓴다"에서 "검증이 안 된다"로 이동했다.</p><p>판정 기준은 코드가 변했는지가 아니라 업무 결정이 변했는지여야 한다.</p></div></details>
+    <details class="qa" open><summary>작업이 끝나면 데이터는 그냥 보관하면 되나요?</summary><div class="answer"><p>"전부 삭제"와 "전부 보존"은 같은 오류의 두 형태다.</p><p>민감도×재사용가치×컴플라이언스 3차원 4사분면으로 분류해 삭제/아카이빙/경험라이브러리화를 나눠야 한다.</p></div></details>
+    <details class="qa" open><summary>Agent가 잘못된 경험을 학습했으면 그냥 지우면 되나요?</summary><div class="answer"><p>단순 삭제로는 이미 오염시킨 다운스트림을 못 되돌린다.</p><p>감사대기 표기+샌드박스 격리 후 과거 궤적 위에서 재생 검증해 정식 대체해야 한다 — 격리 봉인이 물리 삭제보다 우선이다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <section class="category" id="cat-agent-ext">
+    <h2>확장편 <span class="count">(14)</span></h2>
+    <details class="qa" open><summary>파일 하나 읽었다가 어떻게 함락되나요?</summary><div class="answer"><p>공격자는 대화창에 접근할 필요 없이 웹페이지·메일·PDF에 지시를 숨겨두면 된다.</p><p>목표는 "속지 않는다"가 아니라 "속더라도 받아들일 수 없는 결과를 만들 능력이 없다"로 잡아야 한다.</p></div></details>
+    <details class="qa" open><summary>Agent가 스스로 "이상하다"고 오판하면 뭐가 위험하나요?</summary><div class="answer"><p>권한 오류가 아니라 "이 도구를 지금 써도 되는가"를 가르는 업무 전제 검증이 없어서다.</p><p>모델의 확신은 근거가 아니라 검증 대상이며 배치 임계값 기반 회로차단이 필요하다.</p></div></details>
+    <details class="qa" open><summary>"유출 금지"라고만 시스템 프롬프트에 쓰면 되나요?</summary><div class="answer"><p>확률적 생성 모델의 자각에 보안 경계를 통째로 맡긴 것이다.</p><p>출구만 지키고 입구(장기 기억, 상하문 역류)가 뚫려 있는 게 가장 흔한 함정이다.</p></div></details>
+    <details class="qa" open><summary>규범 문서를 시작 시점에 통째로 밀어 넣으면 엄밀한가요?</summary><div class="answer"><p>아니다, 능동적 간섭 생성이다.</p><p>라우팅 판정층(한줄) → 핵심 워크플로(보통 여기서 종료) → 세부 리소스(예외만) 3층 깔때기로 나눠야 한다.</p></div></details>
+    <details class="qa" open><summary>계획을 받으면 실행 Agent는 그냥 실행하면 되나요?</summary><div class="answer"><p>안 된다. 실행 Agent는 시스템의 두 번째 관문으로 실행가능성·권한·안전을 검증하고 문제가 있으면 거부해야 한다.</p><p>계획은 가설이고 실행 전 검증이 사실이다.</p></div></details>
+    <details class="qa" open><summary>목표가 바뀌면 이전 단계는 의미 유사도로 판정하면 되나요?</summary><div class="answer"><p>안 된다, 파라미터가 바뀌면 의미상 만점인데 수치가 전부 틀릴 수 있다.</p><p>각 단계에 파라미터/데이터산출 태그를 달고 DAG로 BFS 영향 전파해 폐기를 판정해야 한다.</p></div></details>
+    <details class="qa" open><summary>샌드박스는 모델의 실수를 막아주나요?</summary><div class="answer"><p>아니다. 모델은 언젠가 실수하며 샌드박스는 그 "파괴 가능 범위"를 제한하는 백스톱이다.</p><p>파일시스템·네트워크·프로세스·자격증명 4종 경계와 일회용 환경이 핵심이다.</p></div></details>
+    <details class="qa" open><summary>Agent가 가격을 확정해서 말해도 되나요?</summary><div class="answer"><p>안 된다. 최종 견적은 버전화된 가격 서비스를 실시간 호출해야 하고 모델은 가격을 캐싱하지 않는다.</p><p>견적과 약속(주문에 바인딩)은 다른 개념이다.</p></div></details>
+    <details class="qa" open><summary>버튼을 두 번 누르면 중복 생성·중복 과금이 생기나요?</summary><div class="answer"><p>버튼 디바운스만으로는 재전송·새로고침·멀티 디바이스를 못 막는다.</p><p>같은 입력·파라미터면 작업을 재사용하는 멱등 설계와 task_id 기준 귀속이 필요하다.</p></div></details>
+    <details class="qa" open><summary>캐릭터 외모가 계속 바뀌면 프롬프트를 더 자세히 써야 하나요?</summary><div class="answer"><p>방향이 틀렸다. 진범은 참조 소재의 조명·색온도·해상도 같은 생성 이전 입력이다.</p><p>소재 버전 정규화+생성 파라미터 잠금(Seed만으론 부족)+얼굴 특징 앵커 검증이 필요하다.</p></div></details>
+    <details class="qa" open><summary>Agent가 20초 멈췄다면 뭘 봐야 하나요?</summary><div class="answer"><p>최종 답변만 저장하면 시스템을 블랙박스로 만드는 것이다.</p><p>Trace(전체 작업)와 Span(각 단계, 사람 개입 대기 포함)으로 재시도 여부까지 기록해야 귀인이 가능하다.</p></div></details>
+    <details class="qa" open><summary>평가는 성공 여부만 보면 되나요?</summary><div class="answer"><p>Outcome(성공 여부, 판정용)과 Trajectory(왜, 복기용)를 함께 봐야 한다.</p><p>금지도구 몰래 호출, 데이터 월권, 비용 폭주는 Outcome의 사각지대다.</p></div></details>
+    <details class="qa" open><summary>답이 전부 맞으면 통과인가요?</summary><div class="answer"><p>몰래 DB를 지웠다면 아니다.</p><p>도구 월권, 위험한 동작 시퀀스, Reward Hacking(채점 로직을 보고 부정행위)까지 궤적 감사로 봐야 한다.</p></div></details>
+    <details class="qa" open><summary>오프라인 평가를 다 통과했는데 왜 프로덕션에서 자주 터지나요?</summary><div class="answer"><p>오프라인은 회귀와 비교를, 프로덕션 모니터링은 분포 변화 발견을 담당하기 때문이다.</p><p>재시도횟수↑·도구거절↑ 같은 선행 지표를 봐야 하며 평가 통과는 출시 통행증이 아니다.</p></div></details>
+    <a class="back-to-top" href="#top">목차로 이동 ↑</a>
+  </section>
+
+  <footer class="note">
+    <p>비공개 개인 학습 자료입니다. 검색엔진에 노출되지 않도록 별도로 링크되어 있지 않습니다.</p>
+    <p>출처: <code>docs/ai/advanced/llm</code>(21) · <code>docs/ai/advanced/rag</code>(30) · <code>docs/ai/advanced/agent</code>(85) 지식 위키를 문답 형태로 재구성.</p>
+  </footer>
+</div>
+</body>
+</html>
