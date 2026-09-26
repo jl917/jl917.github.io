@@ -297,6 +297,7 @@
 - [프로덕션 Agent](/ai/05-agent/04-production.md)
 - [Model Context Protocol (MCP)](/ai/05-agent/05-mcp.md)
 - [Agent2Agent (A2A) Protocol](/ai/05-agent/06-a2a.md)
+- [Agent 오픈소스 모음](/ai/05-agent/07-other.md)
 - [Fine-tuning 파인튜닝](/ai/06-fine-tuning/01-fine-tuning.md)
 - [Fine-tuning 실습 — LoRA 학습부터 Ollama 등록까지](/ai/06-fine-tuning/02-sample.md)
 - [평가 (Evaluation)](/ai/07-evaluation/01-evaluation.md)
