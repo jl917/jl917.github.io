@@ -36553,6 +36553,7 @@ getWeather(city);
 | [guiguiyan930-source/game-ui-design-workflow](https://github.com/guiguiyan930-source/game-ui-design-workflow) | 게임 UI 디자인 워크플로우 |
 | [Agents365-ai/drawio-skill](https://github.com/Agents365-ai/drawio-skill) | draw.io 다이어그램 생성·편집 |
 | [sickn33/agentic-awesome-skills](https://github.com/sickn33/agentic-awesome-skills) | 에이전틱 스킬 모음 |
+| [NomaDamas/k-skill](https://github.com/NomaDamas/k-skill) | 한국인을 위한 스킬 모음 (KTX·로또·당근·쿠팡·정부24·홈택스 등 국내 서비스 연동 125종) |
 
 
 
