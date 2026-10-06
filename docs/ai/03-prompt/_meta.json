@@ -38,5 +38,10 @@
     "type": "file",
     "name": "08-blend",
     "label": "blend 생성"
+  },
+  {
+    "type": "file",
+    "name": "09-qwen-image-edit",
+    "label": "Qwen-Image-Edit 프롬프트"
   }
 ]
