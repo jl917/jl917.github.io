@@ -281,6 +281,7 @@
 - [Skill](/ai/03-prompt/06-skill.md)
 - [CLAUDE.md 생성 프롬프트](/ai/03-prompt/07-claude.md)
 - [Blender 구현을 위한 상세 3D 프롬프트](/ai/03-prompt/08-blend.md)
+- [Qwen-Image-Edit 프롬프트](/ai/03-prompt/09-qwen-image-edit.md)
 - [RAG (Retrieval-Augmented Generation)](/ai/04-rag/01-rag.md)
 - [쿼리 명확화 (Query Clarification)](/ai/04-rag/techniques/01-clearly.md)
 - [어휘 재작성 (Lexical Rewrite)](/ai/04-rag/techniques/02-lexical.md)

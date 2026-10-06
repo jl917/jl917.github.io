@@ -137,3 +137,4 @@ getWeather(city);
 | [NomaDamas/k-skill](https://github.com/NomaDamas/k-skill) | 한국인을 위한 스킬 모음 (KTX·로또·당근·쿠팡·정부24·홈택스 등 국내 서비스 연동 125종) |
 | [yfe404/web-scraper](https://github.com/yfe404/web-scraper) | 웹 스크래핑 |
 | [justlovemaki/LumaRescue](https://github.com/justlovemaki/LumaRescue) | 사진 보정 (노출·색감·구도·선명도 개선) |
+| [eternityspring/shuohao-skills](https://github.com/eternityspring/shuohao-skills) | AI 숏드라마 제작 (캐릭터·대본·미술 설정·콘티까지 5단계 파이프라인) |
