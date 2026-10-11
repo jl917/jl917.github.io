@@ -36557,6 +36557,8 @@ getWeather(city);
 | [yfe404/web-scraper](https://github.com/yfe404/web-scraper) | 웹 스크래핑 |
 | [justlovemaki/LumaRescue](https://github.com/justlovemaki/LumaRescue) | 사진 보정 (노출·색감·구도·선명도 개선) |
 | [eternityspring/shuohao-skills](https://github.com/eternityspring/shuohao-skills) | AI 숏드라마 제작 (캐릭터·대본·미술 설정·콘티까지 5단계 파이프라인) |
+| [zenstory-ai/oh-story-claudecode](https://github.com/zenstory-ai/oh-story-claudecode) | 웹소설 집필 (시장 분석·초고 작성·AI 티 제거·표지 생성까지 13개 스킬) |
+| [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) | 과학 연구 스킬 모음 (생물·화학·의학·신약개발 등 170여 종 + 공공 과학 DB 연동) |
 
 
 
