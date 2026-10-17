@@ -40,6 +40,8 @@
 - ollama [https://ollama.com/download](https://ollama.com/download)
 - chatbox [https://chatboxai.app/en](https://chatboxai.app/en)
 - anythingllm [https://anythingllm.com/desktop](https://anythingllm.com/desktop)
+- Wake [https://github.com/iAmCorey/Wake](https://github.com/iAmCorey/Wake)
+
 
 ## 개인용
 
