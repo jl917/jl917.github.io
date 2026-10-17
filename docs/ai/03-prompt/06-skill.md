@@ -140,3 +140,5 @@ getWeather(city);
 | [eternityspring/shuohao-skills](https://github.com/eternityspring/shuohao-skills) | AI 숏드라마 제작 (캐릭터·대본·미술 설정·콘티까지 5단계 파이프라인) |
 | [zenstory-ai/oh-story-claudecode](https://github.com/zenstory-ai/oh-story-claudecode) | 웹소설 집필 (시장 분석·초고 작성·AI 티 제거·표지 생성까지 13개 스킬) |
 | [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) | 과학 연구 스킬 모음 (생물·화학·의학·신약개발 등 170여 종 + 공공 과학 DB 연동) |
+| [higgsfield-ai/skills](https://github.com/higgsfield-ai/skills) | Higgsfield AI 이미지·영상 생성 (브랜드 아이덴티티·제품 사진·상세페이지·유튜브 썸네일 등) |
+| [dexhunter/seedance2-skill](https://github.com/dexhunter/seedance2-skill) | Seedance 2.0 영상 생성 프롬프트 작성 (광고·드라마·뮤직비디오·교육 템플릿) |
