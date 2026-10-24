@@ -134,6 +134,7 @@
 
 ## AI
 
+- [AI 코딩](/ai/07-evaluation/02-coding.md)
 - [Agent와 Workflow, 뭐가 다른가 — 결정권이 어디 있는가](/ai/advanced/agent/AGENT/01-Agent-Workflow-결정권.md)
 - [Agent란 무엇인가 — Chatbot도, RAG를 얹은 챗봇도 아니다](/ai/advanced/agent/AGENT/02-Agent란-무엇인가-Chatbot-RAG-구분.md)
 - [Agent 효과는 모델이 전부 결정하는가 — 엔지니어링 상한](/ai/advanced/agent/AGENT/03-Agent-효과-모델이-전부-결정하는가.md)
