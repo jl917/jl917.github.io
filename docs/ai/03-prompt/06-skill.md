@@ -143,3 +143,4 @@ getWeather(city);
 | [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) | 과학 연구 스킬 모음 (생물·화학·의학·신약개발 등 170여 종 + 공공 과학 DB 연동) |
 | [higgsfield-ai/skills](https://github.com/higgsfield-ai/skills) | Higgsfield AI 이미지·영상 생성 (브랜드 아이덴티티·제품 사진·상세페이지·유튜브 썸네일 등) |
 | [dexhunter/seedance2-skill](https://github.com/dexhunter/seedance2-skill) | Seedance 2.0 영상 생성 프롬프트 작성 (광고·드라마·뮤직비디오·교육 템플릿) |
+| [DaoYiSec/SecSkills](https://github.com/DaoYiSec/SecSkills) | 보안 스킬·MCP·에이전트 큐레이션 (모의해킹·취약점 스캔·코드 감사·CTF·리버싱 등 100여 종) |
