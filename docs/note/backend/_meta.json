@@ -1,6 +1,11 @@
 [
   {
     "type": "file",
+    "name": "kubernetes",
+    "label": "Kubernetes"
+  },
+  {
+    "type": "file",
     "name": "kafka"
   },
   {
