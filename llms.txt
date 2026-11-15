@@ -39,6 +39,7 @@
 ## Note
 
 - [용어정리](/note/backend/term.md)
+- [Kubernetes](/note/backend/kubernetes.md)
 - [Kafka](/note/backend/kafka.md)
 - [Temporal](/note/backend/temporal.md)
 - [Gradle](/note/backend/gradle.md)
