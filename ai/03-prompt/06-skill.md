@@ -144,3 +144,14 @@ getWeather(city);
 | [higgsfield-ai/skills](https://github.com/higgsfield-ai/skills) | Higgsfield AI 이미지·영상 생성 (브랜드 아이덴티티·제품 사진·상세페이지·유튜브 썸네일 등) |
 | [dexhunter/seedance2-skill](https://github.com/dexhunter/seedance2-skill) | Seedance 2.0 영상 생성 프롬프트 작성 (광고·드라마·뮤직비디오·교육 템플릿) |
 | [DaoYiSec/SecSkills](https://github.com/DaoYiSec/SecSkills) | 보안 스킬·MCP·에이전트 큐레이션 (모의해킹·취약점 스캔·코드 감사·CTF·리버싱 등 100여 종) |
+| [ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp) | Chrome DevTools를 에이전트에 연결 (브라우저 조작·디버깅·성능 분석, MCP) |
+| [google-labs-code/stitch-skills](https://github.com/google-labs-code/stitch-skills) | Google Stitch MCP 서버와 함께 쓰는 UI 디자인 스킬 모음 |
+| [GoogleChrome/modern-web-guidance](https://github.com/GoogleChrome/modern-web-guidance) | 최신 웹 플랫폼 모범 사례를 에이전트에 제공 |
+| [GuidanceStudio/uxui-audit-skill](https://github.com/GuidanceStudio/uxui-audit-skill) | 종합 UX/UI 검사 |
+| [EliaAlberti/ux-audit-skill](https://github.com/EliaAlberti/ux-audit-skill) | 스크린샷 기반 UX 휴리스틱 검사 (심각도·근거 휴리스틱·주석 스크린샷 리포트) |
+| [paulunemoon/ux-audit-skill](https://github.com/paulunemoon/ux-audit-skill) | 16개 영역 UX 검사 (항목마다 근거·심각도·신뢰도 표기) |
+| [humbleteam/design-review](https://github.com/humbleteam/design-review) | Nielsen / WCAG 기반 디자인 리뷰 (점수 + Before/After/Why 개선안) |
+| [shahab7e/ux-skill](https://github.com/shahab7e/ux-skill) | UX 전문가 지식 기반 리뷰 (사용성·접근성·폼·다크 패턴·AI 인터페이스) |
+| [narenkatakam/ux-audit](https://github.com/narenkatakam/ux-audit) | UX 원칙 및 컴포넌트 검사 (원칙 12개·컴포넌트 체크리스트 7종) |
+| [jalaalrd/full-stack-audit](https://github.com/jalaalrd/full-stack-audit) | 웹서비스 종합 진단 (보안·UX·컴플라이언스 등 90개 항목) |
+
